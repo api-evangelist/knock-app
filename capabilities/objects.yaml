@@ -1,0 +1,1346 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Objects API — Objects
+  description: 'Knock Objects API — Objects. 26 operations. Lead operation: updateobjectpreferenceworkflows. Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Objects
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: objects
+    baseUri: https://api.knock.app
+    description: Knock Knock Objects API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-objects-collection-object_id-preferences-id-workflows
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/workflows
+      operations:
+      - name: updateobjectpreferenceworkflows
+        method: PUT
+        description: Update workflows in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id-channel_types-type
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types/{type}
+      operations:
+      - name: updateobjectpreferencechanneltype
+        method: PUT
+        description: Update a channel type preference
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-bulk-delete
+      path: /v1/objects/{collection}/bulk/delete
+      operations:
+      - name: bulkdeleteobjects
+        method: POST
+        description: Bulk delete objects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-id-schedules
+      path: /v1/objects/{collection}/{id}/schedules
+      operations:
+      - name: listobjectschedules
+        method: GET
+        description: List object schedules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: v1-objects-collection-id-messages
+      path: /v1/objects/{collection}/{id}/messages
+      operations:
+      - name: listmessagesforobject
+        method: GET
+        description: List messages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id-categories-key
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/categories/{key}
+      operations:
+      - name: updateobjectpreferencecategory
+        method: PUT
+        description: Update a category preference
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-preferences
+      path: /v1/objects/{collection}/{object_id}/preferences
+      operations:
+      - name: listobjectpreferencesets
+        method: GET
+        description: List preference sets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id-workflows-key
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/workflows/{key}
+      operations:
+      - name: updateobjectpreferenceworkflow
+        method: PUT
+        description: Update a workflow preference
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-bulk-subscriptions-add
+      path: /v1/objects/{collection}/bulk/subscriptions/add
+      operations:
+      - name: bulkaddsubscriptions
+        method: POST
+        description: Bulk add subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id-categories
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/categories
+      operations:
+      - name: updateobjectpreferencecategories
+        method: PUT
+        description: Update categories in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-id
+      path: /v1/objects/{collection}/{id}
+      operations:
+      - name: deleteobject
+        method: DELETE
+        description: Delete an object
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: getobject
+        method: GET
+        description: Get an object
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: setobject
+        method: PUT
+        description: Set an object
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-channel_data-channel_id
+      path: /v1/objects/{collection}/{object_id}/channel_data/{channel_id}
+      operations:
+      - name: unsetobjectchanneldata
+        method: DELETE
+        description: Unset channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+      - name: getobjectchanneldata
+        method: GET
+        description: Get channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+      - name: setobjectchanneldata
+        method: PUT
+        description: Set channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection
+      path: /v1/objects/{collection}
+      operations:
+      - name: listobjects
+        method: GET
+        description: List objects in a collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id-channel_types
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types
+      operations:
+      - name: updateobjectpreferencechanneltypes
+        method: PUT
+        description: Update channel types in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-bulk-subscriptions-delete
+      path: /v1/objects/{collection}/bulk/subscriptions/delete
+      operations:
+      - name: bulkdeletesubscriptions
+        method: POST
+        description: Bulk delete subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-preferences-id
+      path: /v1/objects/{collection}/{object_id}/preferences/{id}
+      operations:
+      - name: deleteobjectpreferenceset
+        method: DELETE
+        description: Delete object preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: getobjectpreferenceset
+        method: GET
+        description: Get object preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: updateobjectpreferenceset
+        method: PUT
+        description: Update a preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-object_id-subscriptions
+      path: /v1/objects/{collection}/{object_id}/subscriptions
+      operations:
+      - name: deletesubscriptionsforobject
+        method: DELETE
+        description: Delete subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+      - name: listsubscriptionsforobject
+        method: GET
+        description: List subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+      - name: addsubscriptionsforobject
+        method: POST
+        description: Add subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: object_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-objects-collection-bulk-set
+      path: /v1/objects/{collection}/bulk/set
+      operations:
+      - name: bulksetobjects
+        method: POST
+        description: Bulk set objects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: collection
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: objects-rest
+    port: 8080
+    description: REST adapter for Knock Knock Objects API.
+    resources:
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/workflows
+      name: v1-objects-collection-object_id-preferences-id-workflows
+      description: REST surface for v1-objects-collection-object_id-preferences-id-workflows.
+      operations:
+      - method: PUT
+        name: updateobjectpreferenceworkflows
+        description: Update workflows in preference set
+        call: objects.updateobjectpreferenceworkflows
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/channel_types/{type}
+      name: v1-objects-collection-object_id-preferences-id-channel_types-type
+      description: REST surface for v1-objects-collection-object_id-preferences-id-channel_types-type.
+      operations:
+      - method: PUT
+        name: updateobjectpreferencechanneltype
+        description: Update a channel type preference
+        call: objects.updateobjectpreferencechanneltype
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          type: rest.type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/bulk/delete
+      name: v1-objects-collection-bulk-delete
+      description: REST surface for v1-objects-collection-bulk-delete.
+      operations:
+      - method: POST
+        name: bulkdeleteobjects
+        description: Bulk delete objects
+        call: objects.bulkdeleteobjects
+        with:
+          collection: rest.collection
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{id}/schedules
+      name: v1-objects-collection-id-schedules
+      description: REST surface for v1-objects-collection-id-schedules.
+      operations:
+      - method: GET
+        name: listobjectschedules
+        description: List object schedules
+        call: objects.listobjectschedules
+        with:
+          collection: rest.collection
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{id}/messages
+      name: v1-objects-collection-id-messages
+      description: REST surface for v1-objects-collection-id-messages.
+      operations:
+      - method: GET
+        name: listmessagesforobject
+        description: List messages
+        call: objects.listmessagesforobject
+        with:
+          collection: rest.collection
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/categories/{key}
+      name: v1-objects-collection-object_id-preferences-id-categories-key
+      description: REST surface for v1-objects-collection-object_id-preferences-id-categories-key.
+      operations:
+      - method: PUT
+        name: updateobjectpreferencecategory
+        description: Update a category preference
+        call: objects.updateobjectpreferencecategory
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences
+      name: v1-objects-collection-object_id-preferences
+      description: REST surface for v1-objects-collection-object_id-preferences.
+      operations:
+      - method: GET
+        name: listobjectpreferencesets
+        description: List preference sets
+        call: objects.listobjectpreferencesets
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/workflows/{key}
+      name: v1-objects-collection-object_id-preferences-id-workflows-key
+      description: REST surface for v1-objects-collection-object_id-preferences-id-workflows-key.
+      operations:
+      - method: PUT
+        name: updateobjectpreferenceworkflow
+        description: Update a workflow preference
+        call: objects.updateobjectpreferenceworkflow
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/bulk/subscriptions/add
+      name: v1-objects-collection-bulk-subscriptions-add
+      description: REST surface for v1-objects-collection-bulk-subscriptions-add.
+      operations:
+      - method: POST
+        name: bulkaddsubscriptions
+        description: Bulk add subscriptions
+        call: objects.bulkaddsubscriptions
+        with:
+          collection: rest.collection
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/categories
+      name: v1-objects-collection-object_id-preferences-id-categories
+      description: REST surface for v1-objects-collection-object_id-preferences-id-categories.
+      operations:
+      - method: PUT
+        name: updateobjectpreferencecategories
+        description: Update categories in preference set
+        call: objects.updateobjectpreferencecategories
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{id}
+      name: v1-objects-collection-id
+      description: REST surface for v1-objects-collection-id.
+      operations:
+      - method: DELETE
+        name: deleteobject
+        description: Delete an object
+        call: objects.deleteobject
+        with:
+          collection: rest.collection
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getobject
+        description: Get an object
+        call: objects.getobject
+        with:
+          collection: rest.collection
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setobject
+        description: Set an object
+        call: objects.setobject
+        with:
+          collection: rest.collection
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/channel_data/{channel_id}
+      name: v1-objects-collection-object_id-channel_data-channel_id
+      description: REST surface for v1-objects-collection-object_id-channel_data-channel_id.
+      operations:
+      - method: DELETE
+        name: unsetobjectchanneldata
+        description: Unset channel data
+        call: objects.unsetobjectchanneldata
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          channel_id: rest.channel_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getobjectchanneldata
+        description: Get channel data
+        call: objects.getobjectchanneldata
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          channel_id: rest.channel_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setobjectchanneldata
+        description: Set channel data
+        call: objects.setobjectchanneldata
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          channel_id: rest.channel_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}
+      name: v1-objects-collection
+      description: REST surface for v1-objects-collection.
+      operations:
+      - method: GET
+        name: listobjects
+        description: List objects in a collection
+        call: objects.listobjects
+        with:
+          collection: rest.collection
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}/channel_types
+      name: v1-objects-collection-object_id-preferences-id-channel_types
+      description: REST surface for v1-objects-collection-object_id-preferences-id-channel_types.
+      operations:
+      - method: PUT
+        name: updateobjectpreferencechanneltypes
+        description: Update channel types in preference set
+        call: objects.updateobjectpreferencechanneltypes
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/bulk/subscriptions/delete
+      name: v1-objects-collection-bulk-subscriptions-delete
+      description: REST surface for v1-objects-collection-bulk-subscriptions-delete.
+      operations:
+      - method: POST
+        name: bulkdeletesubscriptions
+        description: Bulk delete subscriptions
+        call: objects.bulkdeletesubscriptions
+        with:
+          collection: rest.collection
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/preferences/{id}
+      name: v1-objects-collection-object_id-preferences-id
+      description: REST surface for v1-objects-collection-object_id-preferences-id.
+      operations:
+      - method: DELETE
+        name: deleteobjectpreferenceset
+        description: Delete object preference set
+        call: objects.deleteobjectpreferenceset
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getobjectpreferenceset
+        description: Get object preference set
+        call: objects.getobjectpreferenceset
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateobjectpreferenceset
+        description: Update a preference set
+        call: objects.updateobjectpreferenceset
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/{object_id}/subscriptions
+      name: v1-objects-collection-object_id-subscriptions
+      description: REST surface for v1-objects-collection-object_id-subscriptions.
+      operations:
+      - method: DELETE
+        name: deletesubscriptionsforobject
+        description: Delete subscriptions
+        call: objects.deletesubscriptionsforobject
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listsubscriptionsforobject
+        description: List subscriptions
+        call: objects.listsubscriptionsforobject
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addsubscriptionsforobject
+        description: Add subscriptions
+        call: objects.addsubscriptionsforobject
+        with:
+          collection: rest.collection
+          object_id: rest.object_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/objects/{collection}/bulk/set
+      name: v1-objects-collection-bulk-set
+      description: REST surface for v1-objects-collection-bulk-set.
+      operations:
+      - method: POST
+        name: bulksetobjects
+        description: Bulk set objects
+        call: objects.bulksetobjects
+        with:
+          collection: rest.collection
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: objects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Objects API. One tool per consumed operation.
+    tools:
+    - name: knock-updateobjectpreferenceworkflows
+      description: Update workflows in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferenceworkflows
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferencechanneltype
+      description: Update a channel type preference
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferencechanneltype
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        type: tools.type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkdeleteobjects
+      description: Bulk delete objects
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: objects.bulkdeleteobjects
+      with:
+        collection: tools.collection
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listobjectschedules
+      description: List object schedules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.listobjectschedules
+      with:
+        collection: tools.collection
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listmessagesforobject
+      description: List messages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.listmessagesforobject
+      with:
+        collection: tools.collection
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferencecategory
+      description: Update a category preference
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferencecategory
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listobjectpreferencesets
+      description: List preference sets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.listobjectpreferencesets
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferenceworkflow
+      description: Update a workflow preference
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferenceworkflow
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkaddsubscriptions
+      description: Bulk add subscriptions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: objects.bulkaddsubscriptions
+      with:
+        collection: tools.collection
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferencecategories
+      description: Update categories in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferencecategories
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-deleteobject
+      description: Delete an object
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: objects.deleteobject
+      with:
+        collection: tools.collection
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getobject
+      description: Get an object
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.getobject
+      with:
+        collection: tools.collection
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-setobject
+      description: Set an object
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.setobject
+      with:
+        collection: tools.collection
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-unsetobjectchanneldata
+      description: Unset channel data
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: objects.unsetobjectchanneldata
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        channel_id: tools.channel_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getobjectchanneldata
+      description: Get channel data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.getobjectchanneldata
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        channel_id: tools.channel_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-setobjectchanneldata
+      description: Set channel data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.setobjectchanneldata
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        channel_id: tools.channel_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listobjects
+      description: List objects in a collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.listobjects
+      with:
+        collection: tools.collection
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferencechanneltypes
+      description: Update channel types in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferencechanneltypes
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkdeletesubscriptions
+      description: Bulk delete subscriptions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: objects.bulkdeletesubscriptions
+      with:
+        collection: tools.collection
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-deleteobjectpreferenceset
+      description: Delete object preference set
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: objects.deleteobjectpreferenceset
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getobjectpreferenceset
+      description: Get object preference set
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.getobjectpreferenceset
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateobjectpreferenceset
+      description: Update a preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: objects.updateobjectpreferenceset
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-deletesubscriptionsforobject
+      description: Delete subscriptions
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: objects.deletesubscriptionsforobject
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listsubscriptionsforobject
+      description: List subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: objects.listsubscriptionsforobject
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-addsubscriptionsforobject
+      description: Add subscriptions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: objects.addsubscriptionsforobject
+      with:
+        collection: tools.collection
+        object_id: tools.object_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulksetobjects
+      description: Bulk set objects
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: objects.bulksetobjects
+      with:
+        collection: tools.collection
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Channels API — Channels
+  description: 'Knock Channels API — Channels. 1 operations. Lead operation: bulkupdatemessagesforchannel. Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Channels
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: channels
+    baseUri: https://api.knock.app
+    description: Knock Knock Channels API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-channels-channel_id-messages-bulk-action
+      path: /v1/channels/{channel_id}/messages/bulk/{action}
+      operations:
+      - name: bulkupdatemessagesforchannel
+        method: POST
+        description: Bulk update message statuses for channel
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+        - name: action
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: channels-rest
+    port: 8080
+    description: REST adapter for Knock Knock Channels API.
+    resources:
+    - path: /v1/v1/channels/{channel_id}/messages/bulk/{action}
+      name: v1-channels-channel_id-messages-bulk-action
+      description: REST surface for v1-channels-channel_id-messages-bulk-action.
+      operations:
+      - method: POST
+        name: bulkupdatemessagesforchannel
+        description: Bulk update message statuses for channel
+        call: channels.bulkupdatemessagesforchannel
+        with:
+          channel_id: rest.channel_id
+          action: rest.action
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: channels-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Channels API. One tool per consumed operation.
+    tools:
+    - name: knock-bulkupdatemessagesforchannel
+      description: Bulk update message statuses for channel
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: channels.bulkupdatemessagesforchannel
+      with:
+        channel_id: tools.channel_id
+        action: tools.action
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

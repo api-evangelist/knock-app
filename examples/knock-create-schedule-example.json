@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.knock.app/v1/schedules",
+    "headers": {
+      "Authorization": "Bearer sk_test_12345",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "recipients": ["user_123", "user_456"],
+      "workflow": "weekly-digest",
+      "tenant": "acme",
+      "repeats": [
+        {
+          "frequency": "weekly",
+          "days": ["mon"],
+          "hours": 9
+        }
+      ],
+      "data": {
+        "digest_type": "weekly"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": [
+      {
+        "__typename": "Schedule",
+        "id": "01HX2K3F8YQ8E0G7CJVQH3M4WB",
+        "workflow": "weekly-digest",
+        "recipient": "user_123",
+        "tenant": "acme",
+        "repeats": [{"frequency": "weekly", "days": ["mon"], "hours": 9}],
+        "next_occurrence_at": "2026-06-01T09:00:00Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+aid: knock-app
+provider: Knock
+url: https://knock.app
+reviewed: '2026-05-25'
+reviewer:
+  name: Kin Lane
+  org: API Evangelist
+  url: https://apievangelist.com
+tier: 1
+tierReason: |
+  Public, well-documented multi-API surface (runtime + Management API), full OpenAPI spec available
+  (94+65 documented operations), 9+ official server SDKs, mobile SDKs across iOS/Android/Flutter/React
+  Native/Expo, JavaScript/React components library, dedicated CLI, remote OAuth-backed MCP server,
+  outbound webhook event catalog, agent toolkit with bindings for OpenAPI/AI SDK/Langchain/Mastra,
+  comprehensive llms.txt, transparent tiered pricing, public status page, and an Enterprise tier with
+  SAML/SCIM/HIPAA. Strong AI agent posture with workflow function step, dashboard agent, MCP server,
+  and packaged skills.
+strengths:
+  - Two clean, well-documented REST surfaces (runtime + Management API) with full OpenAPI
+  - Excellent SDK breadth — 8 server languages plus mobile + JavaScript/React components
+  - Knock CLI for local-first resource management with git-style branches and commits
+  - Remote MCP server (mcp.knock.app/mcp) with OAuth 2.1 + PKCE and selectable tool groups
+  - Knock Agent Toolkit for embedding Knock into agent workflows across major frameworks
+  - AI agent function step inside workflows for in-line enrichment
+  - First-class outbound webhook event catalog with documented payload schemas
+  - Environment model + Branches + Commits gives notifications infrastructure git-style change control
+  - SlackKit and TeamsKit reduce common OAuth + channel-data boilerplate
+  - Built-in multi-tenancy from the Developer plan upward
+  - Transparent, usage-based pricing with generous Developer free tier (10K messages, 500 guide AUs,
+    500 AI agent credits)
+  - llms.txt is comprehensive and clean — easy for LLM agents to consume the docs
+weaknesses:
+  - The runtime OpenAPI master spec is published as JSON-content under a .yml extension via a Stainless
+    bucket URL rather than a stable, official artifacts URL on knock.app — discoverability could be better
+  - mAPI vs runtime API split is powerful but adds initial cognitive load — could be more prominent in
+    docs landing
+  - Rate-limit documentation uses tier names (T1-T5) without explicitly listing per-endpoint tier
+    assignments in machine-readable form
+  - Several public-portfolio repos (e.g. forks of Elixir libs) clutter the org listing; signal-to-noise
+    in the GitHub org could improve
+opportunities:
+  - Publish the OpenAPI under a knock.app/openapi or docs.knock.app/api-reference/openapi.yml stable URL
+  - Add a machine-readable rate-limit-tier table (e.g. x-knock-rate-limit-tier extension on each
+    operation in the OpenAPI)
+  - Expose webhook schemas as AsyncAPI alongside the existing event-types reference
+  - Offer per-environment apis.json / discovery document for self-describing tenant introspection
+risks:
+  - Heavy dependence on Stainless-generated SDKs and OpenAPI bundle — spec URL changes when Stainless
+    regenerates (the URL contains the spec hash)
+  - Enterprise security claims (SAML / SCIM / HIPAA) are gated behind sales — independent verification
+    via TrustCenter would benefit potential enterprise buyers
+quality:
+  documentationCompleteness: high
+  apiDesignConsistency: high
+  developerExperience: high
+  observability: high
+  finOps: medium
+  agentReadiness: high
+  governance: medium
+notes:
+  - First-class AI agent integration across multiple surfaces (workflow step, dashboard agent, MCP,
+    skills, agent toolkit) makes Knock one of the more agent-native notifications platforms in 2026.
+  - Customer-facing webhook channel (pass-through webhooks owned by the consumer's customers) is an
+    unusual and high-value primitive for B2B SaaS shops building their own notification platforms.

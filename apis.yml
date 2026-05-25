@@ -1,0 +1,518 @@
+aid: knock-app
+url: https://raw.githubusercontent.com/api-evangelist/knock-app/refs/heads/main/apis.yml
+apis:
+- aid: knock-app:knock-workflows-api
+  name: Knock Workflows API
+  tags:
+  - Workflows
+  - Notifications
+  - Messaging
+  - Triggers
+  humanURL: https://docs.knock.app/api-reference/workflows
+  properties:
+  - url: https://docs.knock.app/api-reference/workflows
+    type: Documentation
+  - url: https://docs.knock.app/send-notifications/triggering-workflows/api
+    type: Documentation
+  - url: openapi/knock-workflows-api-openapi.yml
+    type: OpenAPI
+  - url: json-schema/knock-workflow-trigger-schema.json
+    type: JSONSchema
+  - url: examples/knock-trigger-workflow-example.json
+    type: Examples
+  - url: capabilities/workflows.yaml
+    type: NaftikoCapability
+  description: Trigger and cancel notification workflows and inspect workflow recipient runs. Workflows are
+    Knock's core programmable model — orchestrating channel steps (email, SMS, push, in-app, chat, webhook)
+    and function steps (batch, delay, branch, throttle, fetch, AI agent, trigger-workflow) with conditions and
+    preferences across recipients.
+- aid: knock-app:knock-users-api
+  name: Knock Users API
+  tags:
+  - Users
+  - Recipients
+  - Preferences
+  - In-App Feed
+  - Guides
+  humanURL: https://docs.knock.app/api-reference/users
+  properties:
+  - url: https://docs.knock.app/api-reference/users
+    type: Documentation
+  - url: openapi/knock-users-api-openapi.yml
+    type: OpenAPI
+  - url: examples/knock-identify-user-example.json
+    type: Examples
+  - url: capabilities/users.yaml
+    type: NaftikoCapability
+  description: Identify, list, update, delete, and merge users plus manage their channel data, preferences,
+    in-app feeds, guides, subscriptions, messages, and schedules. The primary recipient surface for Knock.
+- aid: knock-app:knock-messages-api
+  name: Knock Messages API
+  tags:
+  - Messages
+  - Engagement
+  - Delivery
+  humanURL: https://docs.knock.app/api-reference/messages
+  properties:
+  - url: https://docs.knock.app/api-reference/messages
+    type: Documentation
+  - url: openapi/knock-messages-api-openapi.yml
+    type: OpenAPI
+  - url: json-schema/knock-message-schema.json
+    type: JSONSchema
+  - url: capabilities/messages.yaml
+    type: NaftikoCapability
+  description: Read, list, and update Knock messages — the per-recipient delivery records produced by workflow
+    runs. Includes activity, delivery log, and event timelines plus mark-as-seen/read/interacted/archived single
+    and batch endpoints.
+- aid: knock-app:knock-objects-api
+  name: Knock Objects API
+  tags:
+  - Objects
+  - Non-User Recipients
+  humanURL: https://docs.knock.app/api-reference/objects
+  properties:
+  - url: https://docs.knock.app/api-reference/objects
+    type: Documentation
+  - url: openapi/knock-objects-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/objects.yaml
+    type: NaftikoCapability
+  description: Create and manage non-user Objects in Knock and their channel data, preferences, subscriptions,
+    and messages. Objects model accounts, projects, devices, or any non-human notification target.
+- aid: knock-app:knock-tenants-api
+  name: Knock Tenants API
+  tags:
+  - Tenants
+  - Multi-Tenancy
+  - Branding
+  humanURL: https://docs.knock.app/api-reference/tenants
+  properties:
+  - url: https://docs.knock.app/api-reference/tenants
+    type: Documentation
+  - url: openapi/knock-tenants-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/tenants.yaml
+    type: NaftikoCapability
+  description: Manage Tenants — the top-level accounts or workspaces in your product. Tenants power
+    tenant-scoped branding, preferences, and message-targeting.
+- aid: knock-app:knock-schedules-api
+  name: Knock Schedules API
+  tags:
+  - Schedules
+  - Recurring
+  - Cron
+  humanURL: https://docs.knock.app/api-reference/schedules
+  properties:
+  - url: https://docs.knock.app/api-reference/schedules
+    type: Documentation
+  - url: https://docs.knock.app/concepts/schedules
+    type: Documentation
+  - url: openapi/knock-schedules-api-openapi.yml
+    type: OpenAPI
+  - url: examples/knock-create-schedule-example.json
+    type: Examples
+  - url: capabilities/schedules.yaml
+    type: NaftikoCapability
+  description: Create, list, update, and delete workflow Schedules. Schedules fire workflows at one-off or
+    recurring times for specific recipients with timezone and repeat-rule support.
+- aid: knock-app:knock-audiences-api
+  name: Knock Audiences API
+  tags:
+  - Audiences
+  - Segments
+  - Lifecycle
+  humanURL: https://docs.knock.app/api-reference/audiences
+  properties:
+  - url: https://docs.knock.app/api-reference/audiences
+    type: Documentation
+  - url: openapi/knock-audiences-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/audiences.yaml
+    type: NaftikoCapability
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user
+    joins an audience, configured workflows fire automatically.
+- aid: knock-app:knock-channels-api
+  name: Knock Channels API
+  tags:
+  - Channels
+  - Providers
+  - Bulk
+  humanURL: https://docs.knock.app/api-reference/channels
+  properties:
+  - url: https://docs.knock.app/api-reference/channels
+    type: Documentation
+  - url: openapi/knock-channels-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/channels.yaml
+    type: NaftikoCapability
+  description: Inspect channels and run bulk message-status updates scoped to a channel. Channels represent
+    configured provider integrations (Resend, SendGrid, Twilio, APNS, Slack, etc.).
+- aid: knock-app:knock-providers-api
+  name: Knock Providers API
+  tags:
+  - Providers
+  - OAuth
+  - SlackKit
+  - TeamsKit
+  humanURL: https://docs.knock.app/api-reference/providers
+  properties:
+  - url: https://docs.knock.app/api-reference/providers
+    type: Documentation
+  - url: openapi/knock-providers-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/providers.yaml
+    type: NaftikoCapability
+  description: OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other inbound provider
+    integrations — authorize, revoke, and inspect connections to chat providers on behalf of users or tenants.
+- aid: knock-app:knock-integrations-api
+  name: Knock Integrations API
+  tags:
+  - Integrations
+  - SlackKit
+  - TeamsKit
+  humanURL: https://docs.knock.app/api-reference/integrations
+  properties:
+  - url: https://docs.knock.app/api-reference/integrations
+    type: Documentation
+  - url: openapi/knock-integrations-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/integrations.yaml
+    type: NaftikoCapability
+  description: Inspect integrations configured for the current environment. Used by SlackKit and TeamsKit
+    clients to discover the destinations available for a recipient.
+- aid: knock-app:knock-bulk-operations-api
+  name: Knock Bulk Operations API
+  tags:
+  - Bulk
+  - Operations
+  - Async
+  humanURL: https://docs.knock.app/api-reference/bulk_operations
+  properties:
+  - url: https://docs.knock.app/api-reference/bulk_operations
+    type: Documentation
+  - url: openapi/knock-bulk-operations-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/bulk-operations.yaml
+    type: NaftikoCapability
+  description: Track and inspect long-running bulk operations. Many Knock endpoints (bulk identify users,
+    bulk delete, bulk channel-status updates) return a bulk-operation handle; this surface exposes its
+    lifecycle.
+- aid: knock-app:knock-notify-api
+  name: Knock Notify API
+  tags:
+  - Notify
+  - Events
+  humanURL: https://docs.knock.app/api-reference/overview
+  properties:
+  - url: openapi/knock-notify-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/notify.yaml
+    type: NaftikoCapability
+  description: Internal notify endpoints used by the Knock event-driven trigger surface. Used to send
+    notifications when workflows fire from source events, schedules, audiences, or programmatic triggers.
+- aid: knock-app:knock-management-api
+  name: Knock Management API (mAPI)
+  tags:
+  - Management
+  - Resources
+  - CLI
+  - MCP
+  - DevOps
+  humanURL: https://docs.knock.app/mapi
+  properties:
+  - url: https://docs.knock.app/mapi
+    type: Documentation
+  - url: https://docs.knock.app/developer-tools/management-api
+    type: Documentation
+  - url: openapi/knock-management-api-openapi.yml
+    type: OpenAPI
+  - url: capabilities/management.yaml
+    type: NaftikoCapability
+  description: Knock Management API (mAPI) — the resource-management surface at control.knock.app. Programmatic
+    CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts,
+    Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys.
+    Powers the Knock CLI and MCP server.
+- aid: knock-app:knock-webhooks
+  name: Knock Outbound Webhooks
+  tags:
+  - Webhooks
+  - Events
+  - AsyncAPI
+  humanURL: https://docs.knock.app/developer-tools/outbound-webhooks/overview
+  properties:
+  - url: https://docs.knock.app/developer-tools/outbound-webhooks/overview
+    type: Documentation
+  - url: https://docs.knock.app/developer-tools/outbound-webhooks/event-types
+    type: Documentation
+  - url: asyncapi/knock-webhooks-asyncapi.yml
+    type: AsyncAPI
+  description: Outbound webhooks fire message lifecycle (sent, delivered, seen, read, interacted, archived,
+    link_clicked, bounced, undelivered) and environment-change (workflow / email_layout / translation / partial
+    / source_event_action updates and commits) events as JSON POSTs to subscriber URLs configured in the Knock
+    dashboard.
+name: Knock
+tags:
+- Notifications
+- Messaging
+- Infrastructure
+- Workflows
+- Cross-Channel
+- Email
+- SMS
+- Push
+- In-App
+- Chat
+- Slack
+- Webhooks
+- MCP
+- AI Agents
+- Developer Platform
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- type: Portal
+  url: https://knock.app
+- type: Documentation
+  url: https://docs.knock.app/
+- type: Documentation
+  name: API Reference
+  url: https://docs.knock.app/api-reference/overview
+- type: Documentation
+  name: Management API Reference
+  url: https://docs.knock.app/mapi
+- type: GettingStarted
+  url: https://docs.knock.app/getting-started/what-is-knock
+- type: GettingStarted
+  name: Quick start
+  url: https://docs.knock.app/getting-started/quick-start/general
+- type: SignUp
+  url: https://dashboard.knock.app/signup
+- type: Authentication
+  url: https://docs.knock.app/api-reference/overview/authentication
+- type: RateLimits
+  url: https://docs.knock.app/api-reference/overview/rate-limits
+- type: RateLimits
+  name: Batch rate limits
+  url: https://docs.knock.app/api-reference/overview/batch-rate-limits
+- type: Idempotency
+  url: https://docs.knock.app/api-reference/overview/idempotent-requests
+- type: Pagination
+  url: https://docs.knock.app/api-reference/overview/pagination
+- type: Errors
+  url: https://docs.knock.app/api-reference/overview/errors
+- type: Errors
+  name: Common error codes
+  url: https://docs.knock.app/api-reference/overview/error-codes
+- type: StatusPage
+  url: https://status.knock.app
+- type: ChangeLog
+  url: https://docs.knock.app/changelog
+- type: Pricing
+  url: https://knock.app/pricing
+- type: TermsOfService
+  url: https://knock.app/legal/terms
+- type: PrivacyPolicy
+  url: https://knock.app/legal/privacy
+- type: TrustCenter
+  url: https://trust.knock.app
+- type: Blog
+  url: https://knock.app/blog
+- type: GitHubOrganization
+  url: https://github.com/knocklabs
+- type: SDK
+  name: Node SDK
+  url: https://github.com/knocklabs/knock-node
+- type: SDK
+  name: Python SDK
+  url: https://github.com/knocklabs/knock-python
+- type: SDK
+  name: Ruby SDK
+  url: https://github.com/knocklabs/knock-ruby
+- type: SDK
+  name: Go SDK
+  url: https://github.com/knocklabs/knock-go
+- type: SDK
+  name: Elixir SDK
+  url: https://github.com/knocklabs/knock-elixir
+- type: SDK
+  name: Java SDK
+  url: https://github.com/knocklabs/knock-java
+- type: SDK
+  name: .NET SDK
+  url: https://github.com/knocklabs/knock-dotnet
+- type: SDK
+  name: PHP SDK
+  url: https://github.com/knocklabs/knock-php
+- type: SDK
+  name: iOS / Swift SDK
+  url: https://github.com/knocklabs/knock-swift
+- type: SDK
+  name: Android / Kotlin SDK
+  url: https://github.com/knocklabs/knock-android
+- type: SDK
+  name: Flutter SDK
+  url: https://github.com/knocklabs/knock-flutter
+- type: SDK
+  name: JavaScript / React SDKs
+  url: https://github.com/knocklabs/javascript
+- type: SDK
+  name: Knock Management Node SDK
+  url: https://github.com/knocklabs/knock-mgmt-node
+- type: SDK
+  name: Knock Management Python SDK
+  url: https://github.com/knocklabs/knock-mgmt-python
+- type: SDK
+  name: Knock Management Go SDK
+  url: https://github.com/knocklabs/knock-mgmt-go
+- type: Tool
+  name: Knock CLI
+  url: https://github.com/knocklabs/knock-cli
+- type: Tool
+  name: Knock MCP Server (remote)
+  url: https://mcp.knock.app/mcp
+- type: Tool
+  name: Knock MCP Server source
+  url: https://github.com/knocklabs/knock-mcp
+- type: Tool
+  name: Knock Agent Toolkit
+  url: https://github.com/knocklabs/agent-toolkit
+- type: Tool
+  name: Knock Telegraph (React component library)
+  url: https://github.com/knocklabs/telegraph
+- type: CodeExamples
+  name: In-app notifications Next.js example
+  url: https://github.com/knocklabs/in-app-notifications-example-nextjs
+- type: CodeExamples
+  name: SlackKit example
+  url: https://github.com/knocklabs/slack-kit-example
+- type: CodeExamples
+  name: iOS example app
+  url: https://github.com/knocklabs/ios-example-app
+- type: CodeExamples
+  name: AI agent examples
+  url: https://github.com/knocklabs/ai-agent-examples
+- type: CodeExamples
+  name: Workflow templates
+  url: https://github.com/knocklabs/workflow-templates
+- type: CodeExamples
+  name: Notion feed example
+  url: https://github.com/knocklabs/notion-feed-example
+- type: CodeExamples
+  name: Marketplace example
+  url: https://github.com/knocklabs/marketplace-example
+- type: Plugins
+  name: React notification feed components
+  url: https://github.com/knocklabs/react-notification-feed
+- type: Webhooks
+  url: https://docs.knock.app/developer-tools/outbound-webhooks/overview
+- type: Webhooks
+  name: Webhook event types
+  url: https://docs.knock.app/developer-tools/outbound-webhooks/event-types
+- type: AsyncAPI
+  url: asyncapi/knock-webhooks-asyncapi.yml
+- type: Plans
+  url: plans/knock-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/knock-rate-limits.yml
+- type: FinOps
+  url: finops/knock-finops.yml
+- type: JSONLD
+  url: json-ld/knock-app-context.jsonld
+- type: Vocabulary
+  url: vocabulary/knock-app-vocabulary.yml
+- type: SpectralRules
+  url: rules/knock-app-rules.yml
+- type: Documentation
+  name: Knock MCP server docs
+  url: https://docs.knock.app/ai/mcp-server
+- type: Documentation
+  name: Knock agent docs
+  url: https://docs.knock.app/ai/agent
+- type: Documentation
+  name: Knock skills
+  url: https://docs.knock.app/ai/skills
+- type: Documentation
+  name: Agent workflow function
+  url: https://docs.knock.app/ai/agent-function
+- type: Documentation
+  name: Service tokens
+  url: https://docs.knock.app/developer-tools/service-tokens
+- type: Documentation
+  name: Environments
+  url: https://docs.knock.app/concepts/environments
+- type: Documentation
+  name: Commits
+  url: https://docs.knock.app/concepts/commits
+- type: Documentation
+  name: Liquid helpers reference
+  url: https://docs.knock.app/template-editor/reference-liquid-helpers
+- type: Forum
+  name: Knock Slack community
+  url: https://knock.app/community
+- type: Features
+  data:
+  - Cross-channel notification workflows — email, SMS, push, in-app, in-app guides, chat (Slack/Discord/Teams/WhatsApp),
+    and outbound webhooks from one trigger
+  - Workflow function steps — batch, delay, branch, experiment, throttle, fetch (HTTP), AI agent, trigger-workflow,
+    update-user / update-tenant / update-object / update-data / update-audience
+  - Drag-and-drop workflow builder used collaboratively by engineering, product, and growth
+  - Broadcasts — one-time messages to audience-targeted groups from the Knock dashboard
+  - Guides — in-app lifecycle messaging using your own components and design system
+  - Recipients model — Users, non-user Objects, and Tenants with channel data and properties
+  - Preferences — per-channel, per-workflow, per-category preference sets enforced automatically on every run
+    and broadcast
+  - Audiences — static and dynamic user segments that automatically drive lifecycle workflow triggers
+  - Schedules — one-off and recurring (timezone-aware) workflow firing
+  - Subscriptions — many-to-many fan-out from Objects to recipient lists
+  - Conditions — dynamic control flow on trigger data, recipient properties, and prior step status
+  - Templates — drag-and-drop editor + Liquid; partials, branding, translations (i18n), email layouts
+  - Real-time in-app feed API plus pre-built React, JavaScript, iOS, Android, Flutter, React Native, Expo,
+    and Vue/Nuxt SDKs
+  - Outbound webhook events for full message lifecycle and environment change tracking
+  - Customer-facing webhook channel (let your customers configure their own webhook destinations)
+  - Idempotent requests via Idempotency-Key
+  - Cursor-based pagination
+  - Tiered per-endpoint rate limits (1, 5, 60, 200, 1000 req/sec) scoped per environment or per signed user
+  - Enhanced security mode with signed user tokens (JWT)
+  - Environments + Branches + Commits — git-style resource workflow with promotion across dev/staging/prod
+  - Knock CLI for local-first resource management against the Management API
+  - Knock MCP server (remote) at mcp.knock.app/mcp — OAuth 2.1 + PKCE; tool groups for resources, commits,
+    debug, data, and docs
+  - Knock Agent Toolkit — AI SDK, OpenAI function-calling, Langchain, Mastra, and local MCP server bindings
+  - AI agent function step inside workflows for prompt-driven enrichment and personalization
+  - Knock skills — procedural knowledge packages for AI agents working with Knock
+  - SlackKit and TeamsKit — drop-in OAuth + channel-data UX for connecting customer Slack/Teams workspaces
+  - Data warehouse / Segment / Datadog observability streams
+  - Source events — trigger workflows from CDPs (Segment, Rudderstack) or reverse-ETL (Hightouch, Census)
+  - Multi-tenancy with per-tenant branding and locked preferences (Enterprise)
+  - SAML 2.0 SSO, SCIM directory sync, HIPAA / BAA on Enterprise
+  - Official SDKs in Node, Python, Ruby, Go, Elixir, Java, .NET, PHP, plus mobile (Swift, Kotlin, Flutter,
+    React Native, Expo) and Management-API SDKs (Node, Python, Go)
+  sources:
+  - https://knock.app
+  - https://knock.app/pricing
+  - https://docs.knock.app/getting-started/what-is-knock
+  - https://docs.knock.app/api-reference/overview
+  - https://docs.knock.app/ai/mcp-server
+  - https://github.com/knocklabs
+  updated: '2026-05-25'
+created: '2026-05-25'
+modified: '2026-05-25'
+position: Consuming
+description: Knock is notifications infrastructure as a service — a product and customer messaging platform you
+  use to power transactional, lifecycle, broadcast, and in-product messaging across email, SMS, push, in-app,
+  in-app guides, chat (Slack / Discord / Teams / WhatsApp), and outbound webhooks. Knock exposes two REST
+  surfaces — a runtime API (api.knock.app) for triggering workflows and managing recipients/messages, and a
+  Management API (control.knock.app) for resource CRUD — together with official SDKs in Node, Python, Ruby,
+  Go, Elixir, Java, .NET, PHP and mobile (Swift, Kotlin, Flutter, React Native, Expo); a CLI; a remote MCP
+  server; an agent toolkit for OpenAI / AI SDK / Langchain / Mastra; outbound webhooks; AI agent workflow
+  steps; SlackKit and TeamsKit; and a git-style environment / branch / commit model for safe promotion of
+  notification resources.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

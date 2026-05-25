@@ -1,0 +1,360 @@
+openapi: 3.0.3
+info:
+  title: Knock Channels API
+  version: '1.0'
+  description: Inspect channels and run bulk message-status updates scoped to a channel. Channels represent configured provider
+    integrations (Resend, SendGrid, Twilio, APNS, Slack, etc.).
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+paths:
+  /v1/channels/{channel_id}/messages/bulk/{action}:
+    post:
+      callbacks: {}
+      description: Bulk update the status of messages for a specific channel. The channel is specified by the `channel_id`
+        parameter. The action to perform is specified by the `action` parameter, where the action is a status change action
+        (e.g. `archive`, `unarchive`).
+      operationId: bulkUpdateMessagesForChannel
+      parameters:
+      - description: The ID of the channel to update messages for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The target status to be applied to the messages.
+        in: path
+        name: action
+        required: true
+        schema:
+          enum:
+          - seen
+          - unseen
+          - read
+          - unread
+          - archived
+          - unarchived
+          - interacted
+          - archive
+          - unarchive
+          - delete
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              archived: include
+              delivery_status: delivered
+              engagement_status: seen
+              has_tenant: true
+              newer_than: '2024-01-01T00:00:00Z'
+              older_than: '2024-01-01T00:00:00Z'
+              recipient_ids:
+              - recipient1
+              - recipient2
+              tenants:
+              - tenant1
+              - tenant2
+              trigger_data: '{"key":"value"}'
+              workflows:
+              - workflow1
+              - workflow2
+            schema:
+              $ref: '#/components/schemas/BulkUpdateMessagesForChannelRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk update message statuses for channel
+      tags:
+      - Messages
+      - Bulk operations
+      x-ratelimit-tier: 2
+      x-retention-policy: true
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...)
+        for server-side.
+  schemas:
+    BulkUpdateMessagesForChannelRequest:
+      description: Updates message statuses in a specified channel. Use the `channel_id` parameter to target the channel and
+        the `status` parameter to define what the status should be changed to (e.g. `archive`, `unarchive`). Apply to all
+        messages or use filters to target a subset. For in-app channels, messages can be updated indefinitely via this operation.
+        For all other channel types, messages outside the account's retention window will not be updated as part of this operation.
+      example:
+        archived: include
+        delivery_status: delivered
+        engagement_status: seen
+        has_tenant: true
+        newer_than: '2024-01-01T00:00:00Z'
+        older_than: '2024-01-01T00:00:00Z'
+        recipient_ids:
+        - recipient1
+        - recipient2
+        tenants:
+        - tenant1
+        - tenant2
+        trigger_data: '{"key":"value"}'
+        workflows:
+        - workflow1
+        - workflow2
+      properties:
+        archived:
+          description: Limits the results to messages with the given archived status.
+          enum:
+          - exclude
+          - include
+          - only
+          type: string
+          x-struct: null
+          x-validate: null
+        delivery_status:
+          description: Limits the results to messages with the given delivery status.
+          enum:
+          - queued
+          - sent
+          - delivered
+          - delivery_attempted
+          - undelivered
+          - not_sent
+          - bounced
+          type: string
+          x-struct: null
+          x-validate: null
+        engagement_status:
+          description: Limits the results to messages with the given engagement status.
+          enum:
+          - seen
+          - unseen
+          - read
+          - unread
+          - archived
+          - unarchived
+          - link_clicked
+          - interacted
+          type: string
+          x-struct: null
+          x-validate: null
+        has_tenant:
+          description: Limits the results to messages that have a tenant or not.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        newer_than:
+          description: Limits the results to messages inserted after the given date.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        older_than:
+          description: Limits the results to messages inserted before the given date.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient_ids:
+          description: Limits the results to messages with the given recipient IDs.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        tenants:
+          description: Limits the results to messages with the given tenant IDs.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        trigger_data:
+          description: Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering)
+            for more information.
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          description: Limits the results to messages with the given workflow keys.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      title: BulkUpdateMessagesForChannelRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkUpdateMessagesForChannelRequest
+      x-validate: null
+    BulkOperation:
+      description: A bulk operation entity.
+      example:
+        __typename: BulkOperation
+        completed_at: null
+        error_count: 0
+        error_items: []
+        estimated_total_rows: 1000
+        failed_at: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2024-05-22T12:00:00Z'
+        name: Bulk operation name
+        processed_rows: 0
+        progress_path: https://api.switchboard.com/v1/bulk_operations/123e4567-e89b-12d3-a456-426614174000
+        started_at: null
+        status: processing
+        success_count: 0
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: BulkOperation
+          type: string
+          x-struct: null
+          x-validate: null
+        completed_at:
+          description: Timestamp when the bulk operation was completed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        error_count:
+          description: The number of failed operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        error_items:
+          description: A list of items that failed to be processed.
+          items:
+            properties:
+              collection:
+                description: The collection this object belongs to.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Unique identifier for the object.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        estimated_total_rows:
+          description: The estimated total number of rows to process.
+          example: 1000
+          type: integer
+          x-struct: null
+          x-validate: null
+        failed_at:
+          description: Timestamp when the bulk operation failed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the bulk operation.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the bulk operation.
+          example: Bulk operation name
+          type: string
+          x-struct: null
+          x-validate: null
+        processed_rows:
+          description: The number of rows processed so far.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        progress_path:
+          description: The URI to the bulk operation's progress.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        started_at:
+          description: Timestamp when the bulk operation was started.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the bulk operation.
+          enum:
+          - queued
+          - processing
+          - completed
+          - failed
+          example: queued
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        success_count:
+          description: The number of successful operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - name
+      - status
+      - estimated_total_rows
+      - processed_rows
+      - success_count
+      - updated_at
+      - inserted_at
+      title: BulkOperation
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkOperation
+      x-validate: null

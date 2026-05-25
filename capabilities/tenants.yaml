@@ -1,0 +1,267 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Tenants API — Tenants
+  description: 'Knock Tenants API — Tenants. 6 operations. Lead operation: settenant. Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Tenants
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: tenants
+    baseUri: https://api.knock.app
+    description: Knock Knock Tenants API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-tenants-id
+      path: /v1/tenants/{id}
+      operations:
+      - name: deletetenant
+        method: DELETE
+        description: Delete a tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: gettenant
+        method: GET
+        description: Get a tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: settenant
+        method: PUT
+        description: Set a tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-tenants
+      path: /v1/tenants
+      operations:
+      - name: listtenants
+        method: GET
+        description: List tenants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-tenants-bulk-delete
+      path: /v1/tenants/bulk/delete
+      operations:
+      - name: bulkdeletetenants
+        method: POST
+        description: Bulk delete tenants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-tenants-bulk-set
+      path: /v1/tenants/bulk/set
+      operations:
+      - name: bulksettenants
+        method: POST
+        description: Bulk set tenants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: tenants-rest
+    port: 8080
+    description: REST adapter for Knock Knock Tenants API.
+    resources:
+    - path: /v1/v1/tenants/{id}
+      name: v1-tenants-id
+      description: REST surface for v1-tenants-id.
+      operations:
+      - method: DELETE
+        name: deletetenant
+        description: Delete a tenant
+        call: tenants.deletetenant
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: gettenant
+        description: Get a tenant
+        call: tenants.gettenant
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: settenant
+        description: Set a tenant
+        call: tenants.settenant
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tenants
+      name: v1-tenants
+      description: REST surface for v1-tenants.
+      operations:
+      - method: GET
+        name: listtenants
+        description: List tenants
+        call: tenants.listtenants
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tenants/bulk/delete
+      name: v1-tenants-bulk-delete
+      description: REST surface for v1-tenants-bulk-delete.
+      operations:
+      - method: POST
+        name: bulkdeletetenants
+        description: Bulk delete tenants
+        call: tenants.bulkdeletetenants
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/tenants/bulk/set
+      name: v1-tenants-bulk-set
+      description: REST surface for v1-tenants-bulk-set.
+      operations:
+      - method: POST
+        name: bulksettenants
+        description: Bulk set tenants
+        call: tenants.bulksettenants
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: tenants-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Tenants API. One tool per consumed operation.
+    tools:
+    - name: knock-deletetenant
+      description: Delete a tenant
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: tenants.deletetenant
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-gettenant
+      description: Get a tenant
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tenants.gettenant
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-settenant
+      description: Set a tenant
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: tenants.settenant
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listtenants
+      description: List tenants
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tenants.listtenants
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkdeletetenants
+      description: Bulk delete tenants
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: tenants.bulkdeletetenants
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulksettenants
+      description: Bulk set tenants
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: tenants.bulksettenants
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

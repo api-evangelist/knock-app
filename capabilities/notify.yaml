@@ -1,0 +1,118 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Notify API — Notify
+  description: 'Knock Notify API — Notify. 2 operations. Lead operation: cancelworkflow (2). Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Notify
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: notify
+    baseUri: https://api.knock.app
+    description: Knock Knock Notify API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-notify-cancel
+      path: /v1/notify/cancel
+      operations:
+      - name: cancelworkflow (2)
+        method: POST
+        description: Cancel workflow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-notify
+      path: /v1/notify
+      operations:
+      - name: triggerworkflow
+        method: POST
+        description: Trigger workflow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: notify-rest
+    port: 8080
+    description: REST adapter for Knock Knock Notify API.
+    resources:
+    - path: /v1/v1/notify/cancel
+      name: v1-notify-cancel
+      description: REST surface for v1-notify-cancel.
+      operations:
+      - method: POST
+        name: cancelworkflow (2)
+        description: Cancel workflow
+        call: notify.cancelworkflow (2)
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/notify
+      name: v1-notify
+      description: REST surface for v1-notify.
+      operations:
+      - method: POST
+        name: triggerworkflow
+        description: Trigger workflow
+        call: notify.triggerworkflow
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: notify-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Notify API. One tool per consumed operation.
+    tools:
+    - name: knock-cancelworkflow (2)
+      description: Cancel workflow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: notify.cancelworkflow (2)
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-triggerworkflow
+      description: Trigger workflow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: notify.triggerworkflow
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

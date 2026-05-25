@@ -1,0 +1,1643 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Users API — Users
+  description: 'Knock Users API — Users. 35 operations. Lead operation: markuserguideasseen (2). Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Users
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: users
+    baseUri: https://api.knock.app
+    description: Knock Knock Users API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-users-user_id-guides-messages-seen
+      path: /v1/users/{user_id}/guides/messages/seen
+      operations:
+      - name: markuserguideasseen (2)
+        method: PUT
+        description: Mark guide as seen
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-feeds-id
+      path: /v1/users/{user_id}/feeds/{id}
+      operations:
+      - name: listuserinappfeeditems
+        method: GET
+        description: List feed items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-user_id-feeds-id-settings
+      path: /v1/users/{user_id}/feeds/{id}/settings
+      operations:
+      - name: getuserinappfeedsettings
+        method: GET
+        description: Get feed settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-user_id-subscriptions
+      path: /v1/users/{user_id}/subscriptions
+      operations:
+      - name: listsubscriptionsforuser
+        method: GET
+        description: List user subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-user_id
+      path: /v1/users/{user_id}
+      operations:
+      - name: deleteuser
+        method: DELETE
+        description: Delete user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+      - name: getuser
+        method: GET
+        description: Get user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+      - name: identifyuser
+        method: PUT
+        description: Identify user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id-categories-key
+      path: /v1/users/{user_id}/preferences/{id}/categories/{key}
+      operations:
+      - name: updateuserpreferencecategory
+        method: PUT
+        description: Update category in user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-messages-message_id-seen
+      path: /v1/users/{user_id}/guides/messages/{message_id}/seen
+      operations:
+      - name: markuserguideasseen
+        method: PUT
+        description: Mark guide as seen
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: message_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-messages-archived
+      path: /v1/users/{user_id}/guides/messages/archived
+      operations:
+      - name: markuserguideasunarchived
+        method: DELETE
+        description: Mark guide as unarchived
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+      - name: markuserguideasarchived (2)
+        method: PUT
+        description: Mark guide as archived
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-channel_data-channel_id
+      path: /v1/users/{user_id}/channel_data/{channel_id}
+      operations:
+      - name: unsetuserchanneldata
+        method: DELETE
+        description: Unset channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+      - name: getuserchanneldata
+        method: GET
+        description: Get channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+      - name: setuserchanneldata
+        method: PUT
+        description: Set channel data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-merge
+      path: /v1/users/{user_id}/merge
+      operations:
+      - name: mergeuser
+        method: POST
+        description: Merge users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-messages-interacted
+      path: /v1/users/{user_id}/guides/messages/interacted
+      operations:
+      - name: markuserguideasinteracted (2)
+        method: PUT
+        description: Mark guide as interacted
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-engagements-reset
+      path: /v1/users/{user_id}/guides/engagements/reset
+      operations:
+      - name: resetuserguideengagement
+        method: PUT
+        description: Reset guide engagement
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-bulk-preferences
+      path: /v1/users/bulk/preferences
+      operations:
+      - name: bulksetuserpreferences
+        method: POST
+        description: Bulk set preferences
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-channel_id
+      path: /v1/users/{user_id}/guides/{channel_id}
+      operations:
+      - name: listuserguides
+        method: GET
+        description: List guides
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: channel_id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-bulk-identify
+      path: /v1/users/bulk/identify
+      operations:
+      - name: bulkidentifyusers
+        method: POST
+        description: Bulk identify users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id-workflows
+      path: /v1/users/{user_id}/preferences/{id}/workflows
+      operations:
+      - name: updateuserpreferenceworkflows
+        method: PUT
+        description: Update workflows in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id-categories
+      path: /v1/users/{user_id}/preferences/{id}/categories
+      operations:
+      - name: updateuserpreferencecategories
+        method: PUT
+        description: Update categories in user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-guides-messages-message_id-interacted
+      path: /v1/users/{user_id}/guides/messages/{message_id}/interacted
+      operations:
+      - name: markuserguideasinteracted
+        method: PUT
+        description: Mark guide as interacted
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: message_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-bulk-delete
+      path: /v1/users/bulk/delete
+      operations:
+      - name: bulkdeleteusers
+        method: POST
+        description: Bulk delete users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id-channel_types-type
+      path: /v1/users/{user_id}/preferences/{id}/channel_types/{type}
+      operations:
+      - name: updateuserpreferencechanneltype
+        method: PUT
+        description: Update channel type in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: type
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences
+      path: /v1/users/{user_id}/preferences
+      operations:
+      - name: listuserpreferencesets
+        method: GET
+        description: List user preference sets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-user_id-schedules
+      path: /v1/users/{user_id}/schedules
+      operations:
+      - name: listuserschedules
+        method: GET
+        description: List user schedules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+    - name: v1-users-user_id-guides-messages-message_id-archived
+      path: /v1/users/{user_id}/guides/messages/{message_id}/archived
+      operations:
+      - name: markuserguideasarchived
+        method: PUT
+        description: Mark guide as archived
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: message_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-messages
+      path: /v1/users/{user_id}/messages
+      operations:
+      - name: listmessagesforuser
+        method: GET
+        description: List user messages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+    - name: v1-users
+      path: /v1/users
+      operations:
+      - name: listusers
+        method: GET
+        description: List users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-users-user_id-preferences-id-workflows-key
+      path: /v1/users/{user_id}/preferences/{id}/workflows/{key}
+      operations:
+      - name: updateuserpreferenceworkflow
+        method: PUT
+        description: Update workflow in user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id
+      path: /v1/users/{user_id}/preferences/{id}
+      operations:
+      - name: deleteuserpreferenceset
+        method: DELETE
+        description: Delete user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: getuserpreferenceset
+        method: GET
+        description: Get user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+      - name: updateuserpreferenceset
+        method: PUT
+        description: Update user preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-users-user_id-preferences-id-channel_types
+      path: /v1/users/{user_id}/preferences/{id}/channel_types
+      operations:
+      - name: updateuserpreferencechanneltypes
+        method: PUT
+        description: Update channel types in preference set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: users-rest
+    port: 8080
+    description: REST adapter for Knock Knock Users API.
+    resources:
+    - path: /v1/v1/users/{user_id}/guides/messages/seen
+      name: v1-users-user_id-guides-messages-seen
+      description: REST surface for v1-users-user_id-guides-messages-seen.
+      operations:
+      - method: PUT
+        name: markuserguideasseen (2)
+        description: Mark guide as seen
+        call: users.markuserguideasseen (2)
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/feeds/{id}
+      name: v1-users-user_id-feeds-id
+      description: REST surface for v1-users-user_id-feeds-id.
+      operations:
+      - method: GET
+        name: listuserinappfeeditems
+        description: List feed items
+        call: users.listuserinappfeeditems
+        with:
+          user_id: rest.user_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/feeds/{id}/settings
+      name: v1-users-user_id-feeds-id-settings
+      description: REST surface for v1-users-user_id-feeds-id-settings.
+      operations:
+      - method: GET
+        name: getuserinappfeedsettings
+        description: Get feed settings
+        call: users.getuserinappfeedsettings
+        with:
+          user_id: rest.user_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/subscriptions
+      name: v1-users-user_id-subscriptions
+      description: REST surface for v1-users-user_id-subscriptions.
+      operations:
+      - method: GET
+        name: listsubscriptionsforuser
+        description: List user subscriptions
+        call: users.listsubscriptionsforuser
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}
+      name: v1-users-user_id
+      description: REST surface for v1-users-user_id.
+      operations:
+      - method: DELETE
+        name: deleteuser
+        description: Delete user
+        call: users.deleteuser
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getuser
+        description: Get user
+        call: users.getuser
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: identifyuser
+        description: Identify user
+        call: users.identifyuser
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/categories/{key}
+      name: v1-users-user_id-preferences-id-categories-key
+      description: REST surface for v1-users-user_id-preferences-id-categories-key.
+      operations:
+      - method: PUT
+        name: updateuserpreferencecategory
+        description: Update category in user preference set
+        call: users.updateuserpreferencecategory
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/messages/{message_id}/seen
+      name: v1-users-user_id-guides-messages-message_id-seen
+      description: REST surface for v1-users-user_id-guides-messages-message_id-seen.
+      operations:
+      - method: PUT
+        name: markuserguideasseen
+        description: Mark guide as seen
+        call: users.markuserguideasseen
+        with:
+          user_id: rest.user_id
+          message_id: rest.message_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/messages/archived
+      name: v1-users-user_id-guides-messages-archived
+      description: REST surface for v1-users-user_id-guides-messages-archived.
+      operations:
+      - method: DELETE
+        name: markuserguideasunarchived
+        description: Mark guide as unarchived
+        call: users.markuserguideasunarchived
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: markuserguideasarchived (2)
+        description: Mark guide as archived
+        call: users.markuserguideasarchived (2)
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/channel_data/{channel_id}
+      name: v1-users-user_id-channel_data-channel_id
+      description: REST surface for v1-users-user_id-channel_data-channel_id.
+      operations:
+      - method: DELETE
+        name: unsetuserchanneldata
+        description: Unset channel data
+        call: users.unsetuserchanneldata
+        with:
+          user_id: rest.user_id
+          channel_id: rest.channel_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getuserchanneldata
+        description: Get channel data
+        call: users.getuserchanneldata
+        with:
+          user_id: rest.user_id
+          channel_id: rest.channel_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setuserchanneldata
+        description: Set channel data
+        call: users.setuserchanneldata
+        with:
+          user_id: rest.user_id
+          channel_id: rest.channel_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/merge
+      name: v1-users-user_id-merge
+      description: REST surface for v1-users-user_id-merge.
+      operations:
+      - method: POST
+        name: mergeuser
+        description: Merge users
+        call: users.mergeuser
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/messages/interacted
+      name: v1-users-user_id-guides-messages-interacted
+      description: REST surface for v1-users-user_id-guides-messages-interacted.
+      operations:
+      - method: PUT
+        name: markuserguideasinteracted (2)
+        description: Mark guide as interacted
+        call: users.markuserguideasinteracted (2)
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/engagements/reset
+      name: v1-users-user_id-guides-engagements-reset
+      description: REST surface for v1-users-user_id-guides-engagements-reset.
+      operations:
+      - method: PUT
+        name: resetuserguideengagement
+        description: Reset guide engagement
+        call: users.resetuserguideengagement
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/bulk/preferences
+      name: v1-users-bulk-preferences
+      description: REST surface for v1-users-bulk-preferences.
+      operations:
+      - method: POST
+        name: bulksetuserpreferences
+        description: Bulk set preferences
+        call: users.bulksetuserpreferences
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/{channel_id}
+      name: v1-users-user_id-guides-channel_id
+      description: REST surface for v1-users-user_id-guides-channel_id.
+      operations:
+      - method: GET
+        name: listuserguides
+        description: List guides
+        call: users.listuserguides
+        with:
+          user_id: rest.user_id
+          channel_id: rest.channel_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/bulk/identify
+      name: v1-users-bulk-identify
+      description: REST surface for v1-users-bulk-identify.
+      operations:
+      - method: POST
+        name: bulkidentifyusers
+        description: Bulk identify users
+        call: users.bulkidentifyusers
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/workflows
+      name: v1-users-user_id-preferences-id-workflows
+      description: REST surface for v1-users-user_id-preferences-id-workflows.
+      operations:
+      - method: PUT
+        name: updateuserpreferenceworkflows
+        description: Update workflows in preference set
+        call: users.updateuserpreferenceworkflows
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/categories
+      name: v1-users-user_id-preferences-id-categories
+      description: REST surface for v1-users-user_id-preferences-id-categories.
+      operations:
+      - method: PUT
+        name: updateuserpreferencecategories
+        description: Update categories in user preference set
+        call: users.updateuserpreferencecategories
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/messages/{message_id}/interacted
+      name: v1-users-user_id-guides-messages-message_id-interacted
+      description: REST surface for v1-users-user_id-guides-messages-message_id-interacted.
+      operations:
+      - method: PUT
+        name: markuserguideasinteracted
+        description: Mark guide as interacted
+        call: users.markuserguideasinteracted
+        with:
+          user_id: rest.user_id
+          message_id: rest.message_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/bulk/delete
+      name: v1-users-bulk-delete
+      description: REST surface for v1-users-bulk-delete.
+      operations:
+      - method: POST
+        name: bulkdeleteusers
+        description: Bulk delete users
+        call: users.bulkdeleteusers
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/channel_types/{type}
+      name: v1-users-user_id-preferences-id-channel_types-type
+      description: REST surface for v1-users-user_id-preferences-id-channel_types-type.
+      operations:
+      - method: PUT
+        name: updateuserpreferencechanneltype
+        description: Update channel type in preference set
+        call: users.updateuserpreferencechanneltype
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          type: rest.type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences
+      name: v1-users-user_id-preferences
+      description: REST surface for v1-users-user_id-preferences.
+      operations:
+      - method: GET
+        name: listuserpreferencesets
+        description: List user preference sets
+        call: users.listuserpreferencesets
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/schedules
+      name: v1-users-user_id-schedules
+      description: REST surface for v1-users-user_id-schedules.
+      operations:
+      - method: GET
+        name: listuserschedules
+        description: List user schedules
+        call: users.listuserschedules
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/guides/messages/{message_id}/archived
+      name: v1-users-user_id-guides-messages-message_id-archived
+      description: REST surface for v1-users-user_id-guides-messages-message_id-archived.
+      operations:
+      - method: PUT
+        name: markuserguideasarchived
+        description: Mark guide as archived
+        call: users.markuserguideasarchived
+        with:
+          user_id: rest.user_id
+          message_id: rest.message_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/messages
+      name: v1-users-user_id-messages
+      description: REST surface for v1-users-user_id-messages.
+      operations:
+      - method: GET
+        name: listmessagesforuser
+        description: List user messages
+        call: users.listmessagesforuser
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users
+      name: v1-users
+      description: REST surface for v1-users.
+      operations:
+      - method: GET
+        name: listusers
+        description: List users
+        call: users.listusers
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/workflows/{key}
+      name: v1-users-user_id-preferences-id-workflows-key
+      description: REST surface for v1-users-user_id-preferences-id-workflows-key.
+      operations:
+      - method: PUT
+        name: updateuserpreferenceworkflow
+        description: Update workflow in user preference set
+        call: users.updateuserpreferenceworkflow
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}
+      name: v1-users-user_id-preferences-id
+      description: REST surface for v1-users-user_id-preferences-id.
+      operations:
+      - method: DELETE
+        name: deleteuserpreferenceset
+        description: Delete user preference set
+        call: users.deleteuserpreferenceset
+        with:
+          user_id: rest.user_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getuserpreferenceset
+        description: Get user preference set
+        call: users.getuserpreferenceset
+        with:
+          user_id: rest.user_id
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateuserpreferenceset
+        description: Update user preference set
+        call: users.updateuserpreferenceset
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/users/{user_id}/preferences/{id}/channel_types
+      name: v1-users-user_id-preferences-id-channel_types
+      description: REST surface for v1-users-user_id-preferences-id-channel_types.
+      operations:
+      - method: PUT
+        name: updateuserpreferencechanneltypes
+        description: Update channel types in preference set
+        call: users.updateuserpreferencechanneltypes
+        with:
+          user_id: rest.user_id
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Users API. One tool per consumed operation.
+    tools:
+    - name: knock-markuserguideasseen (2)
+      description: Mark guide as seen
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasseen (2)
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listuserinappfeeditems
+      description: List feed items
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listuserinappfeeditems
+      with:
+        user_id: tools.user_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getuserinappfeedsettings
+      description: Get feed settings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.getuserinappfeedsettings
+      with:
+        user_id: tools.user_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listsubscriptionsforuser
+      description: List user subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listsubscriptionsforuser
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-deleteuser
+      description: Delete user
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: users.deleteuser
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getuser
+      description: Get user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.getuser
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-identifyuser
+      description: Identify user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.identifyuser
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferencecategory
+      description: Update category in user preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferencecategory
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasseen
+      description: Mark guide as seen
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasseen
+      with:
+        user_id: tools.user_id
+        message_id: tools.message_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasunarchived
+      description: Mark guide as unarchived
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: users.markuserguideasunarchived
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasarchived (2)
+      description: Mark guide as archived
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasarchived (2)
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-unsetuserchanneldata
+      description: Unset channel data
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: users.unsetuserchanneldata
+      with:
+        user_id: tools.user_id
+        channel_id: tools.channel_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getuserchanneldata
+      description: Get channel data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.getuserchanneldata
+      with:
+        user_id: tools.user_id
+        channel_id: tools.channel_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-setuserchanneldata
+      description: Set channel data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.setuserchanneldata
+      with:
+        user_id: tools.user_id
+        channel_id: tools.channel_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-mergeuser
+      description: Merge users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: users.mergeuser
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasinteracted (2)
+      description: Mark guide as interacted
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasinteracted (2)
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-resetuserguideengagement
+      description: Reset guide engagement
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.resetuserguideengagement
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulksetuserpreferences
+      description: Bulk set preferences
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: users.bulksetuserpreferences
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listuserguides
+      description: List guides
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listuserguides
+      with:
+        user_id: tools.user_id
+        channel_id: tools.channel_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkidentifyusers
+      description: Bulk identify users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: users.bulkidentifyusers
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferenceworkflows
+      description: Update workflows in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferenceworkflows
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferencecategories
+      description: Update categories in user preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferencecategories
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasinteracted
+      description: Mark guide as interacted
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasinteracted
+      with:
+        user_id: tools.user_id
+        message_id: tools.message_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-bulkdeleteusers
+      description: Bulk delete users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: users.bulkdeleteusers
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferencechanneltype
+      description: Update channel type in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferencechanneltype
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        type: tools.type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listuserpreferencesets
+      description: List user preference sets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listuserpreferencesets
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listuserschedules
+      description: List user schedules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listuserschedules
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-markuserguideasarchived
+      description: Mark guide as archived
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.markuserguideasarchived
+      with:
+        user_id: tools.user_id
+        message_id: tools.message_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listmessagesforuser
+      description: List user messages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listmessagesforuser
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listusers
+      description: List users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.listusers
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferenceworkflow
+      description: Update workflow in user preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferenceworkflow
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-deleteuserpreferenceset
+      description: Delete user preference set
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: users.deleteuserpreferenceset
+      with:
+        user_id: tools.user_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getuserpreferenceset
+      description: Get user preference set
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: users.getuserpreferenceset
+      with:
+        user_id: tools.user_id
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferenceset
+      description: Update user preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferenceset
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-updateuserpreferencechanneltypes
+      description: Update channel types in preference set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: users.updateuserpreferencechanneltypes
+      with:
+        user_id: tools.user_id
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

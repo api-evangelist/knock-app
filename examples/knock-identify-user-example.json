@@ -1,0 +1,36 @@
+{
+  "request": {
+    "method": "PUT",
+    "url": "https://api.knock.app/v1/users/user_123",
+    "headers": {
+      "Authorization": "Bearer sk_test_12345",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "John Hammond",
+      "email": "hammondj@ingen.net",
+      "phone_number": "555-555-5555",
+      "avatar": "https://ingen.net/headshots/hammondj.jpg",
+      "timezone": "America/Costa_Rica",
+      "properties": {
+        "title": "CEO",
+        "planType": "allAccess",
+        "userType": "admin"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "__typename": "User",
+      "id": "user_123",
+      "name": "John Hammond",
+      "email": "hammondj@ingen.net",
+      "phone_number": "555-555-5555",
+      "avatar": "https://ingen.net/headshots/hammondj.jpg",
+      "timezone": "America/Costa_Rica",
+      "created_at": "2026-05-25T10:00:00Z",
+      "updated_at": "2026-05-25T10:00:00Z"
+    }
+  }
+}

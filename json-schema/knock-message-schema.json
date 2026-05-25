@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/knock-app/main/json-schema/knock-message-schema.json",
+  "title": "Knock Message",
+  "description": "A per-recipient delivery record produced by a Knock workflow run or broadcast. Carries channel, provider, status, engagement, and content references for one message to one recipient.",
+  "type": "object",
+  "required": ["__typename", "id", "channel_id", "recipient", "workflow", "status", "inserted_at"],
+  "properties": {
+    "__typename": {
+      "type": "string",
+      "const": "Message"
+    },
+    "id": {
+      "type": "string",
+      "description": "Globally unique Knock-assigned identifier (typically a ULID)."
+    },
+    "channel_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the Knock channel that produced this message."
+    },
+    "recipient": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "collection": { "type": "string" }
+          }
+        }
+      ],
+      "description": "Either a string user id, or an object reference identifying a non-user recipient."
+    },
+    "workflow": {
+      "type": "string",
+      "description": "Key of the workflow that triggered this message."
+    },
+    "tenant": {
+      "type": ["string", "null"],
+      "description": "Tenant id, when the message was triggered with a tenant."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "sent",
+        "delivered",
+        "delivery_attempted",
+        "undelivered",
+        "not_sent",
+        "bounced"
+      ]
+    },
+    "engagement_statuses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["seen", "unseen", "read", "unread", "interacted", "link_clicked", "archived", "unarchived"]
+      }
+    },
+    "read_at":        { "type": ["string", "null"], "format": "date-time" },
+    "seen_at":        { "type": ["string", "null"], "format": "date-time" },
+    "archived_at":    { "type": ["string", "null"], "format": "date-time" },
+    "interacted_at":  { "type": ["string", "null"], "format": "date-time" },
+    "link_clicked_at":{ "type": ["string", "null"], "format": "date-time" },
+    "inserted_at":    { "type": "string", "format": "date-time" },
+    "updated_at":     { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "description": "How this message originated (workflow trigger, broadcast, schedule, etc.).",
+      "properties": {
+        "key":         { "type": "string" },
+        "version_id":  { "type": "string" },
+        "step_ref":    { "type": "string" }
+      }
+    },
+    "data": {
+      "type": ["object", "null"],
+      "description": "Trigger-time payload available for templating and conditions."
+    },
+    "metadata": {
+      "type": ["object", "null"],
+      "description": "Channel/provider-specific metadata captured at send time."
+    },
+    "scheduled_at": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "additionalProperties": true
+}

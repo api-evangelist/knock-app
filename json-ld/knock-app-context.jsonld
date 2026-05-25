@@ -1,0 +1,124 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "knock": "https://api.knock.app/v1/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "User": {
+      "@id": "knock:User",
+      "@context": {
+        "id":           { "@id": "knock:User/id",           "@type": "xsd:string" },
+        "email":        { "@id": "schema:email",            "@type": "xsd:string" },
+        "name":         { "@id": "schema:name",             "@type": "xsd:string" },
+        "phone_number": { "@id": "schema:telephone",        "@type": "xsd:string" },
+        "avatar":       { "@id": "schema:image",            "@type": "xsd:anyURI" },
+        "timezone":     { "@id": "knock:User/timezone",     "@type": "xsd:string" },
+        "created_at":   { "@id": "schema:dateCreated",      "@type": "xsd:dateTime" },
+        "updated_at":   { "@id": "schema:dateModified",     "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Tenant": {
+      "@id": "knock:Tenant",
+      "@context": {
+        "id":         { "@id": "knock:Tenant/id",          "@type": "xsd:string" },
+        "name":       { "@id": "schema:name",              "@type": "xsd:string" },
+        "settings":   { "@id": "knock:Tenant/settings",    "@type": "@id" }
+      }
+    },
+
+    "Object": {
+      "@id": "knock:Object",
+      "@context": {
+        "id":         { "@id": "knock:Object/id",          "@type": "xsd:string" },
+        "collection": { "@id": "knock:Object/collection",  "@type": "xsd:string" },
+        "properties": { "@id": "knock:Object/properties",  "@type": "@json" }
+      }
+    },
+
+    "Workflow": {
+      "@id": "knock:Workflow",
+      "@context": {
+        "key":         { "@id": "knock:Workflow/key",         "@type": "xsd:string" },
+        "name":        { "@id": "schema:name",                "@type": "xsd:string" },
+        "categories":  { "@id": "knock:Workflow/categories",  "@container": "@list" },
+        "active":      { "@id": "knock:Workflow/active",      "@type": "xsd:boolean" },
+        "steps":       { "@id": "knock:Workflow/steps",       "@container": "@list" }
+      }
+    },
+
+    "Message": {
+      "@id": "knock:Message",
+      "@context": {
+        "id":          { "@id": "knock:Message/id",       "@type": "xsd:string" },
+        "channel_id":  { "@id": "knock:Message/channelId","@type": "xsd:string" },
+        "recipient":   { "@id": "knock:Message/recipient" },
+        "workflow":    { "@id": "knock:Message/workflow", "@type": "xsd:string" },
+        "tenant":      { "@id": "knock:Message/tenant",   "@type": "xsd:string" },
+        "status":      { "@id": "knock:Message/status",   "@type": "xsd:string" },
+        "seen_at":     { "@id": "knock:Message/seenAt",   "@type": "xsd:dateTime" },
+        "read_at":     { "@id": "knock:Message/readAt",   "@type": "xsd:dateTime" },
+        "archived_at": { "@id": "knock:Message/archivedAt","@type": "xsd:dateTime" },
+        "inserted_at": { "@id": "schema:dateCreated",     "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Schedule": {
+      "@id": "knock:Schedule",
+      "@context": {
+        "id":          { "@id": "knock:Schedule/id",       "@type": "xsd:string" },
+        "workflow":    { "@id": "knock:Schedule/workflow", "@type": "xsd:string" },
+        "repeats":     { "@id": "knock:Schedule/repeats",  "@container": "@list" },
+        "recipients":  { "@id": "knock:Schedule/recipients","@container": "@list" }
+      }
+    },
+
+    "Audience": {
+      "@id": "knock:Audience",
+      "@context": {
+        "key":     { "@id": "knock:Audience/key",     "@type": "xsd:string" },
+        "name":    { "@id": "schema:name",            "@type": "xsd:string" },
+        "type":    { "@id": "knock:Audience/type",    "@type": "xsd:string" }
+      }
+    },
+
+    "Channel": {
+      "@id": "knock:Channel",
+      "@context": {
+        "id":            { "@id": "knock:Channel/id",            "@type": "xsd:string" },
+        "name":          { "@id": "schema:name",                 "@type": "xsd:string" },
+        "channel_type":  { "@id": "knock:Channel/channelType",   "@type": "xsd:string" },
+        "provider":      { "@id": "knock:Channel/provider",      "@type": "xsd:string" }
+      }
+    },
+
+    "Guide": {
+      "@id": "knock:Guide",
+      "@context": {
+        "key":     { "@id": "knock:Guide/key",     "@type": "xsd:string" },
+        "name":    { "@id": "schema:name",         "@type": "xsd:string" }
+      }
+    },
+
+    "Broadcast": {
+      "@id": "knock:Broadcast",
+      "@context": {
+        "id":       { "@id": "knock:Broadcast/id",   "@type": "xsd:string" },
+        "name":     { "@id": "schema:name",          "@type": "xsd:string" }
+      }
+    },
+
+    "Preference": {
+      "@id": "knock:Preference",
+      "@context": {
+        "id":           { "@id": "knock:Preference/id",          "@type": "xsd:string" },
+        "channel_types":{ "@id": "knock:Preference/channelTypes","@type": "@json" },
+        "categories":   { "@id": "knock:Preference/categories",  "@type": "@json" },
+        "workflows":    { "@id": "knock:Preference/workflows",   "@type": "@json" }
+      }
+    }
+  }
+}

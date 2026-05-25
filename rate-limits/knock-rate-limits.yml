@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Knock
+providerId: knock-app
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Notifications
+  - Rate Limiting
+  - Quotas
+description: |
+  Reconciled rate limits for the Knock API. Each endpoint is assigned a tier (T1-T5).
+  Limits are scoped by environment when using public or private API keys; when using
+  signed user tokens (enhanced security mode), limits are additionally scoped per user.
+  Knock returns HTTP 429 when a limit is exceeded.
+sources:
+  - https://docs.knock.app/api-reference/overview/rate-limits
+  - https://docs.knock.app/api-reference/overview/batch-rate-limits
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: tiered-token-bucket
+scope: |
+  Per environment for API-key requests; per environment + signing user for signed-user-token
+  (enhanced security mode) requests.
+authoritativeCredentials:
+  - publicApiKey
+  - secretApiKey
+  - signedUserToken
+tiers:
+  - tier: T1
+    rate: 1
+    unit: request
+    timeWindow: second
+    description: One request per second. Reserved for the most write-heavy or expensive
+      endpoints.
+  - tier: T2
+    rate: 5
+    unit: request
+    timeWindow: second
+  - tier: T3
+    rate: 60
+    unit: request
+    timeWindow: second
+  - tier: T4
+    rate: 200
+    unit: request
+    timeWindow: second
+  - tier: T5
+    rate: 1000
+    unit: request
+    timeWindow: second
+    description: Highest-throughput tier — used for read-heavy and bulk endpoints.
+notes:
+  - Rate-limit tiers are assigned per endpoint, not per plan.
+  - Batch endpoints have additional per-item caps documented under "Batch rate limits".
+  - For high-volume workloads, Knock will provision a custom tier on request.

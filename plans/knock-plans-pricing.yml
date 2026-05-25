@@ -1,0 +1,183 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Knock
+providerId: knock-app
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Notifications
+  - Messaging
+  - Workflows
+  - Infrastructure
+description: 'Reconciled plans and per-message pricing for Knock notifications infrastructure. Source: knock.app/pricing.'
+sources:
+  - https://knock.app/pricing
+  - https://docs.knock.app/getting-started/what-is-knock
+plans:
+  - id: knock-developer
+    name: Developer
+    type: free
+    description: For testing, evaluation, and small-scale deployments.
+    entries:
+      - label: Messages
+        name: messages_included
+        type: included
+        metric: messages
+        limit: 10000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+        description: 10,000 messages/month included (workflows + broadcasts).
+      - label: Guide active users
+        name: guide_active_users_included
+        type: included
+        metric: active_users
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: AI agent credits
+        name: ai_agent_credits_included
+        type: included
+        metric: credits
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: AI agent credit overage
+        name: ai_agent_credit_overage
+        type: metered
+        metric: credits
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.01'
+        userMultiplied: false
+    elements:
+      - name: Unlimited notification workflows
+      - name: Unlimited broadcasts
+      - name: Unlimited delivery channels
+      - name: Unlimited team members
+      - name: Batch and delay notifications
+      - name: Built-in multi-tenancy
+      - name: SSO via Google
+      - name: 30-day log retention
+  - id: knock-starter
+    name: Starter
+    type: subscription
+    description: For teams looking to start scaling cross-channel notifications.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: flat
+        metric: subscription
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '250'
+        userMultiplied: false
+      - label: Messages included
+        name: messages_included
+        type: included
+        metric: messages
+        limit: 50000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: Messages overage
+        name: messages_overage
+        type: metered
+        metric: messages
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.005'
+        userMultiplied: false
+      - label: Guide active users included
+        name: guide_active_users_included
+        type: included
+        metric: active_users
+        limit: 2500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: Guide active users overage
+        name: guide_active_users_overage
+        type: metered
+        metric: active_users
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.05'
+        userMultiplied: false
+      - label: AI agent credits included
+        name: ai_agent_credits_included
+        type: included
+        metric: credits
+        limit: 2000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0'
+        userMultiplied: false
+      - label: AI agent credit overage
+        name: ai_agent_credit_overage
+        type: metered
+        metric: credits
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.01'
+        userMultiplied: false
+    elements:
+      - name: Everything in Developer
+      - name: Remove Knock branding
+      - name: 30-day log retention
+  - id: knock-enterprise
+    name: Enterprise
+    type: custom
+    description: For organizations with high volume, security, control, or support needs.
+    entries:
+      - label: Contact sales
+        name: enterprise
+        type: flat
+        metric: contract
+        limit: 1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact
+        userMultiplied: false
+    elements:
+      - name: Everything in Starter
+      - name: Flexible volume-based pricing
+      - name: Annual commit discounts
+      - name: Monthly notified user pricing available
+      - name: Per-customer branding and preferences
+      - name: Translation (i18n) support
+      - name: Send analytics data to any data warehouse
+      - name: Send observability data to Datadog
+      - name: Directory sync (SCIM)
+      - name: Enterprise SLAs
+      - name: Shared Slack channel and priority support
+      - name: SAML 2.0 SSO
+      - name: HIPAA compliance / BAA
+      - name: 90-day log retention
+      - name: Audit logs

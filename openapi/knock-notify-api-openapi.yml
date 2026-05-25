@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Knock Notify API
+  version: '1.0'
+  description: Internal notify endpoints used by the Knock event-driven trigger surface. Used to send notifications when workflows
+    fire from source events, schedules, audiences, or programmatic triggers.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+paths:
+  /v1/notify/cancel:
+    post:
+      callbacks: {}
+      description: Cancels a previously triggered workflow using the provided cancellation key.
+      operationId: cancelWorkflow (2)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cancel Request'
+        description: Cancel Payload
+        required: true
+      responses:
+        '204':
+          description: No Content
+      summary: Cancel workflow
+      tags:
+      - Workflow Triggers
+      x-ratelimit-tier: 3
+  /v1/notify:
+    post:
+      callbacks: {}
+      description: Triggers a workflow with the given key, actor, recipients, and optional data.
+      operationId: triggerWorkflow
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notify Request'
+        description: Notify Payload
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notify Response'
+          description: OK
+      summary: Trigger workflow
+      tags:
+      - Workflow Triggers
+      x-ratelimit-tier: 3
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...)
+        for server-side.
+  schemas: {}

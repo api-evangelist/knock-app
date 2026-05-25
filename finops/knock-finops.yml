@@ -1,0 +1,111 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Knock
+providerId: knock-app
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Notifications
+  - Messaging
+  - Cost Management
+description: |
+  FOCUS-aligned FinOps definition for Knock notifications infrastructure. Knock meters on
+  messages sent, guide active users, and AI agent credits, with included volume on each
+  paid plan and per-unit overage thereafter. Enterprise plans support monthly notified
+  user pricing.
+sources:
+  - https://knock.app/pricing
+  - https://docs.knock.app/getting-started/what-is-knock
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Knock Labs
+billingModel:
+  pricingCategory: Subscription + Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Subscription
+    - Usage
+    - Tax
+    - Credit
+  primaryUnit: message
+  secondaryUnits:
+    - active_user
+    - credit
+focusColumns:
+  ServiceName: Knock
+  ServiceCategory: Communication Services
+  ProviderName: Knock
+  PublisherName: Knock Labs
+  InvoiceIssuerName: Knock Labs
+  PricingCategory: Subscription + Usage-Based
+  PricingUnit: message
+  BillingCurrency: USD
+meters:
+  - name: messages_sent
+    unit: message
+    aggregation: sum
+    dimensions:
+      - environment
+      - workflow
+      - channel_type
+      - provider
+      - tenant
+    description: A message successfully sent to a single user on a single channel via a
+      workflow run or broadcast.
+  - name: guide_active_users
+    unit: active_user
+    aggregation: count_distinct
+    dimensions:
+      - environment
+      - guide
+      - tenant
+    description: A user who sees at least one guide in the calendar month.
+  - name: ai_agent_credits
+    unit: credit
+    aggregation: sum
+    dimensions:
+      - environment
+      - workflow
+      - model
+    description: Credits consumed by AI agent function steps inside a workflow.
+chargeRules:
+  - meter: messages_sent
+    appliesTo:
+      - knock-starter
+      - knock-enterprise
+    includedVolume: 50000
+    overagePrice: '0.005'
+    overageUnit: message
+  - meter: guide_active_users
+    appliesTo:
+      - knock-starter
+      - knock-enterprise
+    includedVolume: 2500
+    overagePrice: '0.05'
+    overageUnit: active_user
+  - meter: ai_agent_credits
+    appliesTo:
+      - knock-developer
+      - knock-starter
+      - knock-enterprise
+    includedVolume: 2000
+    overagePrice: '0.01'
+    overageUnit: credit
+reporting:
+  - api: Knock Dashboard
+    type: dashboard
+  - api: Stream analytics to Segment
+    type: stream
+  - api: Stream observability data to Datadog
+    type: stream
+  - api: Stream analytics to data warehouse
+    type: warehouse

@@ -1,0 +1,165 @@
+asyncapi: '2.6.0'
+id: 'urn:knock:webhooks'
+info:
+  title: Knock Outbound Webhooks
+  version: '1.0.0'
+  description: |
+    Knock fires outbound webhook events for message lifecycle (sent, delivered, seen,
+    read, interacted, archived, link_clicked, bounced, undelivered) and for environment
+    changes (workflow / email_layout / translation / partial / source_event_action updates
+    and commits). Subscribers configure a webhook URL in the Knock dashboard; payloads
+    are POSTed as JSON.
+  contact:
+    name: Knock
+    url: https://docs.knock.app/developer-tools/outbound-webhooks/overview
+defaultContentType: application/json
+servers:
+  knock:
+    url: https://api.knock.app
+    protocol: https
+    description: Subscribers configure a target URL in the Knock dashboard; Knock POSTs JSON events to it.
+channels:
+  webhooks/messages:
+    description: Message lifecycle events for one of the configured outbound webhook endpoints.
+    subscribe:
+      operationId: receiveMessageEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MessageSent'
+          - $ref: '#/components/messages/MessageDelivered'
+          - $ref: '#/components/messages/MessageDeliveryAttempted'
+          - $ref: '#/components/messages/MessageUndelivered'
+          - $ref: '#/components/messages/MessageBounced'
+          - $ref: '#/components/messages/MessageSeen'
+          - $ref: '#/components/messages/MessageUnseen'
+          - $ref: '#/components/messages/MessageRead'
+          - $ref: '#/components/messages/MessageUnread'
+          - $ref: '#/components/messages/MessageArchived'
+          - $ref: '#/components/messages/MessageUnarchived'
+          - $ref: '#/components/messages/MessageInteracted'
+          - $ref: '#/components/messages/MessageLinkClicked'
+  webhooks/workflows:
+    description: Workflow update + commit events.
+    subscribe:
+      operationId: receiveWorkflowEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/WorkflowUpdated'
+          - $ref: '#/components/messages/WorkflowCommitted'
+  webhooks/email_layouts:
+    subscribe:
+      operationId: receiveEmailLayoutEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/EmailLayoutUpdated'
+          - $ref: '#/components/messages/EmailLayoutCommitted'
+  webhooks/translations:
+    subscribe:
+      operationId: receiveTranslationEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TranslationUpdated'
+          - $ref: '#/components/messages/TranslationCommitted'
+  webhooks/partials:
+    subscribe:
+      operationId: receivePartialEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/PartialUpdated'
+          - $ref: '#/components/messages/PartialCommitted'
+  webhooks/source_event_actions:
+    subscribe:
+      operationId: receiveSourceEventActionEvent
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SourceEventActionUpdated'
+          - $ref: '#/components/messages/SourceEventActionCommitted'
+components:
+  messages:
+    MessageSent:                 { name: message.sent,                payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageDelivered:            { name: message.delivered,           payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageDeliveryAttempted:    { name: message.delivery_attempted,  payload: { $ref: '#/components/schemas/MessageDeliveryAttemptedEnvelope' } }
+    MessageUndelivered:          { name: message.undelivered,         payload: { $ref: '#/components/schemas/MessageFailureEnvelope' } }
+    MessageBounced:              { name: message.bounced,             payload: { $ref: '#/components/schemas/MessageBounceEnvelope' } }
+    MessageSeen:                 { name: message.seen,                payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageUnseen:               { name: message.unseen,              payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageRead:                 { name: message.read,                payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageUnread:               { name: message.unread,              payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageArchived:             { name: message.archived,            payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageUnarchived:           { name: message.unarchived,          payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageInteracted:           { name: message.interacted,          payload: { $ref: '#/components/schemas/MessageEnvelope' } }
+    MessageLinkClicked:          { name: message.link_clicked,        payload: { $ref: '#/components/schemas/MessageLinkClickedEnvelope' } }
+    WorkflowUpdated:             { name: workflow.updated,            payload: { $ref: '#/components/schemas/EnvObjectEnvelope' } }
+    WorkflowCommitted:           { name: workflow.committed,          payload: { $ref: '#/components/schemas/CommitEnvelope' } }
+    EmailLayoutUpdated:          { name: email_layout.updated,        payload: { $ref: '#/components/schemas/EnvObjectEnvelope' } }
+    EmailLayoutCommitted:        { name: email_layout.committed,      payload: { $ref: '#/components/schemas/CommitEnvelope' } }
+    TranslationUpdated:          { name: translation.updated,         payload: { $ref: '#/components/schemas/EnvObjectEnvelope' } }
+    TranslationCommitted:        { name: translation.committed,       payload: { $ref: '#/components/schemas/CommitEnvelope' } }
+    PartialUpdated:              { name: partial.updated,             payload: { $ref: '#/components/schemas/EnvObjectEnvelope' } }
+    PartialCommitted:            { name: partial.committed,           payload: { $ref: '#/components/schemas/CommitEnvelope' } }
+    SourceEventActionUpdated:    { name: source_event_action.updated, payload: { $ref: '#/components/schemas/EnvObjectEnvelope' } }
+    SourceEventActionCommitted:  { name: source_event_action.committed,payload: { $ref: '#/components/schemas/CommitEnvelope' } }
+  schemas:
+    MessageEnvelope:
+      type: object
+      properties:
+        type:       { type: string, description: 'Event type, e.g. message.sent.' }
+        created_at: { type: string, format: date-time }
+        data:       { type: object, description: 'The full Message object.' }
+        event_data: { type: ['object', 'null'] }
+    MessageDeliveryAttemptedEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/MessageEnvelope'
+        - type: object
+          properties:
+            event_data:
+              type: object
+              properties:
+                attempt:      { type: integer }
+                max_attempts: { type: integer }
+                retryable:    { type: boolean }
+    MessageFailureEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/MessageEnvelope'
+        - type: object
+          properties:
+            event_data:
+              type: object
+              properties:
+                failure_reason:  { type: string }
+                failure_details: { type: string }
+    MessageBounceEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/MessageEnvelope'
+        - type: object
+          properties:
+            event_data:
+              type: object
+              properties:
+                failure_reason:  { type: string }
+                failure_details: { type: string }
+                token:           { type: string, description: 'Bouncing push token, if applicable.' }
+    MessageLinkClickedEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/MessageEnvelope'
+        - type: object
+          properties:
+            event_data:
+              type: object
+              properties:
+                url: { type: string, format: uri }
+    EnvObjectEnvelope:
+      type: object
+      properties:
+        type:       { type: string }
+        created_at: { type: string, format: date-time }
+        data:       { type: object }
+    CommitEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/EnvObjectEnvelope'
+        - type: object
+          properties:
+            event_data:
+              type: object
+              properties:
+                commit_id: { type: string }

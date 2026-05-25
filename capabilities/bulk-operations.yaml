@@ -1,0 +1,77 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Bulk Operations API — Bulk-Operations
+  description: 'Knock Bulk Operations API — Bulk-Operations. 1 operations. Lead operation: getbulkoperation. Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Bulk-Operations
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bulk-operations
+    baseUri: https://api.knock.app
+    description: Knock Knock Bulk Operations API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-bulk_operations-id
+      path: /v1/bulk_operations/{id}
+      operations:
+      - name: getbulkoperation
+        method: GET
+        description: Get bulk operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: bulk-operations-rest
+    port: 8080
+    description: REST adapter for Knock Knock Bulk Operations API.
+    resources:
+    - path: /v1/v1/bulk_operations/{id}
+      name: v1-bulk_operations-id
+      description: REST surface for v1-bulk_operations-id.
+      operations:
+      - method: GET
+        name: getbulkoperation
+        description: Get bulk operation
+        call: bulk-operations.getbulkoperation
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bulk-operations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Bulk Operations API. One tool per consumed operation.
+    tools:
+    - name: knock-getbulkoperation
+      description: Get bulk operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bulk-operations.getbulkoperation
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

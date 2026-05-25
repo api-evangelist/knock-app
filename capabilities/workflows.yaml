@@ -1,0 +1,205 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knock Workflows API — Workflows
+  description: 'Knock Workflows API — Workflows. 4 operations. Lead operation: triggerworkflow (2). Self-contained Naftiko capability covering one Knock business surface.'
+  tags:
+  - Knock
+  - Workflows
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    KNOCK_API_KEY: KNOCK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: workflows
+    baseUri: https://api.knock.app
+    description: Knock Knock Workflows API business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-workflows-key-trigger
+      path: /v1/workflows/{key}/trigger
+      operations:
+      - name: triggerworkflow (2)
+        method: POST
+        description: Trigger workflow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: v1-workflow_recipient_runs-id
+      path: /v1/workflow_recipient_runs/{id}
+      operations:
+      - name: getworkflowrecipientrun
+        method: GET
+        description: Get a workflow recipient run
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: v1-workflow_recipient_runs
+      path: /v1/workflow_recipient_runs
+      operations:
+      - name: listworkflowrecipientruns
+        method: GET
+        description: List workflow recipient runs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-workflows-key-cancel
+      path: /v1/workflows/{key}/cancel
+      operations:
+      - name: cancelworkflow
+        method: POST
+        description: Cancel workflow
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: key
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.KNOCK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: workflows-rest
+    port: 8080
+    description: REST adapter for Knock Knock Workflows API.
+    resources:
+    - path: /v1/v1/workflows/{key}/trigger
+      name: v1-workflows-key-trigger
+      description: REST surface for v1-workflows-key-trigger.
+      operations:
+      - method: POST
+        name: triggerworkflow (2)
+        description: Trigger workflow
+        call: workflows.triggerworkflow (2)
+        with:
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/workflow_recipient_runs/{id}
+      name: v1-workflow_recipient_runs-id
+      description: REST surface for v1-workflow_recipient_runs-id.
+      operations:
+      - method: GET
+        name: getworkflowrecipientrun
+        description: Get a workflow recipient run
+        call: workflows.getworkflowrecipientrun
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/workflow_recipient_runs
+      name: v1-workflow_recipient_runs
+      description: REST surface for v1-workflow_recipient_runs.
+      operations:
+      - method: GET
+        name: listworkflowrecipientruns
+        description: List workflow recipient runs
+        call: workflows.listworkflowrecipientruns
+        with: {}
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/workflows/{key}/cancel
+      name: v1-workflows-key-cancel
+      description: REST surface for v1-workflows-key-cancel.
+      operations:
+      - method: POST
+        name: cancelworkflow
+        description: Cancel workflow
+        call: workflows.cancelworkflow
+        with:
+          key: rest.key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: workflows-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knock Knock Workflows API. One tool per consumed operation.
+    tools:
+    - name: knock-triggerworkflow (2)
+      description: Trigger workflow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: workflows.triggerworkflow (2)
+      with:
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-getworkflowrecipientrun
+      description: Get a workflow recipient run
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: workflows.getworkflowrecipientrun
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-listworkflowrecipientruns
+      description: List workflow recipient runs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: workflows.listworkflowrecipientruns
+      with: {}
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knock-cancelworkflow
+      description: Cancel workflow
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: workflows.cancelworkflow
+      with:
+        key: tools.key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

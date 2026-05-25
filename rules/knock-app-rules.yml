@@ -1,0 +1,76 @@
+extends: [[spectral:oas, all]]
+documentationUrl: https://docs.knock.app/api-reference/overview
+functions: []
+rules:
+  knock-server-base-url:
+    description: Knock OpenAPI specs MUST list either api.knock.app or control.knock.app as a server.
+    message: 'Knock specs must use api.knock.app (runtime API) or control.knock.app (Management API) as a server.'
+    severity: error
+    given: '$.servers[*].url'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://(api|control)\.knock\.app$'
+
+  knock-bearer-auth:
+    description: Knock APIs MUST require bearer-token authentication.
+    severity: error
+    given: '$.components.securitySchemes[*]'
+    then:
+      - field: type
+        function: enumeration
+        functionOptions:
+          values: [http]
+      - field: scheme
+        function: enumeration
+        functionOptions:
+          values: [bearer]
+
+  knock-paths-v1-prefix:
+    description: All Knock API paths MUST be under /v1/.
+    severity: error
+    given: '$.paths'
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: '^/v1/'
+
+  knock-operation-summary-required:
+    description: Every operation should have a summary.
+    severity: warn
+    given: '$.paths.*[get,post,put,patch,delete]'
+    then:
+      field: summary
+      function: truthy
+
+  knock-snake-case-properties:
+    description: Knock JSON property names are snake_case.
+    severity: warn
+    given: '$.components.schemas..properties.*~'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-z0-9_]*$'
+
+  knock-pagination-cursor:
+    description: List endpoints should support cursor pagination (before/after) over offset.
+    severity: warn
+    given: "$.paths.*.get.parameters[?(@.name=='page' || @.name=='offset')]"
+    then:
+      function: falsy
+
+  knock-rate-limit-headers-documented:
+    description: 429 responses should document rate-limit retry behavior.
+    severity: info
+    given: "$.paths.*.*.responses['429']"
+    then:
+      field: description
+      function: truthy
+
+  knock-idempotency-key-header:
+    description: POST endpoints SHOULD accept an Idempotency-Key header.
+    severity: info
+    given: '$.paths.*.post.parameters[*].name'
+    then:
+      function: undefined

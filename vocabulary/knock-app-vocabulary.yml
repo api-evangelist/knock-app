@@ -1,0 +1,206 @@
+vocabulary: Knock
+specificationVersion: '0.1'
+provider: Knock
+providerId: knock-app
+created: '2026-05-25'
+modified: '2026-05-25'
+description: |
+  Operational and capability dimensions for Knock — the notifications infrastructure
+  platform. Maps the platform's core nouns (workflow, channel, message, recipient,
+  preference, schedule, audience, guide, broadcast, tenant) and verbs (trigger,
+  cancel, commit, promote, identify, set-channel-data) into a single taxonomy.
+domains:
+  - id: Notifications
+    label: Notifications
+    description: Cross-channel transactional, lifecycle, and one-time messaging.
+  - id: Workflows
+    label: Workflows
+    description: Programmable notification orchestration.
+  - id: Recipients
+    label: Recipients
+    description: Users and non-user (Object) targets of notifications.
+  - id: Preferences
+    label: Preferences
+    description: Recipient-level controls over channel, workflow, and category subscription.
+  - id: Messaging
+    label: Messaging
+    description: Per-recipient deliveries and their lifecycle.
+  - id: Templates
+    label: Templates
+    description: Reusable content rendered into messages.
+  - id: Schedules
+    label: Schedules
+    description: One-off and recurring workflow firing.
+  - id: Audiences
+    label: Audiences
+    description: Static and dynamic user segments that drive workflows.
+  - id: Guides
+    label: Guides
+    description: In-app lifecycle messaging using your own components.
+  - id: Broadcasts
+    label: Broadcasts
+    description: One-time messages to groups of users.
+  - id: Multi-Tenancy
+    label: Multi-Tenancy
+    description: Per-tenant branding, preferences, and message scoping.
+  - id: Developer Experience
+    label: Developer Experience
+    description: CLI, MCP, SDKs, environments, branches, commits.
+  - id: AI Agents
+    label: AI Agents
+    description: AI agent step inside workflows; Knock agent + MCP server + agent toolkit.
+
+resources:
+  - id: User
+    label: User
+    description: Human recipient identified by an external user id.
+    keyProperties: [id, email, phone_number, name, avatar, timezone]
+  - id: Object
+    label: Object
+    description: Non-user recipient (project, organization, device, etc.) identified by collection + id.
+    keyProperties: [id, collection, properties]
+  - id: Tenant
+    label: Tenant
+    description: Customer account, organization, or workspace that owns users + objects.
+    keyProperties: [id, name, settings]
+  - id: Workflow
+    label: Workflow
+    description: A versioned sequence of channel + function steps fired by triggers, schedules, or audiences.
+    keyProperties: [key, name, active, categories, steps]
+  - id: WorkflowRun
+    label: Workflow Run
+    description: A single execution of a workflow for one or more recipients.
+    keyProperties: [id, workflow_key, recipient, status, started_at]
+  - id: Message
+    label: Message
+    description: A per-recipient delivery record produced by a workflow run or broadcast.
+    keyProperties: [id, channel_id, recipient, workflow, tenant, status, seen_at, read_at]
+  - id: Channel
+    label: Channel
+    description: Configured provider integration that sends messages on a given channel type.
+    keyProperties: [id, name, channel_type, provider]
+  - id: Schedule
+    label: Schedule
+    description: One-off or recurring firing of a workflow for specific recipients.
+    keyProperties: [id, workflow, repeats, recipients, scheduled_at]
+  - id: Audience
+    label: Audience
+    description: Static or dynamic user segment that drives workflow triggers.
+    keyProperties: [key, name, type]
+  - id: Guide
+    label: Guide
+    description: In-app lifecycle message rendered with the consumer's own components.
+    keyProperties: [key, name, active]
+  - id: Broadcast
+    label: Broadcast
+    description: One-time message sent to a group of users from the dashboard.
+    keyProperties: [id, name, audience, scheduled_at]
+  - id: Preference
+    label: Preference
+    description: Per-recipient subscription preferences across channels and workflows.
+    keyProperties: [id, channel_types, categories, workflows]
+  - id: EmailLayout
+    label: Email Layout
+    description: Reusable HTML/Liquid layout wrapping email templates.
+    keyProperties: [key, name]
+  - id: Partial
+    label: Partial
+    description: Reusable template snippet referenced from templates.
+    keyProperties: [key, name]
+  - id: Translation
+    label: Translation
+    description: Locale-scoped string bundles for templates.
+    keyProperties: [locale, namespace]
+  - id: Variable
+    label: Variable
+    description: Environment-scoped configuration value referenced from templates.
+    keyProperties: [key, value]
+  - id: Environment
+    label: Environment
+    description: Isolated working space (development, staging, production) with its own channels and resources.
+    keyProperties: [slug, name]
+  - id: Branch
+    label: Branch
+    description: Working branch off an environment for resource changes.
+    keyProperties: [slug, base_environment]
+  - id: Commit
+    label: Commit
+    description: A point-in-time snapshot of environment resources used to promote changes.
+    keyProperties: [id, message, environment]
+
+actions:
+  - id: trigger-workflow
+    label: Trigger Workflow
+    method: POST
+    path: /v1/workflows/{key}/trigger
+  - id: cancel-workflow
+    label: Cancel Workflow
+    method: POST
+    path: /v1/workflows/{key}/cancel
+  - id: identify-user
+    label: Identify User
+    method: PUT
+    path: /v1/users/{user_id}
+  - id: set-preferences
+    label: Set Preferences
+    method: PUT
+    path: /v1/users/{user_id}/preferences/{id}
+  - id: list-messages
+    label: List Messages
+    method: GET
+    path: /v1/messages
+  - id: mark-message-as-read
+    label: Mark Message As Read
+    method: PUT
+    path: /v1/messages/{message_id}/read
+  - id: create-schedule
+    label: Create Schedule
+    method: POST
+    path: /v1/schedules
+  - id: add-audience-members
+    label: Add Audience Members
+    method: POST
+    path: /v1/audiences/{key}/members
+  - id: bulk-message-status-update
+    label: Bulk Update Message Status For Channel
+    method: POST
+    path: /v1/channels/{channel_id}/messages/bulk/{action}
+  - id: commit-resources
+    label: Commit Resources
+    method: POST
+    path: /v1/commits
+  - id: promote-commit
+    label: Promote Commit
+    method: PUT
+    path: /v1/commits/{id}/promote
+
+channelTypes:
+  - id: email
+    providers: [knock-test, aws-ses, mailersend, mailgun, mailjet, mailtrap, mandrill, postmark, resend, sendgrid, smtp, sparkpost]
+  - id: sms
+    providers: [africas-talking, aws-sns, mailersend, messagebird, plivo, sinch, sinch-message-media, telnyx, twilio, vonage]
+  - id: push
+    providers: [apns, expo, firebase, one-signal]
+  - id: chat
+    providers: [slack, discord, microsoft-teams, whatsapp]
+  - id: in-app
+    providers: [knock]
+  - id: in-app-guide
+    providers: [knock]
+  - id: webhook
+    providers: [knock-webhook]
+
+functionSteps:
+  - id: batch
+  - id: delay
+  - id: branch
+  - id: experiment
+  - id: throttle
+  - id: fetch
+  - id: ai-agent
+  - id: trigger-workflow
+  - id: update-user
+  - id: update-tenant
+  - id: update-object
+  - id: update-data
+  - id: update-audience

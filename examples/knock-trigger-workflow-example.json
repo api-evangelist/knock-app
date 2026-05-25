@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.knock.app/v1/workflows/comment-created/trigger",
+    "headers": {
+      "Authorization": "Bearer sk_test_12345",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "recipients": ["user_1", "user_2"],
+      "actor": "user_99",
+      "tenant": "acme",
+      "data": {
+        "comment_id": "comment_456",
+        "project_name": "My Project",
+        "commenter": {
+          "id": "user_99",
+          "name": "John Hammond"
+        }
+      },
+      "cancellation_key": "comment_456"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "workflow_run_id": "01HX2K3F8YQ8E0G7CJVQH3M4WB"
+    }
+  }
+}
