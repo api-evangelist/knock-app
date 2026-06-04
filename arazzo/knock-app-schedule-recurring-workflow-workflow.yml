@@ -1,0 +1,127 @@
+arazzo: 1.0.1
+info:
+  title: Knock Schedule a Recurring Workflow
+  summary: Identify a recipient, create a recurring schedule, then verify it was registered.
+  description: >-
+    Schedules run a workflow for recipients on a one-time or recurring basis.
+    This flow identifies the recipient, creates a schedule for a workflow with
+    the supplied repeat rules, and then lists schedules for that workflow and
+    recipient to confirm the schedule was registered. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+- name: knockSchedulesApi
+  url: ../openapi/knock-schedules-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: schedule-recurring-workflow
+  summary: Identify a user, create a schedule, and confirm it was registered.
+  description: >-
+    Upserts the recipient, creates a schedule for the named workflow with the
+    supplied repeat rules, and lists schedules to verify registration.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - workflowKey
+    - repeats
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      userId:
+        type: string
+        description: The unique identifier of the recipient to schedule.
+      email:
+        type: string
+        description: The primary email address to set on the user.
+      workflowKey:
+        type: string
+        description: The key of the workflow to schedule.
+      repeats:
+        type: array
+        description: The repeat rules describing how often the schedule fires.
+        items:
+          type: object
+      scheduledAt:
+        type: string
+        description: Optional ISO-8601 start time for the schedule.
+      tenant:
+        type: string
+        description: Optional tenant id to scope the schedule to.
+      data:
+        type: object
+        description: Optional data payload passed into each scheduled run.
+  steps:
+  - stepId: identifyUser
+    description: >-
+      Upsert the recipient so the schedule has a valid user to target.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+  - stepId: createSchedule
+    description: >-
+      Create a schedule for the workflow and recipient using the supplied repeat
+      rules and optional start time.
+    operationId: createSchedules
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        workflow: $inputs.workflowKey
+        recipients:
+        - $steps.identifyUser.outputs.userId
+        repeats: $inputs.repeats
+        scheduled_at: $inputs.scheduledAt
+        tenant: $inputs.tenant
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      scheduleId: $response.body#/0/id
+  - stepId: verifySchedule
+    description: >-
+      List schedules for the workflow and recipient to confirm the new schedule
+      is registered.
+    operationId: listSchedules
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: workflow
+      in: query
+      value: $inputs.workflowKey
+    - name: tenant
+      in: query
+      value: $inputs.tenant
+    - name: page_size
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstScheduleId: $response.body#/entries/0/id
+  outputs:
+    userId: $steps.identifyUser.outputs.userId
+    scheduleId: $steps.createSchedule.outputs.scheduleId

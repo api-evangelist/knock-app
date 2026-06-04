@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Knock Merge Users and Re-notify
+  summary: Identify a surviving user, merge a duplicate into it, then notify the merged user.
+  description: >-
+    When two records represent the same person, Knock can merge one user into
+    another. This flow identifies the surviving user, merges a duplicate user
+    into it, and triggers a workflow for the surviving record so notifications
+    resume against the consolidated user. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: merge-users-and-renotify
+  summary: Identify a surviving user, merge a duplicate in, and trigger a workflow.
+  description: >-
+    Upserts the surviving user, merges the duplicate user into it, and triggers
+    a workflow for the consolidated recipient.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - fromUserId
+    - workflowKey
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      userId:
+        type: string
+        description: The id of the surviving user to merge into.
+      email:
+        type: string
+        description: The primary email address to set on the surviving user.
+      fromUserId:
+        type: string
+        description: The id of the duplicate user to merge from.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger after the merge.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: identifySurvivor
+    description: >-
+      Upsert the surviving user so the merge target exists with current
+      properties.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+  - stepId: mergeUser
+    description: >-
+      Merge the duplicate user (from_user_id) into the surviving user so all
+      data consolidates onto a single record.
+    operationId: mergeUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $steps.identifySurvivor.outputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        from_user_id: $inputs.fromUserId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mergedUserId: $response.body#/id
+  - stepId: renotify
+    description: >-
+      Trigger the workflow for the consolidated user so notifications resume
+      against the surviving record.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $steps.mergeUser.outputs.mergedUserId
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  outputs:
+    mergedUserId: $steps.mergeUser.outputs.mergedUserId
+    workflowRunId: $steps.renotify.outputs.workflowRunId

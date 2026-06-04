@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Knock Cancellable Workflow Trigger
+  summary: Identify a recipient, trigger a cancellable workflow, then cancel it by key.
+  description: >-
+    Knock supports cancelling queued workflow runs by supplying a
+    cancellation_key at trigger time and later calling cancel with the same key.
+    This flow identifies the recipient, triggers a workflow with a
+    cancellation_key, and then cancels any queued runs for that key/recipient
+    pair. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: cancellable-workflow-trigger
+  summary: Trigger a workflow with a cancellation key and then cancel it.
+  description: >-
+    Identifies the recipient, triggers a delayed workflow tagged with a
+    cancellation key, and cancels the queued run for that key and recipient.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - workflowKey
+    - cancellationKey
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      userId:
+        type: string
+        description: The unique identifier of the recipient.
+      email:
+        type: string
+        description: The primary email address to set on the user.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger and cancel.
+      cancellationKey:
+        type: string
+        description: A unique key used to reference and later cancel the trigger.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: identifyUser
+    description: >-
+      Upsert the recipient so the workflow has a valid user to target.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+  - stepId: triggerWorkflow
+    description: >-
+      Trigger the workflow for the recipient with a cancellation key so the
+      queued run can be cancelled before it sends.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $steps.identifyUser.outputs.userId
+        cancellation_key: $inputs.cancellationKey
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  - stepId: cancelWorkflow
+    description: >-
+      Cancel any queued runs for the workflow key and cancellation key, scoped
+      to the single recipient. A 204 indicates the cancellation was accepted.
+    operationId: cancelWorkflow
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        cancellation_key: $inputs.cancellationKey
+        recipients:
+        - $steps.identifyUser.outputs.userId
+    successCriteria:
+    - condition: $statusCode == 204
+  outputs:
+    userId: $steps.identifyUser.outputs.userId
+    workflowRunId: $steps.triggerWorkflow.outputs.workflowRunId

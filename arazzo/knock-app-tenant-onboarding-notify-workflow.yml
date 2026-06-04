@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: Knock Tenant Onboarding and Notify
+  summary: Set a tenant, identify a member user, then notify them scoped to the tenant.
+  description: >-
+    Tenants in Knock represent the accounts or workspaces that recipients belong
+    to and carry branding and preference overrides. This flow upserts a tenant,
+    identifies a user that belongs to it, and triggers a workflow scoped to the
+    tenant so tenant-level overrides apply and messages are tagged with the
+    tenant. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockTenantsApi
+  url: ../openapi/knock-tenants-api-openapi.yml
+  type: openapi
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: tenant-onboarding-notify
+  summary: Upsert a tenant, identify a member, and trigger a tenant-scoped workflow.
+  description: >-
+    Sets the tenant with optional branding, identifies a member user, and
+    triggers a workflow scoped to the tenant so tenant overrides apply.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - tenantId
+    - userId
+    - workflowKey
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      tenantId:
+        type: string
+        description: The unique identifier for the tenant.
+      tenantName:
+        type: string
+        description: An optional display name for the tenant.
+      settings:
+        type: object
+        description: Optional tenant settings such as branding overrides.
+      userId:
+        type: string
+        description: The unique identifier of the member user to identify.
+      email:
+        type: string
+        description: The primary email address to set on the user.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger for the user.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: setTenant
+    description: >-
+      Create or update the tenant with the supplied name and settings, merging
+      with any existing tenant properties.
+    operationId: setTenant
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.tenantId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.tenantName
+        settings: $inputs.settings
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tenantId: $response.body#/id
+  - stepId: identifyMember
+    description: >-
+      Upsert the member user so the tenant-scoped workflow has a valid recipient.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+  - stepId: triggerTenantWorkflow
+    description: >-
+      Trigger the workflow for the member scoped to the tenant so tenant-level
+      overrides apply and the resulting messages are tagged with the tenant.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $steps.identifyMember.outputs.userId
+        tenant: $steps.setTenant.outputs.tenantId
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  outputs:
+    tenantId: $steps.setTenant.outputs.tenantId
+    userId: $steps.identifyMember.outputs.userId
+    workflowRunId: $steps.triggerTenantWorkflow.outputs.workflowRunId

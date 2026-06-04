@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Knock Register Push Token and Read Feed
+  summary: Identify a user, register their channel data, then read their in-app feed.
+  description: >-
+    To deliver push or in-app notifications Knock needs channel data such as
+    device tokens for a recipient. This flow identifies the user, sets their
+    channel data for a given channel, and then reads the user's in-app feed for
+    that channel to confirm what they will see. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-push-token-and-read-feed
+  summary: Identify a user, set channel data, and read their in-app feed.
+  description: >-
+    Upserts the user, registers channel data for the given channel, and lists
+    the user's in-app feed items for that channel.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - channelId
+    - channelData
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      userId:
+        type: string
+        description: The unique identifier of the user.
+      email:
+        type: string
+        description: The primary email address to set on the user.
+      channelId:
+        type: string
+        description: The channel identifier (UUID) to set data for and read the feed from.
+      channelData:
+        type: object
+        description: The channel data payload (e.g. device tokens) to register.
+      feedStatus:
+        type: string
+        description: Optional feed status filter (unread, read, unseen, seen, all).
+  steps:
+  - stepId: identifyUser
+    description: >-
+      Upsert the user so channel data and feed lookups have a valid recipient.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+  - stepId: setChannelData
+    description: >-
+      Register the user's channel data for the given channel so push or in-app
+      delivery can target them.
+    operationId: setUserChannelData
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $steps.identifyUser.outputs.userId
+    - name: channel_id
+      in: path
+      value: $inputs.channelId
+    requestBody:
+      contentType: application/json
+      payload:
+        data: $inputs.channelData
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      channelData: $response.body
+  - stepId: readFeed
+    description: >-
+      Read the user's in-app feed items for the channel to confirm what they
+      will see in the feed.
+    operationId: listUserInAppFeedItems
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $steps.identifyUser.outputs.userId
+    - name: id
+      in: path
+      value: $inputs.channelId
+    - name: status
+      in: query
+      value: $inputs.feedStatus
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      feedEntries: $response.body#/entries
+      unreadCount: $response.body#/meta/unread_count
+  outputs:
+    userId: $steps.identifyUser.outputs.userId
+    unreadCount: $steps.readFeed.outputs.unreadCount

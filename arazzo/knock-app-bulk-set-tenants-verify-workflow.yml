@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Knock Bulk Set Tenants and Verify
+  summary: Bulk upsert tenants, wait for the operation to complete, then list tenants to verify.
+  description: >-
+    Bulk setting tenants returns a bulk-operation handle that processes
+    asynchronously. This flow submits a batch of tenants, polls the bulk
+    operation until it reaches a terminal status, and then lists tenants to
+    verify the upsert. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockTenantsApi
+  url: ../openapi/knock-tenants-api-openapi.yml
+  type: openapi
+- name: knockBulkOperationsApi
+  url: ../openapi/knock-bulk-operations-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: bulk-set-tenants-verify
+  summary: Bulk upsert tenants, poll the bulk operation, then list tenants.
+  description: >-
+    Submits a batch of tenants, polls the returned bulk operation until
+    completed or failed, and lists tenants to verify the result.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - tenants
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      tenants:
+        type: array
+        description: The list of tenant payloads to upsert in bulk.
+        items:
+          type: object
+      nameFilter:
+        type: string
+        description: Optional name filter applied when listing tenants to verify.
+  steps:
+  - stepId: bulkSetTenants
+    description: >-
+      Submit the batch of tenants, returning a bulk operation handle to poll.
+    operationId: bulkSetTenants
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        tenants: $inputs.tenants
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      bulkOperationId: $response.body#/id
+  - stepId: pollBulkOperation
+    description: >-
+      Fetch the bulk operation and check its status. Re-runs this step while the
+      operation is still queued or processing.
+    operationId: getBulkOperation
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.bulkSetTenants.outputs.bulkOperationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      bulkStatus: $response.body#/status
+      successCount: $response.body#/success_count
+    onSuccess:
+    - name: bulkDone
+      type: goto
+      stepId: listTenants
+      criteria:
+      - context: $response.body
+        condition: $.status == 'completed'
+        type: jsonpath
+    - name: bulkStillRunning
+      type: goto
+      stepId: pollBulkOperation
+      criteria:
+      - context: $response.body
+        condition: $.status == 'queued' || $.status == 'processing'
+        type: jsonpath
+  - stepId: listTenants
+    description: >-
+      List tenants, optionally filtered by name, to verify the bulk upsert
+      registered the tenants.
+    operationId: listTenants
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: name
+      in: query
+      value: $inputs.nameFilter
+    - name: page_size
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tenants: $response.body#/entries
+  outputs:
+    bulkOperationId: $steps.bulkSetTenants.outputs.bulkOperationId
+    bulkStatus: $steps.pollBulkOperation.outputs.bulkStatus
+    successCount: $steps.pollBulkOperation.outputs.successCount

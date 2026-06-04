@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Knock Set Object Preferences and Audit Messages
+  summary: Upsert an object, set its preference set, then audit messages sent to it.
+  description: >-
+    Objects can carry their own notification preferences and accumulate a
+    message history. This flow upserts an object, writes a preference set for it,
+    and then lists the messages delivered to that object so a recent delivery
+    history can be audited. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockObjectsApi
+  url: ../openapi/knock-objects-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: object-preferences-message-audit
+  summary: Upsert an object, set its preferences, and audit its messages.
+  description: >-
+    Sets an object, updates its preference set with the supplied channel types
+    and workflow opt-ins, and lists recent messages delivered to the object.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - collection
+    - objectId
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      collection:
+        type: string
+        description: The collection the object belongs to.
+      objectId:
+        type: string
+        description: The unique identifier for the object.
+      name:
+        type: string
+        description: A display name to set on the object.
+      preferenceSetId:
+        type: string
+        description: The preference set identifier to update (defaults to "default").
+      channelTypes:
+        type: object
+        description: A map of channel type names to boolean opt-in values.
+      workflowPreferences:
+        type: object
+        description: A map of workflow keys to per-workflow preference settings.
+  steps:
+  - stepId: setObject
+    description: >-
+      Create or update the object in the collection with the supplied name.
+    operationId: setObject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: collection
+      in: path
+      value: $inputs.collection
+    - name: id
+      in: path
+      value: $inputs.objectId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      objectId: $response.body#/id
+  - stepId: setObjectPreferences
+    description: >-
+      Update the object's preference set with the supplied channel types and
+      workflow opt-ins.
+    operationId: updateObjectPreferenceSet
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: collection
+      in: path
+      value: $inputs.collection
+    - name: object_id
+      in: path
+      value: $steps.setObject.outputs.objectId
+    - name: id
+      in: path
+      value: $inputs.preferenceSetId
+    requestBody:
+      contentType: application/json
+      payload:
+        channel_types: $inputs.channelTypes
+        workflows: $inputs.workflowPreferences
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      preferenceSetId: $response.body#/id
+  - stepId: auditMessages
+    description: >-
+      List recent messages delivered to the object to audit its notification
+      history.
+    operationId: listMessagesForObject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: collection
+      in: path
+      value: $inputs.collection
+    - name: id
+      in: path
+      value: $steps.setObject.outputs.objectId
+    - name: page_size
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messages: $response.body#/items
+  outputs:
+    objectId: $steps.setObject.outputs.objectId
+    preferenceSetId: $steps.setObjectPreferences.outputs.preferenceSetId

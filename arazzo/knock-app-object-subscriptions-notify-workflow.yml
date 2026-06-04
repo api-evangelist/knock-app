@@ -1,0 +1,135 @@
+arazzo: 1.0.1
+info:
+  title: Knock Set Object, Add Subscriptions, and Notify
+  summary: Create an object, subscribe recipients to it, then notify subscribers via a workflow.
+  description: >-
+    Objects let Knock model non-user resources (projects, documents, devices)
+    that recipients can subscribe to. This flow upserts an object, adds
+    subscriptions so a set of recipients follow it, and then triggers a workflow
+    targeting the object so all subscribers are notified. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockObjectsApi
+  url: ../openapi/knock-objects-api-openapi.yml
+  type: openapi
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: object-subscriptions-notify
+  summary: Upsert an object, subscribe recipients, and trigger a workflow for it.
+  description: >-
+    Sets an object in a collection, adds subscriptions for a list of recipients,
+    and triggers a workflow with the object as the recipient so subscribers
+    receive notifications.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - collection
+    - objectId
+    - recipients
+    - workflowKey
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      collection:
+        type: string
+        description: The collection the object belongs to.
+      objectId:
+        type: string
+        description: The unique identifier for the object.
+      name:
+        type: string
+        description: A display name to set on the object.
+      properties:
+        type: object
+        description: Additional custom properties to set on the object.
+      recipients:
+        type: array
+        description: The list of recipient ids to subscribe to the object.
+        items:
+          type: string
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger for the object.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: setObject
+    description: >-
+      Create or update the object in the collection with the supplied name and
+      custom properties.
+    operationId: setObject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: collection
+      in: path
+      value: $inputs.collection
+    - name: id
+      in: path
+      value: $inputs.objectId
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+        properties: $inputs.properties
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      objectId: $response.body#/id
+  - stepId: addSubscriptions
+    description: >-
+      Subscribe the supplied recipients to the object so they will receive
+      notifications targeted at it.
+    operationId: addSubscriptionsForObject
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: collection
+      in: path
+      value: $inputs.collection
+    - name: object_id
+      in: path
+      value: $steps.setObject.outputs.objectId
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients: $inputs.recipients
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriptions: $response.body
+  - stepId: notifySubscribers
+    description: >-
+      Trigger the workflow with the object as the recipient so all subscribers
+      are notified.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - id: $inputs.objectId
+          collection: $inputs.collection
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  outputs:
+    objectId: $steps.setObject.outputs.objectId
+    workflowRunId: $steps.notifySubscribers.outputs.workflowRunId

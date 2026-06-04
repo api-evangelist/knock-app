@@ -1,0 +1,131 @@
+arazzo: 1.0.1
+info:
+  title: Knock Identify User, Set Preferences, and Trigger Workflow
+  summary: Identify a recipient, apply their notification preferences, then trigger a workflow for them.
+  description: >-
+    The canonical Knock send pattern. The workflow first upserts the recipient
+    with identifyUser so Knock has an up-to-date user record, then writes a
+    complete preference set for that user so channel and workflow opt-ins are
+    respected, and finally triggers a notification workflow scoped to the
+    identified recipient. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockUsersApi
+  url: ../openapi/knock-users-api-openapi.yml
+  type: openapi
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: identify-user-set-preferences-trigger-workflow
+  summary: Identify a user, set their preference set, and trigger a workflow.
+  description: >-
+    Upserts the user, replaces their preference set with the supplied
+    preferences, and triggers the named workflow for that single recipient.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - workflowKey
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      userId:
+        type: string
+        description: The unique identifier of the user to identify and notify.
+      email:
+        type: string
+        description: The primary email address to set on the user.
+      name:
+        type: string
+        description: The display name to set on the user.
+      preferenceSetId:
+        type: string
+        description: The preference set identifier to update (defaults to "default").
+      channelTypes:
+        type: object
+        description: A map of channel type names to boolean opt-in values.
+      workflowPreferences:
+        type: object
+        description: A map of workflow keys to per-workflow preference settings.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: identifyUser
+    description: >-
+      Create or update the user record with the supplied identification
+      properties so the recipient exists before preferences are written.
+    operationId: identifyUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $inputs.userId
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        name: $inputs.name
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      identifiedUserId: $response.body#/id
+  - stepId: setPreferences
+    description: >-
+      Write the complete preference set for the identified user, replacing any
+      existing preferences with the supplied channel types and workflow opt-ins.
+    operationId: updateUserPreferenceSet
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: user_id
+      in: path
+      value: $steps.identifyUser.outputs.identifiedUserId
+    - name: id
+      in: path
+      value: $inputs.preferenceSetId
+    requestBody:
+      contentType: application/json
+      payload:
+        channel_types: $inputs.channelTypes
+        workflows: $inputs.workflowPreferences
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      preferenceSetId: $response.body#/id
+  - stepId: triggerWorkflow
+    description: >-
+      Trigger the named workflow for the identified recipient. Returns a
+      workflow_run_id that can be used to track the resulting messages.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $steps.identifyUser.outputs.identifiedUserId
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  outputs:
+    userId: $steps.identifyUser.outputs.identifiedUserId
+    preferenceSetId: $steps.setPreferences.outputs.preferenceSetId
+    workflowRunId: $steps.triggerWorkflow.outputs.workflowRunId

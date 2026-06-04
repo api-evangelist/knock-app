@@ -1,0 +1,132 @@
+arazzo: 1.0.1
+info:
+  title: Knock Trigger Workflow and Inspect Message Content
+  summary: Trigger a workflow then locate the generated message and read its rendered content.
+  description: >-
+    After a workflow fires, this flow finds the resulting message for the
+    recipient, retrieves the message resource to read its delivery status, and
+    then fetches the fully rendered message content for the channel it was sent
+    through. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+- name: knockMessagesApi
+  url: ../openapi/knock-messages-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: trigger-workflow-inspect-message-content
+  summary: Trigger a workflow then read the resulting message and its content.
+  description: >-
+    Triggers a workflow for a recipient, lists the recipient's most recent
+    message, fetches the message resource, and retrieves its rendered content.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - workflowKey
+    - recipientId
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger.
+      recipientId:
+        type: string
+        description: The user id to trigger the workflow for and filter messages by.
+      tenant:
+        type: string
+        description: Optional tenant id used to scope the message lookup.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: triggerWorkflow
+    description: >-
+      Trigger the workflow for the recipient to produce one or more messages.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $inputs.recipientId
+        tenant: $inputs.tenant
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  - stepId: findMessage
+    description: >-
+      List the most recent message for the recipient and tenant so the
+      generated message can be inspected.
+    operationId: listMessages
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: tenant
+      in: query
+      value: $inputs.tenant
+    - name: page_size
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messageId: $response.body#/items/0/id
+    onSuccess:
+    - name: messageFound
+      type: goto
+      stepId: getMessage
+      criteria:
+      - context: $response.body
+        condition: $.items.length > 0
+        type: jsonpath
+  - stepId: getMessage
+    description: >-
+      Retrieve the message resource to read its delivery status and metadata.
+    operationId: getMessage
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: message_id
+      in: path
+      value: $steps.findMessage.outputs.messageId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messageStatus: $response.body#/status
+      messageId: $response.body#/id
+  - stepId: getMessageContent
+    description: >-
+      Fetch the fully rendered contents of the message for the channel it was
+      delivered through.
+    operationId: getMessageContents
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: message_id
+      in: path
+      value: $steps.getMessage.outputs.messageId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      content: $response.body
+  outputs:
+    workflowRunId: $steps.triggerWorkflow.outputs.workflowRunId
+    messageId: $steps.getMessage.outputs.messageId
+    messageStatus: $steps.getMessage.outputs.messageStatus

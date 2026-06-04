@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: Knock Trigger Then Archive Feed Message
+  summary: Trigger a workflow, find the resulting in-app message, then archive it.
+  description: >-
+    In-app feed messages can be archived to hide them from the default feed view
+    while keeping them accessible. This flow triggers a workflow, lists the
+    recipient's most recent message, and archives it. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+- name: knockMessagesApi
+  url: ../openapi/knock-messages-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: trigger-then-archive-feed-message
+  summary: Trigger a workflow, locate the message, and archive it.
+  description: >-
+    Triggers the named workflow for a recipient, lists the most recent message,
+    and archives it so it is hidden from the default feed.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - workflowKey
+    - recipientId
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger.
+      recipientId:
+        type: string
+        description: The user id to trigger the workflow for.
+      tenant:
+        type: string
+        description: Optional tenant id used to scope the message lookup.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: triggerWorkflow
+    description: >-
+      Trigger the workflow for the recipient to produce an in-app message.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $inputs.recipientId
+        tenant: $inputs.tenant
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  - stepId: findMessage
+    description: >-
+      List the most recent message for the tenant so the generated message can
+      be archived.
+    operationId: listMessages
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: tenant
+      in: query
+      value: $inputs.tenant
+    - name: page_size
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messageId: $response.body#/items/0/id
+    onSuccess:
+    - name: messageFound
+      type: goto
+      stepId: archiveMessage
+      criteria:
+      - context: $response.body
+        condition: $.items.length > 0
+        type: jsonpath
+  - stepId: archiveMessage
+    description: >-
+      Archive the message so it is hidden from the default feed list while
+      remaining accessible for later unarchiving.
+    operationId: archiveMessage
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: message_id
+      in: path
+      value: $steps.findMessage.outputs.messageId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      archivedMessageId: $response.body#/id
+      archivedAt: $response.body#/archived_at
+  outputs:
+    workflowRunId: $steps.triggerWorkflow.outputs.workflowRunId
+    archivedMessageId: $steps.archiveMessage.outputs.archivedMessageId

@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Knock Trigger Workflow and Track Recipient Run
+  summary: Trigger a workflow and poll its per-recipient run until it completes.
+  description: >-
+    Workflow runs in Knock are asynchronous, so this flow triggers a workflow,
+    lists the workflow recipient runs for the triggered run to locate the
+    per-recipient run id, and then polls that run with getWorkflowRecipientRun
+    until it reaches a terminal status. Every step spells out its request inline
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: knockWorkflowsApi
+  url: ../openapi/knock-workflows-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: trigger-workflow-track-recipient-run
+  summary: Trigger a workflow then poll the recipient run to completion.
+  description: >-
+    Triggers the named workflow for a single recipient, resolves the recipient
+    run id for that workflow, and polls the run detail until it is completed or
+    cancelled.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - workflowKey
+    - recipientId
+    properties:
+      apiKey:
+        type: string
+        description: Knock secret API key (sk_...) used as a Bearer token.
+      workflowKey:
+        type: string
+        description: The key of the workflow to trigger and filter runs by.
+      recipientId:
+        type: string
+        description: The user id to trigger the workflow for.
+      data:
+        type: object
+        description: Optional data payload passed into the workflow run.
+  steps:
+  - stepId: triggerWorkflow
+    description: >-
+      Trigger the named workflow for the supplied recipient and capture the
+      returned workflow_run_id.
+    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: key
+      in: path
+      value: $inputs.workflowKey
+    requestBody:
+      contentType: application/json
+      payload:
+        recipients:
+        - $inputs.recipientId
+        data: $inputs.data
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workflowRunId: $response.body#/workflow_run_id
+  - stepId: listRecipientRuns
+    description: >-
+      List recipient runs for the triggered workflow and recipient to resolve
+      the per-recipient run id created by the trigger.
+    operationId: listWorkflowRecipientRuns
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: workflow
+      in: query
+      value: $inputs.workflowKey
+    - name: recipient
+      in: query
+      value: $inputs.recipientId
+    - name: page_size
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      recipientRunId: $response.body#/entries/0/id
+  - stepId: pollRecipientRun
+    description: >-
+      Fetch the recipient run detail and check whether it has reached a terminal
+      status. Re-runs this step while the run is still queued or processing.
+    operationId: getWorkflowRecipientRun
+    parameters:
+    - name: Authorization
+      in: header
+      value: Bearer $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.listRecipientRuns.outputs.recipientRunId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runStatus: $response.body#/status
+      runId: $response.body#/id
+    onSuccess:
+    - name: runFinished
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.status == 'completed' || $.status == 'cancelled'
+        type: jsonpath
+    - name: runStillRunning
+      type: goto
+      stepId: pollRecipientRun
+      criteria:
+      - context: $response.body
+        condition: $.status == 'queued' || $.status == 'processing' || $.status == 'paused'
+        type: jsonpath
+  outputs:
+    workflowRunId: $steps.triggerWorkflow.outputs.workflowRunId
+    recipientRunId: $steps.pollRecipientRun.outputs.runId
+    finalStatus: $steps.pollRecipientRun.outputs.runStatus
