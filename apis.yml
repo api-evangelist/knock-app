@@ -20,12 +20,13 @@ apis:
     type: JSONSchema
   - url: examples/knock-trigger-workflow-example.json
     type: Examples
-  - url: capabilities/workflows.yaml
-    type: NaftikoCapability
-  description: Trigger and cancel notification workflows and inspect workflow recipient runs. Workflows are
-    Knock's core programmable model — orchestrating channel steps (email, SMS, push, in-app, chat, webhook)
-    and function steps (batch, delay, branch, throttle, fetch, AI agent, trigger-workflow) with conditions and
-    preferences across recipients.
+  - url: graphql/knock-app-graphql.md
+    type: GraphQL
+  description: Trigger and cancel notification workflows and inspect workflow recipient
+    runs. Workflows are Knock's core programmable model — orchestrating channel steps
+    (email, SMS, push, in-app, chat, webhook) and function steps (batch, delay, branch,
+    throttle, fetch, AI agent, trigger-workflow) with conditions and preferences across
+    recipients.
 - aid: knock-app:knock-users-api
   name: Knock Users API
   tags:
@@ -42,10 +43,9 @@ apis:
     type: OpenAPI
   - url: examples/knock-identify-user-example.json
     type: Examples
-  - url: capabilities/users.yaml
-    type: NaftikoCapability
-  description: Identify, list, update, delete, and merge users plus manage their channel data, preferences,
-    in-app feeds, guides, subscriptions, messages, and schedules. The primary recipient surface for Knock.
+  description: Identify, list, update, delete, and merge users plus manage their channel
+    data, preferences, in-app feeds, guides, subscriptions, messages, and schedules.
+    The primary recipient surface for Knock.
 - aid: knock-app:knock-messages-api
   name: Knock Messages API
   tags:
@@ -60,11 +60,9 @@ apis:
     type: OpenAPI
   - url: json-schema/knock-message-schema.json
     type: JSONSchema
-  - url: capabilities/messages.yaml
-    type: NaftikoCapability
-  description: Read, list, and update Knock messages — the per-recipient delivery records produced by workflow
-    runs. Includes activity, delivery log, and event timelines plus mark-as-seen/read/interacted/archived single
-    and batch endpoints.
+  description: Read, list, and update Knock messages — the per-recipient delivery
+    records produced by workflow runs. Includes activity, delivery log, and event
+    timelines plus mark-as-seen/read/interacted/archived single and batch endpoints.
 - aid: knock-app:knock-objects-api
   name: Knock Objects API
   tags:
@@ -76,10 +74,9 @@ apis:
     type: Documentation
   - url: openapi/knock-objects-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/objects.yaml
-    type: NaftikoCapability
-  description: Create and manage non-user Objects in Knock and their channel data, preferences, subscriptions,
-    and messages. Objects model accounts, projects, devices, or any non-human notification target.
+  description: Create and manage non-user Objects in Knock and their channel data,
+    preferences, subscriptions, and messages. Objects model accounts, projects, devices,
+    or any non-human notification target.
 - aid: knock-app:knock-tenants-api
   name: Knock Tenants API
   tags:
@@ -92,10 +89,8 @@ apis:
     type: Documentation
   - url: openapi/knock-tenants-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/tenants.yaml
-    type: NaftikoCapability
-  description: Manage Tenants — the top-level accounts or workspaces in your product. Tenants power
-    tenant-scoped branding, preferences, and message-targeting.
+  description: Manage Tenants — the top-level accounts or workspaces in your product.
+    Tenants power tenant-scoped branding, preferences, and message-targeting.
 - aid: knock-app:knock-schedules-api
   name: Knock Schedules API
   tags:
@@ -112,10 +107,9 @@ apis:
     type: OpenAPI
   - url: examples/knock-create-schedule-example.json
     type: Examples
-  - url: capabilities/schedules.yaml
-    type: NaftikoCapability
-  description: Create, list, update, and delete workflow Schedules. Schedules fire workflows at one-off or
-    recurring times for specific recipients with timezone and repeat-rule support.
+  description: Create, list, update, and delete workflow Schedules. Schedules fire
+    workflows at one-off or recurring times for specific recipients with timezone
+    and repeat-rule support.
 - aid: knock-app:knock-audiences-api
   name: Knock Audiences API
   tags:
@@ -128,10 +122,8 @@ apis:
     type: Documentation
   - url: openapi/knock-audiences-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/audiences.yaml
-    type: NaftikoCapability
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user
-    joins an audience, configured workflows fire automatically.
+  description: Manage static Audiences and their members. Audiences power lifecycle
+    messaging — when a user joins an audience, configured workflows fire automatically.
 - aid: knock-app:knock-channels-api
   name: Knock Channels API
   tags:
@@ -144,10 +136,9 @@ apis:
     type: Documentation
   - url: openapi/knock-channels-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/channels.yaml
-    type: NaftikoCapability
-  description: Inspect channels and run bulk message-status updates scoped to a channel. Channels represent
-    configured provider integrations (Resend, SendGrid, Twilio, APNS, Slack, etc.).
+  description: Inspect channels and run bulk message-status updates scoped to a channel.
+    Channels represent configured provider integrations (Resend, SendGrid, Twilio,
+    APNS, Slack, etc.).
 - aid: knock-app:knock-providers-api
   name: Knock Providers API
   tags:
@@ -161,10 +152,9 @@ apis:
     type: Documentation
   - url: openapi/knock-providers-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/providers.yaml
-    type: NaftikoCapability
-  description: OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other inbound provider
-    integrations — authorize, revoke, and inspect connections to chat providers on behalf of users or tenants.
+  description: OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other
+    inbound provider integrations — authorize, revoke, and inspect connections to
+    chat providers on behalf of users or tenants.
 - aid: knock-app:knock-integrations-api
   name: Knock Integrations API
   tags:
@@ -177,10 +167,8 @@ apis:
     type: Documentation
   - url: openapi/knock-integrations-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/integrations.yaml
-    type: NaftikoCapability
-  description: Inspect integrations configured for the current environment. Used by SlackKit and TeamsKit
-    clients to discover the destinations available for a recipient.
+  description: Inspect integrations configured for the current environment. Used by
+    SlackKit and TeamsKit clients to discover the destinations available for a recipient.
 - aid: knock-app:knock-bulk-operations-api
   name: Knock Bulk Operations API
   tags:
@@ -193,11 +181,9 @@ apis:
     type: Documentation
   - url: openapi/knock-bulk-operations-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/bulk-operations.yaml
-    type: NaftikoCapability
-  description: Track and inspect long-running bulk operations. Many Knock endpoints (bulk identify users,
-    bulk delete, bulk channel-status updates) return a bulk-operation handle; this surface exposes its
-    lifecycle.
+  description: Track and inspect long-running bulk operations. Many Knock endpoints
+    (bulk identify users, bulk delete, bulk channel-status updates) return a bulk-operation
+    handle; this surface exposes its lifecycle.
 - aid: knock-app:knock-notify-api
   name: Knock Notify API
   tags:
@@ -207,10 +193,9 @@ apis:
   properties:
   - url: openapi/knock-notify-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/notify.yaml
-    type: NaftikoCapability
-  description: Internal notify endpoints used by the Knock event-driven trigger surface. Used to send
-    notifications when workflows fire from source events, schedules, audiences, or programmatic triggers.
+  description: Internal notify endpoints used by the Knock event-driven trigger surface.
+    Used to send notifications when workflows fire from source events, schedules,
+    audiences, or programmatic triggers.
 - aid: knock-app:knock-management-api
   name: Knock Management API (mAPI)
   tags:
@@ -227,12 +212,11 @@ apis:
     type: Documentation
   - url: openapi/knock-management-api-openapi.yml
     type: OpenAPI
-  - url: capabilities/management.yaml
-    type: NaftikoCapability
-  description: Knock Management API (mAPI) — the resource-management surface at control.knock.app. Programmatic
-    CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts,
-    Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys.
-    Powers the Knock CLI and MCP server.
+  description: Knock Management API (mAPI) — the resource-management surface at control.knock.app.
+    Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates,
+    Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members,
+    Channel Groups, Environments, Branches, Commits, and API Keys. Powers the Knock
+    CLI and MCP server.
 - aid: knock-app:knock-webhooks
   name: Knock Outbound Webhooks
   tags:
@@ -247,10 +231,10 @@ apis:
     type: Documentation
   - url: asyncapi/knock-webhooks-asyncapi.yml
     type: AsyncAPI
-  description: Outbound webhooks fire message lifecycle (sent, delivered, seen, read, interacted, archived,
-    link_clicked, bounced, undelivered) and environment-change (workflow / email_layout / translation / partial
-    / source_event_action updates and commits) events as JSON POSTs to subscriber URLs configured in the Knock
-    dashboard.
+  description: Outbound webhooks fire message lifecycle (sent, delivered, seen, read,
+    interacted, archived, link_clicked, bounced, undelivered) and environment-change
+    (workflow / email_layout / translation / partial / source_event_action updates
+    and commits) events as JSON POSTs to subscriber URLs configured in the Knock dashboard.
 name: Knock
 tags:
 - Notifications
@@ -272,48 +256,62 @@ kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/knock/overview
 - type: ArazzoWorkflows
   url: arazzo/
   workflows:
   - url: arazzo/knock-app-bulk-identify-users-notify-workflow.yml
     name: Knock Bulk Identify Users and Notify
-    summary: Bulk identify a batch of users, wait for the operation to complete, then notify them.
+    summary: Bulk identify a batch of users, wait for the operation to complete, then
+      notify them.
   - url: arazzo/knock-app-bulk-set-objects-notify-workflow.yml
     name: Knock Bulk Set Objects and Notify
-    summary: Bulk upsert objects in a collection, wait for completion, then notify one object.
+    summary: Bulk upsert objects in a collection, wait for completion, then notify
+      one object.
   - url: arazzo/knock-app-bulk-set-tenants-verify-workflow.yml
     name: Knock Bulk Set Tenants and Verify
-    summary: Bulk upsert tenants, wait for the operation to complete, then list tenants to verify.
+    summary: Bulk upsert tenants, wait for the operation to complete, then list tenants
+      to verify.
   - url: arazzo/knock-app-cancellable-workflow-trigger-workflow.yml
     name: Knock Cancellable Workflow Trigger
-    summary: Identify a recipient, trigger a cancellable workflow, then cancel it by key.
+    summary: Identify a recipient, trigger a cancellable workflow, then cancel it
+      by key.
   - url: arazzo/knock-app-identify-user-set-preferences-trigger-workflow.yml
     name: Knock Identify User, Set Preferences, and Trigger Workflow
-    summary: Identify a recipient, apply their notification preferences, then trigger a workflow for them.
+    summary: Identify a recipient, apply their notification preferences, then trigger
+      a workflow for them.
   - url: arazzo/knock-app-merge-users-and-renotify-workflow.yml
     name: Knock Merge Users and Re-notify
-    summary: Identify a surviving user, merge a duplicate into it, then notify the merged user.
+    summary: Identify a surviving user, merge a duplicate into it, then notify the
+      merged user.
   - url: arazzo/knock-app-object-preferences-message-audit-workflow.yml
     name: Knock Set Object Preferences and Audit Messages
-    summary: Upsert an object, set its preference set, then audit messages sent to it.
+    summary: Upsert an object, set its preference set, then audit messages sent to
+      it.
   - url: arazzo/knock-app-object-subscriptions-notify-workflow.yml
     name: Knock Set Object, Add Subscriptions, and Notify
-    summary: Create an object, subscribe recipients to it, then notify subscribers via a workflow.
+    summary: Create an object, subscribe recipients to it, then notify subscribers
+      via a workflow.
   - url: arazzo/knock-app-register-push-token-and-read-feed-workflow.yml
     name: Knock Register Push Token and Read Feed
-    summary: Identify a user, register their channel data, then read their in-app feed.
+    summary: Identify a user, register their channel data, then read their in-app
+      feed.
   - url: arazzo/knock-app-schedule-recurring-workflow-workflow.yml
     name: Knock Schedule a Recurring Workflow
-    summary: Identify a recipient, create a recurring schedule, then verify it was registered.
+    summary: Identify a recipient, create a recurring schedule, then verify it was
+      registered.
   - url: arazzo/knock-app-tenant-onboarding-notify-workflow.yml
     name: Knock Tenant Onboarding and Notify
-    summary: Set a tenant, identify a member user, then notify them scoped to the tenant.
+    summary: Set a tenant, identify a member user, then notify them scoped to the
+      tenant.
   - url: arazzo/knock-app-trigger-then-archive-feed-message-workflow.yml
     name: Knock Trigger Then Archive Feed Message
     summary: Trigger a workflow, find the resulting in-app message, then archive it.
   - url: arazzo/knock-app-trigger-workflow-inspect-message-content-workflow.yml
     name: Knock Trigger Workflow and Inspect Message Content
-    summary: Trigger a workflow then locate the generated message and read its rendered content.
+    summary: Trigger a workflow then locate the generated message and read its rendered
+      content.
   - url: arazzo/knock-app-trigger-workflow-track-recipient-run-workflow.yml
     name: Knock Trigger Workflow and Track Recipient Run
     summary: Trigger a workflow and poll its per-recipient run until it completes.
@@ -498,43 +496,56 @@ common:
   url: https://knock.app/community
 - type: Features
   data:
-  - Cross-channel notification workflows — email, SMS, push, in-app, in-app guides, chat (Slack/Discord/Teams/WhatsApp),
-    and outbound webhooks from one trigger
-  - Workflow function steps — batch, delay, branch, experiment, throttle, fetch (HTTP), AI agent, trigger-workflow,
-    update-user / update-tenant / update-object / update-data / update-audience
-  - Drag-and-drop workflow builder used collaboratively by engineering, product, and growth
+  - Cross-channel notification workflows — email, SMS, push, in-app, in-app guides,
+    chat (Slack/Discord/Teams/WhatsApp), and outbound webhooks from one trigger
+  - Workflow function steps — batch, delay, branch, experiment, throttle, fetch (HTTP),
+    AI agent, trigger-workflow, update-user / update-tenant / update-object / update-data
+    / update-audience
+  - Drag-and-drop workflow builder used collaboratively by engineering, product, and
+    growth
   - Broadcasts — one-time messages to audience-targeted groups from the Knock dashboard
   - Guides — in-app lifecycle messaging using your own components and design system
-  - Recipients model — Users, non-user Objects, and Tenants with channel data and properties
-  - Preferences — per-channel, per-workflow, per-category preference sets enforced automatically on every run
-    and broadcast
-  - Audiences — static and dynamic user segments that automatically drive lifecycle workflow triggers
+  - Recipients model — Users, non-user Objects, and Tenants with channel data and
+    properties
+  - Preferences — per-channel, per-workflow, per-category preference sets enforced
+    automatically on every run and broadcast
+  - Audiences — static and dynamic user segments that automatically drive lifecycle
+    workflow triggers
   - Schedules — one-off and recurring (timezone-aware) workflow firing
   - Subscriptions — many-to-many fan-out from Objects to recipient lists
-  - Conditions — dynamic control flow on trigger data, recipient properties, and prior step status
-  - Templates — drag-and-drop editor + Liquid; partials, branding, translations (i18n), email layouts
-  - Real-time in-app feed API plus pre-built React, JavaScript, iOS, Android, Flutter, React Native, Expo,
-    and Vue/Nuxt SDKs
+  - Conditions — dynamic control flow on trigger data, recipient properties, and prior
+    step status
+  - Templates — drag-and-drop editor + Liquid; partials, branding, translations (i18n),
+    email layouts
+  - Real-time in-app feed API plus pre-built React, JavaScript, iOS, Android, Flutter,
+    React Native, Expo, and Vue/Nuxt SDKs
   - Outbound webhook events for full message lifecycle and environment change tracking
-  - Customer-facing webhook channel (let your customers configure their own webhook destinations)
+  - Customer-facing webhook channel (let your customers configure their own webhook
+    destinations)
   - Idempotent requests via Idempotency-Key
   - Cursor-based pagination
-  - Tiered per-endpoint rate limits (1, 5, 60, 200, 1000 req/sec) scoped per environment or per signed user
+  - Tiered per-endpoint rate limits (1, 5, 60, 200, 1000 req/sec) scoped per environment
+    or per signed user
   - Enhanced security mode with signed user tokens (JWT)
-  - Environments + Branches + Commits — git-style resource workflow with promotion across dev/staging/prod
+  - Environments + Branches + Commits — git-style resource workflow with promotion
+    across dev/staging/prod
   - Knock CLI for local-first resource management against the Management API
-  - Knock MCP server (remote) at mcp.knock.app/mcp — OAuth 2.1 + PKCE; tool groups for resources, commits,
-    debug, data, and docs
-  - Knock Agent Toolkit — AI SDK, OpenAI function-calling, Langchain, Mastra, and local MCP server bindings
+  - Knock MCP server (remote) at mcp.knock.app/mcp — OAuth 2.1 + PKCE; tool groups
+    for resources, commits, debug, data, and docs
+  - Knock Agent Toolkit — AI SDK, OpenAI function-calling, Langchain, Mastra, and
+    local MCP server bindings
   - AI agent function step inside workflows for prompt-driven enrichment and personalization
   - Knock skills — procedural knowledge packages for AI agents working with Knock
-  - SlackKit and TeamsKit — drop-in OAuth + channel-data UX for connecting customer Slack/Teams workspaces
+  - SlackKit and TeamsKit — drop-in OAuth + channel-data UX for connecting customer
+    Slack/Teams workspaces
   - Data warehouse / Segment / Datadog observability streams
-  - Source events — trigger workflows from CDPs (Segment, Rudderstack) or reverse-ETL (Hightouch, Census)
+  - Source events — trigger workflows from CDPs (Segment, Rudderstack) or reverse-ETL
+    (Hightouch, Census)
   - Multi-tenancy with per-tenant branding and locked preferences (Enterprise)
   - SAML 2.0 SSO, SCIM directory sync, HIPAA / BAA on Enterprise
-  - Official SDKs in Node, Python, Ruby, Go, Elixir, Java, .NET, PHP, plus mobile (Swift, Kotlin, Flutter,
-    React Native, Expo) and Management-API SDKs (Node, Python, Go)
+  - Official SDKs in Node, Python, Ruby, Go, Elixir, Java, .NET, PHP, plus mobile
+    (Swift, Kotlin, Flutter, React Native, Expo) and Management-API SDKs (Node, Python,
+    Go)
   sources:
   - https://knock.app
   - https://knock.app/pricing
@@ -546,15 +557,17 @@ common:
 created: '2026-05-25'
 modified: '2026-05-25'
 position: Consuming
-description: Knock is notifications infrastructure as a service — a product and customer messaging platform you
-  use to power transactional, lifecycle, broadcast, and in-product messaging across email, SMS, push, in-app,
-  in-app guides, chat (Slack / Discord / Teams / WhatsApp), and outbound webhooks. Knock exposes two REST
-  surfaces — a runtime API (api.knock.app) for triggering workflows and managing recipients/messages, and a
-  Management API (control.knock.app) for resource CRUD — together with official SDKs in Node, Python, Ruby,
-  Go, Elixir, Java, .NET, PHP and mobile (Swift, Kotlin, Flutter, React Native, Expo); a CLI; a remote MCP
-  server; an agent toolkit for OpenAI / AI SDK / Langchain / Mastra; outbound webhooks; AI agent workflow
-  steps; SlackKit and TeamsKit; and a git-style environment / branch / commit model for safe promotion of
-  notification resources.
+description: Knock is notifications infrastructure as a service — a product and customer
+  messaging platform you use to power transactional, lifecycle, broadcast, and in-product
+  messaging across email, SMS, push, in-app, in-app guides, chat (Slack / Discord
+  / Teams / WhatsApp), and outbound webhooks. Knock exposes two REST surfaces — a
+  runtime API (api.knock.app) for triggering workflows and managing recipients/messages,
+  and a Management API (control.knock.app) for resource CRUD — together with official
+  SDKs in Node, Python, Ruby, Go, Elixir, Java, .NET, PHP and mobile (Swift, Kotlin,
+  Flutter, React Native, Expo); a CLI; a remote MCP server; an agent toolkit for OpenAI
+  / AI SDK / Langchain / Mastra; outbound webhooks; AI agent workflow steps; SlackKit
+  and TeamsKit; and a git-style environment / branch / commit model for safe promotion
+  of notification resources.
 maintainers:
 - FN: Kin Lane
   email: info@apievangelist.com

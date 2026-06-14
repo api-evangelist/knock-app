@@ -1,0 +1,1042 @@
+"""
+Knock GraphQL Schema
+Conceptual schema for the Knock notification infrastructure platform.
+Derived from: https://docs.knock.app/reference/api and https://github.com/knocklabs
+"""
+
+scalar DateTime
+scalar JSON
+scalar ID
+
+# ─── Enumerations ───────────────────────────────────────────────────────────
+
+enum WorkflowRunStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  SKIPPED
+}
+
+enum MessageStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  DELIVERY_ATTEMPTED
+  UNDELIVERED
+  NOT_SENT
+  BOUNCED
+  SEEN
+  READ
+  INTERACTED
+  ARCHIVED
+  LINK_CLICKED
+}
+
+enum MessageChannel {
+  EMAIL
+  SMS
+  PUSH
+  IN_APP_FEED
+  CHAT
+  WEBHOOK
+}
+
+enum ChannelType {
+  EMAIL
+  SMS
+  PUSH
+  IN_APP_FEED
+  CHAT
+  WEBHOOK
+}
+
+enum BulkOperationStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum FeedStatus {
+  UNREAD
+  READ
+  SEEN
+  ARCHIVED
+  ALL
+}
+
+enum ActivityKind {
+  TRIGGER
+  BATCH
+  WORKFLOW_RUN
+  MESSAGE
+  BROADCAST
+  SCHEDULE
+}
+
+enum WorkflowStepType {
+  CHANNEL
+  BATCH
+  DELAY
+  BRANCH
+  THROTTLE
+  FETCH
+  AI_AGENT
+  TRIGGER_WORKFLOW
+  UPDATE_USER
+  UPDATE_TENANT
+  UPDATE_OBJECT
+  UPDATE_DATA
+  UPDATE_AUDIENCE
+}
+
+enum PreferenceStatus {
+  OPTED_IN
+  OPTED_OUT
+  DEFAULT
+}
+
+enum ScheduleRepeatUnit {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum WebhookEventType {
+  MESSAGE_SENT
+  MESSAGE_DELIVERED
+  MESSAGE_DELIVERY_ATTEMPTED
+  MESSAGE_UNDELIVERED
+  MESSAGE_BOUNCED
+  MESSAGE_SEEN
+  MESSAGE_READ
+  MESSAGE_INTERACTED
+  MESSAGE_ARCHIVED
+  MESSAGE_LINK_CLICKED
+  WORKFLOW_UPDATED
+  EMAIL_LAYOUT_UPDATED
+  TRANSLATION_UPDATED
+  PARTIAL_UPDATED
+  SOURCE_EVENT_ACTION_UPDATED
+  ENVIRONMENT_COMMITTED
+}
+
+enum TokenStatus {
+  ACTIVE
+  REVOKED
+}
+
+# ─── Core Recipient Types ─────────────────────────────────────────────────────
+
+"""A Knock user — the primary human recipient of notifications."""
+type User {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  avatar: String
+  timezone: String
+  locale: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  properties: JSON
+  channelData: [ChannelData!]
+  preferences: PreferenceSet
+  messages(after: String, before: String, first: Int, last: Int, status: [MessageStatus!], channelId: String): MessageConnection!
+  subscriptions(after: String, before: String, first: Int, last: Int): SubscriptionConnection!
+  schedules(after: String, before: String, first: Int, last: Int, workflowKey: String): ScheduleConnection!
+  feed(after: String, before: String, first: Int, last: Int, status: FeedStatus, source: String): FeedConnection!
+}
+
+"""Extended detail view of a Knock user."""
+type UserDetails {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  avatar: String
+  timezone: String
+  locale: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  properties: JSON
+  channelData: [ChannelData!]!
+  preferences: PreferenceSet
+  totalMessageCount: Int
+  totalWorkflowRunCount: Int
+}
+
+"""A user's complete notification preferences."""
+type UserPreferences {
+  userId: ID!
+  defaultPreferences: PreferenceSet
+  workflowPreferences: [WorkflowPreference!]!
+  channelPreferences: [ChannelPreference!]!
+  categories: JSON
+  updatedAt: DateTime
+}
+
+# ─── Preferences ─────────────────────────────────────────────────────────────
+
+"""A set of preferences governing how a recipient receives notifications."""
+type PreferenceSet {
+  id: String!
+  workflows: JSON
+  categories: JSON
+  channelTypes: JSON
+}
+
+"""Per-workflow preference override."""
+type WorkflowPreference {
+  workflowKey: String!
+  channelTypes: JSON
+  conditions: JSON
+  status: PreferenceStatus!
+}
+
+"""Per-channel-type preference."""
+type ChannelPreference {
+  channelType: ChannelType!
+  status: PreferenceStatus!
+  conditions: JSON
+}
+
+# ─── Objects ─────────────────────────────────────────────────────────────────
+
+"""A non-user Knock Object — models accounts, projects, devices, etc."""
+type Object {
+  id: ID!
+  collection: String!
+  name: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  properties: JSON
+  channelData: [ChannelData!]
+  preferences: PreferenceSet
+  subscriptions(after: String, before: String, first: Int, last: Int): SubscriptionConnection!
+  messages(after: String, before: String, first: Int, last: Int): MessageConnection!
+}
+
+"""Extended detail view of a Knock Object."""
+type ObjectDetails {
+  id: ID!
+  collection: String!
+  name: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  properties: JSON
+  channelData: [ChannelData!]!
+  preferences: PreferenceSet
+  subscriberCount: Int
+}
+
+"""A named collection of Knock Objects."""
+type ObjectCollection {
+  id: ID!
+  name: String!
+  objects(after: String, before: String, first: Int, last: Int): ObjectConnection!
+  totalCount: Int!
+}
+
+# ─── Workflows ────────────────────────────────────────────────────────────────
+
+"""A Knock Workflow definition."""
+type Workflow {
+  key: String!
+  name: String!
+  active: Boolean!
+  categories: [String!]
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  steps: [WorkflowStep!]!
+  triggerData: JSON
+}
+
+"""Extended detail view of a workflow including all steps and configuration."""
+type WorkflowDetails {
+  key: String!
+  name: String!
+  active: Boolean!
+  categories: [String!]
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  steps: [WorkflowStep!]!
+  environment: String!
+  version: Int!
+  commitHash: String
+}
+
+"""A per-recipient execution record of a workflow run."""
+type WorkflowRun {
+  id: ID!
+  workflowKey: String!
+  recipient: RecipientUnion
+  status: WorkflowRunStatus!
+  triggeredAt: DateTime!
+  completedAt: DateTime
+  cancelledAt: DateTime
+  triggerData: JSON
+  steps: [WorkflowStep!]!
+  messages: [Message!]!
+}
+
+"""Status summary of a workflow run."""
+type WorkflowRunStatus {
+  runId: ID!
+  workflowKey: String!
+  status: WorkflowRunStatus!
+  recipientCount: Int!
+  completedCount: Int!
+  failedCount: Int!
+  cancelledCount: Int!
+  startedAt: DateTime!
+  completedAt: DateTime
+}
+
+"""A single step inside a workflow."""
+type WorkflowStep {
+  id: ID!
+  type: WorkflowStepType!
+  ref: String
+  name: String
+  active: Boolean!
+  conditions: JSON
+  config: JSON
+}
+
+"""A workflow trigger invocation record."""
+type WorkflowTrigger {
+  id: ID!
+  workflowKey: String!
+  cancellationKey: String
+  triggeredAt: DateTime!
+  actor: Actor
+  recipients: [RecipientUnion!]!
+  tenant: String
+  data: JSON
+  runIds: [ID!]!
+}
+
+# ─── Messages ─────────────────────────────────────────────────────────────────
+
+"""A per-recipient delivery record produced by a workflow run."""
+type Message {
+  id: ID!
+  channelId: String!
+  workflowKey: String!
+  recipient: RecipientUnion
+  status: MessageStatus!
+  readAt: DateTime
+  seenAt: DateTime
+  interactedAt: DateTime
+  archivedAt: DateTime
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  source: JSON
+  data: JSON
+  metadata: JSON
+  tenant: String
+  activities: [Activity!]!
+}
+
+"""Extended detail view of a message including rendered content."""
+type MessageDetails {
+  id: ID!
+  channelId: String!
+  channelType: ChannelType!
+  workflowKey: String!
+  recipient: RecipientUnion
+  status: MessageStatus!
+  readAt: DateTime
+  seenAt: DateTime
+  interactedAt: DateTime
+  archivedAt: DateTime
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  source: JSON
+  data: JSON
+  metadata: JSON
+  tenant: String
+  content: MessageContent
+  activities: [Activity!]!
+  events: [MessageActivity!]!
+}
+
+"""Rendered content for a message."""
+type MessageContent {
+  subject: String
+  body: String
+  htmlBody: String
+  textBody: String
+  preheader: String
+  headers: JSON
+  attachments: [JSON!]
+  blocks: [JSON!]
+}
+
+"""A lifecycle event on a message."""
+type MessageActivity {
+  id: ID!
+  messageId: ID!
+  status: MessageStatus!
+  timestamp: DateTime!
+  metadata: JSON
+}
+
+# ─── Activities ───────────────────────────────────────────────────────────────
+
+"""An activity record attached to a message or workflow run."""
+type Activity {
+  id: ID!
+  kind: ActivityKind!
+  recipient: RecipientUnion
+  actor: Actor
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  data: JSON
+}
+
+"""Extended detail view of an activity record."""
+type ActivityDetails {
+  id: ID!
+  kind: ActivityKind!
+  recipient: RecipientUnion
+  actor: Actor
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  data: JSON
+  workflowKey: String
+  messageId: ID
+}
+
+# ─── Actors ───────────────────────────────────────────────────────────────────
+
+"""An actor that triggered a notification (user or object or system)."""
+type Actor {
+  id: ID!
+  collection: String
+  name: String
+  email: String
+  avatar: String
+  properties: JSON
+}
+
+# ─── Channels ─────────────────────────────────────────────────────────────────
+
+"""A configured notification channel (provider integration)."""
+type Channel {
+  id: ID!
+  key: String!
+  name: String!
+  type: ChannelType!
+  active: Boolean!
+  provider: String
+  environment: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""Extended detail view of a channel."""
+type ChannelDetails {
+  id: ID!
+  key: String!
+  name: String!
+  type: ChannelType!
+  active: Boolean!
+  provider: String
+  providerConfig: JSON
+  environment: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  messageCount: Int
+}
+
+"""Channel data attached to a recipient (e.g., push token, email address)."""
+type ChannelData {
+  channelId: String!
+  data: JSON!
+  updatedAt: DateTime
+}
+
+"""Available notification channel providers."""
+type ChannelProviders {
+  email: [String!]!
+  sms: [String!]!
+  push: [String!]!
+  chat: [String!]!
+  inAppFeed: [String!]!
+  webhook: [String!]!
+}
+
+# ─── In-App Feed ──────────────────────────────────────────────────────────────
+
+"""An in-app feed for a user."""
+type Feed {
+  id: ID!
+  userId: ID!
+  channelId: String!
+  totalCount: Int!
+  unreadCount: Int!
+  unseenCount: Int!
+  items(after: String, before: String, first: Int, last: Int, status: FeedStatus, source: String): FeedConnection!
+}
+
+"""Extended detail view of a feed with metadata."""
+type FeedDetails {
+  id: ID!
+  userId: ID!
+  channelId: String!
+  totalCount: Int!
+  unreadCount: Int!
+  unseenCount: Int!
+  archivedCount: Int!
+  metadata: JSON
+}
+
+"""A single item in a user's in-app feed."""
+type FeedItem {
+  id: ID!
+  feedId: ID!
+  status: MessageStatus!
+  readAt: DateTime
+  seenAt: DateTime
+  interactedAt: DateTime
+  archivedAt: DateTime
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  data: JSON
+  blocks: [JSON!]
+  activities: [Activity!]!
+  actors: [Actor!]!
+  totalActivities: Int!
+  totalActors: Int!
+  source: JSON
+  tenant: String
+}
+
+"""Feed item status summary."""
+type FeedStatus {
+  channelId: String!
+  userId: ID!
+  totalCount: Int!
+  unreadCount: Int!
+  unseenCount: Int!
+  archivedCount: Int!
+}
+
+# ─── Bulk Operations ──────────────────────────────────────────────────────────
+
+"""A handle for a long-running bulk operation."""
+type BulkOperation {
+  id: ID!
+  name: String!
+  status: BulkOperationStatus!
+  successfulOperations: Int!
+  failedOperations: Int!
+  totalOperations: Int!
+  startedAt: DateTime
+  completedAt: DateTime
+  estimatedTotalRows: Int
+  processedRows: Int
+  failedRows: Int
+  errorCount: Int
+  progressPath: String
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended detail view of a bulk operation."""
+type BulkOperationDetails {
+  id: ID!
+  name: String!
+  status: BulkOperationStatus!
+  successfulOperations: Int!
+  failedOperations: Int!
+  totalOperations: Int!
+  startedAt: DateTime
+  completedAt: DateTime
+  estimatedTotalRows: Int
+  processedRows: Int
+  failedRows: Int
+  errors: [JSON!]
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─── Schedules ────────────────────────────────────────────────────────────────
+
+"""A scheduled workflow execution for a recipient."""
+type Schedule {
+  id: ID!
+  workflowKey: String!
+  recipient: RecipientUnion
+  tenant: String
+  actor: Actor
+  data: JSON
+  repeats: [ScheduleOccurrence!]
+  scheduledAt: DateTime
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  lastOccurrenceAt: DateTime
+  nextOccurrenceAt: DateTime
+}
+
+"""Extended detail view of a schedule."""
+type ScheduleDetails {
+  id: ID!
+  workflowKey: String!
+  recipient: RecipientUnion
+  tenant: String
+  actor: Actor
+  data: JSON
+  repeats: [ScheduleOccurrence!]
+  scheduledAt: DateTime
+  insertedAt: DateTime!
+  updatedAt: DateTime!
+  lastOccurrenceAt: DateTime
+  nextOccurrenceAt: DateTime
+  timezone: String
+}
+
+"""A repeat rule for a recurring schedule."""
+type ScheduleOccurrence {
+  frequency: ScheduleRepeatUnit!
+  interval: Int
+  dayOfMonth: Int
+  days: [String!]
+  hours: Int
+  minutes: Int
+}
+
+# ─── Translations ─────────────────────────────────────────────────────────────
+
+"""A Knock translation resource for i18n."""
+type Translation {
+  locale: String!
+  namespace: String
+  format: String!
+  content: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""Extended detail view of a translation including metadata."""
+type TranslationDetails {
+  locale: String!
+  namespace: String
+  format: String!
+  content: String!
+  environment: String!
+  commitHash: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── Environments ─────────────────────────────────────────────────────────────
+
+"""A Knock environment (development, staging, production, etc.)."""
+type Environment {
+  id: ID!
+  name: String!
+  slug: String!
+  color: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""Extended detail view of a Knock environment."""
+type EnvironmentDetails {
+  id: ID!
+  name: String!
+  slug: String!
+  color: String
+  apiKeys: [APIKey!]!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── API Keys & Tokens ───────────────────────────────────────────────────────
+
+"""A Knock API key for an environment."""
+type APIKey {
+  id: ID!
+  key: String!
+  name: String
+  type: String!
+  environment: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""A signed user token for enhanced security mode."""
+type Token {
+  userId: ID!
+  token: String!
+  status: TokenStatus!
+  expiresAt: DateTime
+  issuedAt: DateTime!
+}
+
+# ─── Webhooks ─────────────────────────────────────────────────────────────────
+
+"""A configured outbound webhook for a Knock environment."""
+type Webhook {
+  id: ID!
+  url: String!
+  name: String
+  active: Boolean!
+  signingKey: String
+  eventTypes: [WebhookEventType!]!
+  environment: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""A webhook event payload dispatched by Knock."""
+type WebhookEvent {
+  id: ID!
+  type: WebhookEventType!
+  data: JSON!
+  environment: String!
+  version: String!
+  timestamp: DateTime!
+}
+
+# ─── Subscriptions ───────────────────────────────────────────────────────────
+
+"""A subscription linking a recipient to a Knock Object for fan-out delivery."""
+type Subscription {
+  id: ID!
+  object: Object!
+  recipient: RecipientUnion!
+  properties: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Extended detail view of a subscription."""
+type SubscriptionDetails {
+  id: ID!
+  object: Object!
+  recipient: RecipientUnion!
+  properties: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─── Tenants ─────────────────────────────────────────────────────────────────
+
+"""A Knock Tenant — top-level account or workspace in the product."""
+type Tenant {
+  id: ID!
+  name: String
+  settings: JSON
+  brandingSettings: JSON
+  preferences: PreferenceSet
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── Union Types ─────────────────────────────────────────────────────────────
+
+"""A notification recipient — either a User or a non-user Object."""
+union RecipientUnion = User | Object
+
+# ─── Connection / Pagination Types ───────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type ObjectEdge {
+  node: Object!
+  cursor: String!
+}
+
+type ObjectConnection {
+  edges: [ObjectEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type MessageEdge {
+  node: Message!
+  cursor: String!
+}
+
+type MessageConnection {
+  edges: [MessageEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type FeedEdge {
+  node: FeedItem!
+  cursor: String!
+}
+
+type FeedConnection {
+  edges: [FeedEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+  unreadCount: Int
+  unseenCount: Int
+}
+
+type ScheduleEdge {
+  node: Schedule!
+  cursor: String!
+}
+
+type ScheduleConnection {
+  edges: [ScheduleEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type SubscriptionEdge {
+  node: Subscription!
+  cursor: String!
+}
+
+type SubscriptionConnection {
+  edges: [SubscriptionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type WorkflowRunEdge {
+  node: WorkflowRun!
+  cursor: String!
+}
+
+type WorkflowRunConnection {
+  edges: [WorkflowRunEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type BulkOperationEdge {
+  node: BulkOperation!
+  cursor: String!
+}
+
+type BulkOperationConnection {
+  edges: [BulkOperationEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# ─── Input Types ─────────────────────────────────────────────────────────────
+
+input IdentifyUserInput {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  avatar: String
+  timezone: String
+  locale: String
+  properties: JSON
+}
+
+input SetPreferencesInput {
+  recipientId: ID!
+  preferenceSetId: String
+  workflows: JSON
+  categories: JSON
+  channelTypes: JSON
+}
+
+input TriggerWorkflowInput {
+  workflowKey: String!
+  recipients: [RecipientInput!]!
+  actor: RecipientInput
+  cancellationKey: String
+  tenant: String
+  data: JSON
+  scheduledAt: DateTime
+}
+
+input RecipientInput {
+  id: ID!
+  collection: String
+}
+
+input CreateScheduleInput {
+  workflowKey: String!
+  recipients: [RecipientInput!]!
+  scheduledAt: DateTime
+  repeats: [ScheduleOccurrenceInput!]
+  tenant: String
+  actor: RecipientInput
+  data: JSON
+}
+
+input ScheduleOccurrenceInput {
+  frequency: ScheduleRepeatUnit!
+  interval: Int
+  dayOfMonth: Int
+  days: [String!]
+  hours: Int
+  minutes: Int
+}
+
+input SetChannelDataInput {
+  recipientId: ID!
+  channelId: String!
+  data: JSON!
+}
+
+input BulkIdentifyInput {
+  users: [IdentifyUserInput!]!
+}
+
+input MessageStatusUpdateInput {
+  messageIds: [ID!]!
+  status: MessageStatus!
+}
+
+# ─── Root Operations ─────────────────────────────────────────────────────────
+
+type Query {
+  # Users
+  user(id: ID!): UserDetails
+  users(after: String, before: String, first: Int, last: Int): UserConnection!
+
+  # User Preferences
+  userPreferences(userId: ID!, preferenceSetId: String): PreferenceSet
+  allUserPreferences(userId: ID!): UserPreferences
+
+  # Objects
+  object(collection: String!, id: ID!): ObjectDetails
+  objects(collection: String!, after: String, before: String, first: Int, last: Int): ObjectConnection!
+  objectCollection(name: String!): ObjectCollection
+
+  # Workflows
+  workflow(key: String!): WorkflowDetails
+  workflows(after: String, before: String, first: Int, last: Int, active: Boolean): [Workflow!]!
+  workflowRun(workflowKey: String!, runId: ID!): WorkflowRun
+  workflowRuns(workflowKey: String!, after: String, before: String, first: Int, last: Int, status: WorkflowRunStatus): WorkflowRunConnection!
+
+  # Messages
+  message(id: ID!): MessageDetails
+  messages(after: String, before: String, first: Int, last: Int, status: [MessageStatus!], channelId: String, workflowKey: String): MessageConnection!
+
+  # Feed
+  userFeed(userId: ID!, channelId: String!, after: String, before: String, first: Int, last: Int, status: FeedStatus): FeedConnection!
+  feedStatus(userId: ID!, channelId: String!): FeedStatus
+
+  # Schedules
+  schedule(id: ID!): ScheduleDetails
+  schedules(workflowKey: String, after: String, before: String, first: Int, last: Int): ScheduleConnection!
+
+  # Bulk Operations
+  bulkOperation(id: ID!): BulkOperationDetails
+  bulkOperations(after: String, before: String, first: Int, last: Int): BulkOperationConnection!
+
+  # Channels
+  channel(id: ID!): ChannelDetails
+  channels: [Channel!]!
+  channelProviders: ChannelProviders!
+
+  # Tenants
+  tenant(id: ID!): Tenant
+  tenants(after: String, before: String, first: Int, last: Int): [Tenant!]!
+
+  # Subscriptions
+  objectSubscriptions(collection: String!, objectId: ID!, after: String, before: String, first: Int, last: Int): SubscriptionConnection!
+
+  # Translations
+  translation(locale: String!, namespace: String): TranslationDetails
+  translations(locale: String): [Translation!]!
+
+  # Environments
+  environment(slug: String!): EnvironmentDetails
+  environments: [Environment!]!
+
+  # Activities
+  messageActivities(messageId: ID!): [Activity!]!
+}
+
+type Mutation {
+  # Users
+  identifyUser(input: IdentifyUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+  mergeUsers(fromUserId: ID!, intoUserId: ID!): User!
+  bulkIdentifyUsers(input: BulkIdentifyInput!): BulkOperation!
+
+  # User Channel Data
+  setUserChannelData(input: SetChannelDataInput!): ChannelData!
+  deleteUserChannelData(userId: ID!, channelId: String!): Boolean!
+
+  # User Preferences
+  setUserPreferences(input: SetPreferencesInput!): PreferenceSet!
+  deleteUserPreferenceSet(userId: ID!, preferenceSetId: String!): Boolean!
+
+  # Objects
+  setObject(collection: String!, id: ID!, properties: JSON): Object!
+  deleteObject(collection: String!, id: ID!): Boolean!
+  setObjectChannelData(collection: String!, objectId: ID!, channelId: String!, data: JSON!): ChannelData!
+  setObjectPreferences(collection: String!, objectId: ID!, input: SetPreferencesInput!): PreferenceSet!
+
+  # Subscriptions
+  addSubscriptions(collection: String!, objectId: ID!, recipients: [RecipientInput!]!, properties: JSON): [Subscription!]!
+  deleteSubscriptions(collection: String!, objectId: ID!, recipients: [RecipientInput!]!): Boolean!
+
+  # Workflows
+  triggerWorkflow(input: TriggerWorkflowInput!): WorkflowTrigger!
+  cancelWorkflow(workflowKey: String!, cancellationKey: String!, recipients: [RecipientInput!]): Boolean!
+
+  # Messages
+  updateMessageStatus(id: ID!, status: MessageStatus!): Message!
+  batchUpdateMessageStatus(input: MessageStatusUpdateInput!): [Message!]!
+  bulkUpdateChannelMessageStatus(channelId: String!, status: MessageStatus!, olderThan: DateTime, newerThan: DateTime, workflowKey: String, userId: ID): BulkOperation!
+
+  # Schedules
+  createSchedule(input: CreateScheduleInput!): [Schedule!]!
+  updateSchedule(id: ID!, scheduledAt: DateTime, repeats: [ScheduleOccurrenceInput!], data: JSON): Schedule!
+  deleteSchedule(id: ID!): Boolean!
+
+  # Tenants
+  setTenant(id: ID!, name: String, settings: JSON, brandingSettings: JSON): Tenant!
+  deleteTenant(id: ID!): Boolean!
+  bulkSetTenants(tenants: [JSON!]!): BulkOperation!
+
+  # Translations
+  upsertTranslation(locale: String!, namespace: String, format: String!, content: String!): Translation!
+  deleteTranslation(locale: String!, namespace: String): Boolean!
+}
+
+type Subscription {
+  # Real-time feed updates for a user
+  feedUpdated(userId: ID!, channelId: String!): FeedItem!
+
+  # Message status changes
+  messageStatusChanged(messageId: ID!): MessageDetails!
+
+  # Bulk operation progress
+  bulkOperationProgress(operationId: ID!): BulkOperation!
+
+  # Workflow run status changes
+  workflowRunStatusChanged(runId: ID!): WorkflowRun!
+}
