@@ -1,0 +1,862 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Objects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Objects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update workflows in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/workflows"
+          },
+          "docs": "Updates the workflow preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Update a channel type preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/channel_types/:type"
+          },
+          "docs": "Updates a specific channel type preference for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Bulk delete objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/delete",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk deletes objects from the specified collection."
+        },
+        {
+          "info": {
+            "name": "Update a category preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/categories/:key"
+          },
+          "docs": "Updates a specific category preference for an object's preference set. Deprecated."
+        },
+        {
+          "info": {
+            "name": "List preference sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of preference sets for the specified object."
+        },
+        {
+          "info": {
+            "name": "Update a workflow preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/workflows/:key"
+          },
+          "docs": "Updates a specific workflow preference for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Bulk add subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/add",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add subscriptions for all objects in a single collection. If a subscription for an object in the collection already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient` field."
+        },
+        {
+          "info": {
+            "name": "Update categories in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/categories"
+          },
+          "docs": "Updates the category preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Get an object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific object by its ID from the specified collection. Returns the object with all its properties."
+        },
+        {
+          "info": {
+            "name": "Set an object",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new object or updates an existing one in the specified collection. This operation is used to identify objects with their properties, as well as optional preferences and channel data."
+        },
+        {
+          "info": {
+            "name": "Delete an object",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              }
+            ]
+          },
+          "docs": "Permanently removes an object from the specified collection. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "List objects in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Includes preferences of the objects in the response."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of objects from the specified collection. Optionally includes preference data for the objects."
+        },
+        {
+          "info": {
+            "name": "Update channel types in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/channel_types"
+          },
+          "docs": "Updates the channel type preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Bulk delete subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/delete",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete subscriptions for many objects in a single collection type. If a subscription for an object in the collection doesn't exist, it will be skipped."
+        },
+        {
+          "info": {
+            "name": "Get object preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Returns the preference set for the specified object and preference set `id`."
+        },
+        {
+          "info": {
+            "name": "Update a preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets preferences within the given preference set. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use '__persistence_strategy': 'merge' to merge with existing preferences instead. If no object exists in the current environment for the given `:collection` and `:object_id`, Knock will create the object as part of this request. The preference set `:id` can be either `default` or a `tenant.id`. Learn more about [per-tenant preferences"
+        },
+        {
+          "info": {
+            "name": "Delete object preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Unsets the preference set for the object, removing it entirely."
+        },
+        {
+          "info": {
+            "name": "Bulk set objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/set",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk sets up to 1,000 objects at a time in the specified collection."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List object schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:id/schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the object to list schedules for."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection of the object to list schedules for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Filter schedules by tenant id."
+              },
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "Filter schedules by workflow id."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of schedules for an object."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:id/messages",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "tenant",
+                "value": "tenant_123",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding tenant."
+              },
+              {
+                "name": "channel_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding channel ID."
+              },
+              {
+                "name": "status[]",
+                "value": "delivered",
+                "type": "query",
+                "description": "Limits the results to messages with the given delivery status."
+              },
+              {
+                "name": "engagement_status[]",
+                "value": "unread",
+                "type": "query",
+                "description": "Limits the results to messages with the given engagement status."
+              },
+              {
+                "name": "message_ids[]",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "query",
+                "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query."
+              },
+              {
+                "name": "workflow_categories[]",
+                "value": "workflow_123",
+                "type": "query",
+                "description": "Limits the results to messages related to any of the provided categories."
+              },
+              {
+                "name": "source",
+                "value": "comment-created",
+                "type": "query",
+                "description": "Limits the results to messages triggered by the given workflow key."
+              },
+              {
+                "name": "workflow_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages associated with the top-level workflow run ID returned by the workflow trigger request."
+              },
+              {
+                "name": "workflow_recipient_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages for a specific recipient's workflow run."
+              },
+              {
+                "name": "trigger_data",
+                "value": "{\"comment_id\": \"123\"}",
+                "type": "query",
+                "description": "Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering) for more information."
+              },
+              {
+                "name": "inserted_at.gt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after the given date."
+              },
+              {
+                "name": "inserted_at.gte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after or on the given date."
+              },
+              {
+                "name": "inserted_at.lt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before the given date."
+              },
+              {
+                "name": "inserted_at.lte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before or on the given date."
+              },
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "project-123",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of messages for a specific object in the given collection. Allows filtering by message status and provides various sorting options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channel data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Returns the channel data for the specified object and channel."
+        },
+        {
+          "info": {
+            "name": "Set channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the channel data for the specified object and channel. If no object exists in the current environment for the given `collection` and `object_id`, Knock will create the object as part of this request."
+        },
+        {
+          "info": {
+            "name": "Unset channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Unsets the channel data for the specified object and channel."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Mode of the request. `recipient` to list the objects that the provided object is subscribed to, `object` to list the recipients that subscribe to the provided object."
+              },
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Additional fields to include in the response."
+              },
+              {
+                "name": "recipients[]",
+                "value": "",
+                "type": "query",
+                "description": "Recipients to filter by (only used if mode is `object`)."
+              },
+              {
+                "name": "objects[]",
+                "value": "",
+                "type": "query",
+                "description": "Objects to filter by (only used if mode is `recipient`)."
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "List subscriptions for an object. Either list the recipients that subscribe to the provided object, or list the objects that the provided object is subscribed to. Determined by the `mode` query parameter."
+        },
+        {
+          "info": {
+            "name": "Add subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add subscriptions for an object. If a subscription already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient`."
+        },
+        {
+          "info": {
+            "name": "Delete subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete subscriptions for the specified recipients from an object. Returns the list of deleted subscriptions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

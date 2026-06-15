@@ -1,0 +1,217 @@
+{
+  "info": {
+    "_postman_id": "b9676dd8-ea0b-4cad-b06f-fd40b407d08d",
+    "name": "Knock Channels API",
+    "description": "Inspect channels and run bulk message-status updates scoped to a channel. Channels represent configured provider integrations (Resend, SendGrid, Twilio, APNS, Slack, etc.).\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:51.000Z",
+    "updatedAt": "2026-06-05T15:10:51.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b9676dd8-ea0b-4cad-b06f-fd40b407d08d"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "channels",
+          "item": [
+            {
+              "name": "{channel_id}",
+              "item": [
+                {
+                  "name": "messages",
+                  "item": [
+                    {
+                      "name": "bulk",
+                      "item": [
+                        {
+                          "name": "{action}",
+                          "item": [
+                            {
+                              "name": "Bulk update message statuses for channel",
+                              "id": "22caa674-db8c-4bda-9708-a6f72dbb7e10",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"archived\": \"only\",\n  \"delivery_status\": \"not_sent\",\n  \"engagement_status\": \"unarchived\",\n  \"has_tenant\": \"<boolean>\",\n  \"newer_than\": \"<dateTime>\",\n  \"older_than\": \"<dateTime>\",\n  \"recipient_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tenants\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trigger_data\": \"<string>\",\n  \"workflows\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/channels/:channel_id/messages/bulk/:action",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "channels",
+                                    ":channel_id",
+                                    "messages",
+                                    "bulk",
+                                    ":action"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "291a7b8a-5024-44ef-9b85-ace830fccdb3",
+                                      "key": "channel_id",
+                                      "value": "<uuid>",
+                                      "description": "(Required) The ID of the channel to update messages for."
+                                    },
+                                    {
+                                      "id": "d90e9812-a794-4fa8-bd91-7b14a3f6c17c",
+                                      "key": "action",
+                                      "value": "read",
+                                      "description": "(Required) The target status to be applied to the messages."
+                                    }
+                                  ]
+                                },
+                                "description": "Bulk update the status of messages for a specific channel. The channel is specified by the `channel_id` parameter. The action to perform is specified by the `action` parameter, where the action is a status change action (e.g. `archive`, `unarchive`)."
+                              },
+                              "response": [
+                                {
+                                  "id": "4ace1aad-66b8-42b5-aa2a-478fa48a66bb",
+                                  "name": "OK",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"archived\": \"only\",\n  \"delivery_status\": \"not_sent\",\n  \"engagement_status\": \"unarchived\",\n  \"has_tenant\": \"<boolean>\",\n  \"newer_than\": \"<dateTime>\",\n  \"older_than\": \"<dateTime>\",\n  \"recipient_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tenants\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trigger_data\": \"<string>\",\n  \"workflows\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/channels/:channel_id/messages/bulk/:action",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "channels",
+                                        ":channel_id",
+                                        "messages",
+                                        "bulk",
+                                        ":action"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "channel_id"
+                                        },
+                                        {
+                                          "key": "action"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"status\": \"processing\",\n  \"estimated_total_rows\": \"<integer>\",\n  \"processed_rows\": \"<integer>\",\n  \"success_count\": \"<integer>\",\n  \"updated_at\": \"<dateTime>\",\n  \"inserted_at\": \"<dateTime>\",\n  \"completed_at\": \"<dateTime>\",\n  \"error_count\": \"<integer>\",\n  \"error_items\": [\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    }\n  ],\n  \"failed_at\": \"<dateTime>\",\n  \"progress_path\": \"<uri>\",\n  \"started_at\": \"<dateTime>\"\n}",
+                                  "createdAt": "2026-06-05T15:10:51.000Z",
+                                  "updatedAt": "2026-06-05T15:10:51.000Z",
+                                  "uid": "35240-4ace1aad-66b8-42b5-aa2a-478fa48a66bb"
+                                }
+                              ],
+                              "createdAt": "2026-06-05T15:10:51.000Z",
+                              "updatedAt": "2026-06-05T15:10:51.000Z",
+                              "uid": "35240-22caa674-db8c-4bda-9708-a6f72dbb7e10"
+                            }
+                          ],
+                          "id": "73bb2716-8838-4344-9b4f-63ee5bdc1a5b",
+                          "createdAt": "2026-06-05T15:10:51.000Z",
+                          "updatedAt": "2026-06-05T15:10:51.000Z",
+                          "uid": "35240-73bb2716-8838-4344-9b4f-63ee5bdc1a5b"
+                        }
+                      ],
+                      "id": "c8dc0ad3-db72-48f5-bc87-a3dff3c11d28",
+                      "createdAt": "2026-06-05T15:10:51.000Z",
+                      "updatedAt": "2026-06-05T15:10:51.000Z",
+                      "uid": "35240-c8dc0ad3-db72-48f5-bc87-a3dff3c11d28"
+                    }
+                  ],
+                  "id": "b64f9e82-5e7d-4b81-91cb-d7ec9a774eaa",
+                  "createdAt": "2026-06-05T15:10:51.000Z",
+                  "updatedAt": "2026-06-05T15:10:51.000Z",
+                  "uid": "35240-b64f9e82-5e7d-4b81-91cb-d7ec9a774eaa"
+                }
+              ],
+              "id": "5fcd7a09-1520-4ced-8d11-ba5ad611950b",
+              "createdAt": "2026-06-05T15:10:51.000Z",
+              "updatedAt": "2026-06-05T15:10:51.000Z",
+              "uid": "35240-5fcd7a09-1520-4ced-8d11-ba5ad611950b"
+            }
+          ],
+          "id": "115a72fd-01eb-4ff5-9c3f-4dacba36f09c",
+          "createdAt": "2026-06-05T15:10:51.000Z",
+          "updatedAt": "2026-06-05T15:10:51.000Z",
+          "uid": "35240-115a72fd-01eb-4ff5-9c3f-4dacba36f09c"
+        }
+      ],
+      "id": "88bcbaf2-fc88-4ab6-a354-fd5c854c6d6f",
+      "createdAt": "2026-06-05T15:10:51.000Z",
+      "updatedAt": "2026-06-05T15:10:51.000Z",
+      "uid": "35240-88bcbaf2-fc88-4ab6-a354-fd5c854c6d6f"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

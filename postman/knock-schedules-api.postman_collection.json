@@ -1,0 +1,626 @@
+{
+  "info": {
+    "_postman_id": "991ed31b-df3a-4f86-83a8-f707c2ed758d",
+    "name": "Knock Schedules API",
+    "description": "Create, list, update, and delete workflow Schedules. Schedules let you fire workflows at one-off or recurring times for specific recipients with timezone and repeat-rule support.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:47.000Z",
+    "updatedAt": "2026-06-05T15:10:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-991ed31b-df3a-4f86-83a8-f707c2ed758d"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "schedules",
+          "item": [
+            {
+              "name": "bulk",
+              "item": [
+                {
+                  "name": "create",
+                  "item": [
+                    {
+                      "name": "Create schedules in bulk",
+                      "id": "14a515d1-285f-448d-b7ef-0820c9038b02",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schedules\": [\n    {\n      \"workflow\": \"<string>\",\n      \"actor\": \"<string>\",\n      \"data\": {\n        \"sed6ce\": 80902166,\n        \"culpa_d2\": false,\n        \"mollit_7\": \"in sit ex mollit proident\",\n        \"exercitation_ff\": 53587947,\n        \"animbf0\": 85782120.25080857\n      },\n      \"ending_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"repeats\": [\n        {\n          \"frequency\": \"monthly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"wed\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"hourly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"sat\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"scheduled_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"workflow\": \"<string>\",\n      \"actor\": \"<string>\",\n      \"data\": {\n        \"ut_5b\": \"ipsum in\",\n        \"laboris_7\": 66462733\n      },\n      \"ending_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"repeats\": [\n        {\n          \"frequency\": \"hourly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"tue\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"weekly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"scheduled_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/schedules/bulk/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "schedules",
+                            "bulk",
+                            "create"
+                          ]
+                        },
+                        "description": "Bulk creates up to 1,000 schedules at a time. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+                      },
+                      "response": [
+                        {
+                          "id": "d35f73a2-98de-445f-90cf-4a32fba0bc16",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"schedules\": [\n    {\n      \"workflow\": \"<string>\",\n      \"actor\": \"<string>\",\n      \"data\": {\n        \"sed6ce\": 80902166,\n        \"culpa_d2\": false,\n        \"mollit_7\": \"in sit ex mollit proident\",\n        \"exercitation_ff\": 53587947,\n        \"animbf0\": 85782120.25080857\n      },\n      \"ending_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"repeats\": [\n        {\n          \"frequency\": \"monthly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"wed\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"hourly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"sat\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"scheduled_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"workflow\": \"<string>\",\n      \"actor\": \"<string>\",\n      \"data\": {\n        \"ut_5b\": \"ipsum in\",\n        \"laboris_7\": 66462733\n      },\n      \"ending_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"repeats\": [\n        {\n          \"frequency\": \"hourly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"tue\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"weekly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"scheduled_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/schedules/bulk/create",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "schedules",
+                                "bulk",
+                                "create"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"status\": \"failed\",\n  \"estimated_total_rows\": \"<integer>\",\n  \"processed_rows\": \"<integer>\",\n  \"success_count\": \"<integer>\",\n  \"updated_at\": \"<dateTime>\",\n  \"inserted_at\": \"<dateTime>\",\n  \"completed_at\": \"<dateTime>\",\n  \"error_count\": \"<integer>\",\n  \"error_items\": [\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    }\n  ],\n  \"failed_at\": \"<dateTime>\",\n  \"progress_path\": \"<uri>\",\n  \"started_at\": \"<dateTime>\"\n}",
+                          "createdAt": "2026-06-05T15:10:47.000Z",
+                          "updatedAt": "2026-06-05T15:10:47.000Z",
+                          "uid": "35240-d35f73a2-98de-445f-90cf-4a32fba0bc16"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:47.000Z",
+                      "updatedAt": "2026-06-05T15:10:47.000Z",
+                      "uid": "35240-14a515d1-285f-448d-b7ef-0820c9038b02"
+                    }
+                  ],
+                  "id": "67c64458-6e84-4532-8276-257b3e927c15",
+                  "createdAt": "2026-06-05T15:10:47.000Z",
+                  "updatedAt": "2026-06-05T15:10:47.000Z",
+                  "uid": "35240-67c64458-6e84-4532-8276-257b3e927c15"
+                }
+              ],
+              "id": "ac35f4c4-886d-410e-8523-e6fc6dd0dcef",
+              "createdAt": "2026-06-05T15:10:47.000Z",
+              "updatedAt": "2026-06-05T15:10:47.000Z",
+              "uid": "35240-ac35f4c4-886d-410e-8523-e6fc6dd0dcef"
+            },
+            {
+              "name": "Delete schedules",
+              "id": "993ec47a-54f0-41ca-8e93-e047ca3ac295",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ]
+                },
+                "description": "Permanently deletes one or more schedules identified by the provided schedule IDs. This operation cannot be undone."
+              },
+              "response": [
+                {
+                  "id": "fba7aa34-da13-48fd-a26d-3bd98f9e519c",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schedule_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/schedules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "schedules"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"mon\",\n          \"sat\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"sun\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"mollit22\": 98514425,\n      \"sunt_5\": \"aute culpa dolor occaeca\"\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"monthly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"fri\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"tue\",\n          \"tue\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"adb1c\": 71497437,\n      \"id_9\": true\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-06-05T15:10:47.000Z",
+                  "updatedAt": "2026-06-05T15:10:47.000Z",
+                  "uid": "35240-fba7aa34-da13-48fd-a26d-3bd98f9e519c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:47.000Z",
+              "updatedAt": "2026-06-05T15:10:47.000Z",
+              "uid": "35240-993ec47a-54f0-41ca-8e93-e047ca3ac295"
+            },
+            {
+              "name": "List schedules",
+              "id": "0419fded-5649-4606-b258-fbbe3783c99d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/schedules?workflow=<string>&recipients[]=<string>&recipients[]=<string>&tenant=<string>&after=<string>&before=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Filter by workflow key.",
+                      "key": "workflow",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by recipient references.",
+                      "key": "recipients[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by recipient references.",
+                      "key": "recipients[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by tenant ID.",
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries after.",
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries before.",
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of items per page (defaults to 50).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Returns a paginated list of schedules for the current environment, filtered by workflow and optionally by recipients and tenant."
+              },
+              "response": [
+                {
+                  "id": "46f1502c-1f7d-4fab-833b-6aefad54c5e0",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/schedules?workflow=<string>&recipients[]=<string>&tenant=<string>&after=<string>&before=<string>&page_size=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "schedules"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Filter by workflow key.",
+                          "key": "workflow",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by recipient references.",
+                          "key": "recipients[]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by tenant ID.",
+                          "key": "tenant",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries after.",
+                          "key": "after",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries before.",
+                          "key": "before",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of items per page (defaults to 50).",
+                          "key": "page_size",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"entries\": [\n    {\n      \"id\": \"<uuid>\",\n      \"workflow\": \"<string>\",\n      \"recipient\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"weekly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"sat\",\n            \"wed\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"monthly\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"mon\",\n            \"tue\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"__typename\": \"<string>\",\n      \"actor\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"data\": {\n        \"et1\": 17448883,\n        \"ut9\": 91140329.91620994,\n        \"proident_c\": 62087506.2812773\n      },\n      \"last_occurrence_at\": \"<dateTime>\",\n      \"next_occurrence_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"workflow\": \"<string>\",\n      \"recipient\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"wed\",\n            \"mon\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"<string>\",\n          \"day_of_month\": \"<integer>\",\n          \"days\": [\n            \"mon\",\n            \"mon\"\n          ],\n          \"hours\": \"<integer>\",\n          \"interval\": 1,\n          \"minutes\": \"<integer>\"\n        }\n      ],\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"__typename\": \"<string>\",\n      \"actor\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"data\": {\n        \"ad5\": false,\n        \"aliquip_e7\": false\n      },\n      \"last_occurrence_at\": \"<dateTime>\",\n      \"next_occurrence_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:10:47.000Z",
+                  "updatedAt": "2026-06-05T15:10:47.000Z",
+                  "uid": "35240-46f1502c-1f7d-4fab-833b-6aefad54c5e0"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:47.000Z",
+              "updatedAt": "2026-06-05T15:10:47.000Z",
+              "uid": "35240-0419fded-5649-4606-b258-fbbe3783c99d"
+            },
+            {
+              "name": "Create schedules",
+              "id": "cadd6e9e-72f0-4b4b-8780-3887d8b7e444",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workflow\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"consequatee_\": \"cillum proident quis\"\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"monthly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"fri\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"monthly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"sat\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ]
+                },
+                "description": "Creates one or more schedules for a workflow with the specified recipients, timing, and data. Schedules can be one-time or recurring. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+              },
+              "response": [
+                {
+                  "id": "9e9c7e71-bbf1-4737-ad63-9c493d2d9d71",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"workflow\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"consequatee_\": \"cillum proident quis\"\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"monthly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"fri\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"monthly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"sat\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/schedules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "schedules"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"mon\",\n          \"sat\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"sun\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"mollit22\": 98514425,\n      \"sunt_5\": \"aute culpa dolor occaeca\"\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"monthly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"fri\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"tue\",\n          \"tue\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"adb1c\": 71497437,\n      \"id_9\": true\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-06-05T15:10:47.000Z",
+                  "updatedAt": "2026-06-05T15:10:47.000Z",
+                  "uid": "35240-9e9c7e71-bbf1-4737-ad63-9c493d2d9d71"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:47.000Z",
+              "updatedAt": "2026-06-05T15:10:47.000Z",
+              "uid": "35240-cadd6e9e-72f0-4b4b-8780-3887d8b7e444"
+            },
+            {
+              "name": "Update schedules",
+              "id": "8266274f-f4aa-48c2-bef9-c6fb71e76623",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"adipisicingbd6\": -73795427.97676848\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"weekly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"wed\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"sat\",\n        \"tue\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ]
+                },
+                "description": "Updates one or more existing schedules with new timing, data, or other properties. All specified schedule IDs will be updated with the same values. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+              },
+              "response": [
+                {
+                  "id": "10d43866-3cbd-4a0e-99eb-3ca8e0c87a1f",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schedule_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"adipisicingbd6\": -73795427.97676848\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"weekly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"thu\",\n        \"wed\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"hourly\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"sat\",\n        \"tue\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/schedules",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "schedules"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"mon\",\n          \"sat\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"sun\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"mollit22\": 98514425,\n      \"sunt_5\": \"aute culpa dolor occaeca\"\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"workflow\": \"<string>\",\n    \"recipient\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"monthly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"fri\",\n          \"wed\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      },\n      {\n        \"frequency\": \"weekly\",\n        \"__typename\": \"<string>\",\n        \"day_of_month\": \"<integer>\",\n        \"days\": [\n          \"tue\",\n          \"tue\"\n        ],\n        \"hours\": \"<integer>\",\n        \"interval\": 1,\n        \"minutes\": \"<integer>\"\n      }\n    ],\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"__typename\": \"<string>\",\n    \"actor\": {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"avatar\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"data\": {\n      \"adb1c\": 71497437,\n      \"id_9\": true\n    },\n    \"last_occurrence_at\": \"<dateTime>\",\n    \"next_occurrence_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-06-05T15:10:47.000Z",
+                  "updatedAt": "2026-06-05T15:10:47.000Z",
+                  "uid": "35240-10d43866-3cbd-4a0e-99eb-3ca8e0c87a1f"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:47.000Z",
+              "updatedAt": "2026-06-05T15:10:47.000Z",
+              "uid": "35240-8266274f-f4aa-48c2-bef9-c6fb71e76623"
+            }
+          ],
+          "id": "e12e5218-7d95-48f8-9490-4173290b4203",
+          "createdAt": "2026-06-05T15:10:47.000Z",
+          "updatedAt": "2026-06-05T15:10:47.000Z",
+          "uid": "35240-e12e5218-7d95-48f8-9490-4173290b4203"
+        }
+      ],
+      "id": "a77eb8d9-ff6f-456c-9ac3-f3c7484b0312",
+      "createdAt": "2026-06-05T15:10:47.000Z",
+      "updatedAt": "2026-06-05T15:10:47.000Z",
+      "uid": "35240-a77eb8d9-ff6f-456c-9ac3-f3c7484b0312"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

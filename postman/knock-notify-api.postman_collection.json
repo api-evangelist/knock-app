@@ -1,0 +1,252 @@
+{
+  "info": {
+    "_postman_id": "cb91b876-91f1-4d38-b304-70662316a491",
+    "name": "Knock Notify API",
+    "description": "Internal notify endpoints used by the Knock event-driven trigger surface. Used to send notifications when workflows fire from source events, schedules, audiences, or programmatic triggers.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:57.000Z",
+    "updatedAt": "2026-06-05T15:10:57.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-cb91b876-91f1-4d38-b304-70662316a491"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "notify",
+          "item": [
+            {
+              "name": "cancel",
+              "item": [
+                {
+                  "name": "Cancel workflow",
+                  "id": "40603ecf-7f7e-438a-8c38-3dbdfbe3ccfa",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"value\": \"reference #/components/schemas/Cancel Request not found in the OpenAPI spec\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/notify/cancel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "notify",
+                        "cancel"
+                      ]
+                    },
+                    "description": "Cancels a previously triggered workflow using the provided cancellation key."
+                  },
+                  "response": [
+                    {
+                      "id": "8701b79e-6fbf-4371-accd-a831e964eb4b",
+                      "name": "No Content",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"value\": \"reference #/components/schemas/Cancel Request not found in the OpenAPI spec\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/notify/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "notify",
+                            "cancel"
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:10:58.000Z",
+                      "updatedAt": "2026-06-05T15:10:58.000Z",
+                      "uid": "35240-8701b79e-6fbf-4371-accd-a831e964eb4b"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:58.000Z",
+                  "updatedAt": "2026-06-05T15:10:58.000Z",
+                  "uid": "35240-40603ecf-7f7e-438a-8c38-3dbdfbe3ccfa"
+                }
+              ],
+              "id": "18112683-e9fc-4ace-b35a-6fe4f7912924",
+              "createdAt": "2026-06-05T15:10:57.000Z",
+              "updatedAt": "2026-06-05T15:10:57.000Z",
+              "uid": "35240-18112683-e9fc-4ace-b35a-6fe4f7912924"
+            },
+            {
+              "name": "Trigger workflow",
+              "id": "241a582e-7a52-4a8b-b54c-8f68658c40eb",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"value\": \"reference #/components/schemas/Notify Request not found in the OpenAPI spec\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/notify",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "notify"
+                  ]
+                },
+                "description": "Triggers a workflow with the given key, actor, recipients, and optional data."
+              },
+              "response": [
+                {
+                  "id": "13e74d97-25a4-44d5-bf1a-4dd3c2edb94f",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"value\": \"reference #/components/schemas/Notify Request not found in the OpenAPI spec\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/notify",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "notify"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"value\": \"reference #/components/schemas/Notify Response not found in the OpenAPI spec\"\n}",
+                  "createdAt": "2026-06-05T15:10:58.000Z",
+                  "updatedAt": "2026-06-05T15:10:58.000Z",
+                  "uid": "35240-13e74d97-25a4-44d5-bf1a-4dd3c2edb94f"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:58.000Z",
+              "updatedAt": "2026-06-05T15:10:58.000Z",
+              "uid": "35240-241a582e-7a52-4a8b-b54c-8f68658c40eb"
+            }
+          ],
+          "id": "29554003-cf98-4040-a3c1-a5bc97a71196",
+          "createdAt": "2026-06-05T15:10:57.000Z",
+          "updatedAt": "2026-06-05T15:10:57.000Z",
+          "uid": "35240-29554003-cf98-4040-a3c1-a5bc97a71196"
+        }
+      ],
+      "id": "7f385e88-1522-43eb-81e5-cf52ef5bb002",
+      "createdAt": "2026-06-05T15:10:57.000Z",
+      "updatedAt": "2026-06-05T15:10:57.000Z",
+      "uid": "35240-7f385e88-1522-43eb-81e5-cf52ef5bb002"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

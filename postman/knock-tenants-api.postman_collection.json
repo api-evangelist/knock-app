@@ -1,0 +1,730 @@
+{
+  "info": {
+    "_postman_id": "83767a46-978c-4563-bb5e-044bdb054cfc",
+    "name": "Knock Tenants API",
+    "description": "Manage Tenants \u2014 the top-level accounts or workspaces in your product. Tenants power tenant-scoped branding, preferences, and message-targeting.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:45.000Z",
+    "updatedAt": "2026-06-05T15:10:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-83767a46-978c-4563-bb5e-044bdb054cfc"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "tenants",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Delete a tenant",
+                  "id": "372d303d-a449-48ba-ad91-db5e8a0043fd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/tenants/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "tenants",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e0207b28-51f5-4d72-974a-725f37340b9d",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier for the tenant."
+                        }
+                      ]
+                    },
+                    "description": "Delete a tenant and all associated data. This operation cannot be undone."
+                  },
+                  "response": [
+                    {
+                      "id": "a59c862b-5aad-4350-a79a-d7c75201b2c6",
+                      "name": "No Content",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tenants/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tenants",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:10:45.000Z",
+                      "updatedAt": "2026-06-05T15:10:45.000Z",
+                      "uid": "35240-a59c862b-5aad-4350-a79a-d7c75201b2c6"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-372d303d-a449-48ba-ad91-db5e8a0043fd"
+                },
+                {
+                  "name": "Get a tenant",
+                  "id": "cd5c9273-e523-4b3f-8dc6-c8d2f1328166",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/tenants/:id?resolve_full_preference_settings=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "tenants",
+                        ":id"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.",
+                          "key": "resolve_full_preference_settings",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "26800d8b-2539-4b1b-8e6f-44309f813a7d",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier for the tenant."
+                        }
+                      ]
+                    },
+                    "description": "Get a tenant by ID."
+                  },
+                  "response": [
+                    {
+                      "id": "2c06674e-8295-4b59-8e4f-cee67d30abf4",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tenants/:id?resolve_full_preference_settings=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tenants",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.",
+                              "key": "resolve_full_preference_settings",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"branding\": {\n      \"icon_url\": \"<uri>\",\n      \"logo_url\": \"<uri>\",\n      \"primary_color\": \"<string>\",\n      \"primary_color_contrast\": \"<string>\"\n    },\n    \"preference_set\": {\n      \"id\": \"<string>\",\n      \"categories\": {\n        \"in86\": \"<boolean>\",\n        \"dolore_3f2\": \"<boolean>\",\n        \"site3\": \"<boolean>\",\n        \"labore_99_\": \"<boolean>\"\n      },\n      \"channel_types\": {\n        \"chat\": \"<boolean>\",\n        \"email\": \"<boolean>\",\n        \"http\": \"<boolean>\",\n        \"in_app_feed\": \"<boolean>\",\n        \"push\": \"<boolean>\",\n        \"sms\": \"<boolean>\"\n      },\n      \"channels\": {\n        \"utbf\": \"<boolean>\",\n        \"non_36\": \"<boolean>\"\n      },\n      \"commercial_subscribed\": \"<boolean>\",\n      \"workflows\": {\n        \"esse__24\": \"<boolean>\",\n        \"est9\": \"<boolean>\"\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:10:45.000Z",
+                      "updatedAt": "2026-06-05T15:10:45.000Z",
+                      "uid": "35240-2c06674e-8295-4b59-8e4f-cee67d30abf4"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-cd5c9273-e523-4b3f-8dc6-c8d2f1328166"
+                },
+                {
+                  "name": "Set a tenant",
+                  "id": "73d42163-09a8-44c4-a0c1-6c77d2dd45c5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"channel_data\": {\n    \"nullable\": true\n  },\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"branding\": {\n      \"icon_url\": \"<string>\",\n      \"logo_url\": \"<string>\",\n      \"primary_color\": \"<string>\",\n      \"primary_color_contrast\": \"<string>\"\n    },\n    \"preference_set\": {\n      \"nullable\": true\n    }\n  },\n  \"pariatur_a40\": \"in dolor elit ut\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/tenants/:id?resolve_full_preference_settings=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "tenants",
+                        ":id"
+                      ],
+                      "query": [
+                        {
+                          "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.",
+                          "key": "resolve_full_preference_settings",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "e8a823d8-bc6b-487f-8284-834e4f9e5a43",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier for the tenant."
+                        }
+                      ]
+                    },
+                    "description": "Sets a tenant within an environment, performing an upsert operation. Any existing properties will be merged with the incoming properties."
+                  },
+                  "response": [
+                    {
+                      "id": "79bfcb2d-20e1-49c9-849f-6543470634cf",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"channel_data\": {\n    \"nullable\": true\n  },\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"branding\": {\n      \"icon_url\": \"<string>\",\n      \"logo_url\": \"<string>\",\n      \"primary_color\": \"<string>\",\n      \"primary_color_contrast\": \"<string>\"\n    },\n    \"preference_set\": {\n      \"nullable\": true\n    }\n  },\n  \"pariatur_a40\": \"in dolor elit ut\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tenants/:id?resolve_full_preference_settings=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tenants",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.",
+                              "key": "resolve_full_preference_settings",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"branding\": {\n      \"icon_url\": \"<uri>\",\n      \"logo_url\": \"<uri>\",\n      \"primary_color\": \"<string>\",\n      \"primary_color_contrast\": \"<string>\"\n    },\n    \"preference_set\": {\n      \"id\": \"<string>\",\n      \"categories\": {\n        \"in86\": \"<boolean>\",\n        \"dolore_3f2\": \"<boolean>\",\n        \"site3\": \"<boolean>\",\n        \"labore_99_\": \"<boolean>\"\n      },\n      \"channel_types\": {\n        \"chat\": \"<boolean>\",\n        \"email\": \"<boolean>\",\n        \"http\": \"<boolean>\",\n        \"in_app_feed\": \"<boolean>\",\n        \"push\": \"<boolean>\",\n        \"sms\": \"<boolean>\"\n      },\n      \"channels\": {\n        \"utbf\": \"<boolean>\",\n        \"non_36\": \"<boolean>\"\n      },\n      \"commercial_subscribed\": \"<boolean>\",\n      \"workflows\": {\n        \"esse__24\": \"<boolean>\",\n        \"est9\": \"<boolean>\"\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:10:45.000Z",
+                      "updatedAt": "2026-06-05T15:10:45.000Z",
+                      "uid": "35240-79bfcb2d-20e1-49c9-849f-6543470634cf"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-73d42163-09a8-44c4-a0c1-6c77d2dd45c5"
+                }
+              ],
+              "id": "d28e9d69-5dcc-4add-ada9-552a0f8795b7",
+              "createdAt": "2026-06-05T15:10:45.000Z",
+              "updatedAt": "2026-06-05T15:10:45.000Z",
+              "uid": "35240-d28e9d69-5dcc-4add-ada9-552a0f8795b7"
+            },
+            {
+              "name": "bulk",
+              "item": [
+                {
+                  "name": "delete",
+                  "item": [
+                    {
+                      "name": "Bulk delete tenants",
+                      "id": "98a396b0-7523-41dd-8853-fae4132f9b64",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tenants/bulk/delete?tenant_ids[]=<string>&tenant_ids[]=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tenants",
+                            "bulk",
+                            "delete"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The IDs of the tenants to delete.",
+                              "key": "tenant_ids[]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The IDs of the tenants to delete.",
+                              "key": "tenant_ids[]",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Delete up to 1,000 tenants at a time in a single operation. This operation cannot be undone."
+                      },
+                      "response": [
+                        {
+                          "id": "e38aa759-1ec1-4887-9cb7-964f0794c04f",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/tenants/bulk/delete?tenant_ids[]=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "tenants",
+                                "bulk",
+                                "delete"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) The IDs of the tenants to delete.",
+                                  "key": "tenant_ids[]",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"status\": \"queued\",\n  \"estimated_total_rows\": \"<integer>\",\n  \"processed_rows\": \"<integer>\",\n  \"success_count\": \"<integer>\",\n  \"updated_at\": \"<dateTime>\",\n  \"inserted_at\": \"<dateTime>\",\n  \"completed_at\": \"<dateTime>\",\n  \"error_count\": \"<integer>\",\n  \"error_items\": [\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    }\n  ],\n  \"failed_at\": \"<dateTime>\",\n  \"progress_path\": \"<uri>\",\n  \"started_at\": \"<dateTime>\"\n}",
+                          "createdAt": "2026-06-05T15:10:45.000Z",
+                          "updatedAt": "2026-06-05T15:10:45.000Z",
+                          "uid": "35240-e38aa759-1ec1-4887-9cb7-964f0794c04f"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:45.000Z",
+                      "updatedAt": "2026-06-05T15:10:45.000Z",
+                      "uid": "35240-98a396b0-7523-41dd-8853-fae4132f9b64"
+                    }
+                  ],
+                  "id": "79dabfad-cf4c-4402-a9f4-b7a50c97e85f",
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-79dabfad-cf4c-4402-a9f4-b7a50c97e85f"
+                },
+                {
+                  "name": "set",
+                  "item": [
+                    {
+                      "name": "Bulk set tenants",
+                      "id": "7512fd42-7d4d-4e44-b561-e3bdbee345ad",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tenants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tenants/bulk/set",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tenants",
+                            "bulk",
+                            "set"
+                          ]
+                        },
+                        "description": "Set or update up to 1,000 tenants in a single operation."
+                      },
+                      "response": [
+                        {
+                          "id": "999025ab-3a4f-42c1-9329-476973fcb7eb",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"tenants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/tenants/bulk/set",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "tenants",
+                                "bulk",
+                                "set"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"status\": \"queued\",\n  \"estimated_total_rows\": \"<integer>\",\n  \"processed_rows\": \"<integer>\",\n  \"success_count\": \"<integer>\",\n  \"updated_at\": \"<dateTime>\",\n  \"inserted_at\": \"<dateTime>\",\n  \"completed_at\": \"<dateTime>\",\n  \"error_count\": \"<integer>\",\n  \"error_items\": [\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"collection\": \"<string>\"\n    }\n  ],\n  \"failed_at\": \"<dateTime>\",\n  \"progress_path\": \"<uri>\",\n  \"started_at\": \"<dateTime>\"\n}",
+                          "createdAt": "2026-06-05T15:10:45.000Z",
+                          "updatedAt": "2026-06-05T15:10:45.000Z",
+                          "uid": "35240-999025ab-3a4f-42c1-9329-476973fcb7eb"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:45.000Z",
+                      "updatedAt": "2026-06-05T15:10:45.000Z",
+                      "uid": "35240-7512fd42-7d4d-4e44-b561-e3bdbee345ad"
+                    }
+                  ],
+                  "id": "83aa9b60-b9f8-405a-b6cc-bc8c21d3df1a",
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-83aa9b60-b9f8-405a-b6cc-bc8c21d3df1a"
+                }
+              ],
+              "id": "a83444a8-48cd-49cb-ba26-9a762c9872f3",
+              "createdAt": "2026-06-05T15:10:45.000Z",
+              "updatedAt": "2026-06-05T15:10:45.000Z",
+              "uid": "35240-a83444a8-48cd-49cb-ba26-9a762c9872f3"
+            },
+            {
+              "name": "List tenants",
+              "id": "04ae93d7-1f55-4f9b-ab22-2d91ab8fd037",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/tenants?tenant_id=<string>&name=<string>&after=<string>&before=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "tenants"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter tenants by ID.",
+                      "key": "tenant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter tenants by name.",
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries after.",
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries before.",
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of items per page (defaults to 50).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "List tenants for the current environment."
+              },
+              "response": [
+                {
+                  "id": "00607f13-7451-4c84-acd4-d518d351005d",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/tenants?tenant_id=<string>&name=<string>&after=<string>&before=<string>&page_size=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "tenants"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter tenants by ID.",
+                          "key": "tenant_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter tenants by name.",
+                          "key": "name",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries after.",
+                          "key": "after",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries before.",
+                          "key": "before",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of items per page (defaults to 50).",
+                          "key": "page_size",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"settings\": {\n        \"branding\": {\n          \"icon_url\": \"<uri>\",\n          \"logo_url\": \"<uri>\",\n          \"primary_color\": \"<string>\",\n          \"primary_color_contrast\": \"<string>\"\n        },\n        \"preference_set\": {\n          \"id\": \"<string>\",\n          \"categories\": {\n            \"et_1\": \"<boolean>\"\n          },\n          \"channel_types\": {\n            \"chat\": \"<boolean>\",\n            \"email\": \"<boolean>\",\n            \"http\": \"<boolean>\",\n            \"in_app_feed\": \"<boolean>\",\n            \"push\": \"<boolean>\",\n            \"sms\": \"<boolean>\"\n          },\n          \"channels\": {\n            \"voluptate_3\": \"<boolean>\"\n          },\n          \"commercial_subscribed\": \"<boolean>\",\n          \"workflows\": {\n            \"culpa_c\": \"<boolean>\"\n          }\n        }\n      }\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"settings\": {\n        \"branding\": {\n          \"icon_url\": \"<uri>\",\n          \"logo_url\": \"<uri>\",\n          \"primary_color\": \"<string>\",\n          \"primary_color_contrast\": \"<string>\"\n        },\n        \"preference_set\": {\n          \"id\": \"<string>\",\n          \"categories\": {\n            \"do4\": \"<boolean>\",\n            \"eiusmode9\": \"<boolean>\",\n            \"occaecat_5\": \"<boolean>\"\n          },\n          \"channel_types\": {\n            \"chat\": \"<boolean>\",\n            \"email\": \"<boolean>\",\n            \"http\": \"<boolean>\",\n            \"in_app_feed\": \"<boolean>\",\n            \"push\": \"<boolean>\",\n            \"sms\": \"<boolean>\"\n          },\n          \"channels\": {\n            \"sint_6c5\": \"<boolean>\",\n            \"Loremd\": \"<boolean>\"\n          },\n          \"commercial_subscribed\": \"<boolean>\",\n          \"workflows\": {\n            \"do64f\": \"<boolean>\",\n            \"adipisicing8c\": \"<boolean>\"\n          }\n        }\n      }\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:10:45.000Z",
+                  "updatedAt": "2026-06-05T15:10:45.000Z",
+                  "uid": "35240-00607f13-7451-4c84-acd4-d518d351005d"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:45.000Z",
+              "updatedAt": "2026-06-05T15:10:45.000Z",
+              "uid": "35240-04ae93d7-1f55-4f9b-ab22-2d91ab8fd037"
+            }
+          ],
+          "id": "1efbcf13-289f-419b-a75c-f4d87555bfb1",
+          "createdAt": "2026-06-05T15:10:45.000Z",
+          "updatedAt": "2026-06-05T15:10:45.000Z",
+          "uid": "35240-1efbcf13-289f-419b-a75c-f4d87555bfb1"
+        }
+      ],
+      "id": "403131bd-2ef1-42e2-ae7e-191b86956552",
+      "createdAt": "2026-06-05T15:10:45.000Z",
+      "updatedAt": "2026-06-05T15:10:45.000Z",
+      "uid": "35240-403131bd-2ef1-42e2-ae7e-191b86956552"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

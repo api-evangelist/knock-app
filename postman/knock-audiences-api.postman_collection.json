@@ -1,0 +1,386 @@
+{
+  "info": {
+    "_postman_id": "455d56fb-3177-4c7d-b8a7-d5aa66b11705",
+    "name": "Knock Audiences API",
+    "description": "Manage static Audiences and their members. Audiences power lifecycle messaging \u2014 when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:49.000Z",
+    "updatedAt": "2026-06-05T15:10:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-455d56fb-3177-4c7d-b8a7-d5aa66b11705"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "audiences",
+          "item": [
+            {
+              "name": "{key}",
+              "item": [
+                {
+                  "name": "members",
+                  "item": [
+                    {
+                      "name": "Remove members",
+                      "id": "2fa7ba83-fcb2-4bfe-bbfe-404c6591e0a0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"cupidatat4b\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"exercitation_89d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"qui_63d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"laboris9\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"minimff3\": \"<boolean>\",\n              \"elit61a\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"exercitation_2\": \"<boolean>\",\n              \"minim_8\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"cillum_5\": \"<boolean>\",\n              \"eu1\": \"<boolean>\"\n            }\n          },\n          \"minim_ba\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"quisc21\": \"<boolean>\",\n              \"enim_a0\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"consectetur_28\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"in_1e\": \"<boolean>\",\n              \"Ut_f\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Lorem13\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"nulla_1c\": {\n            \"__persistence_strategy__\": \"replace\",\n            \"categories\": {\n              \"consequat566\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"nisi_4\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"sit3\": \"<boolean>\",\n              \"pariatur0\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audiences/:key/members",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audiences",
+                            ":key",
+                            "members"
+                          ],
+                          "variable": [
+                            {
+                              "id": "69d893fa-6624-4a3b-8bc7-fb5182f8dacb",
+                              "key": "key",
+                              "value": "<string>",
+                              "description": "(Required) The key of the audience."
+                            }
+                          ]
+                        },
+                        "description": "Removes one or more members from the specified audience."
+                      },
+                      "response": [
+                        {
+                          "id": "65cfb399-4956-4ac7-a619-540f5ccb2357",
+                          "name": "No Content",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"cupidatat4b\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"exercitation_89d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"qui_63d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"laboris9\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"minimff3\": \"<boolean>\",\n              \"elit61a\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"exercitation_2\": \"<boolean>\",\n              \"minim_8\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"cillum_5\": \"<boolean>\",\n              \"eu1\": \"<boolean>\"\n            }\n          },\n          \"minim_ba\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"quisc21\": \"<boolean>\",\n              \"enim_a0\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"consectetur_28\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"in_1e\": \"<boolean>\",\n              \"Ut_f\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Lorem13\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"nulla_1c\": {\n            \"__persistence_strategy__\": \"replace\",\n            \"categories\": {\n              \"consequat566\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"nisi_4\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"sit3\": \"<boolean>\",\n              \"pariatur0\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/audiences/:key/members",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "audiences",
+                                ":key",
+                                "members"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "key"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-06-05T15:10:50.000Z",
+                          "updatedAt": "2026-06-05T15:10:50.000Z",
+                          "uid": "35240-65cfb399-4956-4ac7-a619-540f5ccb2357"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:50.000Z",
+                      "updatedAt": "2026-06-05T15:10:50.000Z",
+                      "uid": "35240-2fa7ba83-fcb2-4bfe-bbfe-404c6591e0a0"
+                    },
+                    {
+                      "name": "List members",
+                      "id": "fe8fe508-8a7b-4871-a4e8-52e2f13eb6cd",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audiences/:key/members",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audiences",
+                            ":key",
+                            "members"
+                          ],
+                          "variable": [
+                            {
+                              "id": "604f2bad-9d88-4343-8e78-7b083b91c7e2",
+                              "key": "key",
+                              "value": "<string>",
+                              "description": "(Required) The key of the audience."
+                            }
+                          ]
+                        },
+                        "description": "Returns a paginated list of members for the specified audience."
+                      },
+                      "response": [
+                        {
+                          "id": "93f422bf-8b5d-402d-9269-1bf7fbd7c6bc",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/audiences/:key/members",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "audiences",
+                                ":key",
+                                "members"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "key"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"<string>\",\n      \"added_at\": \"<dateTime>\",\n      \"user_id\": \"<string>\",\n      \"user\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"added_at\": \"<dateTime>\",\n      \"user_id\": \"<string>\",\n      \"user\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:50.000Z",
+                          "updatedAt": "2026-06-05T15:10:50.000Z",
+                          "uid": "35240-93f422bf-8b5d-402d-9269-1bf7fbd7c6bc"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:50.000Z",
+                      "updatedAt": "2026-06-05T15:10:50.000Z",
+                      "uid": "35240-fe8fe508-8a7b-4871-a4e8-52e2f13eb6cd"
+                    },
+                    {
+                      "name": "Add members",
+                      "id": "db20383e-3d76-4a88-a58d-25b6f360d7b4",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Excepteur_e0f\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"anim_5d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"ullamco8d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"dolore8\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"elit_461\": {\n            \"__persistence_strategy__\": \"replace\",\n            \"categories\": {\n              \"cillum__\": \"<boolean>\",\n              \"Excepteur_66\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"ipsum_29c\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"dolore_8\": \"<boolean>\",\n              \"Utf5\": \"<boolean>\"\n            }\n          },\n          \"incididunt_d\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"deserunt6\": \"<boolean>\",\n              \"culpa_43_\": \"<boolean>\",\n              \"dolor_6f7\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"eiusmodf88\": \"<boolean>\",\n              \"officia_a\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"in50c\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Duis2_\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"aliqua_d4\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"commodo__e9\": \"<boolean>\",\n              \"nulla_ab5\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"dolore_2d\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"sit_162\": \"<boolean>\",\n              \"enim_2\": \"<boolean>\",\n              \"reprehenderit_50\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audiences/:key/members?create_audience=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audiences",
+                            ":key",
+                            "members"
+                          ],
+                          "query": [
+                            {
+                              "description": "Create the audience if it does not exist.",
+                              "key": "create_audience",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "107e7368-4c06-4877-a00c-b3b610bd40a2",
+                              "key": "key",
+                              "value": "<string>",
+                              "description": "(Required) The key of the audience."
+                            }
+                          ]
+                        },
+                        "description": "Adds one or more members to the specified audience."
+                      },
+                      "response": [
+                        {
+                          "id": "05c5bf82-4b2d-41a3-af8d-7f7e599bbbb4",
+                          "name": "No Content",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Excepteur_e0f\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"anim_5d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"ullamco8d\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          \"dolore8\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"elit_461\": {\n            \"__persistence_strategy__\": \"replace\",\n            \"categories\": {\n              \"cillum__\": \"<boolean>\",\n              \"Excepteur_66\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"ipsum_29c\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"dolore_8\": \"<boolean>\",\n              \"Utf5\": \"<boolean>\"\n            }\n          },\n          \"incididunt_d\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"deserunt6\": \"<boolean>\",\n              \"culpa_43_\": \"<boolean>\",\n              \"dolor_6f7\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"eiusmodf88\": \"<boolean>\",\n              \"officia_a\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"in50c\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"Duis2_\": {\n            \"tokens\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"aliqua_d4\": {\n            \"__persistence_strategy__\": \"merge\",\n            \"categories\": {\n              \"commodo__e9\": \"<boolean>\",\n              \"nulla_ab5\": \"<boolean>\"\n            },\n            \"channel_types\": {\n              \"chat\": \"<boolean>\",\n              \"email\": \"<boolean>\",\n              \"http\": \"<boolean>\",\n              \"in_app_feed\": \"<boolean>\",\n              \"push\": \"<boolean>\",\n              \"sms\": \"<boolean>\"\n            },\n            \"channels\": {\n              \"dolore_2d\": \"<boolean>\"\n            },\n            \"commercial_subscribed\": \"<boolean>\",\n            \"workflows\": {\n              \"sit_162\": \"<boolean>\",\n              \"enim_2\": \"<boolean>\",\n              \"reprehenderit_50\": \"<boolean>\"\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/audiences/:key/members?create_audience=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "audiences",
+                                ":key",
+                                "members"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Create the audience if it does not exist.",
+                                  "key": "create_audience",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "key"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-06-05T15:10:50.000Z",
+                          "updatedAt": "2026-06-05T15:10:50.000Z",
+                          "uid": "35240-05c5bf82-4b2d-41a3-af8d-7f7e599bbbb4"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:50.000Z",
+                      "updatedAt": "2026-06-05T15:10:50.000Z",
+                      "uid": "35240-db20383e-3d76-4a88-a58d-25b6f360d7b4"
+                    }
+                  ],
+                  "id": "4d9d0424-5e91-453b-b78f-db293258dded",
+                  "createdAt": "2026-06-05T15:10:49.000Z",
+                  "updatedAt": "2026-06-05T15:10:49.000Z",
+                  "uid": "35240-4d9d0424-5e91-453b-b78f-db293258dded"
+                }
+              ],
+              "id": "9df9cb58-1374-487e-8762-8901becea2d0",
+              "createdAt": "2026-06-05T15:10:49.000Z",
+              "updatedAt": "2026-06-05T15:10:49.000Z",
+              "uid": "35240-9df9cb58-1374-487e-8762-8901becea2d0"
+            }
+          ],
+          "id": "59214c43-1bd9-4857-af20-a8b30752fed0",
+          "createdAt": "2026-06-05T15:10:49.000Z",
+          "updatedAt": "2026-06-05T15:10:49.000Z",
+          "uid": "35240-59214c43-1bd9-4857-af20-a8b30752fed0"
+        }
+      ],
+      "id": "bc838bfb-236b-4216-a24f-5724850dabbd",
+      "createdAt": "2026-06-05T15:10:49.000Z",
+      "updatedAt": "2026-06-05T15:10:49.000Z",
+      "uid": "35240-bc838bfb-236b-4216-a24f-5724850dabbd"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

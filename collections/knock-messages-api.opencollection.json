@@ -1,0 +1,612 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Messages API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List delivery logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/:message_id/delivery_logs",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the message to fetch delivery logs for."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of delivery logs for the specified message."
+        },
+        {
+          "info": {
+            "name": "List messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "tenant",
+                "value": "tenant_123",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding tenant."
+              },
+              {
+                "name": "channel_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding channel ID."
+              },
+              {
+                "name": "status[]",
+                "value": "delivered",
+                "type": "query",
+                "description": "Limits the results to messages with the given delivery status."
+              },
+              {
+                "name": "engagement_status[]",
+                "value": "unread",
+                "type": "query",
+                "description": "Limits the results to messages with the given engagement status."
+              },
+              {
+                "name": "message_ids[]",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "query",
+                "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query."
+              },
+              {
+                "name": "workflow_categories[]",
+                "value": "workflow_123",
+                "type": "query",
+                "description": "Limits the results to messages related to any of the provided categories."
+              },
+              {
+                "name": "source",
+                "value": "comment-created",
+                "type": "query",
+                "description": "Limits the results to messages triggered by the given workflow key."
+              },
+              {
+                "name": "workflow_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages associated with the top-level workflow run ID returned by the workflow trigger request."
+              },
+              {
+                "name": "workflow_recipient_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages for a specific recipient's workflow run."
+              },
+              {
+                "name": "trigger_data",
+                "value": "{\"comment_id\": \"123\"}",
+                "type": "query",
+                "description": "Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering) for more information."
+              },
+              {
+                "name": "inserted_at.gt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after the given date."
+              },
+              {
+                "name": "inserted_at.gte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after or on the given date."
+              },
+              {
+                "name": "inserted_at.lt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before the given date."
+              },
+              {
+                "name": "inserted_at.lte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before or on the given date."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of messages for the current environment."
+        },
+        {
+          "info": {
+            "name": "Mark message as unseen",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/unseen",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark messages as unarchived",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/unarchived",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as unarchived. This reverses the `archived` state. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+        },
+        {
+          "info": {
+            "name": "Mark message as unread",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/unread",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark message as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/messages/:message_id/seen",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `seen`. This indicates that the user has viewed the message in their feed or inbox. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark message as unseen",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/seen",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/:message_id/events",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the message to fetch events for."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of events for the specified message."
+        },
+        {
+          "info": {
+            "name": "Mark messages as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/seen",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as `seen`. This indicates that the user has viewed the message in their feed or inbox. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark messages as unseen",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/unseen",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark message as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/messages/:message_id/read",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `read`. This indicates that the user has read the message content. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Mark message as unread",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/read",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Marks a message as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Batch get message contents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/batch/content",
+            "params": [
+              {
+                "name": "message_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The IDs of the messages to fetch contents of."
+              }
+            ]
+          },
+          "docs": "Get the contents of multiple messages in a single request."
+        },
+        {
+          "info": {
+            "name": "Get message content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/:message_id/content",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the message to fetch contents of."
+              }
+            ]
+          },
+          "docs": "Returns the fully rendered contents of a message, where the response depends on which channel the message was sent through."
+        },
+        {
+          "info": {
+            "name": "List activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/:message_id/activities",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the message to fetch activities for."
+              },
+              {
+                "name": "trigger_data",
+                "value": "",
+                "type": "query",
+                "description": "The trigger data to filter activities by."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of activities for the specified message."
+        },
+        {
+          "info": {
+            "name": "Mark messages as unread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/unread",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Archive message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/messages/:message_id/archived",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Archives a message for the user. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+        },
+        {
+          "info": {
+            "name": "Unarchive message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/archived",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Removes a message from the archived state, making it visible in the default message list in the feed again."
+        },
+        {
+          "info": {
+            "name": "Mark messages as archived",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/archived",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as archived. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+        },
+        {
+          "info": {
+            "name": "Mark message as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/messages/:message_id/interacted",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks a message as `interacted` with by the user. This can include any user action on the message, with optional metadata about the specific interaction. Cannot include more than 5 key-value pairs, must not contain nested data. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Unarchive message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/messages/:message_id/unarchived",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Removes a message from the archived state, making it visible in the default message list in the feed again."
+        },
+        {
+          "info": {
+            "name": "Mark messages as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/read",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as `read`. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        },
+        {
+          "info": {
+            "name": "Get message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/messages/:message_id",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "path",
+                "description": "The unique identifier for the message."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific message by its ID."
+        },
+        {
+          "info": {
+            "name": "Mark messages as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/messages/batch/interacted",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks the given messages as interacted with by the user. This can include any user action on the message, with optional metadata about the specific interaction. Cannot include more than 5 key-value pairs, must not contain nested data. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

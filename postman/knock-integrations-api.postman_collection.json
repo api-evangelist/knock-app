@@ -1,0 +1,298 @@
+{
+  "info": {
+    "_postman_id": "8ccb6c9b-e687-479d-91b5-2cfe3795a490",
+    "name": "Knock Integrations API",
+    "description": "Inspect integrations configured for the current environment. Used by SlackKit and TeamsKit clients to discover the destinations available for a recipient.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:53.000Z",
+    "updatedAt": "2026-06-05T15:10:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8ccb6c9b-e687-479d-91b5-2cfe3795a490"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "integrations",
+          "item": [
+            {
+              "name": "census",
+              "item": [
+                {
+                  "name": "custom-destination",
+                  "item": [
+                    {
+                      "name": "Process a Census RPC request",
+                      "id": "82461950-814f-4d53-848e-58dad56761da",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"id\": \"<string>\",\n  \"method\": \"<string>\",\n  \"jsonrpc\": \"<string>\",\n  \"params\": {\n    \"consequat_66\": true\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/integrations/census/custom-destination",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "integrations",
+                            "census",
+                            "custom-destination"
+                          ]
+                        },
+                        "description": "Processes a Census custom destination RPC request."
+                      },
+                      "response": [
+                        {
+                          "id": "1db6c7b0-cdfe-430c-b74a-257a3d28e9e1",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"id\": \"<string>\",\n  \"method\": \"<string>\",\n  \"jsonrpc\": \"<string>\",\n  \"params\": {\n    \"consequat_66\": true\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/integrations/census/custom-destination",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "integrations",
+                                "census",
+                                "custom-destination"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\",\n  \"result\": {\n    \"nostrud_2\": 14679567,\n    \"Duis_4\": 23097573,\n    \"esse_2\": 10974162,\n    \"officia2\": 57018734\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:54.000Z",
+                          "updatedAt": "2026-06-05T15:10:54.000Z",
+                          "uid": "35240-1db6c7b0-cdfe-430c-b74a-257a3d28e9e1"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:54.000Z",
+                      "updatedAt": "2026-06-05T15:10:54.000Z",
+                      "uid": "35240-82461950-814f-4d53-848e-58dad56761da"
+                    }
+                  ],
+                  "id": "62734844-c5ac-45d5-b694-2758201332da",
+                  "createdAt": "2026-06-05T15:10:54.000Z",
+                  "updatedAt": "2026-06-05T15:10:54.000Z",
+                  "uid": "35240-62734844-c5ac-45d5-b694-2758201332da"
+                }
+              ],
+              "id": "a32e6344-f525-41ce-856d-425d3fe3d890",
+              "createdAt": "2026-06-05T15:10:54.000Z",
+              "updatedAt": "2026-06-05T15:10:54.000Z",
+              "uid": "35240-a32e6344-f525-41ce-856d-425d3fe3d890"
+            },
+            {
+              "name": "hightouch",
+              "item": [
+                {
+                  "name": "embedded-destination",
+                  "item": [
+                    {
+                      "name": "Process a Hightouch RPC request",
+                      "id": "783debe9-ebff-4050-aa76-ea9115267f9a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"id\": \"<string>\",\n  \"method\": \"<string>\",\n  \"jsonrpc\": \"<string>\",\n  \"params\": {\n    \"consequat_66\": true\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/integrations/hightouch/embedded-destination",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "integrations",
+                            "hightouch",
+                            "embedded-destination"
+                          ]
+                        },
+                        "description": "Processes a Hightouch embedded destination RPC request."
+                      },
+                      "response": [
+                        {
+                          "id": "a76ed5ab-d694-4f4e-8296-0592bf541eea",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"id\": \"<string>\",\n  \"method\": \"<string>\",\n  \"jsonrpc\": \"<string>\",\n  \"params\": {\n    \"consequat_66\": true\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/integrations/hightouch/embedded-destination",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "integrations",
+                                "hightouch",
+                                "embedded-destination"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\",\n  \"result\": {\n    \"nostrud_2\": 14679567,\n    \"Duis_4\": 23097573,\n    \"esse_2\": 10974162,\n    \"officia2\": 57018734\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:54.000Z",
+                          "updatedAt": "2026-06-05T15:10:54.000Z",
+                          "uid": "35240-a76ed5ab-d694-4f4e-8296-0592bf541eea"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:54.000Z",
+                      "updatedAt": "2026-06-05T15:10:54.000Z",
+                      "uid": "35240-783debe9-ebff-4050-aa76-ea9115267f9a"
+                    }
+                  ],
+                  "id": "42239815-454e-4a61-aed0-2f2273ab68bc",
+                  "createdAt": "2026-06-05T15:10:54.000Z",
+                  "updatedAt": "2026-06-05T15:10:54.000Z",
+                  "uid": "35240-42239815-454e-4a61-aed0-2f2273ab68bc"
+                }
+              ],
+              "id": "d67bdce0-b4e7-43d2-8669-dcbca746862d",
+              "createdAt": "2026-06-05T15:10:54.000Z",
+              "updatedAt": "2026-06-05T15:10:54.000Z",
+              "uid": "35240-d67bdce0-b4e7-43d2-8669-dcbca746862d"
+            }
+          ],
+          "id": "b3ce0858-c710-4bed-b477-cacd40af589c",
+          "createdAt": "2026-06-05T15:10:54.000Z",
+          "updatedAt": "2026-06-05T15:10:54.000Z",
+          "uid": "35240-b3ce0858-c710-4bed-b477-cacd40af589c"
+        }
+      ],
+      "id": "f1248f11-a7cc-4e2a-9c76-5c75e5172ec9",
+      "createdAt": "2026-06-05T15:10:54.000Z",
+      "updatedAt": "2026-06-05T15:10:54.000Z",
+      "uid": "35240-f1248f11-a7cc-4e2a-9c76-5c75e5172ec9"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

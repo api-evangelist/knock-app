@@ -1,0 +1,1085 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Users API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Guides",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Mark guide as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/seen",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been seen by a user, triggering any associated seen events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/seen",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been seen by a user, triggering any associated seen events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as archived",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been archived by a user, triggering any associated archived events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as unarchived",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been unarchived, triggering any associated unarchived events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/interacted",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a user has interacted with a guide, triggering any associated interacted events."
+        },
+        {
+          "info": {
+            "name": "Reset guide engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/engagements/reset",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next interaction creates a fresh engagement."
+        },
+        {
+          "info": {
+            "name": "List guides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The tenant ID to use for targeting and rendering guides."
+              },
+              {
+                "name": "data",
+                "value": "",
+                "type": "query",
+                "description": "The data (JSON encoded object) to use for targeting and rendering guides."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of guides to filter by."
+              }
+            ]
+          },
+          "docs": "Returns a list of eligible in-app guides for a specific user and channel."
+        },
+        {
+          "info": {
+            "name": "Mark guide as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/interacted",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a user has interacted with a guide, triggering any associated interacted events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as archived",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been archived by a user, triggering any associated archived events."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List feed items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/feeds/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              },
+              {
+                "name": "status",
+                "value": "unread",
+                "type": "query",
+                "description": "The status of the feed items."
+              },
+              {
+                "name": "source",
+                "value": "my_source",
+                "type": "query",
+                "description": "The workflow key associated with the message in the feed."
+              },
+              {
+                "name": "tenant",
+                "value": "my_tenant",
+                "type": "query",
+                "description": "The tenant associated with the feed items."
+              },
+              {
+                "name": "has_tenant",
+                "value": "true",
+                "type": "query",
+                "description": "Whether the feed items have a tenant."
+              },
+              {
+                "name": "workflow_categories[]",
+                "value": "my_workflow_category",
+                "type": "query",
+                "description": "The workflow categories of the feed items."
+              },
+              {
+                "name": "archived",
+                "value": "exclude",
+                "type": "query",
+                "description": "The archived status of the feed items."
+              },
+              {
+                "name": "trigger_data",
+                "value": "{ \"key\": \"value\" }",
+                "type": "query",
+                "description": "The trigger data of the feed items (as a JSON string)."
+              },
+              {
+                "name": "locale",
+                "value": "en-US",
+                "type": "query",
+                "description": "The locale to render the feed items in. Must be in the IETF 5646 format (e.g. `en-US`). When not provided, will default to the locale that the feed items were rendered in. Only available for enterprise plan customers using custom translations."
+              },
+              {
+                "name": "exclude",
+                "value": "entries.archived_at,entries.clicked_at",
+                "type": "query",
+                "description": "Comma-separated list of field paths to exclude from the response. Use dot notation for nested fields (e.g., `entries.archived_at`). Limited to 3 levels deep."
+              },
+              {
+                "name": "mode",
+                "value": "compact",
+                "type": "query",
+                "description": "The mode to render the feed items in. Can be `compact` or `rich`. Defaults to `rich`. When `mode` is `compact`, feed items will not have `activities` and `total_activities` fields; the `data` field will not include nested arrays and objects; and the `actors` field will only have up to one actor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "inserted_at.gt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after the given date."
+              },
+              {
+                "name": "inserted_at.gte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after or on the given date."
+              },
+              {
+                "name": "inserted_at.lt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before the given date."
+              },
+              {
+                "name": "inserted_at.lte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before or on the given date."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of feed items for a user in reverse chronological order, including metadata about the feed. If the user has not yet been identified within Knock, an empty feed will be returned.\n\nYou can customize the response using [response filters](/integrations/in-app/knock#customizing-api-response-content) to exclude or only include specific properties on your resources.\n\n**Notes:**\n* When making this call from a client-side environment, use your publishable key along with a user to"
+        },
+        {
+          "info": {
+            "name": "Get feed settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/feeds/:id/settings",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Returns the feed settings for a user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/subscriptions",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user ID to list subscriptions for."
+              },
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Associated resources to include in the response."
+              },
+              {
+                "name": "objects[]",
+                "value": "",
+                "type": "query",
+                "description": "Only returns subscriptions for the specified object references."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of subscriptions for a specific user, in descending order."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific user by their ID."
+        },
+        {
+          "info": {
+            "name": "Identify user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a user with the provided identification data. When you identify an existing user, the system merges the properties you specific with what is currently set on the user, updating only the fields included in your requests."
+        },
+        {
+          "info": {
+            "name": "Delete user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to delete."
+              }
+            ]
+          },
+          "docs": "Permanently delete a user and all associated data."
+        },
+        {
+          "info": {
+            "name": "Update category in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/categories/:key"
+          },
+          "docs": "Updates a single category in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Merge users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/:user_id/merge",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the user to merge into."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge two users together, where the user specified with the `from_user_id` param will be merged into the user specified by `user_id`."
+        },
+        {
+          "info": {
+            "name": "Bulk set preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/preferences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk sets the preferences for up to 1,000 users at a time. The preference set `:id` can be either `default` or a `tenant.id`. Learn more about [per-tenant preferences](/preferences/tenant-preferences). Note that this is a destructive operation and will replace any existing users' preferences with the preferences sent."
+        },
+        {
+          "info": {
+            "name": "Bulk identify users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/identify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Identifies multiple users in a single operation. Allows creating or updating up to 1,000 users in a single batch with various properties, preferences, and channel data."
+        },
+        {
+          "info": {
+            "name": "Update workflows in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/workflows"
+          },
+          "docs": "Updates the workflows in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Update categories in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/categories"
+          },
+          "docs": "Updates the categories in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Bulk delete users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently deletes up to 1,000 users at a time."
+        },
+        {
+          "info": {
+            "name": "Update channel type in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/channel_types/:type"
+          },
+          "docs": "Updates a single channel type in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "List user preference sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all preference sets for a specific user."
+        },
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users",
+            "params": [
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Associated resources to include in the response."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of users in the environment. Defaults to 50 users per page."
+        },
+        {
+          "info": {
+            "name": "Update workflow in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/workflows/:key"
+          },
+          "docs": "Updates a single workflow in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Get user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier for the tenant."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific preference set for a user identified by the preference set ID."
+        },
+        {
+          "info": {
+            "name": "Update user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a complete preference set for a user. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use '__persistence_strategy__': 'merge' to merge with existing preferences instead."
+        },
+        {
+          "info": {
+            "name": "Delete user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Unsets the preference set for the user, removing it entirely."
+        },
+        {
+          "info": {
+            "name": "Update channel types in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/channel_types"
+          },
+          "docs": "Updates the channel types in a specific user preference set. This operation is deprecated."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channel data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Retrieves the channel data for a specific user and channel ID."
+        },
+        {
+          "info": {
+            "name": "Set channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates or creates channel data for a specific user and channel ID. If no user exists in the current environment for the given `user_id`, Knock will create the user entry as part of this request."
+        },
+        {
+          "info": {
+            "name": "Unset channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Deletes channel data for a specific user and channel ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/schedules",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user ID to list schedules for."
+              },
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "The workflow key to filter schedules for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The tenant ID to filter schedules for."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of schedules for a specific user, in descending order."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/messages",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "tenant",
+                "value": "tenant_123",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding tenant."
+              },
+              {
+                "name": "channel_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to items with the corresponding channel ID."
+              },
+              {
+                "name": "status[]",
+                "value": "delivered",
+                "type": "query",
+                "description": "Limits the results to messages with the given delivery status."
+              },
+              {
+                "name": "engagement_status[]",
+                "value": "unread",
+                "type": "query",
+                "description": "Limits the results to messages with the given engagement status."
+              },
+              {
+                "name": "message_ids[]",
+                "value": "1jNaXzB2RZX3LY8wVQnfCKyPnv7",
+                "type": "query",
+                "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query."
+              },
+              {
+                "name": "workflow_categories[]",
+                "value": "workflow_123",
+                "type": "query",
+                "description": "Limits the results to messages related to any of the provided categories."
+              },
+              {
+                "name": "source",
+                "value": "comment-created",
+                "type": "query",
+                "description": "Limits the results to messages triggered by the given workflow key."
+              },
+              {
+                "name": "workflow_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages associated with the top-level workflow run ID returned by the workflow trigger request."
+              },
+              {
+                "name": "workflow_recipient_run_id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "query",
+                "description": "Limits the results to messages for a specific recipient's workflow run."
+              },
+              {
+                "name": "trigger_data",
+                "value": "{\"comment_id\": \"123\"}",
+                "type": "query",
+                "description": "Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering) for more information."
+              },
+              {
+                "name": "inserted_at.gt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after the given date."
+              },
+              {
+                "name": "inserted_at.gte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after or on the given date."
+              },
+              {
+                "name": "inserted_at.lt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before the given date."
+              },
+              {
+                "name": "inserted_at.lte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before or on the given date."
+              },
+              {
+                "name": "user_id",
+                "value": "user-123",
+                "type": "path",
+                "description": "The user ID to list messages for."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of messages for a specific user. Messages are sorted with the most recent ones appearing first. Messages outside the account's retention window will not be included in the results."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

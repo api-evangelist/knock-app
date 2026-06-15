@@ -1,0 +1,2871 @@
+{
+  "info": {
+    "_postman_id": "6073b8e4-f3ad-420b-8dfa-a1440ae071dc",
+    "name": "Knock Messages API",
+    "description": "Read, list, and update Knock messages \u2014 the per-recipient delivery records produced by workflow runs. Includes activity, delivery log, and event timelines plus mark-as-seen/read/interacted/archived single and batch endpoints.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:27.000Z",
+    "updatedAt": "2026-06-05T15:10:27.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6073b8e4-f3ad-420b-8dfa-a1440ae071dc"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "messages",
+          "item": [
+            {
+              "name": "{message_id}",
+              "item": [
+                {
+                  "name": "delivery_logs",
+                  "item": [
+                    {
+                      "name": "List delivery logs",
+                      "id": "99a2d0c5-b796-4f66-8e74-21d2a3919f5e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/delivery_logs?after=<string>&before=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "delivery_logs"
+                          ],
+                          "query": [
+                            {
+                              "description": "The cursor to fetch entries after.",
+                              "key": "after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The cursor to fetch entries before.",
+                              "key": "before",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The number of items per page (defaults to 50).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "c87bbc3c-7684-4966-ba70-2657e8fcf2cb",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The ID of the message to fetch delivery logs for."
+                            }
+                          ]
+                        },
+                        "description": "Returns a paginated list of delivery logs for the specified message."
+                      },
+                      "response": [
+                        {
+                          "id": "0f5e76ca-68e6-4bc8-b4ff-04c48e99907f",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/delivery_logs?after=<string>&before=<string>&page_size=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "delivery_logs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The cursor to fetch entries after.",
+                                  "key": "after",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The cursor to fetch entries before.",
+                                  "key": "before",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The number of items per page (defaults to 50).",
+                                  "key": "page_size",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"items\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"environment_id\": \"<uuid>\",\n      \"request\": {\n        \"body\": \"<string>\",\n        \"headers\": {\n          \"nulla7\": \"consectetur nulla amet\"\n        },\n        \"host\": \"<string>\",\n        \"method\": \"GET\",\n        \"path\": \"<string>\",\n        \"query\": \"<string>\"\n      },\n      \"response\": {\n        \"body\": \"<string>\",\n        \"headers\": {\n          \"sedfb0\": 14998865,\n          \"ut9_\": \"sunt e\",\n          \"tempor_41\": -42486878.55267774\n        },\n        \"status\": \"<integer>\"\n      },\n      \"service_name\": \"<string>\",\n      \"inserted_at\": \"<string>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"environment_id\": \"<uuid>\",\n      \"request\": {\n        \"body\": \"<string>\",\n        \"headers\": {\n          \"laborisd74\": -9204059,\n          \"anim96\": -30585047.56318201\n        },\n        \"host\": \"<string>\",\n        \"method\": \"GET\",\n        \"path\": \"<string>\",\n        \"query\": \"<string>\"\n      },\n      \"response\": {\n        \"body\": \"<string>\",\n        \"headers\": {\n          \"fugiat7d1\": \"aliqua nostrud ut\",\n          \"anim_1\": 77514261\n        },\n        \"status\": \"<integer>\"\n      },\n      \"service_name\": \"<string>\",\n      \"inserted_at\": \"<string>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-0f5e76ca-68e6-4bc8-b4ff-04c48e99907f"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-99a2d0c5-b796-4f66-8e74-21d2a3919f5e"
+                    }
+                  ],
+                  "id": "f9874d77-340d-4be6-aaae-68a01ccb242b",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-f9874d77-340d-4be6-aaae-68a01ccb242b"
+                },
+                {
+                  "name": "unseen",
+                  "item": [
+                    {
+                      "name": "Mark message as unseen",
+                      "id": "a7a2b9c9-37af-4d17-b5f8-3001b84d1539",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/unseen",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "unseen"
+                          ],
+                          "variable": [
+                            {
+                              "id": "848b552e-5f20-4599-8af9-d57d161bbb8f",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "2fbda57b-1660-42d8-b93a-822f7d04f393",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/unseen",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "unseen"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivered\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"read\",\n    \"interacted\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"magna7\": \"cupidatat consectetur\"\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"pariatur09a\": false\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-2fbda57b-1660-42d8-b93a-822f7d04f393"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-a7a2b9c9-37af-4d17-b5f8-3001b84d1539"
+                    }
+                  ],
+                  "id": "67659243-5315-4521-9099-e840a1c2e265",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-67659243-5315-4521-9099-e840a1c2e265"
+                },
+                {
+                  "name": "unread",
+                  "item": [
+                    {
+                      "name": "Mark message as unread",
+                      "id": "224421b0-8ee7-45cf-a9ce-0aabfe740c07",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/unread",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "unread"
+                          ],
+                          "variable": [
+                            {
+                              "id": "4cb47027-fcac-47ea-b4df-c22015b07963",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "7c7f292d-9dda-4ead-8741-891d884db964",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/unread",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "unread"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"interacted\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"labore4e4\": -8236969.126680508,\n    \"deserunt_a5\": -71909534\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"elit_66\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-7c7f292d-9dda-4ead-8741-891d884db964"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-224421b0-8ee7-45cf-a9ce-0aabfe740c07"
+                    }
+                  ],
+                  "id": "36822621-d1bc-4448-96c0-c5651beefb78",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-36822621-d1bc-4448-96c0-c5651beefb78"
+                },
+                {
+                  "name": "seen",
+                  "item": [
+                    {
+                      "name": "Mark message as unseen",
+                      "id": "1c6059da-3853-4de8-a172-a21902ce7542",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/seen",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "seen"
+                          ],
+                          "variable": [
+                            {
+                              "id": "416cccb4-bb24-4487-aa3a-9294872ef09b",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "9623ab5f-1386-4bdc-abbe-36d4207d300f",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/seen",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "seen"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivered\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"read\",\n    \"interacted\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"magna7\": \"cupidatat consectetur\"\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"pariatur09a\": false\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-9623ab5f-1386-4bdc-abbe-36d4207d300f"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-1c6059da-3853-4de8-a172-a21902ce7542"
+                    },
+                    {
+                      "name": "Mark message as seen",
+                      "id": "ac96e182-e8fc-4404-988b-24dfcd3f6342",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/seen",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "seen"
+                          ],
+                          "variable": [
+                            {
+                              "id": "d8738180-bdcf-425a-9c5d-5c8a6d3b041b",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `seen`. This indicates that the user has viewed the message in their feed or inbox. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "f92baf71-665c-4ca3-803a-a1402cd82ce4",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/seen",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "seen"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"interacted\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"labore4e4\": -8236969.126680508,\n    \"deserunt_a5\": -71909534\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"elit_66\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-f92baf71-665c-4ca3-803a-a1402cd82ce4"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-ac96e182-e8fc-4404-988b-24dfcd3f6342"
+                    }
+                  ],
+                  "id": "5993d87c-5d98-4231-8bcc-44195b601e69",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-5993d87c-5d98-4231-8bcc-44195b601e69"
+                },
+                {
+                  "name": "events",
+                  "item": [
+                    {
+                      "name": "List events",
+                      "id": "5d80abc0-ddb5-4946-95bf-5f9e9e17ab62",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/events?after=<string>&before=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "events"
+                          ],
+                          "query": [
+                            {
+                              "description": "The cursor to fetch entries after.",
+                              "key": "after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The cursor to fetch entries before.",
+                              "key": "before",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The number of items per page (defaults to 50).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "5357c2fe-15a0-481c-b71d-f262edb1ad0f",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The ID of the message to fetch events for."
+                            }
+                          ]
+                        },
+                        "description": "Returns a paginated list of events for the specified message."
+                      },
+                      "response": [
+                        {
+                          "id": "503a1603-b6e5-4148-8835-92ddc2b7d919",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/events?after=<string>&before=<string>&page_size=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "events"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The cursor to fetch entries after.",
+                                  "key": "after",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The cursor to fetch entries before.",
+                                  "key": "before",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The number of items per page (defaults to 50).",
+                                  "key": "page_size",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"items\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"inserted_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"type\": \"message.archived\",\n      \"data\": {\n        \"quis06\": false\n      }\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"inserted_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"type\": \"message.unarchived\",\n      \"data\": {\n        \"ex4\": \"est esse tempor min\",\n        \"ex804\": -15331271.503920525\n      }\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-503a1603-b6e5-4148-8835-92ddc2b7d919"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-5d80abc0-ddb5-4946-95bf-5f9e9e17ab62"
+                    }
+                  ],
+                  "id": "6d668056-b9c1-4332-bea3-932a3921bc8c",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-6d668056-b9c1-4332-bea3-932a3921bc8c"
+                },
+                {
+                  "name": "read",
+                  "item": [
+                    {
+                      "name": "Mark message as unread",
+                      "id": "4f0f6e9a-ec86-487d-899c-a0a5c9ccd34d",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/read",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "read"
+                          ],
+                          "variable": [
+                            {
+                              "id": "8c5214a0-6f49-49d5-af63-822162aa4211",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "78180c66-e539-45bd-9fb3-fb864309f305",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "read"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"interacted\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"labore4e4\": -8236969.126680508,\n    \"deserunt_a5\": -71909534\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"elit_66\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-78180c66-e539-45bd-9fb3-fb864309f305"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-4f0f6e9a-ec86-487d-899c-a0a5c9ccd34d"
+                    },
+                    {
+                      "name": "Mark message as read",
+                      "id": "342b2621-0300-4318-9436-3e0ea92bc124",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/read",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "read"
+                          ],
+                          "variable": [
+                            {
+                              "id": "3204b046-3017-4ea2-b0ce-c1c22ec4fd64",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `read`. This indicates that the user has read the message content. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "73a52f8f-1676-4359-8b2a-12c1f4d28e62",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "read"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"read\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"workflow\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"push\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"nostrud_fc\": false,\n    \"Duis_63\": false\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"est53\": true,\n    \"dolore4\": -45473238,\n    \"adaf9\": false\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-73a52f8f-1676-4359-8b2a-12c1f4d28e62"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-342b2621-0300-4318-9436-3e0ea92bc124"
+                    }
+                  ],
+                  "id": "e7b70fdf-78b5-4bad-97d7-bfe8b44e63a8",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-e7b70fdf-78b5-4bad-97d7-bfe8b44e63a8"
+                },
+                {
+                  "name": "content",
+                  "item": [
+                    {
+                      "name": "Get message content",
+                      "id": "d6598c54-3157-46c5-8d8b-e3f6d857c0a0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/content",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "content"
+                          ],
+                          "variable": [
+                            {
+                              "id": "ff1b3d72-31a6-4876-a60f-1da146acafb4",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The ID of the message to fetch contents of."
+                            }
+                          ]
+                        },
+                        "description": "Returns the fully rendered contents of a message, where the response depends on which channel the message was sent through."
+                      },
+                      "response": [
+                        {
+                          "id": "7e9d919a-045f-4ca6-ae11-9c29929ecdfc",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/content",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "content"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"message_id\": \"<string>\",\n  \"data\": {\n    \"__typename\": \"<string>\",\n    \"html_body\": \"<string>\",\n    \"text_body\": \"<string>\",\n    \"subject_line\": \"<string>\",\n    \"from\": \"<string>\",\n    \"to\": \"<string>\",\n    \"bcc\": \"<string>\",\n    \"cc\": \"<string>\",\n    \"reply_to\": \"<string>\"\n  },\n  \"inserted_at\": \"<dateTime>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-7e9d919a-045f-4ca6-ae11-9c29929ecdfc"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-d6598c54-3157-46c5-8d8b-e3f6d857c0a0"
+                    }
+                  ],
+                  "id": "c8429e73-b042-40dd-b6c0-9527c5546ca0",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-c8429e73-b042-40dd-b6c0-9527c5546ca0"
+                },
+                {
+                  "name": "activities",
+                  "item": [
+                    {
+                      "name": "List activities",
+                      "id": "ed0213bc-aa58-4685-a844-04fd287c94cb",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/activities?trigger_data=<string>&after=<string>&before=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "activities"
+                          ],
+                          "query": [
+                            {
+                              "description": "The trigger data to filter activities by.",
+                              "key": "trigger_data",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The cursor to fetch entries after.",
+                              "key": "after",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The cursor to fetch entries before.",
+                              "key": "before",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The number of items per page (defaults to 50).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "870eb77b-1a69-4782-9a01-10a38a2678f3",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The ID of the message to fetch activities for."
+                            }
+                          ]
+                        },
+                        "description": "Returns a paginated list of activities for the specified message."
+                      },
+                      "response": [
+                        {
+                          "id": "3c426380-10f0-48b3-9d6d-76d44bbc5ff8",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/activities?trigger_data=<string>&after=<string>&before=<string>&page_size=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "activities"
+                              ],
+                              "query": [
+                                {
+                                  "description": "The trigger data to filter activities by.",
+                                  "key": "trigger_data",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The cursor to fetch entries after.",
+                                  "key": "after",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The cursor to fetch entries before.",
+                                  "key": "before",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The number of items per page (defaults to 50).",
+                                  "key": "page_size",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"items\": [\n    {\n      \"__typename\": \"<string>\",\n      \"actor\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"data\": {\n        \"ut_a6\": 62262757.99537423\n      },\n      \"id\": \"<string>\",\n      \"inserted_at\": \"<dateTime>\",\n      \"recipient\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"updated_at\": \"<dateTime>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"actor\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"data\": {\n        \"incididunt_5\": \"com\",\n        \"ut_ac0\": false,\n        \"in_21\": \"mollit occaecat in irure\"\n      },\n      \"id\": \"<string>\",\n      \"inserted_at\": \"<dateTime>\",\n      \"recipient\": {\n        \"__typename\": \"<string>\",\n        \"id\": \"<string>\",\n        \"updated_at\": \"<dateTime>\",\n        \"avatar\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"updated_at\": \"<dateTime>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-3c426380-10f0-48b3-9d6d-76d44bbc5ff8"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-ed0213bc-aa58-4685-a844-04fd287c94cb"
+                    }
+                  ],
+                  "id": "7a672818-071a-43e1-b554-69f22c30301b",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-7a672818-071a-43e1-b554-69f22c30301b"
+                },
+                {
+                  "name": "archived",
+                  "item": [
+                    {
+                      "name": "Unarchive message",
+                      "id": "5ddc421b-ec95-4994-938c-0875dcc76fae",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/archived",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "archived"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f12700ea-42d3-40d9-9ef8-3a91940a3e1f",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Removes a message from the archived state, making it visible in the default message list in the feed again."
+                      },
+                      "response": [
+                        {
+                          "id": "d8e0fd82-0158-4b71-9c6f-9f2a3ecfa7c6",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/archived",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "archived"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"interacted\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"labore4e4\": -8236969.126680508,\n    \"deserunt_a5\": -71909534\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"elit_66\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-d8e0fd82-0158-4b71-9c6f-9f2a3ecfa7c6"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-5ddc421b-ec95-4994-938c-0875dcc76fae"
+                    },
+                    {
+                      "name": "Archive message",
+                      "id": "da3889c9-cf54-4e7a-9157-c79a4499e67a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/archived",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "archived"
+                          ],
+                          "variable": [
+                            {
+                              "id": "4c683f2d-6b74-4099-aff3-7536e0b0e75e",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Archives a message for the user. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+                      },
+                      "response": [
+                        {
+                          "id": "1cf5ef1d-f46e-4646-8aae-a81c1f0cda12",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/archived",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "archived"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"bounced\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"seen\",\n    \"archived\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"broadcast\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"chat\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"in_360\": \"aute commodo nostrud\"\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"Duis2f9\": -64142635.041073784,\n    \"exercitation55d\": \"aliqua Duis\",\n    \"tempor8\": \"labore occaecat\"\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-1cf5ef1d-f46e-4646-8aae-a81c1f0cda12"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-da3889c9-cf54-4e7a-9157-c79a4499e67a"
+                    }
+                  ],
+                  "id": "2ba89172-f821-4aed-8fd8-ee5f81503942",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-2ba89172-f821-4aed-8fd8-ee5f81503942"
+                },
+                {
+                  "name": "interacted",
+                  "item": [
+                    {
+                      "name": "Mark message as interacted",
+                      "id": "af6b47a9-9e0a-4747-b679-8795f15ede98",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"metadata\": {\n    \"dolor_242\": true,\n    \"Excepteure6\": -52018674,\n    \"ipsumb\": false\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/interacted",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "interacted"
+                          ],
+                          "variable": [
+                            {
+                              "id": "1bad43f9-04e3-424b-819c-f9b33e997aff",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Marks a message as `interacted` with by the user. This can include any user action on the message, with optional metadata about the specific interaction. Cannot include more than 5 key-value pairs, must not contain nested data. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "7c8d1e8a-8717-46e4-8e37-8fa143f33058",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"metadata\": {\n    \"dolor_242\": true,\n    \"Excepteure6\": -52018674,\n    \"ipsumb\": false\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/interacted",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "interacted"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"queued\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"link_clicked\",\n    \"archived\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"workflow\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"chat\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"voluptate_e1\": \"e\",\n    \"Excepteur_49\": true\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"nulla_9_7\": \"amet consequat incididunt elit anim\",\n    \"adipisicinge43\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-7c8d1e8a-8717-46e4-8e37-8fa143f33058"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-af6b47a9-9e0a-4747-b679-8795f15ede98"
+                    }
+                  ],
+                  "id": "77d7d316-c06a-453a-a90f-a1d82b857a6e",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-77d7d316-c06a-453a-a90f-a1d82b857a6e"
+                },
+                {
+                  "name": "unarchived",
+                  "item": [
+                    {
+                      "name": "Unarchive message",
+                      "id": "77a40e00-3302-4e2e-b09e-52279293b560",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id/unarchived",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id",
+                            "unarchived"
+                          ],
+                          "variable": [
+                            {
+                              "id": "844a3f3a-86b4-4b50-b55d-5807d73c5423",
+                              "key": "message_id",
+                              "value": "<string>",
+                              "description": "(Required) The unique identifier for the message."
+                            }
+                          ]
+                        },
+                        "description": "Removes a message from the archived state, making it visible in the default message list in the feed again."
+                      },
+                      "response": [
+                        {
+                          "id": "9f81990a-70a1-43f3-877b-da2302f6323e",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/:message_id/unarchived",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                ":message_id",
+                                "unarchived"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "message_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"delivery_attempted\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"interacted\",\n    \"seen\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"email\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"labore4e4\": -8236969.126680508,\n    \"deserunt_a5\": -71909534\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"elit_66\": true\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-9f81990a-70a1-43f3-877b-da2302f6323e"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-77a40e00-3302-4e2e-b09e-52279293b560"
+                    }
+                  ],
+                  "id": "a7160eef-9872-4e24-a6b7-cfca9c2e711d",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-a7160eef-9872-4e24-a6b7-cfca9c2e711d"
+                },
+                {
+                  "name": "Get message",
+                  "id": "539850d5-3b4c-475f-88d8-b559dfdd178b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/messages/:message_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "messages",
+                        ":message_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1a8fc41b-330c-4b51-b417-91dffc688a2d",
+                          "key": "message_id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier for the message."
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a specific message by its ID."
+                  },
+                  "response": [
+                    {
+                      "id": "5a425e22-29d3-4b61-992a-8b72a2f67aba",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/:message_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            ":message_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "message_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"__typename\": \"<string>\",\n  \"id\": \"<string>\",\n  \"channel_id\": \"<uuid>\",\n  \"status\": \"bounced\",\n  \"inserted_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"engagement_statuses\": [\n    \"link_clicked\",\n    \"archived\"\n  ],\n  \"source\": {\n    \"__typename\": \"<string>\",\n    \"key\": \"<string>\",\n    \"version_id\": \"<uuid>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"step_ref\": \"<string>\",\n    \"type\": \"guide\",\n    \"workflow_recipient_run_id\": \"<uuid>\",\n    \"workflow_run_id\": \"<uuid>\"\n  },\n  \"actors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived_at\": \"<dateTime>\",\n  \"channel\": {\n    \"id\": \"<string>\",\n    \"type\": \"sms\",\n    \"provider\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"key\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"clicked_at\": \"<dateTime>\",\n  \"data\": {\n    \"dolore_b4\": 6252338.677739158,\n    \"dolordc\": \"aliquip\"\n  },\n  \"interacted_at\": \"<dateTime>\",\n  \"link_clicked_at\": \"<dateTime>\",\n  \"metadata\": {\n    \"proidentab\": 7730311.924614593\n  },\n  \"read_at\": \"<dateTime>\",\n  \"scheduled_at\": \"<dateTime>\",\n  \"seen_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\",\n  \"workflow\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-5a425e22-29d3-4b61-992a-8b72a2f67aba"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-539850d5-3b4c-475f-88d8-b559dfdd178b"
+                }
+              ],
+              "id": "02fee882-d4f3-4c7f-b4e5-5d72a7b14f3f",
+              "createdAt": "2026-06-05T15:10:28.000Z",
+              "updatedAt": "2026-06-05T15:10:28.000Z",
+              "uid": "35240-02fee882-d4f3-4c7f-b4e5-5d72a7b14f3f"
+            },
+            {
+              "name": "batch",
+              "item": [
+                {
+                  "name": "unarchived",
+                  "item": [
+                    {
+                      "name": "Mark messages as unarchived",
+                      "id": "0d496c31-cd33-41d4-9fac-e537fc835e51",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/unarchived",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "unarchived"
+                          ]
+                        },
+                        "description": "Marks the given messages as unarchived. This reverses the `archived` state. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+                      },
+                      "response": [
+                        {
+                          "id": "90b0be54-4a19-40f7-bf00-294f603ab925",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/unarchived",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "unarchived"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivery_attempted\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"sms\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"sita60\": -73255499.11664733,\n      \"deseruntd\": false\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"aliqua1\": \"ipsum quis in\",\n      \"nulla1\": 5973761.931364447,\n      \"eu_df\": -36108199.87964109\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"undelivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"link_clicked\",\n      \"archived\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app_feed\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"eu_5cd\": -17268011\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"fugiat_e\": -85804827.91094303\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-90b0be54-4a19-40f7-bf00-294f603ab925"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-0d496c31-cd33-41d4-9fac-e537fc835e51"
+                    }
+                  ],
+                  "id": "30787630-ce32-465c-8e4e-15f731ef3c07",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-30787630-ce32-465c-8e4e-15f731ef3c07"
+                },
+                {
+                  "name": "seen",
+                  "item": [
+                    {
+                      "name": "Mark messages as seen",
+                      "id": "6d4454d1-9868-44f5-b1ef-a8be88d57c07",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/seen",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "seen"
+                          ]
+                        },
+                        "description": "Marks the given messages as `seen`. This indicates that the user has viewed the message in their feed or inbox. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "6f093223-88f0-4bf4-a91b-f7458759271e",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/seen",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "seen"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivery_attempted\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"sms\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"sita60\": -73255499.11664733,\n      \"deseruntd\": false\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"aliqua1\": \"ipsum quis in\",\n      \"nulla1\": 5973761.931364447,\n      \"eu_df\": -36108199.87964109\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"undelivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"link_clicked\",\n      \"archived\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app_feed\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"eu_5cd\": -17268011\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"fugiat_e\": -85804827.91094303\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-6f093223-88f0-4bf4-a91b-f7458759271e"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-6d4454d1-9868-44f5-b1ef-a8be88d57c07"
+                    }
+                  ],
+                  "id": "22380fc4-521d-46b2-a7dd-76eed9051efd",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-22380fc4-521d-46b2-a7dd-76eed9051efd"
+                },
+                {
+                  "name": "unseen",
+                  "item": [
+                    {
+                      "name": "Mark messages as unseen",
+                      "id": "401100ca-1e4b-4269-8d00-f4dd36f5c676",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/unseen",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "unseen"
+                          ]
+                        },
+                        "description": "Marks the given messages as `unseen`. This reverses the `seen` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "3593d5ca-4a00-4b1e-9b67-360ab018c2a7",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/unseen",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "unseen"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"seen\",\n      \"archived\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"push\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"cillum_b\": \"voluptate ut irure elit\"\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"dolore_2\": -22902360,\n      \"proident5c\": \"nulla amet occaecat deserunt\"\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"queued\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"in_b1\": 42497538\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"enim_8\": \"et esse\",\n      \"incididunt_1c\": 34119863.10083152\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-3593d5ca-4a00-4b1e-9b67-360ab018c2a7"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-401100ca-1e4b-4269-8d00-f4dd36f5c676"
+                    }
+                  ],
+                  "id": "72d670bf-e700-4b83-857e-e7b219d0e6aa",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-72d670bf-e700-4b83-857e-e7b219d0e6aa"
+                },
+                {
+                  "name": "content",
+                  "item": [
+                    {
+                      "name": "Batch get message contents",
+                      "id": "8da8d4c9-067e-4ee5-90d6-02036f4363a6",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/content?message_ids[]=<string>&message_ids[]=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "content"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The IDs of the messages to fetch contents of.",
+                              "key": "message_ids[]",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The IDs of the messages to fetch contents of.",
+                              "key": "message_ids[]",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Get the contents of multiple messages in a single request."
+                      },
+                      "response": [
+                        {
+                          "id": "2997aa73-1f9b-4080-ab3e-24573ce793bd",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/content?message_ids[]=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "content"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) The IDs of the messages to fetch contents of.",
+                                  "key": "message_ids[]",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"message_id\": \"<string>\",\n    \"data\": {\n      \"__typename\": \"<string>\",\n      \"html_body\": \"<string>\",\n      \"text_body\": \"<string>\",\n      \"subject_line\": \"<string>\",\n      \"from\": \"<string>\",\n      \"to\": \"<string>\",\n      \"bcc\": \"<string>\",\n      \"cc\": \"<string>\",\n      \"reply_to\": \"<string>\"\n    },\n    \"inserted_at\": \"<dateTime>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"message_id\": \"<string>\",\n    \"data\": {\n      \"__typename\": \"<string>\",\n      \"html_body\": \"<string>\",\n      \"text_body\": \"<string>\",\n      \"subject_line\": \"<string>\",\n      \"from\": \"<string>\",\n      \"to\": \"<string>\",\n      \"bcc\": \"<string>\",\n      \"cc\": \"<string>\",\n      \"reply_to\": \"<string>\"\n    },\n    \"inserted_at\": \"<dateTime>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-2997aa73-1f9b-4080-ab3e-24573ce793bd"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-8da8d4c9-067e-4ee5-90d6-02036f4363a6"
+                    }
+                  ],
+                  "id": "c14bf564-4bc8-44f2-80f9-990c23e43174",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-c14bf564-4bc8-44f2-80f9-990c23e43174"
+                },
+                {
+                  "name": "unread",
+                  "item": [
+                    {
+                      "name": "Mark messages as unread",
+                      "id": "f74615ad-b3df-4058-b586-efc8e6b6b0ce",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/unread",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "unread"
+                          ]
+                        },
+                        "description": "Marks the given messages as `unread`. This reverses the `read` state. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "989ec6e5-adff-4cba-b632-7d359ba2b174",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/unread",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "unread"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivery_attempted\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"sms\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"sita60\": -73255499.11664733,\n      \"deseruntd\": false\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"aliqua1\": \"ipsum quis in\",\n      \"nulla1\": 5973761.931364447,\n      \"eu_df\": -36108199.87964109\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"undelivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"link_clicked\",\n      \"archived\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app_feed\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"eu_5cd\": -17268011\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"fugiat_e\": -85804827.91094303\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-989ec6e5-adff-4cba-b632-7d359ba2b174"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-f74615ad-b3df-4058-b586-efc8e6b6b0ce"
+                    }
+                  ],
+                  "id": "9a9305a6-15b4-48e4-af68-085997c8985b",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-9a9305a6-15b4-48e4-af68-085997c8985b"
+                },
+                {
+                  "name": "archived",
+                  "item": [
+                    {
+                      "name": "Mark messages as archived",
+                      "id": "462005b6-2650-4145-be17-65e4b510a228",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/archived",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "archived"
+                          ]
+                        },
+                        "description": "Marks the given messages as archived. Archived messages are hidden from the default message list in the feed but can still be accessed and unarchived later."
+                      },
+                      "response": [
+                        {
+                          "id": "c7ec6628-b0fd-4840-9ccb-14a530d9cdc3",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/archived",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "archived"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"link_clicked\",\n      \"interacted\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"sms\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"irure_5_\": false\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"Ut4\": -10099970.567666456,\n      \"occaecatd90\": \"mollit deserunt esse\"\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"bounced\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"chat\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"ea_5d\": \"irure ex culpa\",\n      \"Ut_0\": 916424\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"irure_ee\": 79674854\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-c7ec6628-b0fd-4840-9ccb-14a530d9cdc3"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-462005b6-2650-4145-be17-65e4b510a228"
+                    }
+                  ],
+                  "id": "594518e9-f488-40fa-ab25-320870b96ed3",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-594518e9-f488-40fa-ab25-320870b96ed3"
+                },
+                {
+                  "name": "read",
+                  "item": [
+                    {
+                      "name": "Mark messages as read",
+                      "id": "8bf847b2-15d8-4b70-b281-56688842fd58",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/read",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "read"
+                          ]
+                        },
+                        "description": "Marks the given messages as `read`. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "bad585b0-9c82-43c2-9283-cc29a8b1f7bd",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "read"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivery_attempted\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"read\",\n      \"interacted\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app_feed\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"voluptate_db\": true\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"ad8\": \"ea commodo cupidatat exercitation\"\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"not_sent\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"link_clicked\",\n      \"interacted\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"broadcast\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"in_app\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"ad_4\": 10778558\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"anim__12\": false\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-bad585b0-9c82-43c2-9283-cc29a8b1f7bd"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-8bf847b2-15d8-4b70-b281-56688842fd58"
+                    }
+                  ],
+                  "id": "1c044110-983f-44b1-bc75-b57365cab1ee",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-1c044110-983f-44b1-bc75-b57365cab1ee"
+                },
+                {
+                  "name": "interacted",
+                  "item": [
+                    {
+                      "name": "Mark messages as interacted",
+                      "id": "588650d1-6ff9-4a6f-8c41-7ec1d7201461",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"Ut44_\": 69004780,\n    \"labore_a30\": true\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/messages/batch/interacted",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "messages",
+                            "batch",
+                            "interacted"
+                          ]
+                        },
+                        "description": "Marks the given messages as interacted with by the user. This can include any user action on the message, with optional metadata about the specific interaction. Cannot include more than 5 key-value pairs, must not contain nested data. Read more about message engagement statuses [here](/send-notifications/message-statuses#engagement-status)."
+                      },
+                      "response": [
+                        {
+                          "id": "12ec0813-841d-4b40-b09c-18a710e86dd2",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"message_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {\n    \"Ut44_\": 69004780,\n    \"labore_a30\": true\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/messages/batch/interacted",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "messages",
+                                "batch",
+                                "interacted"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivered\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"interacted\",\n      \"link_clicked\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"workflow\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"push\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"quis_a7\": false,\n      \"aliquip792\": 80827012,\n      \"velit_f8\": \"et\"\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"inf94\": -53604469\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  },\n  {\n    \"__typename\": \"<string>\",\n    \"id\": \"<string>\",\n    \"channel_id\": \"<uuid>\",\n    \"status\": \"delivery_attempted\",\n    \"inserted_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"recipient\": \"<string>\",\n    \"engagement_statuses\": [\n      \"seen\",\n      \"seen\"\n    ],\n    \"source\": {\n      \"__typename\": \"<string>\",\n      \"key\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"step_ref\": \"<string>\",\n      \"type\": \"guide\",\n      \"workflow_recipient_run_id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\"\n    },\n    \"actors\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"channel\": {\n      \"id\": \"<string>\",\n      \"type\": \"sms\",\n      \"provider\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"key\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"clicked_at\": \"<dateTime>\",\n    \"data\": {\n      \"elit7d\": false,\n      \"mollit2\": true\n    },\n    \"interacted_at\": \"<dateTime>\",\n    \"link_clicked_at\": \"<dateTime>\",\n    \"metadata\": {\n      \"irurec\": -35663405,\n      \"adipisicing_e4\": 13869240,\n      \"add5\": false\n    },\n    \"read_at\": \"<dateTime>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"seen_at\": \"<dateTime>\",\n    \"tenant\": \"<string>\",\n    \"workflow\": \"<string>\"\n  }\n]",
+                          "createdAt": "2026-06-05T15:10:28.000Z",
+                          "updatedAt": "2026-06-05T15:10:28.000Z",
+                          "uid": "35240-12ec0813-841d-4b40-b09c-18a710e86dd2"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:28.000Z",
+                      "updatedAt": "2026-06-05T15:10:28.000Z",
+                      "uid": "35240-588650d1-6ff9-4a6f-8c41-7ec1d7201461"
+                    }
+                  ],
+                  "id": "f3ab2163-cd2e-4647-ad67-4055ac41500e",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-f3ab2163-cd2e-4647-ad67-4055ac41500e"
+                }
+              ],
+              "id": "ec3eaa1c-a49e-4dbe-b87b-db1a3894d1a4",
+              "createdAt": "2026-06-05T15:10:28.000Z",
+              "updatedAt": "2026-06-05T15:10:28.000Z",
+              "uid": "35240-ec3eaa1c-a49e-4dbe-b87b-db1a3894d1a4"
+            },
+            {
+              "name": "List messages",
+              "id": "4c2b5c37-a375-49ac-afc0-96a32070db52",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/messages?after=<string>&before=<string>&page_size=<integer>&tenant=<string>&channel_id=<string>&status[]=bounced&status[]=undelivered&engagement_status[]=unseen&engagement_status[]=link_clicked&message_ids[]=<string>&message_ids[]=<string>&workflow_categories[]=<string>&workflow_categories[]=<string>&source=<string>&workflow_run_id=<uuid>&workflow_recipient_run_id=<uuid>&trigger_data=<string>&inserted_at.gt=<string>&inserted_at.gte=<string>&inserted_at.lt=<string>&inserted_at.lte=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor to fetch entries after.",
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries before.",
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of items per page (defaults to 50).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Limits the results to items with the corresponding tenant.",
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to items with the corresponding channel ID.",
+                      "key": "channel_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to messages with the given delivery status.",
+                      "key": "status[]",
+                      "value": "bounced"
+                    },
+                    {
+                      "description": "Limits the results to messages with the given delivery status.",
+                      "key": "status[]",
+                      "value": "undelivered"
+                    },
+                    {
+                      "description": "Limits the results to messages with the given engagement status.",
+                      "key": "engagement_status[]",
+                      "value": "unseen"
+                    },
+                    {
+                      "description": "Limits the results to messages with the given engagement status.",
+                      "key": "engagement_status[]",
+                      "value": "link_clicked"
+                    },
+                    {
+                      "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query.",
+                      "key": "message_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query.",
+                      "key": "message_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to messages related to any of the provided categories.",
+                      "key": "workflow_categories[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to messages related to any of the provided categories.",
+                      "key": "workflow_categories[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to messages triggered by the given workflow key.",
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to messages associated with the top-level workflow run ID returned by the workflow trigger request.",
+                      "key": "workflow_run_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Limits the results to messages for a specific recipient's workflow run.",
+                      "key": "workflow_recipient_run_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering) for more information.",
+                      "key": "trigger_data",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to items inserted after the given date.",
+                      "key": "inserted_at.gt",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to items inserted after or on the given date.",
+                      "key": "inserted_at.gte",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to items inserted before the given date.",
+                      "key": "inserted_at.lt",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to items inserted before or on the given date.",
+                      "key": "inserted_at.lte",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns a paginated list of messages for the current environment."
+              },
+              "response": [
+                {
+                  "id": "60e3f148-6607-4dda-9e85-70277634cd90",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/messages?after=<string>&before=<string>&page_size=<integer>&tenant=<string>&channel_id=<string>&status[]=undelivered&engagement_status[]=link_clicked&message_ids[]=<string>&workflow_categories[]=<string>&source=<string>&workflow_run_id=<uuid>&workflow_recipient_run_id=<uuid>&trigger_data=<string>&inserted_at.gt=<string>&inserted_at.gte=<string>&inserted_at.lt=<string>&inserted_at.lte=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "messages"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor to fetch entries after.",
+                          "key": "after",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries before.",
+                          "key": "before",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of items per page (defaults to 50).",
+                          "key": "page_size",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Limits the results to items with the corresponding tenant.",
+                          "key": "tenant",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to items with the corresponding channel ID.",
+                          "key": "channel_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to messages with the given delivery status.",
+                          "key": "status[]",
+                          "value": "undelivered"
+                        },
+                        {
+                          "description": "Limits the results to messages with the given engagement status.",
+                          "key": "engagement_status[]",
+                          "value": "link_clicked"
+                        },
+                        {
+                          "description": "Limits the results to only the message IDs given (max 50). Note: when using this option, the results will be subject to any other filters applied to the query.",
+                          "key": "message_ids[]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to messages related to any of the provided categories.",
+                          "key": "workflow_categories[]",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to messages triggered by the given workflow key.",
+                          "key": "source",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to messages associated with the top-level workflow run ID returned by the workflow trigger request.",
+                          "key": "workflow_run_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Limits the results to messages for a specific recipient's workflow run.",
+                          "key": "workflow_recipient_run_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering) for more information.",
+                          "key": "trigger_data",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to items inserted after the given date.",
+                          "key": "inserted_at.gt",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to items inserted after or on the given date.",
+                          "key": "inserted_at.gte",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to items inserted before the given date.",
+                          "key": "inserted_at.lt",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to items inserted before or on the given date.",
+                          "key": "inserted_at.lte",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"items\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"channel_id\": \"<uuid>\",\n      \"status\": \"bounced\",\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"engagement_statuses\": [\n        \"read\",\n        \"link_clicked\"\n      ],\n      \"source\": {\n        \"__typename\": \"<string>\",\n        \"key\": \"<string>\",\n        \"version_id\": \"<uuid>\",\n        \"categories\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"step_ref\": \"<string>\",\n        \"type\": \"guide\",\n        \"workflow_recipient_run_id\": \"<uuid>\",\n        \"workflow_run_id\": \"<uuid>\"\n      },\n      \"actors\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"archived_at\": \"<dateTime>\",\n      \"channel\": {\n        \"id\": \"<string>\",\n        \"type\": \"http\",\n        \"provider\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"key\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"clicked_at\": \"<dateTime>\",\n      \"data\": {\n        \"mollit_89\": -78576396,\n        \"Ut_e\": -98414103.70455366\n      },\n      \"interacted_at\": \"<dateTime>\",\n      \"link_clicked_at\": \"<dateTime>\",\n      \"metadata\": {\n        \"deserunt_f77\": 3319892\n      },\n      \"read_at\": \"<dateTime>\",\n      \"scheduled_at\": \"<dateTime>\",\n      \"seen_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\",\n      \"workflow\": \"<string>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"channel_id\": \"<uuid>\",\n      \"status\": \"delivered\",\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"recipient\": \"<string>\",\n      \"engagement_statuses\": [\n        \"archived\",\n        \"read\"\n      ],\n      \"source\": {\n        \"__typename\": \"<string>\",\n        \"key\": \"<string>\",\n        \"version_id\": \"<uuid>\",\n        \"categories\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"step_ref\": \"<string>\",\n        \"type\": \"guide\",\n        \"workflow_recipient_run_id\": \"<uuid>\",\n        \"workflow_run_id\": \"<uuid>\"\n      },\n      \"actors\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"archived_at\": \"<dateTime>\",\n      \"channel\": {\n        \"id\": \"<string>\",\n        \"type\": \"push\",\n        \"provider\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"key\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      \"clicked_at\": \"<dateTime>\",\n      \"data\": {\n        \"reprehenderit_a2\": -21151792,\n        \"Ut0\": 71226434\n      },\n      \"interacted_at\": \"<dateTime>\",\n      \"link_clicked_at\": \"<dateTime>\",\n      \"metadata\": {\n        \"magna_02\": false,\n        \"culpae8\": false\n      },\n      \"read_at\": \"<dateTime>\",\n      \"scheduled_at\": \"<dateTime>\",\n      \"seen_at\": \"<dateTime>\",\n      \"tenant\": \"<string>\",\n      \"workflow\": \"<string>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:10:28.000Z",
+                  "updatedAt": "2026-06-05T15:10:28.000Z",
+                  "uid": "35240-60e3f148-6607-4dda-9e85-70277634cd90"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:28.000Z",
+              "updatedAt": "2026-06-05T15:10:28.000Z",
+              "uid": "35240-4c2b5c37-a375-49ac-afc0-96a32070db52"
+            }
+          ],
+          "id": "85537e12-c127-42c7-beb2-9b403f9f6ecc",
+          "createdAt": "2026-06-05T15:10:28.000Z",
+          "updatedAt": "2026-06-05T15:10:28.000Z",
+          "uid": "35240-85537e12-c127-42c7-beb2-9b403f9f6ecc"
+        }
+      ],
+      "id": "f88d7a02-d2aa-4237-85bc-df2c0a90cd51",
+      "createdAt": "2026-06-05T15:10:28.000Z",
+      "updatedAt": "2026-06-05T15:10:28.000Z",
+      "uid": "35240-f88d7a02-d2aa-4237-85bc-df2c0a90cd51"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

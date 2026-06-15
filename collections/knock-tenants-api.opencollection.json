@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Tenants API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/tenants/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the tenant."
+              },
+              {
+                "name": "resolve_full_preference_settings",
+                "value": "",
+                "type": "query",
+                "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false."
+              }
+            ]
+          },
+          "docs": "Get a tenant by ID."
+        },
+        {
+          "info": {
+            "name": "Set a tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/tenants/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the tenant."
+              },
+              {
+                "name": "resolve_full_preference_settings",
+                "value": "",
+                "type": "query",
+                "description": "When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets a tenant within an environment, performing an upsert operation. Any existing properties will be merged with the incoming properties."
+        },
+        {
+          "info": {
+            "name": "Delete a tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/tenants/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the tenant."
+              }
+            ]
+          },
+          "docs": "Delete a tenant and all associated data. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "List tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/tenants",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter tenants by ID."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter tenants by name."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "List tenants for the current environment."
+        },
+        {
+          "info": {
+            "name": "Bulk delete tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/tenants/bulk/delete",
+            "params": [
+              {
+                "name": "tenant_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The IDs of the tenants to delete."
+              }
+            ]
+          },
+          "docs": "Delete up to 1,000 tenants at a time in a single operation. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Bulk set tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/tenants/bulk/set",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set or update up to 1,000 tenants in a single operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

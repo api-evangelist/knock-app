@@ -1,0 +1,271 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Providers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/providers/slack/:channel_id/channels",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Slack channel to get channels for."
+              },
+              {
+                "name": "access_token_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the access token object reference."
+              },
+              {
+                "name": "query_options.cursor",
+                "value": "",
+                "type": "query",
+                "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection."
+              },
+              {
+                "name": "query_options.limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of channels to return. Defaults to 200."
+              },
+              {
+                "name": "query_options.exclude_archived",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided."
+              },
+              {
+                "name": "query_options.types",
+                "value": "",
+                "type": "query",
+                "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned."
+              },
+              {
+                "name": "query_options.team_id",
+                "value": "",
+                "type": "query",
+                "description": "Encoded team ID (T1234) to list channels in, required if org token is used."
+              }
+            ]
+          },
+          "docs": "List Slack channels for a Slack workspace."
+        },
+        {
+          "info": {
+            "name": "Check auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/providers/ms-teams/:channel_id/auth_check",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Microsoft Teams channel to check."
+              },
+              {
+                "name": "ms_teams_tenant_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the Microsoft Teams tenant object reference."
+              }
+            ]
+          },
+          "docs": "Check if a connection to Microsoft Teams has been authorized for a given Microsoft Teams tenant object."
+        },
+        {
+          "info": {
+            "name": "Check auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/providers/slack/:channel_id/auth_check",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Slack channel to check."
+              },
+              {
+                "name": "access_token_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the access token object reference."
+              }
+            ]
+          },
+          "docs": "Check if a Slack channel is authenticated."
+        },
+        {
+          "info": {
+            "name": "List channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/providers/ms-teams/:channel_id/channels",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Microsoft Teams channel to get channels for."
+              },
+              {
+                "name": "ms_teams_tenant_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the Microsoft Teams tenant object reference."
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "query",
+                "description": "Microsoft Teams team ID."
+              },
+              {
+                "name": "query_options.$filter",
+                "value": "displayName eq 'General'",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter channels."
+              },
+              {
+                "name": "query_options.$select",
+                "value": "id,displayName,description",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select specific properties."
+              }
+            ]
+          },
+          "docs": "List the Microsoft Teams channels within a team. By default, archived and private channels are excluded from the results."
+        },
+        {
+          "info": {
+            "name": "Revoke access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/providers/slack/:channel_id/revoke_access",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Slack channel to revoke access for."
+              },
+              {
+                "name": "access_token_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the access token object reference."
+              }
+            ]
+          },
+          "docs": "Revoke access for a Slack channel."
+        },
+        {
+          "info": {
+            "name": "List teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/providers/ms-teams/:channel_id/teams",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Microsoft Teams channel to get teams for."
+              },
+              {
+                "name": "ms_teams_tenant_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the Microsoft Teams tenant object reference."
+              },
+              {
+                "name": "query_options.$filter",
+                "value": "displayName eq 'My Team'",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter teams."
+              },
+              {
+                "name": "query_options.$select",
+                "value": "id,displayName,description",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select fields on a team."
+              },
+              {
+                "name": "query_options.$top",
+                "value": "10",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to limit the number of teams returned."
+              },
+              {
+                "name": "query_options.$skiptoken",
+                "value": "",
+                "type": "query",
+                "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results."
+              }
+            ]
+          },
+          "docs": "Get a list of teams belonging to the Microsoft Entra tenant. By default, archived and private channels are excluded from the results."
+        },
+        {
+          "info": {
+            "name": "Revoke access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/providers/ms-teams/:channel_id/revoke_access",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Knock Microsoft Teams channel to revoke access for."
+              },
+              {
+                "name": "ms_teams_tenant_object",
+                "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}",
+                "type": "query",
+                "description": "A JSON encoded string containing the Microsoft Teams tenant object reference."
+              }
+            ]
+          },
+          "docs": "Remove a Microsoft Entra tenant ID from a Microsoft Teams tenant object."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

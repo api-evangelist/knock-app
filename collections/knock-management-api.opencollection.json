@@ -1,0 +1,2697 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Management API (mAPI)",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/environments/:environment_slug",
+            "params": [
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the environment to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a single environment by the `environment_slug`."
+        },
+        {
+          "info": {
+            "name": "List environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/environments",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of environments. The environments will be returned in order of their index, with the `development` environment first."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Branches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/branches",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of branches. The branches will be returned in order of their last commit time (newest first)."
+        },
+        {
+          "info": {
+            "name": "Get a branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/branches/:branch_slug",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch_slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the branch to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a single branch by the `branch_slug`."
+        },
+        {
+          "info": {
+            "name": "Create a branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://control.knock.app/v1/branches/:branch_slug",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch_slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug for the new branch to create."
+              }
+            ]
+          },
+          "docs": "Creates a new branch off of the development environment with the given slug."
+        },
+        {
+          "info": {
+            "name": "Delete a branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://control.knock.app/v1/branches/:branch_slug",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch_slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the branch to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a branch by the `branch_slug`."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key/validate",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a workflow payload without persisting it. Some read-only fields will be empty as they are generated by the system when persisted.\n\nNote: Validating a workflow is only done in the development environment context.\n"
+        },
+        {
+          "info": {
+            "name": "Run a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key/run",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs the latest version of a committed workflow in a given environment using the params provided."
+        },
+        {
+          "info": {
+            "name": "Preview a workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key/steps/:step_ref/preview_template",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow."
+              },
+              {
+                "name": "step_ref",
+                "value": "",
+                "type": "path",
+                "description": "The reference key of the channel step in the workflow to preview."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a rendered template for a given channel step in a workflow."
+        },
+        {
+          "info": {
+            "name": "List workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/workflows",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of workflows available in a given environment. The workflows are returned alphabetically by `key`."
+        },
+        {
+          "info": {
+            "name": "Activate a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key/activate",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates (or deactivates) a workflow in a given environment. Read more in the [docs](https://docs.knock.app/concepts/workflows#workflow-status).\n\nNote: This immediately enables or disables a workflow in a given environment without needing to go through environment promotion.\n"
+        },
+        {
+          "info": {
+            "name": "Get a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve a workflow by its key in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/workflows/:workflow_key",
+            "params": [
+              {
+                "name": "workflow_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the workflow."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a workflow of a given key, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on workflows in the `development` environment.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email layouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List email layouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/email_layouts",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of email layouts available in a given environment."
+        },
+        {
+          "info": {
+            "name": "Get email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/email_layouts/:email_layout_key",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to show."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve an email layout by its key, in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/email_layouts/:email_layout_key",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to upsert."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an email layout, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Validate email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/email_layouts/:email_layout_key/validate",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to validate."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates an email layout payload without persisting it.\n\nNote: this endpoint only operates in the \"development\" environment.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Guides",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to retrieve."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Get a guide by its key."
+        },
+        {
+          "info": {
+            "name": "Upsert a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to upsert."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a guide of a given key, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on guides in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Archive a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://control.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to archive."
+              }
+            ]
+          },
+          "docs": "Archives a given guide across all environments."
+        },
+        {
+          "info": {
+            "name": "List guides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/guides",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of guides available in a given environment."
+        },
+        {
+          "info": {
+            "name": "Activate a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/guides/:guide_key/activate",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates (or deactivates) a guide in a given environment. You can either set the active status immediately or schedule it.\n\nNote: This immediately enables or disables a guide in a given environment without needing to go through environment promotion.\n"
+        },
+        {
+          "info": {
+            "name": "Validate a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/guides/:guide_key/validate",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a guide payload without persisting it.\n\nNote: Validating a guide is only done in the development environment context.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Broadcasts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/broadcasts/:broadcast_key/send",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a broadcast immediately or schedules it to send at a future time.\n"
+        },
+        {
+          "info": {
+            "name": "Validate a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/broadcasts/:broadcast_key/validate",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a broadcast payload without persisting it.\n"
+        },
+        {
+          "info": {
+            "name": "List broadcasts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/broadcasts",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of broadcasts available in a given environment. The broadcasts are returned ordered by creation time (newest first)."
+        },
+        {
+          "info": {
+            "name": "Get a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/broadcasts/:broadcast_key",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Get a broadcast by its key in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/broadcasts/:broadcast_key",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a broadcast of a given key, or creates a new one if it does not yet exist.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a scheduled broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/broadcasts/:broadcast_key/cancel",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ]
+          },
+          "docs": "Cancels sending a scheduled broadcast. The broadcast will return to draft status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/variables/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the variable to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a single variable by key with per-environment value overrides."
+        },
+        {
+          "info": {
+            "name": "List variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/variables",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter variables by type. Supports 'public' or 'secret'."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a list of variables. When an environment is specified, returns per-environment variables. Otherwise, returns project-scoped variables with per-environment overrides."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Translations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List translations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/translations",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "query",
+                "description": "A specific locale code to filter translations for."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "A specific namespace to filter translations for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "A specific tenant to filter translations for."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of translations available in a given environment. The translations are returned in alphabetical order by locale code.\n"
+        },
+        {
+          "info": {
+            "name": "Validate translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/translations/:locale_code/validate",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "The translation's locale code."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a translation payload without persisting it.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Get translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/translations/:locale_code",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "A specific locale code to filter translations for."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "A specific namespace to filter translations for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "A specific tenant to scope the translation to."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve a translation by its locale and namespace, in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/translations/:locale_code",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "A locale code of the translation."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "An optional namespace that identifies the translation."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "An optional tenant to scope the translation to."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a translation of a given locale code + namespace, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Preview a template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://control.knock.app/v1/templates/preview",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renders a template preview, without requiring a template to be persisted within Knock.\nThis is useful for previewing templates in isolation, without the need to use a workflow.\n\nFor email templates, you can optionally specify a layout by key or provide inline layout content.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Partials",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List partials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/partials",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "List all partials for a given environment."
+        },
+        {
+          "info": {
+            "name": "Get a partial",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/partials/:partial_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "partial_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the partial to retrieve."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Get a partial by its key."
+        },
+        {
+          "info": {
+            "name": "Upsert a partial",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/partials/:partial_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "partial_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the partial to upsert."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a partial of a given key, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on partials in the “development” environment.\n"
+        },
+        {
+          "info": {
+            "name": "Validate a partial",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/partials/:partial_key/validate",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "partial_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the partial to validate."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a partial payload without persisting it.\n\nNote: this endpoint only operates on partials in the “development” environment.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/channels",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A channel id to filter the results by."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Associated resources to include in the response. Accepts `environment_settings` to include per-environment channel configuration."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of channels. Note: the list of channels is across the entire account, not scoped to an environment."
+        },
+        {
+          "info": {
+            "name": "Get a channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/channels/:channel_key",
+            "params": [
+              {
+                "name": "channel_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a channel with all environment-specific settings. Secret values in provider settings are obfuscated unless they are Liquid templates (e.g., `{{ vars.api_key }}`)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the member to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a single member by their ID."
+        },
+        {
+          "info": {
+            "name": "Remove a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://control.knock.app/v1/members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the member to remove."
+              }
+            ]
+          },
+          "docs": "Removes a member from the account."
+        },
+        {
+          "info": {
+            "name": "List members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/members",
+            "params": [
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Filter members by role. One of: owner, admin, member, production_only_member, billing, support."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter members by email address (exact match)."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of members for the current account. Optionally filter by role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channel Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channel groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/channel_groups",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of channel groups. Note: the list of channel groups is across the entire account, not scoped to an environment."
+        },
+        {
+          "info": {
+            "name": "Get a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to retrieve."
+              }
+            ]
+          },
+          "docs": "Get a channel group by its key."
+        },
+        {
+          "info": {
+            "name": "Upsert a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to upsert."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a channel group by key."
+        },
+        {
+          "info": {
+            "name": "Delete a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://control.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to delete."
+              }
+            ]
+          },
+          "docs": "Archives (soft deletes) a channel group by key."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/whoami"
+          },
+          "docs": "Return information about the current calling scope. Will either be a service token or from an OAuth context."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve an audience by its key in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to upsert."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an audience of a given key, or creates a new one if it does not yet exist."
+        },
+        {
+          "info": {
+            "name": "Archive an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://control.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to archive."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              }
+            ]
+          },
+          "docs": "Archives a given audience across all environments."
+        },
+        {
+          "info": {
+            "name": "Validate an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/audiences/:audience_key/validate",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to validate."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates an audience payload without persisting it."
+        },
+        {
+          "info": {
+            "name": "List audiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/audiences",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of audiences for the given environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/commits/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the commit to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve a single commit by its ID."
+        },
+        {
+          "info": {
+            "name": "Promote one commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/commits/:id/promote",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The target commit ID to promote to the subsequent environment."
+              }
+            ]
+          },
+          "docs": "Promotes one change to the subsequent environment."
+        },
+        {
+          "info": {
+            "name": "Promote all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/commits/promote",
+            "params": [
+              {
+                "name": "to_environment",
+                "value": "",
+                "type": "query",
+                "description": "A slug of the target environment to which you want to promote all changes from its directly preceding environment.\n\nFor example, if you have three environments “development”, “staging”, and “production” (in that order), setting this param to “production” will promote all commits not currently in production from staging.\n\nWhen this param is set to `\"development\"`, the `\"branch\"` param must be provided.\n"
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the branch to promote all changes from."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits to promote by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits to promote by resource identifier. Must be used together with resource_type."
+              }
+            ]
+          },
+          "docs": "Promote all changes across all resources to the target environment from its preceding environment."
+        },
+        {
+          "info": {
+            "name": "List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/commits",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "promoted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show commits in the given environment that have not been promoted to the subsequent environment (false) or commits which have been promoted (true)."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits by resource identifier. Must be used together with resource_type. For most resources, this will be the resource key. In the case of translations, this will be the locale code and namespace, separated by a `/`. For example, `en/courses` or `en`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of commits in a given environment. The commits are ordered from most recent first."
+        },
+        {
+          "info": {
+            "name": "Commit all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/commits",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "An optional message to include in a commit."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter changes to commit by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter changes to commit by resource identifier. Must be used together with resource_type."
+              }
+            ]
+          },
+          "docs": "Commit all changes across all resources in the development environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Message types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate message type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/message_types/:message_type_key/validate",
+            "params": [
+              {
+                "name": "message_type_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the message type to validate."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a message type payload without persisting it.\n\nNote: this endpoint only operates on message types in the `development` environment.\n"
+        },
+        {
+          "info": {
+            "name": "Get message type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/message_types/:message_type_key",
+            "params": [
+              {
+                "name": "message_type_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the message type to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve a message type by its key, in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert message type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://control.knock.app/v1/message_types/:message_type_key",
+            "params": [
+              {
+                "name": "message_type_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the message type to upsert."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a message type, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates in the `development` environment.\n"
+        },
+        {
+          "info": {
+            "name": "List message types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://control.knock.app/v1/message_types",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of message types available in a given environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange for API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://control.knock.app/v1/api_keys/exchange",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              }
+            ]
+          },
+          "docs": "Given an authenticated service token and an environment, will exchange the service token for a secret API key that can be used to make requests to the public API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

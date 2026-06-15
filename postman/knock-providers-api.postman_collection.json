@@ -1,0 +1,1222 @@
+{
+  "info": {
+    "_postman_id": "ea667433-d9a3-4876-9c7c-685991eae39c",
+    "name": "Knock Providers API",
+    "description": "OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other inbound provider integrations \u2014 authorize, revoke, and inspect connections to chat and notification providers on behalf of users or tenants.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:52.000Z",
+    "updatedAt": "2026-06-05T15:10:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ea667433-d9a3-4876-9c7c-685991eae39c"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "providers",
+          "item": [
+            {
+              "name": "slack",
+              "item": [
+                {
+                  "name": "{channel_id}",
+                  "item": [
+                    {
+                      "name": "channels",
+                      "item": [
+                        {
+                          "name": "List channels",
+                          "id": "a48440a6-d57b-4426-841c-b70de646c6dd",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/channels?access_token_object=<string>&query_options.cursor=<string>&query_options.limit=<integer>&query_options.exclude_archived=<boolean>&query_options.types=<string>&query_options.team_id=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "slack",
+                                ":channel_id",
+                                "channels"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                  "key": "access_token_object",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection.",
+                                  "key": "query_options.cursor",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "The maximum number of channels to return. Defaults to 200.",
+                                  "key": "query_options.limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided.",
+                                  "key": "query_options.exclude_archived",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned.",
+                                  "key": "query_options.types",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Encoded team ID (T1234) to list channels in, required if org token is used.",
+                                  "key": "query_options.team_id",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "6d273dc5-d6c3-4446-a26e-935e72a18d87",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                                }
+                              ]
+                            },
+                            "description": "List Slack channels for a Slack workspace."
+                          },
+                          "response": [
+                            {
+                              "id": "3d55d5f5-4877-4733-8811-c4dc96cff5f9",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/channels?access_token_object=<string>&query_options.cursor=<string>&query_options.limit=<integer>&query_options.exclude_archived=<boolean>&query_options.types=<string>&query_options.team_id=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "slack",
+                                    ":channel_id",
+                                    "channels"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                      "key": "access_token_object",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection.",
+                                      "key": "query_options.cursor",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "The maximum number of channels to return. Defaults to 200.",
+                                      "key": "query_options.limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided.",
+                                      "key": "query_options.exclude_archived",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned.",
+                                      "key": "query_options.types",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Encoded team ID (T1234) to list channels in, required if org token is used.",
+                                      "key": "query_options.team_id",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"slack_channels\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"is_private\": \"<boolean>\",\n      \"is_im\": \"<boolean>\",\n      \"context_team_id\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"is_private\": \"<boolean>\",\n      \"is_im\": \"<boolean>\",\n      \"context_team_id\": \"<string>\"\n    }\n  ],\n  \"next_cursor\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-3d55d5f5-4877-4733-8811-c4dc96cff5f9"
+                            },
+                            {
+                              "id": "b02a8fae-9592-4a1f-a138-59a24f4d4b08",
+                              "name": "Forbidden",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/channels?access_token_object=<string>&query_options.cursor=<string>&query_options.limit=<integer>&query_options.exclude_archived=<boolean>&query_options.types=<string>&query_options.team_id=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "slack",
+                                    ":channel_id",
+                                    "channels"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                      "key": "access_token_object",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection.",
+                                      "key": "query_options.cursor",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "The maximum number of channels to return. Defaults to 200.",
+                                      "key": "query_options.limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided.",
+                                      "key": "query_options.exclude_archived",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned.",
+                                      "key": "query_options.types",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Encoded team ID (T1234) to list channels in, required if org token is used.",
+                                      "key": "query_options.team_id",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"type\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-b02a8fae-9592-4a1f-a138-59a24f4d4b08"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-a48440a6-d57b-4426-841c-b70de646c6dd"
+                        }
+                      ],
+                      "id": "009e7747-bb93-45aa-acbd-ec0e7293c3d3",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-009e7747-bb93-45aa-acbd-ec0e7293c3d3"
+                    },
+                    {
+                      "name": "auth_check",
+                      "item": [
+                        {
+                          "name": "Check auth",
+                          "id": "6409ebd0-79e8-4b09-ade1-d0ba40c6ddce",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/auth_check?access_token_object=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "slack",
+                                ":channel_id",
+                                "auth_check"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                  "key": "access_token_object",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "09a05623-efc8-4056-9b8e-83b82082bd93",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Slack channel to check."
+                                }
+                              ]
+                            },
+                            "description": "Check if a Slack channel is authenticated."
+                          },
+                          "response": [
+                            {
+                              "id": "9196f225-672b-4339-8a2e-4c06471ade29",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/auth_check?access_token_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "slack",
+                                    ":channel_id",
+                                    "auth_check"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                      "key": "access_token_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"connection\": {\n    \"ok\": \"<boolean>\",\n    \"reason\": \"<string>\"\n  }\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-9196f225-672b-4339-8a2e-4c06471ade29"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-6409ebd0-79e8-4b09-ade1-d0ba40c6ddce"
+                        }
+                      ],
+                      "id": "e3b07f3e-a161-43cc-b508-3e1fd4e42c1f",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-e3b07f3e-a161-43cc-b508-3e1fd4e42c1f"
+                    },
+                    {
+                      "name": "revoke_access",
+                      "item": [
+                        {
+                          "name": "Revoke access",
+                          "id": "f6a1b56f-1dd1-4133-887c-3cb326e81d67",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/revoke_access?access_token_object=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "slack",
+                                ":channel_id",
+                                "revoke_access"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                  "key": "access_token_object",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "fbb3385b-67e1-4b5e-b319-295ca45a65d5",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                                }
+                              ]
+                            },
+                            "description": "Revoke access for a Slack channel."
+                          },
+                          "response": [
+                            {
+                              "id": "c4bd8fa6-6eee-4f1d-a9dd-0070f0356525",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/revoke_access?access_token_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "slack",
+                                    ":channel_id",
+                                    "revoke_access"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                      "key": "access_token_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"ok\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-c4bd8fa6-6eee-4f1d-a9dd-0070f0356525"
+                            },
+                            {
+                              "id": "c0e1d59c-2a84-4679-9856-e309ff761e56",
+                              "name": "Forbidden",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/slack/:channel_id/revoke_access?access_token_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "slack",
+                                    ":channel_id",
+                                    "revoke_access"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the access token object reference.",
+                                      "key": "access_token_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"type\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-c0e1d59c-2a84-4679-9856-e309ff761e56"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-f6a1b56f-1dd1-4133-887c-3cb326e81d67"
+                        }
+                      ],
+                      "id": "46809d88-ab3b-4fc4-90e5-5b1dcf0f0762",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-46809d88-ab3b-4fc4-90e5-5b1dcf0f0762"
+                    }
+                  ],
+                  "id": "8df3d3fc-a7f2-40b0-9e29-84f2e2cfd516",
+                  "createdAt": "2026-06-05T15:10:53.000Z",
+                  "updatedAt": "2026-06-05T15:10:53.000Z",
+                  "uid": "35240-8df3d3fc-a7f2-40b0-9e29-84f2e2cfd516"
+                }
+              ],
+              "id": "c60feb32-ac76-49d8-9018-4f7c6eeaa58d",
+              "createdAt": "2026-06-05T15:10:53.000Z",
+              "updatedAt": "2026-06-05T15:10:53.000Z",
+              "uid": "35240-c60feb32-ac76-49d8-9018-4f7c6eeaa58d"
+            },
+            {
+              "name": "ms-teams",
+              "item": [
+                {
+                  "name": "{channel_id}",
+                  "item": [
+                    {
+                      "name": "auth_check",
+                      "item": [
+                        {
+                          "name": "Check auth",
+                          "id": "ce3699d1-53f0-47e0-83ce-c5de00536033",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/auth_check?ms_teams_tenant_object=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "ms-teams",
+                                ":channel_id",
+                                "auth_check"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                  "key": "ms_teams_tenant_object",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "c4fbb288-cce3-44bc-8f59-bea25dbe7521",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Microsoft Teams channel to check."
+                                }
+                              ]
+                            },
+                            "description": "Check if a connection to Microsoft Teams has been authorized for a given Microsoft Teams tenant object."
+                          },
+                          "response": [
+                            {
+                              "id": "1652c669-c604-4488-9a63-60d059281746",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/auth_check?ms_teams_tenant_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "ms-teams",
+                                    ":channel_id",
+                                    "auth_check"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                      "key": "ms_teams_tenant_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"connection\": {\n    \"ok\": \"<boolean>\",\n    \"reason\": \"<string>\"\n  }\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-1652c669-c604-4488-9a63-60d059281746"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-ce3699d1-53f0-47e0-83ce-c5de00536033"
+                        }
+                      ],
+                      "id": "b8b36aaf-605e-4ea4-95d6-34bf597751ca",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-b8b36aaf-605e-4ea4-95d6-34bf597751ca"
+                    },
+                    {
+                      "name": "channels",
+                      "item": [
+                        {
+                          "name": "List channels",
+                          "id": "ed593187-1c77-4b31-9779-03c162bb6a7e",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/channels?ms_teams_tenant_object=<string>&team_id=<string>&query_options.$filter=<string>&query_options.$select=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "ms-teams",
+                                ":channel_id",
+                                "channels"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                  "key": "ms_teams_tenant_object",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) Microsoft Teams team ID.",
+                                  "key": "team_id",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter channels.",
+                                  "key": "query_options.$filter",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select specific properties.",
+                                  "key": "query_options.$select",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "57cf73cf-23fc-4dd0-bf92-21f771d1069a",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Microsoft Teams channel to get channels for."
+                                }
+                              ]
+                            },
+                            "description": "List the Microsoft Teams channels within a team. By default, archived and private channels are excluded from the results."
+                          },
+                          "response": [
+                            {
+                              "id": "59946891-8e9d-43bf-ad78-12ceb325ab8c",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/channels?ms_teams_tenant_object=<string>&team_id=<string>&query_options.$filter=<string>&query_options.$select=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "ms-teams",
+                                    ":channel_id",
+                                    "channels"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                      "key": "ms_teams_tenant_object",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "(Required) Microsoft Teams team ID.",
+                                      "key": "team_id",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter channels.",
+                                      "key": "query_options.$filter",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select specific properties.",
+                                      "key": "query_options.$select",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"ms_teams_channels\": [\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"createdDateTime\": \"<string>\",\n      \"description\": \"<string>\",\n      \"isArchived\": \"<boolean>\",\n      \"membershipType\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"createdDateTime\": \"<string>\",\n      \"description\": \"<string>\",\n      \"isArchived\": \"<boolean>\",\n      \"membershipType\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-59946891-8e9d-43bf-ad78-12ceb325ab8c"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-ed593187-1c77-4b31-9779-03c162bb6a7e"
+                        }
+                      ],
+                      "id": "b3c4f0c0-c40a-46e5-988e-fd79a955c30f",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-b3c4f0c0-c40a-46e5-988e-fd79a955c30f"
+                    },
+                    {
+                      "name": "teams",
+                      "item": [
+                        {
+                          "name": "List teams",
+                          "id": "b0fd7e81-330b-486c-aa27-b5b01c907ff1",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/teams?ms_teams_tenant_object=<string>&query_options.$filter=<string>&query_options.$select=<string>&query_options.$top=<integer>&query_options.$skiptoken=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "ms-teams",
+                                ":channel_id",
+                                "teams"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                  "key": "ms_teams_tenant_object",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter teams.",
+                                  "key": "query_options.$filter",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select fields on a team.",
+                                  "key": "query_options.$select",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to limit the number of teams returned.",
+                                  "key": "query_options.$top",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.",
+                                  "key": "query_options.$skiptoken",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "8a4fa198-081d-4a19-8797-631143833705",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Microsoft Teams channel to get teams for."
+                                }
+                              ]
+                            },
+                            "description": "Get a list of teams belonging to the Microsoft Entra tenant. By default, archived and private channels are excluded from the results."
+                          },
+                          "response": [
+                            {
+                              "id": "0472a8cb-dc9a-4333-a990-060c5e1dc1f2",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/teams?ms_teams_tenant_object=<string>&query_options.$filter=<string>&query_options.$select=<string>&query_options.$top=<integer>&query_options.$skiptoken=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "ms-teams",
+                                    ":channel_id",
+                                    "teams"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                      "key": "ms_teams_tenant_object",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter teams.",
+                                      "key": "query_options.$filter",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select fields on a team.",
+                                      "key": "query_options.$select",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to limit the number of teams returned.",
+                                      "key": "query_options.$top",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.",
+                                      "key": "query_options.$skiptoken",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"ms_teams_teams\": [\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"skip_token\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-0472a8cb-dc9a-4333-a990-060c5e1dc1f2"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-b0fd7e81-330b-486c-aa27-b5b01c907ff1"
+                        }
+                      ],
+                      "id": "8a562572-3309-4b89-8af9-04495dda4a5f",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-8a562572-3309-4b89-8af9-04495dda4a5f"
+                    },
+                    {
+                      "name": "revoke_access",
+                      "item": [
+                        {
+                          "name": "Revoke access",
+                          "id": "69ce7f1a-a3c8-4c95-a85e-0c666b267c75",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/revoke_access?ms_teams_tenant_object=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "providers",
+                                "ms-teams",
+                                ":channel_id",
+                                "revoke_access"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                  "key": "ms_teams_tenant_object",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "d4c5f353-e898-440e-b9ac-bcaad87ce365",
+                                  "key": "channel_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the Knock Microsoft Teams channel to revoke access for."
+                                }
+                              ]
+                            },
+                            "description": "Remove a Microsoft Entra tenant ID from a Microsoft Teams tenant object."
+                          },
+                          "response": [
+                            {
+                              "id": "0c6d915c-c1d9-4589-af6a-cf628047c1da",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/revoke_access?ms_teams_tenant_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "ms-teams",
+                                    ":channel_id",
+                                    "revoke_access"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                      "key": "ms_teams_tenant_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"ok\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-0c6d915c-c1d9-4589-af6a-cf628047c1da"
+                            },
+                            {
+                              "id": "510d91b4-3299-49e6-a66d-49ddb70ef216",
+                              "name": "Forbidden",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/providers/ms-teams/:channel_id/revoke_access?ms_teams_tenant_object=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "providers",
+                                    "ms-teams",
+                                    ":channel_id",
+                                    "revoke_access"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference.",
+                                      "key": "ms_teams_tenant_object",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "channel_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"type\": \"<string>\"\n}",
+                              "createdAt": "2026-06-05T15:10:53.000Z",
+                              "updatedAt": "2026-06-05T15:10:53.000Z",
+                              "uid": "35240-510d91b4-3299-49e6-a66d-49ddb70ef216"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:10:53.000Z",
+                          "updatedAt": "2026-06-05T15:10:53.000Z",
+                          "uid": "35240-69ce7f1a-a3c8-4c95-a85e-0c666b267c75"
+                        }
+                      ],
+                      "id": "46648ded-b9c4-4c6a-9201-7a2693ac7805",
+                      "createdAt": "2026-06-05T15:10:53.000Z",
+                      "updatedAt": "2026-06-05T15:10:53.000Z",
+                      "uid": "35240-46648ded-b9c4-4c6a-9201-7a2693ac7805"
+                    }
+                  ],
+                  "id": "17926c55-d0b2-4ff9-9eb3-59837d8417d5",
+                  "createdAt": "2026-06-05T15:10:53.000Z",
+                  "updatedAt": "2026-06-05T15:10:53.000Z",
+                  "uid": "35240-17926c55-d0b2-4ff9-9eb3-59837d8417d5"
+                }
+              ],
+              "id": "b1206f66-34ff-404d-98bb-cec887a48e0c",
+              "createdAt": "2026-06-05T15:10:53.000Z",
+              "updatedAt": "2026-06-05T15:10:53.000Z",
+              "uid": "35240-b1206f66-34ff-404d-98bb-cec887a48e0c"
+            }
+          ],
+          "id": "45b74ded-6c17-4672-93eb-7624b5fa4419",
+          "createdAt": "2026-06-05T15:10:53.000Z",
+          "updatedAt": "2026-06-05T15:10:53.000Z",
+          "uid": "35240-45b74ded-6c17-4672-93eb-7624b5fa4419"
+        }
+      ],
+      "id": "ec78d04c-113e-4588-b31b-5cadfe7e5b8c",
+      "createdAt": "2026-06-05T15:10:53.000Z",
+      "updatedAt": "2026-06-05T15:10:53.000Z",
+      "uid": "35240-ec78d04c-113e-4588-b31b-5cadfe7e5b8c"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}

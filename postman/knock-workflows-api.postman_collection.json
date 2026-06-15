@@ -1,0 +1,594 @@
+{
+  "info": {
+    "_postman_id": "5f4d6863-9990-4049-a6ab-6531b46f6f73",
+    "name": "Knock Workflows API",
+    "description": "Trigger and cancel notification workflows, and inspect workflow recipient runs. Workflows are Knock's core programmable notification model \u2014 orchestrating channel steps (email, SMS, push, in-app, chat), function steps (batch, delay, branch, throttle, fetch, AI agent), and conditions across recipients.\n\nContact Support:\n Name: Knock",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:10:12.000Z",
+    "updatedAt": "2026-06-05T15:10:12.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5f4d6863-9990-4049-a6ab-6531b46f6f73"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "workflows",
+          "item": [
+            {
+              "name": "{key}",
+              "item": [
+                {
+                  "name": "trigger",
+                  "item": [
+                    {
+                      "name": "Trigger workflow",
+                      "id": "05746468-06e6-4bc7-8ebf-c02db3c8604c",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor\": \"<string>\",\n  \"cancellation_key\": \"<string>\",\n  \"data\": {\n    \"proident_77\": 86758791.94214171,\n    \"culpa_4\": \"magna laboris deserunt anim\"\n  },\n  \"tenant\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/workflows/:key/trigger",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "workflows",
+                            ":key",
+                            "trigger"
+                          ],
+                          "variable": [
+                            {
+                              "id": "570f1792-20ec-489d-8ec2-f875dacfb3f5",
+                              "key": "key",
+                              "value": "<string>",
+                              "description": "(Required) Key of the workflow to trigger."
+                            }
+                          ]
+                        },
+                        "description": "Trigger a workflow (specified by the key) to run for the given recipients, using the parameters provided. Returns an identifier for the workflow run request. All workflow runs are executed asynchronously. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+                      },
+                      "response": [
+                        {
+                          "id": "506a98e4-27d8-432a-8afd-d7e8a870cb90",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor\": \"<string>\",\n  \"cancellation_key\": \"<string>\",\n  \"data\": {\n    \"proident_77\": 86758791.94214171,\n    \"culpa_4\": \"magna laboris deserunt anim\"\n  },\n  \"tenant\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/workflows/:key/trigger",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "workflows",
+                                ":key",
+                                "trigger"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "key"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"workflow_run_id\": \"<uuid>\"\n}",
+                          "createdAt": "2026-06-05T15:10:13.000Z",
+                          "updatedAt": "2026-06-05T15:10:13.000Z",
+                          "uid": "35240-506a98e4-27d8-432a-8afd-d7e8a870cb90"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:13.000Z",
+                      "updatedAt": "2026-06-05T15:10:13.000Z",
+                      "uid": "35240-05746468-06e6-4bc7-8ebf-c02db3c8604c"
+                    }
+                  ],
+                  "id": "60d6aa79-6eba-477e-b72a-1cbff4a72b01",
+                  "createdAt": "2026-06-05T15:10:13.000Z",
+                  "updatedAt": "2026-06-05T15:10:13.000Z",
+                  "uid": "35240-60d6aa79-6eba-477e-b72a-1cbff4a72b01"
+                },
+                {
+                  "name": "cancel",
+                  "item": [
+                    {
+                      "name": "Cancel workflow",
+                      "id": "35d6c245-7054-4c76-9f88-76f783f8ac47",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cancellation_key\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/workflows/:key/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "workflows",
+                            ":key",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "id": "859b6366-f924-45e6-96e4-d3a28dafb4fd",
+                              "key": "key",
+                              "value": "<string>",
+                              "description": "(Required) The key of the workflow to cancel."
+                            }
+                          ]
+                        },
+                        "description": "When invoked for a workflow using a specific workflow key and cancellation key, will cancel any queued workflow runs associated with that key/cancellation key pair. Can optionally be provided one or more recipients to scope the request to."
+                      },
+                      "response": [
+                        {
+                          "id": "ca7b23b9-4be4-4053-bf61-108271f36438",
+                          "name": "No Content",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"cancellation_key\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/workflows/:key/cancel",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "workflows",
+                                ":key",
+                                "cancel"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "key"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-06-05T15:10:13.000Z",
+                          "updatedAt": "2026-06-05T15:10:13.000Z",
+                          "uid": "35240-ca7b23b9-4be4-4053-bf61-108271f36438"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:10:13.000Z",
+                      "updatedAt": "2026-06-05T15:10:13.000Z",
+                      "uid": "35240-35d6c245-7054-4c76-9f88-76f783f8ac47"
+                    }
+                  ],
+                  "id": "8cb5cd1f-2b15-4b38-b990-7b14fe27cb58",
+                  "createdAt": "2026-06-05T15:10:13.000Z",
+                  "updatedAt": "2026-06-05T15:10:13.000Z",
+                  "uid": "35240-8cb5cd1f-2b15-4b38-b990-7b14fe27cb58"
+                }
+              ],
+              "id": "140bd25a-89df-48d6-9e4d-09ed34e1efa1",
+              "createdAt": "2026-06-05T15:10:13.000Z",
+              "updatedAt": "2026-06-05T15:10:13.000Z",
+              "uid": "35240-140bd25a-89df-48d6-9e4d-09ed34e1efa1"
+            }
+          ],
+          "id": "de9614cb-a70e-40a9-88d5-7ff10d18029b",
+          "createdAt": "2026-06-05T15:10:13.000Z",
+          "updatedAt": "2026-06-05T15:10:13.000Z",
+          "uid": "35240-de9614cb-a70e-40a9-88d5-7ff10d18029b"
+        },
+        {
+          "name": "workflow_recipient_runs",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Get a workflow recipient run",
+                  "id": "4d8e6083-957b-458f-836c-505df0cbb3e5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/workflow_recipient_runs/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "workflow_recipient_runs",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "2f650f19-2751-4fcc-845d-fbccff5b8c4b",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier for the workflow recipient run (per-recipient)."
+                        }
+                      ]
+                    },
+                    "description": "Returns a single workflow recipient run with its associated events."
+                  },
+                  "response": [
+                    {
+                      "id": "891b85f5-20fd-4fea-a7d4-67a9a3cfe8c3",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/workflow_recipient_runs/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "workflow_recipient_runs",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"__typename\": \"<string>\",\n  \"events\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"event\": \"<string>\",\n      \"status\": \"error\",\n      \"inserted_at\": \"<dateTime>\",\n      \"attempt\": \"<integer>\",\n      \"data\": {\n        \"dolor_bc\": true,\n        \"consequat_5a6\": -36097696\n      },\n      \"step_ref\": \"<string>\",\n      \"step_type\": \"<string>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<string>\",\n      \"event\": \"<string>\",\n      \"status\": \"error\",\n      \"inserted_at\": \"<dateTime>\",\n      \"attempt\": \"<integer>\",\n      \"data\": {\n        \"dolored\": -96317356\n      },\n      \"step_ref\": \"<string>\",\n      \"step_type\": \"<string>\"\n    }\n  ],\n  \"id\": \"<uuid>\",\n  \"inserted_at\": \"<dateTime>\",\n  \"recipient\": \"<string>\",\n  \"status\": \"completed\",\n  \"trigger_source\": {\n    \"type\": \"rehearsal\",\n    \"audience_key\": \"<string>\",\n    \"cancellation_key\": \"<string>\",\n    \"schedule_id\": \"<string>\"\n  },\n  \"updated_at\": \"<dateTime>\",\n  \"workflow\": \"<string>\",\n  \"workflow_run_id\": \"<uuid>\",\n  \"actor\": \"<string>\",\n  \"error_count\": \"<integer>\",\n  \"tenant\": \"<string>\"\n}",
+                      "createdAt": "2026-06-05T15:10:13.000Z",
+                      "updatedAt": "2026-06-05T15:10:13.000Z",
+                      "uid": "35240-891b85f5-20fd-4fea-a7d4-67a9a3cfe8c3"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:10:13.000Z",
+                  "updatedAt": "2026-06-05T15:10:13.000Z",
+                  "uid": "35240-4d8e6083-957b-458f-836c-505df0cbb3e5"
+                }
+              ],
+              "id": "26666aae-2cb0-4181-ad05-8568cae30bdc",
+              "createdAt": "2026-06-05T15:10:13.000Z",
+              "updatedAt": "2026-06-05T15:10:13.000Z",
+              "uid": "35240-26666aae-2cb0-4181-ad05-8568cae30bdc"
+            },
+            {
+              "name": "List workflow recipient runs",
+              "id": "59e42eb3-55fa-478f-ada9-3e84ea8fd9dd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/workflow_recipient_runs?after=<string>&before=<string>&page_size=<integer>&workflow=<string>&status[]=completed&status[]=processing&tenant=<string>&has_errors=<boolean>&recipient=<string>&starting_at=<dateTime>&ending_at=<dateTime>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "workflow_recipient_runs"
+                  ],
+                  "query": [
+                    {
+                      "description": "The cursor to fetch entries after.",
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The cursor to fetch entries before.",
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The number of items per page (defaults to 50).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs for the given workflow key.",
+                      "key": "workflow",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs with the given status.",
+                      "key": "status[]",
+                      "value": "completed"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs with the given status.",
+                      "key": "status[]",
+                      "value": "processing"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs for the given tenant.",
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs that have errors.",
+                      "key": "has_errors",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs for the given recipient. Accepts a user ID string or an object reference with `id` and `collection`.",
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs started after the given date.",
+                      "key": "starting_at",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Limits the results to workflow recipient runs started before the given date.",
+                      "key": "ending_at",
+                      "value": "<dateTime>"
+                    }
+                  ]
+                },
+                "description": "Returns a paginated list of workflow recipient runs for the current environment."
+              },
+              "response": [
+                {
+                  "id": "c1f4cd34-ef82-4056-91f2-ecef6a620104",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/workflow_recipient_runs?after=<string>&before=<string>&page_size=<integer>&workflow=<string>&status[]=processing&tenant=<string>&has_errors=<boolean>&recipient=<string>&starting_at=<dateTime>&ending_at=<dateTime>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "workflow_recipient_runs"
+                      ],
+                      "query": [
+                        {
+                          "description": "The cursor to fetch entries after.",
+                          "key": "after",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The cursor to fetch entries before.",
+                          "key": "before",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of items per page (defaults to 50).",
+                          "key": "page_size",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs for the given workflow key.",
+                          "key": "workflow",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs with the given status.",
+                          "key": "status[]",
+                          "value": "processing"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs for the given tenant.",
+                          "key": "tenant",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs that have errors.",
+                          "key": "has_errors",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs for the given recipient. Accepts a user ID string or an object reference with `id` and `collection`.",
+                          "key": "recipient",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs started after the given date.",
+                          "key": "starting_at",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Limits the results to workflow recipient runs started before the given date.",
+                          "key": "ending_at",
+                          "value": "<dateTime>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"items\": [\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\",\n      \"workflow\": \"<string>\",\n      \"status\": \"cancelled\",\n      \"recipient\": \"<string>\",\n      \"trigger_source\": {\n        \"type\": \"workflow_step\",\n        \"audience_key\": \"<string>\",\n        \"cancellation_key\": \"<string>\",\n        \"schedule_id\": \"<string>\"\n      },\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"actor\": \"<string>\",\n      \"error_count\": \"<integer>\",\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"__typename\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"workflow_run_id\": \"<uuid>\",\n      \"workflow\": \"<string>\",\n      \"status\": \"queued\",\n      \"recipient\": \"<string>\",\n      \"trigger_source\": {\n        \"type\": \"integration\",\n        \"audience_key\": \"<string>\",\n        \"cancellation_key\": \"<string>\",\n        \"schedule_id\": \"<string>\"\n      },\n      \"inserted_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"actor\": \"<string>\",\n      \"error_count\": \"<integer>\",\n      \"tenant\": \"<string>\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"<string>\",\n    \"page_size\": \"<integer>\",\n    \"after\": \"<string>\",\n    \"before\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:10:13.000Z",
+                  "updatedAt": "2026-06-05T15:10:13.000Z",
+                  "uid": "35240-c1f4cd34-ef82-4056-91f2-ecef6a620104"
+                }
+              ],
+              "createdAt": "2026-06-05T15:10:13.000Z",
+              "updatedAt": "2026-06-05T15:10:13.000Z",
+              "uid": "35240-59e42eb3-55fa-478f-ada9-3e84ea8fd9dd"
+            }
+          ],
+          "id": "f485d7ca-06c8-4766-afb1-95ea63e025c1",
+          "createdAt": "2026-06-05T15:10:13.000Z",
+          "updatedAt": "2026-06-05T15:10:13.000Z",
+          "uid": "35240-f485d7ca-06c8-4766-afb1-95ea63e025c1"
+        }
+      ],
+      "id": "be264ec2-36fc-4ae0-a5cc-3216dfccc305",
+      "createdAt": "2026-06-05T15:10:13.000Z",
+      "updatedAt": "2026-06-05T15:10:13.000Z",
+      "uid": "35240-be264ec2-36fc-4ae0-a5cc-3216dfccc305"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.knock.app"
+    }
+  ]
+}
