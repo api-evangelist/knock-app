@@ -258,63 +258,48 @@ access: 3rd-Party
 common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/knock/overview
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/knock-app-bulk-identify-users-notify-workflow.yml
-    name: Knock Bulk Identify Users and Notify
-    summary: Bulk identify a batch of users, wait for the operation to complete, then
-      notify them.
-  - url: arazzo/knock-app-bulk-set-objects-notify-workflow.yml
-    name: Knock Bulk Set Objects and Notify
-    summary: Bulk upsert objects in a collection, wait for completion, then notify
-      one object.
-  - url: arazzo/knock-app-bulk-set-tenants-verify-workflow.yml
-    name: Knock Bulk Set Tenants and Verify
-    summary: Bulk upsert tenants, wait for the operation to complete, then list tenants
-      to verify.
-  - url: arazzo/knock-app-cancellable-workflow-trigger-workflow.yml
-    name: Knock Cancellable Workflow Trigger
-    summary: Identify a recipient, trigger a cancellable workflow, then cancel it
-      by key.
-  - url: arazzo/knock-app-identify-user-set-preferences-trigger-workflow.yml
-    name: Knock Identify User, Set Preferences, and Trigger Workflow
-    summary: Identify a recipient, apply their notification preferences, then trigger
-      a workflow for them.
-  - url: arazzo/knock-app-merge-users-and-renotify-workflow.yml
-    name: Knock Merge Users and Re-notify
-    summary: Identify a surviving user, merge a duplicate into it, then notify the
-      merged user.
-  - url: arazzo/knock-app-object-preferences-message-audit-workflow.yml
-    name: Knock Set Object Preferences and Audit Messages
-    summary: Upsert an object, set its preference set, then audit messages sent to
-      it.
-  - url: arazzo/knock-app-object-subscriptions-notify-workflow.yml
-    name: Knock Set Object, Add Subscriptions, and Notify
-    summary: Create an object, subscribe recipients to it, then notify subscribers
-      via a workflow.
-  - url: arazzo/knock-app-register-push-token-and-read-feed-workflow.yml
-    name: Knock Register Push Token and Read Feed
-    summary: Identify a user, register their channel data, then read their in-app
-      feed.
-  - url: arazzo/knock-app-schedule-recurring-workflow-workflow.yml
-    name: Knock Schedule a Recurring Workflow
-    summary: Identify a recipient, create a recurring schedule, then verify it was
-      registered.
-  - url: arazzo/knock-app-tenant-onboarding-notify-workflow.yml
-    name: Knock Tenant Onboarding and Notify
-    summary: Set a tenant, identify a member user, then notify them scoped to the
-      tenant.
-  - url: arazzo/knock-app-trigger-then-archive-feed-message-workflow.yml
-    name: Knock Trigger Then Archive Feed Message
-    summary: Trigger a workflow, find the resulting in-app message, then archive it.
-  - url: arazzo/knock-app-trigger-workflow-inspect-message-content-workflow.yml
-    name: Knock Trigger Workflow and Inspect Message Content
-    summary: Trigger a workflow then locate the generated message and read its rendered
-      content.
-  - url: arazzo/knock-app-trigger-workflow-track-recipient-run-workflow.yml
-    name: Knock Trigger Workflow and Track Recipient Run
-    summary: Trigger a workflow and poll its per-recipient run until it completes.
+- type: Arazzo
+  url: arazzo/knock-app-bulk-identify-users-notify-workflow.yml
+  name: Knock Bulk Identify Users and Notify
+- type: Arazzo
+  url: arazzo/knock-app-bulk-set-objects-notify-workflow.yml
+  name: Knock Bulk Set Objects and Notify
+- type: Arazzo
+  url: arazzo/knock-app-bulk-set-tenants-verify-workflow.yml
+  name: Knock Bulk Set Tenants and Verify
+- type: Arazzo
+  url: arazzo/knock-app-cancellable-workflow-trigger-workflow.yml
+  name: Knock Cancellable Workflow Trigger
+- type: Arazzo
+  url: arazzo/knock-app-identify-user-set-preferences-trigger-workflow.yml
+  name: Knock Identify User, Set Preferences, and Trigger Workflow
+- type: Arazzo
+  url: arazzo/knock-app-merge-users-and-renotify-workflow.yml
+  name: Knock Merge Users and Re-notify
+- type: Arazzo
+  url: arazzo/knock-app-object-preferences-message-audit-workflow.yml
+  name: Knock Set Object Preferences and Audit Messages
+- type: Arazzo
+  url: arazzo/knock-app-object-subscriptions-notify-workflow.yml
+  name: Knock Set Object, Add Subscriptions, and Notify
+- type: Arazzo
+  url: arazzo/knock-app-register-push-token-and-read-feed-workflow.yml
+  name: Knock Register Push Token and Read Feed
+- type: Arazzo
+  url: arazzo/knock-app-schedule-recurring-workflow-workflow.yml
+  name: Knock Schedule a Recurring Workflow
+- type: Arazzo
+  url: arazzo/knock-app-tenant-onboarding-notify-workflow.yml
+  name: Knock Tenant Onboarding and Notify
+- type: Arazzo
+  url: arazzo/knock-app-trigger-then-archive-feed-message-workflow.yml
+  name: Knock Trigger Then Archive Feed Message
+- type: Arazzo
+  url: arazzo/knock-app-trigger-workflow-inspect-message-content-workflow.yml
+  name: Knock Trigger Workflow and Inspect Message Content
+- type: Arazzo
+  url: arazzo/knock-app-trigger-workflow-track-recipient-run-workflow.yml
+  name: Knock Trigger Workflow and Track Recipient Run
 - type: Portal
   url: https://knock.app
 - type: Documentation
@@ -330,7 +315,7 @@ common:
 - type: GettingStarted
   name: Quick start
   url: https://docs.knock.app/getting-started/quick-start/general
-- type: SignUp
+- type: Signup
   url: https://dashboard.knock.app/signup
 - type: Authentication
   url: https://docs.knock.app/api-reference/overview/authentication
@@ -343,9 +328,9 @@ common:
   url: https://docs.knock.app/api-reference/overview/idempotent-requests
 - type: Pagination
   url: https://docs.knock.app/api-reference/overview/pagination
-- type: Errors
+- type: ErrorCodes
   url: https://docs.knock.app/api-reference/overview/errors
-- type: Errors
+- type: ErrorCodes
   name: Common error codes
   url: https://docs.knock.app/api-reference/overview/error-codes
 - type: StatusPage
@@ -364,64 +349,64 @@ common:
   url: https://knock.app/blog
 - type: GitHubOrganization
   url: https://github.com/knocklabs
-- type: SDK
+- type: SDKs
   name: Node SDK
   url: https://github.com/knocklabs/knock-node
-- type: SDK
+- type: SDKs
   name: Python SDK
   url: https://github.com/knocklabs/knock-python
-- type: SDK
+- type: SDKs
   name: Ruby SDK
   url: https://github.com/knocklabs/knock-ruby
-- type: SDK
+- type: SDKs
   name: Go SDK
   url: https://github.com/knocklabs/knock-go
-- type: SDK
+- type: SDKs
   name: Elixir SDK
   url: https://github.com/knocklabs/knock-elixir
-- type: SDK
+- type: SDKs
   name: Java SDK
   url: https://github.com/knocklabs/knock-java
-- type: SDK
+- type: SDKs
   name: .NET SDK
   url: https://github.com/knocklabs/knock-dotnet
-- type: SDK
+- type: SDKs
   name: PHP SDK
   url: https://github.com/knocklabs/knock-php
-- type: SDK
+- type: SDKs
   name: iOS / Swift SDK
   url: https://github.com/knocklabs/knock-swift
-- type: SDK
+- type: SDKs
   name: Android / Kotlin SDK
   url: https://github.com/knocklabs/knock-android
-- type: SDK
+- type: SDKs
   name: Flutter SDK
   url: https://github.com/knocklabs/knock-flutter
-- type: SDK
+- type: SDKs
   name: JavaScript / React SDKs
   url: https://github.com/knocklabs/javascript
-- type: SDK
+- type: SDKs
   name: Knock Management Node SDK
   url: https://github.com/knocklabs/knock-mgmt-node
-- type: SDK
+- type: SDKs
   name: Knock Management Python SDK
   url: https://github.com/knocklabs/knock-mgmt-python
-- type: SDK
+- type: SDKs
   name: Knock Management Go SDK
   url: https://github.com/knocklabs/knock-mgmt-go
-- type: Tool
+- type: Tools
   name: Knock CLI
   url: https://github.com/knocklabs/knock-cli
-- type: Tool
+- type: Tools
   name: Knock MCP Server (remote)
   url: https://mcp.knock.app/mcp
-- type: Tool
+- type: Tools
   name: Knock MCP Server source
   url: https://github.com/knocklabs/knock-mcp
-- type: Tool
+- type: Tools
   name: Knock Agent Toolkit
   url: https://github.com/knocklabs/agent-toolkit
-- type: Tool
+- type: Tools
   name: Knock Telegraph (React component library)
   url: https://github.com/knocklabs/telegraph
 - type: CodeExamples
@@ -491,7 +476,7 @@ common:
 - type: Documentation
   name: Liquid helpers reference
   url: https://docs.knock.app/template-editor/reference-liquid-helpers
-- type: Forum
+- type: Forums
   name: Knock Slack community
   url: https://knock.app/community
 - type: Features
