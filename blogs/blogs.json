@@ -2,13 +2,11 @@
   "repo": "knock-app",
   "feeds": [
     {
-      "source": "https://knock.app/blog",
-      "feed_url": "",
-      "saved": 0,
-      "method": "agent-scrape"
+      "source": "https://trust.knock.app",
+      "error": "URLError"
     }
   ],
   "post_count": 1,
-  "fetched": "2026-06-27T12:49:35Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "agent_pulled": "2026-06-27"
 }
