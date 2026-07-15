@@ -256,6 +256,8 @@ kind: contract
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+- type: AgenticAccess
+  url: agentic-access/knock-app-agentic-access.yml
 - type: DomainSecurity
   url: security/knock-app-domain-security.yml
 - type: Authentication
