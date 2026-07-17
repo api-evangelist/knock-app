@@ -1,0 +1,48 @@
+generated: '2026-06-20'
+method: searched
+status: published
+source: https://docs.knock.app/ai/mcp-server
+description: >-
+  Knock ships an official remote (hosted) MCP server plus a local MCP server
+  bundled with the Agent Toolkit. The remote server exposes tools to interact
+  with all Knock resources through the Management API and the Knock agent. Note:
+  the server ships no delete-resource tools by design. Individual tool names are
+  published in the Agent Toolkit tools reference.
+server:
+  name: knock
+  transport: http
+  url: https://mcp.knock.app/mcp
+  auth:
+    type: oauth2
+    note: >-
+      OAuth 2.1 sign-in with your Knock account (no static service token). The
+      authorization-server and protected-resource metadata are captured under
+      well-known/knock-app-mcp-oauth-authorization-server.json and
+      well-known/knock-app-mcp-oauth-protected-resource.json.
+    authorization_endpoint: https://mcp.knock.app/authorize
+    token_endpoint: https://mcp.knock.app/token
+    registration_endpoint: https://mcp.knock.app/register
+    code_challenge_methods_supported: [plain, S256]
+    grant_types_supported: [authorization_code, refresh_token]
+local_server:
+  name: "@knocklabs/agent-toolkit MCP"
+  transport: stdio
+  package: "@knocklabs/agent-toolkit"
+  source: https://github.com/knocklabs/agent-toolkit
+  docs: https://docs.knock.app/ai/agent
+tool_groups:
+- name: resources
+  description: Read and manage Knock configuration resources (workflows, layouts, partials, templates, translations, guides, broadcasts, message types, etc.) via the Management API. GET and write operations; no delete.
+- name: commits
+  description: Inspect and create commits across the git-style environment / branch / commit model.
+- name: debug
+  description: Inspect environments and view sent message logs.
+- name: data
+  description: Manage users, tenants, and object data.
+- name: docs
+  description: Search the Knock documentation.
+- name: agent
+  description: The Knock agent for creating and managing workflows, broadcasts, guides, and resources.
+tools_reference: https://docs.knock.app/ai/agent
+constraints:
+- No delete-resource tools are shipped at this time.

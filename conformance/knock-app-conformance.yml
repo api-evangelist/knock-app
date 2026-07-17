@@ -1,0 +1,63 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/*, apis.yml, https://docs.knock.app
+description: >-
+  Which industry / cross-cutting standards the Knock platform conforms to.
+  Derived from the OpenAPI security schemes and conventions in this repo and
+  corroborated against Knock's docs and feature claims. "conforms: true" means
+  there is concrete evidence (a spec artifact, a well-known document, or an
+  explicit docs claim); absence is recorded as false rather than omitted.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Remote MCP server (mcp.knock.app) authenticates via OAuth 2.1 + PKCE; authorization-server metadata captured in well-known/. The REST API itself uses Bearer API keys, not OAuth.
+  scope: mcp-server
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: well-known/knock-app-mcp-oauth-authorization-server.json (200 from mcp.knock.app)
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: well-known/knock-app-mcp-oauth-protected-resource.json (200 from mcp.knock.app)
+- id: pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [plain, S256] in MCP authorization-server metadata
+- id: mcp
+  conforms: true
+  evidence: Official hosted MCP server at https://mcp.knock.app/mcp plus local Agent Toolkit MCP server (mcp/knock-app-mcp.yml)
+- id: asyncapi
+  conforms: true
+  evidence: asyncapi/knock-webhooks-asyncapi.yml describes outbound webhook events
+- id: idempotency
+  conforms: true
+  evidence: Idempotency-Key header on POST /workflows/:key/trigger (conventions/knock-app-conventions.yml)
+- id: cursor-pagination
+  conforms: true
+  evidence: after/before/page_size + entries/page_info envelope (conventions/knock-app-conventions.yml)
+- id: saml2-sso
+  conforms: true
+  evidence: SAML 2.0 SSO documented on Enterprise plan
+  scope: enterprise
+- id: scim
+  conforms: true
+  evidence: SCIM directory sync documented on Enterprise plan
+  scope: enterprise
+- id: hipaa
+  conforms: true
+  evidence: HIPAA / BAA available on Enterprise plan (docs + pricing)
+  scope: enterprise
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json envelope published; errors described as HTTP status classes only
+- id: json-api
+  conforms: false
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on API hosts
+- id: fhir-r4
+  conforms: false
+- id: odata
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false

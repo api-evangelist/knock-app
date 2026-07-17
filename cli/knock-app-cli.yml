@@ -1,0 +1,54 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/cli
+description: >-
+  The Knock CLI is a local-first tool for managing Knock resources against the
+  Management API (control.knock.app). It supports a git-style pull/push workflow
+  over workflows, layouts, translations, partials, guides, message types, and
+  audiences, plus environment/branch/commit management. Binary is catalogued in
+  packages/knock-app-packages.yml (@knocklabs/cli).
+name: Knock CLI
+repo: https://github.com/knocklabs/knock-cli
+docs: https://docs.knock.app/cli
+requires:
+  node: ">=16.14.0"
+  npm: ">=7.18.1"
+install:
+- method: homebrew
+  command: brew install knocklabs/tap/knock
+- method: npm
+  command: npm install -g @knocklabs/cli
+commands:
+- name: login / logout
+  description: Manage account authentication and session.
+- name: init
+  description: Initialize a new Knock project with configuration.
+- name: pull / push
+  description: Synchronize all resources between local files and Knock.
+- name: workflow
+  description: Manage notification workflows — create, validate, and run.
+- name: layout
+  description: Manage email layout templates and formatting.
+- name: translation
+  description: Localize notifications across languages and namespaces.
+- name: partial
+  description: Manage reusable content snippets.
+- name: guide
+  description: Administer in-app guide configurations and scheduling.
+- name: message-type
+  description: Define in-app message schemas and preview templates.
+- name: audience
+  description: Create and manage recipient segments for targeting.
+- name: environment
+  description: View and manage deployment environments.
+- name: channel
+  description: List available notification channels.
+- name: branch
+  description: Isolate and manage changes using version-control branches.
+- name: commit
+  description: Track changes and promote updates across environments.
+- name: schema
+  description: Sync recipient data schemas to version control.
+key_flows:
+- Local-first authoring: pull resources to files, edit, push back, then commit and promote across environments.
+- CI/CD: run knock push + knock commit in a pipeline to promote notification resources to production.

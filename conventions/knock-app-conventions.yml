@@ -1,0 +1,60 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/api-reference/overview
+description: >-
+  Cross-cutting request/response conventions that apply across every Knock
+  endpoint (not any single operation): authentication, idempotency, pagination,
+  rate-limit signaling, request tracing, and the environment/commit versioning
+  model. Captured from the Knock API reference overview and derived from the
+  OpenAPI specs in this repo.
+base_urls:
+  runtime: https://api.knock.app
+  management: https://control.knock.app
+api_style: REST over HTTPS, JSON requests and responses
+authentication:
+  scheme: HTTP Bearer
+  key_types: [secret (sk_, server-side), public (pk_, client-side)]
+  enhanced_security: Signed user tokens (JWT) via X-Knock-User-Token for client-side requests in enhanced-security mode.
+  docs: https://docs.knock.app/api-reference/overview/authentication
+  detail: authentication/knock-app-authentication.yml
+idempotency:
+  supported: true
+  mechanism: Idempotency-Key request header
+  applies_to: >-
+    Documented for POST /workflows/:key/trigger. Keys are a client-generated
+    unique string up to 255 characters (random UUIDs or meaningful values like
+    order-placed:user-123:order-456).
+  retention: 24 hours (default idempotency window)
+  conflict_behavior: >-
+    Idempotent requests must be identical; Knock returns an error when incoming
+    parameters do not match the original request. Only 2xx responses are cached;
+    4xx/5xx are not stored and re-execute on retry.
+  replay_indicators: [idempotent-replayed, original-x-request-id]
+  docs: https://docs.knock.app/api-reference/overview/idempotent-requests
+pagination:
+  style: cursor
+  request_params:
+    after: cursor to fetch items after a position
+    before: cursor to fetch items before a position
+    page_size: 1-50, default 50
+  response_fields:
+    entries: array of resource objects
+    page_info: "{ after, before, page_size, total_count }"
+  notes: total_count is reported up to a maximum of 10,000.
+  docs: https://docs.knock.app/api-reference/overview/pagination
+request_tracing:
+  request_id: Responses carry an X-Request-Id; the original request id is echoed as original-x-request-id on idempotent replays.
+metadata:
+  supported: true
+  note: Recipients (users, objects, tenants) carry arbitrary custom properties used in templates, conditions, and segmentation.
+versioning:
+  model: environments + branches + commits (git-style), unversioned URL
+  detail: lifecycle/knock-app-lifecycle.yml
+error_envelope:
+  format: http-status (no RFC 9457 problem+json envelope published)
+  detail: errors/knock-app-problem-types.yml
+rate_limiting:
+  model: Tiered per-endpoint limits (1, 5, 60, 200, 1000 req/sec), scoped per environment or per signed user; batch endpoints have separate limits.
+  signaling: Retry-After and X-RateLimit-* response headers on 429.
+  detail: rate-limits/knock-rate-limits.yml
+  docs: https://docs.knock.app/api-reference/overview/rate-limits

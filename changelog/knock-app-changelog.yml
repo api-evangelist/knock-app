@@ -1,0 +1,45 @@
+generated: '2026-06-20'
+method: searched
+source: https://knock.app/changelog
+description: >-
+  Knock publishes a dated product changelog at knock.app/changelog (the
+  docs.knock.app/changelog path 404s; knock.app/changelog is the live source).
+  Entries are calendar-dated, not semantically versioned — the REST API itself
+  is unversioned in the URL and evolves through Knock's git-style environment /
+  commit model rather than a numbered API version. SDKs are released under
+  independent semver (e.g. @knocklabs/node 1.34.0). The window below is the
+  recent slice captured at fetch time, not the full history.
+scheme: dated
+current_version: null
+api_versioning: >-
+  Unversioned REST API; resource changes ship through environments, branches,
+  and commits (see lifecycle/knock-app-lifecycle.yml).
+entries:
+- date: '2026-07-16'
+  title: Branch rebasing
+  type: addition
+  highlights: Rebase a branch onto main to pull in the latest changes while keeping your branch's commits intact.
+- date: '2026-07-14'
+  title: Passkey authentication
+  type: addition
+  highlights: Log in with biometrics, a device PIN, a password manager, or a hardware security key.
+- date: '2026-07-09'
+  title: Saved views and tags
+  type: addition
+  highlights: Tag workflows, broadcasts, guides, and partials, then filter and save shared views with your team.
+- date: '2026-07-08'
+  title: Schema management
+  type: addition
+  highlights: Customize how properties appear across the Knock dashboard, from message preview variables to condition and segment builders.
+- date: '2026-07-07'
+  title: Message events in your data warehouse
+  type: addition
+  highlights: Sync delivery and engagement data into your warehouse for messages from workflows, broadcasts, or guides.
+- date: '2026-06-30'
+  title: Test runner improvements
+  type: addition
+  highlights: Sandbox-mode testing plus the ability to skip delay steps to validate the full execution path in seconds.
+- date: '2026-06-29'
+  title: Multi-factor authentication
+  type: addition
+  highlights: 2-step verification for dashboard login with TOTP-based authenticator apps.

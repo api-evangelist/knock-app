@@ -1,0 +1,39 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/in-app-ui/overview
+description: >-
+  Client-side and embeddable UI components Knock ships for in-app notification
+  feeds, in-app guides, and inbound chat-connection (SlackKit / TeamsKit) UX.
+  These are prebuilt front-end surfaces, distinct from the server-side SDKs in
+  packages/knock-app-packages.yml. Loader libraries are the @knocklabs/* client
+  packages plus the Telegraph design system.
+component_families:
+- name: In-app feed
+  description: Prebuilt real-time notification feed — bell icon, dropdown/popover feed, and full inbox surfaces.
+  platforms: [React, JavaScript, React Native, iOS/Swift, Android/Kotlin, Flutter, Expo]
+  loaders:
+  - "@knocklabs/react (KnockFeedProvider, NotificationFeed, NotificationIconButton, NotificationFeedPopover)"
+  - "@knocklabs/client"
+  - "@knocklabs/react-native"
+  - "@knocklabs/expo"
+  repo: https://github.com/knocklabs/react-notification-feed
+  docs: https://docs.knock.app/in-app-ui/react/notification-feed
+- name: In-app guides
+  description: In-app lifecycle messaging surfaces (banners, cards, modals) rendered with your own components and design system.
+  platforms: [React, JavaScript, React Native]
+  loaders: ["@knocklabs/react", "@knocklabs/client"]
+  docs: https://docs.knock.app/in-app-ui/guides/overview
+- name: SlackKit
+  description: Drop-in OAuth + channel-data UI for connecting a customer's Slack workspace and picking channels.
+  platforms: [React]
+  loaders: ["@knocklabs/react"]
+  docs: https://docs.knock.app/integrations/chat/slack/slack-kit
+- name: TeamsKit
+  description: Drop-in OAuth + channel-data UI for connecting a customer's Microsoft Teams workspace.
+  platforms: [React]
+  loaders: ["@knocklabs/react"]
+  docs: https://docs.knock.app/integrations/chat/microsoft-teams/teams-kit
+design_system:
+- name: Telegraph
+  description: Knock's open-source React component library / design system underpinning its UI components.
+  repo: https://github.com/knocklabs/telegraph

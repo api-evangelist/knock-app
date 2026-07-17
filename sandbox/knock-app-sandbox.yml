@@ -1,0 +1,37 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/concepts/environments
+description: >-
+  Knock's test-vs-live separation is environment-based rather than a single
+  global "test mode." Every Knock account has isolated Environments (a
+  Development environment plus Production, and optionally staging), and API keys
+  are scoped per environment — so a Development key exercises the same API
+  surface without touching production recipients or sending real messages
+  through production channel configs. Knock does not publish magic test card
+  numbers or fixed synthetic identifiers the way a payments provider does;
+  testing is done against your own Development-environment data. Only values
+  actually documented by Knock are recorded here — no test credentials are
+  invented.
+test_vs_live:
+  model: per-environment API keys (Development vs Production), not a global test flag
+  key_prefixes:
+    public: pk_    # client-side; environment-scoped
+    secret: sk_    # server-side; environment-scoped
+  note: >-
+    Key prefixes documented in the OpenAPI security scheme and auth docs are
+    pk_ (public) and sk_ (secret); the environment (development/production) is
+    encoded in the key issued from that environment's settings.
+  docs: https://docs.knock.app/developer-tools/api-keys
+sandbox_mode:
+  available: true
+  surface: Dashboard Test Runner
+  capabilities:
+  - Run workflows in sandbox mode without delivering real notifications.
+  - Skip delay steps to validate the full execution path in seconds.
+  source: https://knock.app/changelog  # "Test runner improvements", 2026-06-30
+magic_test_values: []
+test_clocks:
+  available: false
+  note: No published test-clock / time-simulation primitive; delay steps can be skipped in the Test Runner instead.
+fixtures:
+  note: Local resource fixtures are managed as files via the Knock CLI (knock pull/push) against a Development environment.

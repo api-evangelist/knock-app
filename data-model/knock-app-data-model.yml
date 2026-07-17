@@ -1,0 +1,139 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/*-openapi.yml (components.schemas)
+description: >-
+  Entity-relationship graph for Knock, derived from the OpenAPI component
+  schemas in this repo (id-reference and $ref fields on the core objects) and
+  corroborated against the Knock object reference. Knock's recipient model is
+  polymorphic: a Recipient is either a User or an Object (collection + id), and
+  Messages/Schedules/Subscriptions/Activities all point at a Recipient. Field
+  names in relationships[].via are the actual property names on the source
+  schema.
+id_conventions:
+  User.id: developer-supplied identifier (your system's user id), not prefixed by Knock
+  Object: 'addressed as { collection, id } — e.g. { collection: projects, id: project_123 }'
+  Tenant.id: developer-supplied identifier
+  note: >-
+    Unlike prefixed-id providers, Knock uses caller-supplied identifiers for
+    Users/Objects/Tenants; system objects (messages, bulk operations) carry
+    Knock-generated ids.
+entities:
+- name: User
+  key: id
+  fields: [id, name, email, phone_number, avatar, timezone, created_at, updated_at]
+- name: Object
+  key: [collection, id]
+  fields: [collection, id, properties, created_at, updated_at]
+- name: Tenant
+  key: id
+  fields: [id, name, settings]
+- name: Recipient
+  note: Polymorphic — a User (id string) or an Object reference ({collection, id}).
+- name: Message
+  key: id
+  fields: [id, channel_id, recipient, actors, source, status, engagement_statuses, metadata, data, seen_at, read_at, interacted_at, archived_at]
+- name: Workflow
+  key: key
+  fields: [key, name, active, categories, conditions, steps, trigger_data_json_schema, environment, sha]
+- name: Schedule
+  key: id
+  fields: [id, workflow, recipient, actor, tenant, data, repeats, next_occurrence_at, last_occurrence_at]
+- name: Subscription
+  fields: [object, recipient, properties, inserted_at, updated_at]
+- name: Audience
+  fields: [key, name]
+- name: AudienceMember
+  fields: [user, user_id, tenant, added_at]
+- name: Activity
+  fields: [id, actor, recipient, data, inserted_at]
+- name: ChannelData
+  fields: [channel_id, provider, data]
+- name: PreferenceSet
+  key: id
+  fields: [id, categories, channel_types, channels, workflows, commercial_subscribed]
+- name: BulkOperation
+  key: id
+  fields: [id, name, status, progress_path, processed_rows, success_count, error_count]
+- name: Guide
+  key: key
+  fields: [key, name, type, channel_key, steps, target_audience_id, target_property_conditions, environment]
+- name: Broadcast
+  key: key
+  fields: [key, name, status, categories, target_audience_key, scheduled_at, sent_at, environment]
+relationships:
+- from: Message
+  to: Recipient
+  type: belongs_to
+  via: recipient
+- from: Message
+  to: ChannelData
+  type: belongs_to
+  via: channel_id
+- from: Message
+  to: Activity
+  type: has_many
+  via: source
+- from: Schedule
+  to: Workflow
+  type: belongs_to
+  via: workflow
+- from: Schedule
+  to: Recipient
+  type: belongs_to
+  via: recipient
+- from: Schedule
+  to: Tenant
+  type: belongs_to
+  via: tenant
+- from: Subscription
+  to: Object
+  type: belongs_to
+  via: object
+- from: Subscription
+  to: Recipient
+  type: belongs_to
+  via: recipient
+- from: AudienceMember
+  to: User
+  type: belongs_to
+  via: user
+- from: AudienceMember
+  to: Tenant
+  type: belongs_to
+  via: tenant
+- from: Activity
+  to: Recipient
+  type: belongs_to
+  via: recipient
+- from: User
+  to: ChannelData
+  type: has_many
+  via: channel_data
+- from: User
+  to: PreferenceSet
+  type: has_many
+  via: preferences
+- from: Object
+  to: ChannelData
+  type: has_many
+  via: channel_data
+- from: Object
+  to: PreferenceSet
+  type: has_many
+  via: preferences
+- from: Object
+  to: Subscription
+  type: has_many
+  via: subscriptions
+- from: Broadcast
+  to: Audience
+  type: belongs_to
+  via: target_audience_key
+- from: Guide
+  to: Audience
+  type: belongs_to
+  via: target_audience_id
+- from: Workflow
+  to: Message
+  type: has_many
+  via: runtime (a workflow run produces per-recipient messages)

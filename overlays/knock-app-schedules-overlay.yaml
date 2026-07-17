@@ -1,0 +1,21 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Knock Schedules API
+  version: 1.0.0
+extends: openapi/knock-schedules-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: knock-app
+      x-apievangelist-catalog: https://apis.io/providers/knock-app
+      x-apievangelist-artifacts:
+        authentication: authentication/knock-app-authentication.yml
+        conventions: conventions/knock-app-conventions.yml
+        errors: errors/knock-app-problem-types.yml
+        lifecycle: lifecycle/knock-app-lifecycle.yml
+        data_model: data-model/knock-app-data-model.yml
+        rate_limits: rate-limits/knock-rate-limits.yml
+      x-apievangelist-agentic-access: agentic-access/knock-app-agentic-access.yml
+  - target: $.info
+    update:
+      x-apievangelist-mcp-server: https://mcp.knock.app/mcp

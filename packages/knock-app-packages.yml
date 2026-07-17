@@ -1,0 +1,157 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/developer-tools/sdks
+description: >-
+  First-party Knock client libraries and tools, verified against the public
+  package registries (npm registry.npmjs.org, PyPI, RubyGems, Packagist,
+  pkg.go.dev) and the knocklabs GitHub organization. Registry HTTP status was
+  recorded at fetch time. Knock ships two SDK families: the runtime/data-plane
+  SDKs (trigger workflows, manage recipients/messages) and the Management API
+  (mAPI) SDKs (resource CRUD). The knock-node / knock-python / knock-ruby
+  packages publish under registry names @knocklabs/node, knockapi (PyPI), and
+  knockapi (RubyGems) respectively.
+packages:
+- language: javascript
+  registry: npm
+  name: "@knocklabs/node"
+  url: https://www.npmjs.com/package/@knocklabs/node
+  source: https://github.com/knocklabs/knock-node
+  install: npm install @knocklabs/node
+  official: true
+  note: Official TypeScript library for the Knock API (runtime).
+- language: javascript
+  registry: npm
+  name: "@knocklabs/mgmt"
+  url: https://www.npmjs.com/package/@knocklabs/mgmt
+  source: https://github.com/knocklabs/knock-mgmt-node
+  install: npm install @knocklabs/mgmt
+  official: true
+  note: Official TypeScript library for the Knock Management API (mAPI).
+- language: javascript
+  registry: npm
+  name: "@knocklabs/client"
+  url: https://www.npmjs.com/package/@knocklabs/client
+  source: https://github.com/knocklabs/javascript
+  install: npm install @knocklabs/client
+  official: true
+  note: Client-side JS SDK powering in-app feeds and guides.
+- language: javascript
+  registry: npm
+  name: "@knocklabs/react"
+  url: https://www.npmjs.com/package/@knocklabs/react
+  source: https://github.com/knocklabs/javascript
+  install: npm install @knocklabs/react
+  official: true
+  note: React components and hooks for in-app notification feeds and guides.
+- language: javascript
+  registry: npm
+  name: "@knocklabs/react-native"
+  url: https://www.npmjs.com/package/@knocklabs/react-native
+  source: https://github.com/knocklabs/javascript
+  install: npm install @knocklabs/react-native
+  official: true
+- language: javascript
+  registry: npm
+  name: "@knocklabs/expo"
+  url: https://www.npmjs.com/package/@knocklabs/expo
+  source: https://github.com/knocklabs/javascript
+  install: npm install @knocklabs/expo
+  official: true
+- language: javascript
+  registry: npm
+  name: "@knocklabs/agent-toolkit"
+  url: https://www.npmjs.com/package/@knocklabs/agent-toolkit
+  source: https://github.com/knocklabs/agent-toolkit
+  install: npm install @knocklabs/agent-toolkit
+  official: true
+  note: AI SDK / OpenAI function-calling / Langchain / Mastra bindings plus a local MCP server.
+- language: javascript
+  registry: npm
+  name: "@knocklabs/cli"
+  url: https://www.npmjs.com/package/@knocklabs/cli
+  source: https://github.com/knocklabs/knock-cli
+  install: npm install -g @knocklabs/cli
+  official: true
+  note: The Knock CLI binary; command surface catalogued in cli/knock-app-cli.yml.
+- language: python
+  registry: pypi
+  name: knockapi
+  url: https://pypi.org/project/knockapi/
+  source: https://github.com/knocklabs/knock-python
+  install: pip install knockapi
+  official: true
+  note: Official Python library for the Knock API (runtime).
+- language: ruby
+  registry: rubygems
+  name: knockapi
+  url: https://rubygems.org/gems/knockapi
+  source: https://github.com/knocklabs/knock-ruby
+  install: gem install knockapi
+  official: true
+- language: php
+  registry: packagist
+  name: knocklabs/knock-php
+  url: https://packagist.org/packages/knocklabs/knock-php
+  source: https://github.com/knocklabs/knock-php
+  install: composer require knocklabs/knock-php
+  official: true
+- language: go
+  registry: pkg.go.dev
+  name: github.com/knocklabs/knock-go
+  url: https://pkg.go.dev/github.com/knocklabs/knock-go
+  source: https://github.com/knocklabs/knock-go
+  install: go get github.com/knocklabs/knock-go
+  official: true
+- language: elixir
+  registry: hex
+  name: knock
+  url: https://hex.pm/packages/knock
+  source: https://github.com/knocklabs/knock-elixir
+  install: "{:knock, \"~> 0.5\"}"
+  official: true
+- language: java
+  registry: github
+  name: knock-java
+  url: https://github.com/knocklabs/knock-java
+  source: https://github.com/knocklabs/knock-java
+  official: true
+  note: Distribution via GitHub Packages / Maven; see repo README.
+- language: dotnet
+  registry: github
+  name: knock-dotnet
+  url: https://github.com/knocklabs/knock-dotnet
+  source: https://github.com/knocklabs/knock-dotnet
+  official: true
+- language: swift
+  registry: github
+  name: knock-swift
+  url: https://github.com/knocklabs/knock-swift
+  source: https://github.com/knocklabs/knock-swift
+  official: true
+  note: iOS / Swift in-app feed SDK (Swift Package Manager).
+- language: kotlin
+  registry: github
+  name: knock-android
+  url: https://github.com/knocklabs/knock-android
+  source: https://github.com/knocklabs/knock-android
+  official: true
+- language: dart
+  registry: pub.dev
+  name: knock_flutter
+  url: https://github.com/knocklabs/knock-flutter
+  source: https://github.com/knocklabs/knock-flutter
+  official: true
+- language: python
+  registry: github
+  name: knock-mgmt-python
+  url: https://github.com/knocklabs/knock-mgmt-python
+  source: https://github.com/knocklabs/knock-mgmt-python
+  official: true
+  note: Management API (mAPI) Python SDK.
+- language: go
+  registry: github
+  name: knock-mgmt-go
+  url: https://github.com/knocklabs/knock-mgmt-go
+  source: https://github.com/knocklabs/knock-mgmt-go
+  official: true
+  note: Management API (mAPI) Go SDK.

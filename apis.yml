@@ -262,6 +262,69 @@ common:
   url: security/knock-app-domain-security.yml
 - type: Authentication
   url: authentication/knock-app-authentication.yml
+- type: Packages
+  url: packages/knock-app-packages.yml
+- type: WellKnown
+  url: well-known/knock-app-well-known.yml
+- type: MCPServer
+  url: mcp/knock-app-mcp.yml
+- type: LLMsTxt
+  url: llms/knock-app-llms.txt
+- type: Conformance
+  url: conformance/knock-app-conformance.yml
+- type: ErrorCatalog
+  url: errors/knock-app-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/knock-app-lifecycle.yml
+- type: Conventions
+  url: conventions/knock-app-conventions.yml
+- type: Sandbox
+  url: sandbox/knock-app-sandbox.yml
+- type: CLI
+  url: cli/knock-app-cli.yml
+- type: Components
+  url: components/knock-app-components.yml
+- type: DataModel
+  url: data-model/knock-app-data-model.yml
+- type: Overlay
+  name: Audiences API overlay
+  url: overlays/knock-app-audiences-overlay.yaml
+- type: Overlay
+  name: Bulk Operations API overlay
+  url: overlays/knock-app-bulk-operations-overlay.yaml
+- type: Overlay
+  name: Channels API overlay
+  url: overlays/knock-app-channels-overlay.yaml
+- type: Overlay
+  name: Integrations API overlay
+  url: overlays/knock-app-integrations-overlay.yaml
+- type: Overlay
+  name: Management API overlay
+  url: overlays/knock-app-management-overlay.yaml
+- type: Overlay
+  name: Messages API overlay
+  url: overlays/knock-app-messages-overlay.yaml
+- type: Overlay
+  name: Notify API overlay
+  url: overlays/knock-app-notify-overlay.yaml
+- type: Overlay
+  name: Objects API overlay
+  url: overlays/knock-app-objects-overlay.yaml
+- type: Overlay
+  name: Providers API overlay
+  url: overlays/knock-app-providers-overlay.yaml
+- type: Overlay
+  name: Schedules API overlay
+  url: overlays/knock-app-schedules-overlay.yaml
+- type: Overlay
+  name: Tenants API overlay
+  url: overlays/knock-app-tenants-overlay.yaml
+- type: Overlay
+  name: Users API overlay
+  url: overlays/knock-app-users-overlay.yaml
+- type: Overlay
+  name: Workflows API overlay
+  url: overlays/knock-app-workflows-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/knock/overview
 - type: Arazzo
@@ -342,7 +405,9 @@ common:
 - type: StatusPage
   url: https://status.knock.app
 - type: ChangeLog
-  url: https://docs.knock.app/changelog
+  url: https://knock.app/changelog
+- type: ChangeLog
+  url: changelog/knock-app-changelog.yml
 - type: Pricing
   url: https://knock.app/pricing
 - type: TermsOfService
@@ -546,7 +611,7 @@ common:
   - https://github.com/knocklabs
   updated: '2026-05-25'
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-06-20'
 position: Consuming
 description: Knock is notifications infrastructure as a service — a product and customer
   messaging platform you use to power transactional, lifecycle, broadcast, and in-product

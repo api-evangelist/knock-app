@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app/api-reference/overview/errors
+docs:
+- https://docs.knock.app/api-reference/overview/errors
+- https://docs.knock.app/api-reference/overview/error-codes
+format: http-status
+description: >-
+  Knock uses standard HTTP response codes to signal success or failure. 2xx
+  confirms the request worked; 4xx indicates a client error (incorrect or
+  missing request information, e.g. a bad API key); 5xx indicates a Knock server
+  error. The documented error reference does NOT publish an RFC 9457
+  problem+json envelope or a machine-readable error-type registry — it describes
+  status classes and the common authentication / authorization / rate-limit
+  cases. The OpenAPI specs in this repo declare almost no explicit 4xx/5xx
+  response bodies (only sparse 403s), so this catalog is sourced from the docs
+  error reference rather than derived from the specs.
+envelope:
+  documented: false
+  note: >-
+    No error-response envelope schema is published in the Knock error
+    reference. Rate-limited (429) responses carry Retry-After and
+    X-RateLimit-* headers (see rate-limits/knock-rate-limits.yml).
+problems:
+- status: 401
+  title: Unauthorized
+  cause: API request made without authentication or using an incorrect key.
+  remediation: Provide a valid Knock API key (sk_ secret key server-side, pk_ public key client-side) as a Bearer token.
+- status: 403
+  title: Forbidden
+  cause: Request used a valid key but with insufficient permissions for the resource or environment.
+  remediation: Use a key scoped to the correct environment and with sufficient privileges; enhanced-security signed user tokens may be required.
+- status: 429
+  title: Too Many Requests
+  cause: The request was rate limited (per-endpoint tiered limits, scoped per environment or per signed user).
+  remediation: Back off using the Retry-After / X-RateLimit-Reset headers; see rate-limits/knock-rate-limits.yml.
+classes:
+- range: 2xx
+  meaning: Success — the request worked as expected.
+- range: 4xx
+  meaning: Client error caused by incorrect or missing request information.
+- range: 5xx
+  meaning: Knock server error.

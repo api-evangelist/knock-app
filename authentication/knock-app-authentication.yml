@@ -1,5 +1,7 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
+docs: https://docs.knock.app/api-reference/overview/authentication
+enhanced_security: Client-side requests can be signed with a JWT user token (X-Knock-User-Token) in enhanced-security mode; server tokens (service tokens) authenticate the Management API. See https://docs.knock.app/developer-tools/service-tokens
 source: openapi/knock-audiences-api-openapi.yml, openapi/knock-bulk-operations-api-openapi.yml,
   openapi/knock-channels-api-openapi.yml, openapi/knock-integrations-api-openapi.yml, openapi/knock-management-api-openapi.yml,
   openapi/knock-messages-api-openapi.yml, openapi/knock-notify-api-openapi.yml, openapi/knock-objects-api-openapi.yml,

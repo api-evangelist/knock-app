@@ -1,0 +1,30 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.knock.app
+description: >-
+  Knock's REST API is unversioned in the request URL. Instead of a numbered or
+  date-pinned API version, Knock evolves notification resources through a
+  git-style model — Environments (dev/staging/production), Branches, and Commits
+  — that promote changes across environments safely. No X-Knock-Version request
+  header or dated-version scheme was found in the docs. SDKs follow independent
+  semver and publish migration guides for major bumps (e.g. the Go SDK v0.x to
+  v1.0 upgrade). No RFC 8594 Sunset/Deprecation header policy is documented for
+  the HTTP API.
+versioning:
+  scheme: unversioned-url
+  api_version_header: null
+  model: environments + branches + commits (git-style resource promotion)
+  docs: https://docs.knock.app/concepts/environments
+  sdk_versioning: semver (per-SDK), with published migration guides
+  migration_guides: https://docs.knock.app/developer-tools/migration-guides
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: No RFC 8594 Sunset/Deprecation header policy documented for the HTTP API.
+sla:
+  url: null
+  uptime_target: null
+  note: SLA / uptime targets are Enterprise-plan commitments (see plans/knock-plans-pricing.yml); no public numeric target published.
+status_page: https://status.knock.app
+deprecated_operations: []

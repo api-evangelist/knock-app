@@ -1,0 +1,48 @@
+generated: '2026-06-20'
+method: searched
+source: live probes of /.well-known/* across Knock hosts
+description: >-
+  Well-known discovery surface for Knock. The runtime API (api.knock.app), the
+  Management API (control.knock.app), and the marketing host (knock.app) publish
+  no /.well-known documents. The remote MCP server (mcp.knock.app) publishes the
+  OAuth 2.1 authorization-server metadata (RFC 8414) and protected-resource
+  metadata (RFC 9728) that its OAuth + PKCE sign-in flow relies on.
+hosts:
+- host: https://mcp.knock.app
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: knock-app-mcp-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: knock-app-mcp-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://api.knock.app
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://control.knock.app
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://knock.app
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+- host: https://docs.knock.app
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
