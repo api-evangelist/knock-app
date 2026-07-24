@@ -1,0 +1,426 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Microsoft Teams API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Microsoft Teams
+paths:
+  /v1/providers/ms-teams/{channel_id}/auth_check:
+    get:
+      callbacks: {}
+      description: Check if a connection to Microsoft Teams has been authorized for a given Microsoft Teams tenant object.
+      operationId: msTeamsProviderAuthCheck
+      parameters:
+      - description: The ID of the Knock Microsoft Teams channel to check.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the Microsoft Teams tenant object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: ms_teams_tenant_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MsTeamsAuthCheckResponse'
+          description: OK
+      summary: Check auth
+      tags:
+      - Microsoft Teams
+      x-ratelimit-tier: 2
+  /v1/providers/ms-teams/{channel_id}/channels:
+    get:
+      callbacks: {}
+      description: List the Microsoft Teams channels within a team. By default, archived and private channels are excluded from the results.
+      operationId: listChannelsForMsTeamsProvider
+      parameters:
+      - description: The ID of the Knock Microsoft Teams channel to get channels for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the Microsoft Teams tenant object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: ms_teams_tenant_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Microsoft Teams team ID.
+        in: query
+        name: team_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter channels.'
+        example: displayName eq 'General'
+        in: query
+        name: query_options.$filter
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select specific properties.'
+        example: id,displayName,description
+        in: query
+        name: query_options.$select
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelsForMsTeamsProviderResponse'
+          description: OK
+      summary: List channels
+      tags:
+      - Microsoft Teams
+      x-ratelimit-tier: 2
+  /v1/providers/ms-teams/{channel_id}/teams:
+    get:
+      callbacks: {}
+      description: Get a list of teams belonging to the Microsoft Entra tenant. By default, archived and private channels are excluded from the results.
+      operationId: listTeamsForMsTeamsProvider
+      parameters:
+      - description: The ID of the Knock Microsoft Teams channel to get teams for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the Microsoft Teams tenant object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: ms_teams_tenant_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter teams.'
+        example: displayName eq 'My Team'
+        in: query
+        name: query_options.$filter
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select fields on a team.'
+        example: id,displayName,description
+        in: query
+        name: query_options.$select
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to limit the number of teams returned.'
+        example: 10
+        in: query
+        name: query_options.$top
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.'
+        in: query
+        name: query_options.$skiptoken
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamsForMsTeamsProviderResponse'
+          description: OK
+      summary: List teams
+      tags:
+      - Microsoft Teams
+      x-ratelimit-tier: 2
+  /v1/providers/ms-teams/{channel_id}/revoke_access:
+    put:
+      callbacks: {}
+      description: Remove a Microsoft Entra tenant ID from a Microsoft Teams tenant object.
+      operationId: msTeamsProviderRevokeAccess
+      parameters:
+      - description: The ID of the Knock Microsoft Teams channel to revoke access for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the Microsoft Teams tenant object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: ms_teams_tenant_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A response indicating the operation was successful.
+                example:
+                  ok: ok
+                properties:
+                  ok:
+                    description: OK response.
+                    example: ok
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                title: SuccessResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Authentication error response
+                example:
+                  code: authorization
+                  message: Access token not set.
+                  status: 403
+                  type: authentication_error
+                properties:
+                  code:
+                    description: The error code.
+                    example: authorization
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  message:
+                    description: The error message.
+                    example: Access token not set.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  status:
+                    description: The HTTP status code.
+                    example: 403
+                    type: integer
+                    x-struct: null
+                    x-validate: null
+                  type:
+                    description: The error type.
+                    example: authentication_error
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - code
+                - message
+                - status
+                - type
+                title: AuthenticationError
+                type: object
+                x-struct: null
+                x-validate: null
+          description: Forbidden
+      summary: Revoke access
+      tags:
+      - Microsoft Teams
+      x-ratelimit-tier: 2
+components:
+  schemas:
+    MsTeamsAuthCheckResponse:
+      description: The response from a Microsoft Teams auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Microsoft Teams connection object.
+          properties:
+            ok:
+              description: Whether the Microsoft Teams connection is valid.
+              nullable: false
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Microsoft Teams connection if it is not valid.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: MsTeamsAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsAuthCheckResponse
+      x-validate: null
+    TeamsForMsTeamsProviderResponse:
+      description: The response from a Microsoft Teams provider request, containing a list of teams.
+      example:
+        ms_teams_teams:
+        - displayName: Engineering Team
+          id: team-id-1
+        skip_token: token-for-next-page
+      properties:
+        ms_teams_teams:
+          description: List of Microsoft Teams teams.
+          items:
+            properties:
+              description:
+                description: Microsoft Teams team description.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              displayName:
+                description: Microsoft Teams team display name.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Microsoft Teams team ID.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - displayName
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        skip_token:
+          description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - ms_teams_teams
+      - skip_token
+      title: TeamsForMsTeamsProviderResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.TeamsForMsTeamsProviderResponse
+      x-validate: null
+    ChannelsForMsTeamsProviderResponse:
+      description: The response from a Microsoft Teams provider request, containing a list of channels.
+      example:
+        ms_teams_channels:
+        - displayName: General
+          id: channel-id-1
+      properties:
+        ms_teams_channels:
+          description: List of Microsoft Teams channels.
+          items:
+            properties:
+              createdDateTime:
+                description: Microsoft Teams channel created date and time.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              description:
+                description: Microsoft Teams channel description.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              displayName:
+                description: Microsoft Teams channel name.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Microsoft Teams channel ID.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              isArchived:
+                description: Whether the Microsoft Teams channel is archived.
+                nullable: false
+                type: boolean
+                x-struct: null
+                x-validate: null
+              membershipType:
+                description: Microsoft Teams channel membership type.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - displayName
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - ms_teams_channels
+      title: ChannelsForMsTeamsProviderResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelsForMsTeamsProviderResponse
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

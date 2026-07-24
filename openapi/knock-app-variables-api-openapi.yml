@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Variables API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Variables
+paths:
+  /v1/variables/{key}:
+    get:
+      callbacks: {}
+      description: Returns a single variable by key with per-environment value overrides.
+      operationId: getVariable
+      parameters:
+      - description: The key of the variable to retrieve.
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Variable'
+          description: OK
+      summary: Get a variable
+      tags:
+      - Variables
+  /v1/variables:
+    get:
+      callbacks: {}
+      description: Returns a list of variables. When an environment is specified, returns per-environment variables. Otherwise, returns project-scoped variables with per-environment overrides.
+      operationId: listVariables
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter variables by type. Supports 'public' or 'secret'.
+        in: query
+        name: type
+        required: false
+        schema:
+          enum:
+          - public
+          - secret
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Variable. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - description: This is a description of my variable.
+                    environment_values:
+                      development: dev_value
+                      production: prod_value
+                    inserted_at: '2021-01-01T00:00:00Z'
+                    key: my_variable
+                    type: public
+                    updated_at: '2021-01-01T00:00:00Z'
+                    value: my_value
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Variable'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedVariableResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List variables
+      tags:
+      - Variables
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    Variable:
+      description: An environment variable object.
+      example:
+        description: This is a description of my variable.
+        environment_values:
+          development: dev_value
+          production: prod_value
+        inserted_at: '2021-01-01T00:00:00Z'
+        key: my_variable
+        type: public
+        updated_at: '2021-01-01T00:00:00Z'
+        value: my_value
+      properties:
+        description:
+          description: The description of the variable.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        environment_values:
+          additionalProperties:
+            nullable: true
+            type: string
+            x-struct: null
+            x-validate: null
+          description: A map of environment slugs to their override values. Only present for project-scoped responses.
+          type: object
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: The timestamp of when the variable was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: The key of the variable.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          default: public
+          description: The type of the variable.
+          enum:
+          - public
+          - secret
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the variable was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        value:
+          description: The default value of the variable. For secret variables, this is obfuscated.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - key
+      - type
+      - inserted_at
+      - updated_at
+      title: Variable
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Variable
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

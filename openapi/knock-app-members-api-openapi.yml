@@ -1,0 +1,303 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Members API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Members
+paths:
+  /v1/members/{id}:
+    delete:
+      callbacks: {}
+      description: Removes a member from the account.
+      operationId: removeMember
+      parameters:
+      - description: The ID of the member to remove.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Remove a member
+      tags:
+      - Members
+    get:
+      callbacks: {}
+      description: Returns a single member by their ID.
+      operationId: getMember
+      parameters:
+      - description: The ID of the member to retrieve.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+          description: OK
+      summary: Get a member
+      tags:
+      - Members
+  /v1/members:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of members for the current account. Optionally filter by role.
+      operationId: listMembers
+      parameters:
+      - description: 'Filter members by role. One of: owner, admin, member, production_only_member, billing, support.'
+        in: query
+        name: role
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter members by email address (exact match).
+        in: query
+        name: email
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Member. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - created_at: '2024-01-15T10:30:00Z'
+                    id: d4b8e8e0-1234-5678-9abc-def012345678
+                    role: admin
+                    updated_at: '2024-06-20T14:45:00Z'
+                    user:
+                      avatar_url: https://www.gravatar.com/avatar/abc123
+                      created_at: '2024-01-10T08:00:00Z'
+                      email: jane@example.com
+                      id: a1b2c3d4-5678-9abc-def0-123456789abc
+                      name: Jane Doe
+                      updated_at: '2024-06-18T12:00:00Z'
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Member'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedMemberResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List members
+      tags:
+      - Members
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    MemberUser:
+      description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
+      example:
+        avatar_url: https://www.gravatar.com/avatar/abc123
+        created_at: '2024-01-10T08:00:00Z'
+        email: jane@example.com
+        id: a1b2c3d4-5678-9abc-def0-123456789abc
+        name: Jane Doe
+        updated_at: '2024-06-18T12:00:00Z'
+      properties:
+        avatar_url:
+          description: The URL of the user's avatar image.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the user was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The user's email address.
+          format: email
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The user's unique identifier.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The user's display name.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the user was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - email
+      - created_at
+      - updated_at
+      title: MemberUser
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
+      x-validate: null
+    Member:
+      description: A member of the account.
+      example:
+        created_at: '2024-01-15T10:30:00Z'
+        id: d4b8e8e0-1234-5678-9abc-def012345678
+        role: admin
+        updated_at: '2024-06-20T14:45:00Z'
+        user:
+          avatar_url: https://www.gravatar.com/avatar/abc123
+          created_at: '2024-01-10T08:00:00Z'
+          email: jane@example.com
+          id: a1b2c3d4-5678-9abc-def0-123456789abc
+          name: Jane Doe
+          updated_at: '2024-06-18T12:00:00Z'
+      properties:
+        created_at:
+          description: The timestamp of when the member joined the account.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the member.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        role:
+          description: The member's role in the account.
+          enum:
+          - owner
+          - admin
+          - member
+          - production_only_member
+          - billing
+          - support
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the member was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        user:
+          $ref: '#/components/schemas/MemberUser'
+      required:
+      - id
+      - role
+      - user
+      - created_at
+      - updated_at
+      title: Member
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Member
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

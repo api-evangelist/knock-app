@@ -1,0 +1,4241 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Broadcasts API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Broadcasts
+paths:
+  /v1/broadcasts/{broadcast_key}/send:
+    put:
+      callbacks: {}
+      description: 'Sends a broadcast immediately or schedules it to send at a future time.
+
+        '
+      operationId: sendBroadcast
+      parameters:
+      - description: The key of the broadcast.
+        in: path
+        name: broadcast_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BroadcastSendRequest'
+        description: Params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the Broadcast response under the `broadcast` key.
+                example:
+                  broadcast:
+                    categories:
+                    - marketing
+                    - promotions
+                    created_at: '2022-12-16T19:07:50.027113Z'
+                    description: Holiday promotion broadcast for December
+                    environment: development
+                    key: december-promotion
+                    name: December Promotion
+                    scheduled_at: null
+                    sent_at: null
+                    settings:
+                      is_commercial: true
+                      override_preferences: false
+                    sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+                    status: draft
+                    steps:
+                    - channel_key: in-app-feed
+                      description: Main in-app feed
+                      name: In-app step
+                      ref: in_app_feed_1
+                      template:
+                        action_url: '{{ vars.app_url }}'
+                        markdown_body: Hello **{{ recipient.name }}**
+                      type: channel
+                    target_audience_key: premium-users
+                    updated_at: '2023-02-08T22:15:19.846681Z'
+                    valid: true
+                properties:
+                  broadcast:
+                    $ref: '#/components/schemas/Broadcast'
+                required:
+                - broadcast
+                title: WrappedBroadcastResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Send a broadcast
+      tags:
+      - Broadcasts
+  /v1/broadcasts/{broadcast_key}/validate:
+    put:
+      callbacks: {}
+      description: 'Validates a broadcast payload without persisting it.
+
+        '
+      operationId: validateBroadcast
+      parameters:
+      - description: The key of the broadcast.
+        in: path
+        name: broadcast_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: Wraps the BroadcastRequest request under the broadcast key.
+              example:
+                broadcast:
+                  categories:
+                  - announcement
+                  description: A broadcast to all users
+                  name: My Broadcast
+                  settings:
+                    is_commercial: true
+                    override_preferences: false
+                  steps:
+                  - channel_key: in-app-feed
+                    name: Channel 1
+                    ref: channel_1
+                    template:
+                      action_url: '{{ vars.app_url }}'
+                      markdown_body: Hello **{{ recipient.name }}**
+                    type: channel
+                  target_audience_key: all-users
+              properties:
+                broadcast:
+                  $ref: '#/components/schemas/BroadcastRequest'
+              required:
+              - broadcast
+              title: WrappedBroadcastRequestRequest
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the Broadcast response under the `broadcast` key.
+                example:
+                  broadcast:
+                    categories:
+                    - marketing
+                    - promotions
+                    created_at: '2022-12-16T19:07:50.027113Z'
+                    description: Holiday promotion broadcast for December
+                    environment: development
+                    key: december-promotion
+                    name: December Promotion
+                    scheduled_at: null
+                    sent_at: null
+                    settings:
+                      is_commercial: true
+                      override_preferences: false
+                    sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+                    status: draft
+                    steps:
+                    - channel_key: in-app-feed
+                      description: Main in-app feed
+                      name: In-app step
+                      ref: in_app_feed_1
+                      template:
+                        action_url: '{{ vars.app_url }}'
+                        markdown_body: Hello **{{ recipient.name }}**
+                      type: channel
+                    target_audience_key: premium-users
+                    updated_at: '2023-02-08T22:15:19.846681Z'
+                    valid: true
+                properties:
+                  broadcast:
+                    $ref: '#/components/schemas/Broadcast'
+                required:
+                - broadcast
+                title: WrappedBroadcastResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Validate a broadcast
+      tags:
+      - Broadcasts
+  /v1/broadcasts:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of broadcasts available in a given environment. The broadcasts are returned ordered by creation time (newest first).
+      operationId: listBroadcasts
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned.
+        in: query
+        name: hide_uncommitted_changes
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Broadcast. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - categories:
+                    - marketing
+                    - promotions
+                    created_at: '2022-12-16T19:07:50.027113Z'
+                    description: Holiday promotion broadcast for December
+                    environment: development
+                    key: december-promotion
+                    name: December Promotion
+                    scheduled_at: null
+                    sent_at: null
+                    settings:
+                      is_commercial: true
+                      override_preferences: false
+                    sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+                    status: draft
+                    steps:
+                    - channel_key: in-app-feed
+                      description: Main in-app feed
+                      name: In-app step
+                      ref: in_app_feed_1
+                      template:
+                        action_url: '{{ vars.app_url }}'
+                        markdown_body: Hello **{{ recipient.name }}**
+                      type: channel
+                    target_audience_key: premium-users
+                    updated_at: '2023-02-08T22:15:19.846681Z'
+                    valid: true
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Broadcast'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedBroadcastResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List broadcasts
+      tags:
+      - Broadcasts
+  /v1/broadcasts/{broadcast_key}:
+    get:
+      callbacks: {}
+      description: Get a broadcast by its key in a given environment.
+      operationId: getBroadcast
+      parameters:
+      - description: The key of the broadcast to retrieve.
+        in: path
+        name: broadcast_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned.
+        in: query
+        name: hide_uncommitted_changes
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+          description: OK
+      summary: Get a broadcast
+      tags:
+      - Broadcasts
+    put:
+      callbacks: {}
+      description: 'Updates a broadcast of a given key, or creates a new one if it does not yet exist.
+
+        '
+      operationId: upsertBroadcast
+      parameters:
+      - description: The key of the broadcast.
+        in: path
+        name: broadcast_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: Wraps the BroadcastRequest request under the broadcast key.
+              example:
+                broadcast:
+                  categories:
+                  - announcement
+                  description: A broadcast to all users
+                  name: My Broadcast
+                  settings:
+                    is_commercial: true
+                    override_preferences: false
+                  steps:
+                  - channel_key: in-app-feed
+                    name: Channel 1
+                    ref: channel_1
+                    template:
+                      action_url: '{{ vars.app_url }}'
+                      markdown_body: Hello **{{ recipient.name }}**
+                    type: channel
+                  target_audience_key: all-users
+              properties:
+                broadcast:
+                  $ref: '#/components/schemas/BroadcastRequest'
+              required:
+              - broadcast
+              title: WrappedBroadcastRequestRequest
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the Broadcast response under the `broadcast` key.
+                example:
+                  broadcast:
+                    categories:
+                    - marketing
+                    - promotions
+                    created_at: '2022-12-16T19:07:50.027113Z'
+                    description: Holiday promotion broadcast for December
+                    environment: development
+                    key: december-promotion
+                    name: December Promotion
+                    scheduled_at: null
+                    sent_at: null
+                    settings:
+                      is_commercial: true
+                      override_preferences: false
+                    sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+                    status: draft
+                    steps:
+                    - channel_key: in-app-feed
+                      description: Main in-app feed
+                      name: In-app step
+                      ref: in_app_feed_1
+                      template:
+                        action_url: '{{ vars.app_url }}'
+                        markdown_body: Hello **{{ recipient.name }}**
+                      type: channel
+                    target_audience_key: premium-users
+                    updated_at: '2023-02-08T22:15:19.846681Z'
+                    valid: true
+                properties:
+                  broadcast:
+                    $ref: '#/components/schemas/Broadcast'
+                required:
+                - broadcast
+                title: WrappedBroadcastResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Upsert a broadcast
+      tags:
+      - Broadcasts
+  /v1/broadcasts/{broadcast_key}/cancel:
+    put:
+      callbacks: {}
+      description: 'Cancels sending a scheduled broadcast. The broadcast will return to draft status.
+
+        '
+      operationId: cancelBroadcast
+      parameters:
+      - description: The key of the broadcast.
+        in: path
+        name: broadcast_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the Broadcast response under the `broadcast` key.
+                example:
+                  broadcast:
+                    categories:
+                    - marketing
+                    - promotions
+                    created_at: '2022-12-16T19:07:50.027113Z'
+                    description: Holiday promotion broadcast for December
+                    environment: development
+                    key: december-promotion
+                    name: December Promotion
+                    scheduled_at: null
+                    sent_at: null
+                    settings:
+                      is_commercial: true
+                      override_preferences: false
+                    sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+                    status: draft
+                    steps:
+                    - channel_key: in-app-feed
+                      description: Main in-app feed
+                      name: In-app step
+                      ref: in_app_feed_1
+                      template:
+                        action_url: '{{ vars.app_url }}'
+                        markdown_body: Hello **{{ recipient.name }}**
+                      type: channel
+                    target_audience_key: premium-users
+                    updated_at: '2023-02-08T22:15:19.846681Z'
+                    valid: true
+                properties:
+                  broadcast:
+                    $ref: '#/components/schemas/Broadcast'
+                required:
+                - broadcast
+                title: WrappedBroadcastResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Cancel a scheduled broadcast
+      tags:
+      - Broadcasts
+components:
+  schemas:
+    WorkflowRandomCohortStepBranch:
+      description: A cohort branch in an experiment step.
+      example:
+        name: Control
+        percentage: '50'
+        steps: []
+        terminates: false
+      properties:
+        name:
+          description: The name of the cohort branch.
+          example: Control
+          type: string
+          x-struct: null
+          x-validate: null
+        percentage:
+          description: The percentage of recipients to assign to this cohort. Must be between 0 and 100 with at most 1 decimal place. All branch percentages must sum to 100. Sent as a number in requests; returned as a decimal string in responses (e.g. "50", "33.3").
+          example: '50'
+          type: string
+          x-struct: null
+          x-validate: null
+        steps:
+          description: A list of steps that will be executed for recipients assigned to this cohort.
+          items:
+            $ref: '#/components/schemas/WorkflowStep'
+          type: array
+          x-struct: null
+          x-validate: null
+        terminates:
+          description: If the workflow should halt at the end of the branch. Defaults to false if not provided.
+          example: false
+          type: boolean
+          x-struct: null
+          x-validate: null
+      required:
+      - percentage
+      title: WorkflowRandomCohortStepBranch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowRandomCohortStep.CohortBranch
+      x-validate: null
+    ConditionGroup:
+      anyOf:
+      - $ref: '#/components/schemas/ConditionGroupAllMatch'
+      - $ref: '#/components/schemas/ConditionGroupAnyMatch'
+      description: A group of conditions to be evaluated.
+      example:
+        all:
+        - argument: some_property
+          operator: equal_to
+          variable: recipient.property
+      title: ConditionGroup
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup
+      x-validate: null
+    PushChannelSettings:
+      description: Push channel settings. Only used as configuration as part of a workflow channel step.
+      example:
+        token_deregistration: true
+      properties:
+        token_deregistration:
+          description: Whether to deregister a push-token when a push send hard bounces. This is to prevent the same token from being used for future pushes.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: PushChannelSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PushChannelSettings
+      x-validate: null
+    WorkflowChatStep:
+      description: A chat step within a workflow. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: slack
+        channel_overrides: null
+        channel_type: chat
+        conditions: null
+        description: This is a description of the channel step
+        name: Chat channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          json_body: null
+          markdown_body: '**Hello**, world!'
+          summary: Hello, world!
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_overrides:
+          anyOf:
+          - $ref: '#/components/schemas/ChatChannelSettings'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A map of channel overrides for the channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of the channel step. Always `chat` for chat steps.
+          enum:
+          - chat
+          example: chat
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/ChatTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowChatStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowChatStep
+      x-validate: null
+    ChatChannelSettings:
+      description: Chat channel settings. Only used as configuration as part of a workflow channel step.
+      example:
+        email_based_user_id_resolution: true
+        link_tracking: true
+      properties:
+        email_based_user_id_resolution:
+          description: Whether to resolve chat provider user IDs using a Knock user's email address. Only relevant for Slack channels for the time being.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        link_tracking:
+          description: Whether to track link clicks on chat notifications.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: ChatChannelSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChatChannelSettings
+      x-validate: null
+    EmailChannelSettings:
+      description: Email channel settings. Only used as configuration as part of a workflow channel step.
+      example:
+        bcc_address: null
+        cc_address: null
+        from_address: hello@example.com
+        from_name: John Doe
+        json_overrides: '{"some_override": true}'
+        link_tracking: true
+        open_tracking: true
+        reply_to_address: null
+        to_address: hello@example.com
+      properties:
+        bcc_address:
+          description: The BCC address on email notifications. Supports liquid.
+          example: hello@example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        cc_address:
+          description: The CC address on email notifications. Supports liquid.
+          example: hello@example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        from_address:
+          description: The email address from which this channel will send. Supports liquid.
+          example: hello@example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        from_name:
+          description: The name from which this channel will send. Supports liquid.
+          example: John Doe
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        json_overrides:
+          description: A JSON template for any custom overrides to merge into the API payload that is sent to the email provider. Supports liquid.
+          example: '{"some_override": true}'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        link_tracking:
+          description: Whether to track link clicks on email notifications.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        open_tracking:
+          description: Whether to track opens on email notifications.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        reply_to_address:
+          description: The Reply-to address on email notifications. Supports liquid.
+          example: hello@example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        to_address:
+          description: The email address to which this channel will send. Defaults to `recipient.email`. Supports liquid.
+          example: hello@example.com
+          type: string
+          x-struct: null
+          x-validate: null
+      title: EmailChannelSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailChannelSettings
+      x-validate: null
+    WorkflowFetchStep:
+      description: A fetch function step. Retrieves data from an external source and merges it into the workflow's `data` scope for use in later steps. Read more in the [docs](https://docs.knock.app/designing-workflows/fetch-function).
+      example:
+        name: Fetch step
+        ref: fetch_1
+        settings:
+          body: null
+          headers:
+          - key: X-API-Key
+            value: '1234567890'
+          method: get
+          query_params:
+          - key: key
+            value: value
+          url: https://example.com
+        type: http_fetch
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Fetch step description
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Fetch step
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: fetch_step
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          $ref: '#/components/schemas/RequestTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - http_fetch
+          example: http_fetch
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowFetchStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowFetchStep
+      x-validate: null
+    EmailButtonSetBlockButton:
+      description: A button in a button set block.
+      example:
+        action: https://example.com/button-action
+        label: Click me
+        size_attrs:
+          is_fullwidth: false
+          size: sm
+        style_attrs:
+          background_color: '#000000'
+          border_color: '#000000'
+          border_radius: 6
+          border_width: 1
+          text_color: '#FFFFFF'
+        variant: solid
+      properties:
+        action:
+          description: The action of the button.
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the button.
+          type: string
+          x-struct: null
+          x-validate: null
+        size_attrs:
+          description: The size attributes of the button.
+          properties:
+            is_fullwidth:
+              description: Whether the button is full width.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            size:
+              description: The size of the button.
+              enum:
+              - sm
+              - md
+              - lg
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        style_attrs:
+          description: The style attributes of the button.
+          properties:
+            background_color:
+              description: The background color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+            border_color:
+              description: The border color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+            border_radius:
+              description: The border radius of the button.
+              type: integer
+              x-struct: null
+              x-validate: null
+            border_width:
+              description: The border width of the button.
+              type: integer
+              x-struct: null
+              x-validate: null
+            text_color:
+              description: The text color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        variant:
+          description: The variant of the button.
+          enum:
+          - solid
+          - outline
+          example: solid
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - label
+      - action
+      - variant
+      title: EmailButtonSetBlockButton
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ButtonSetBlock.Button
+      x-validate: null
+    WebhookTemplate:
+      description: A webhook template. By default, a webhook step will use the request settings you configured in your webhook channel. You can override this as you see fit on a per-step basis.
+      example:
+        body: null
+        headers:
+        - key: X-API-Key
+          value: '1234567890'
+        method: get
+        query_params:
+        - key: key
+          value: value
+        url: https://example.com
+      properties:
+        body:
+          description: The body of the request. Only used for POST or PUT requests.
+          example: '{"key": "value"}'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        headers:
+          description: A list of key-value pairs for the request headers. Each object should contain key and value fields with string values.
+          items:
+            properties:
+              key:
+                description: The key of the header.
+                example: X-API-Key
+                type: string
+                x-struct: null
+                x-validate: null
+              value:
+                description: The value of the header.
+                example: '1234567890'
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - key
+            - value
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        method:
+          description: The HTTP method of the webhook.
+          enum:
+          - get
+          - post
+          - put
+          - delete
+          - patch
+          example: post
+          type: string
+          x-struct: null
+          x-validate: null
+        query_params:
+          description: A list of key-value pairs for the request query params. Each object should contain key and value fields with string values.
+          items:
+            properties:
+              key:
+                description: The key of the query param.
+                example: key
+                type: string
+                x-struct: null
+                x-validate: null
+              value:
+                description: The value of the query param.
+                example: value
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - key
+            - value
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        url:
+          description: The URL of the webhook.
+          example: https://example.com
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      - method
+      title: WebhookTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WebhookTemplate
+      x-validate: null
+    WorkflowStep:
+      anyOf:
+      - $ref: '#/components/schemas/WorkflowWebhookStep'
+      - $ref: '#/components/schemas/WorkflowInAppFeedStep'
+      - $ref: '#/components/schemas/WorkflowChatStep'
+      - $ref: '#/components/schemas/WorkflowSmsStep'
+      - $ref: '#/components/schemas/WorkflowPushStep'
+      - $ref: '#/components/schemas/WorkflowEmailStep'
+      - $ref: '#/components/schemas/WorkflowAIAgentStep'
+      - $ref: '#/components/schemas/WorkflowDelayStep'
+      - $ref: '#/components/schemas/WorkflowBatchStep'
+      - $ref: '#/components/schemas/WorkflowFetchStep'
+      - $ref: '#/components/schemas/WorkflowUpdateDataStep'
+      - $ref: '#/components/schemas/WorkflowUpdateObjectStep'
+      - $ref: '#/components/schemas/WorkflowUpdateTenantStep'
+      - $ref: '#/components/schemas/WorkflowUpdateUserStep'
+      - $ref: '#/components/schemas/WorkflowThrottleStep'
+      - $ref: '#/components/schemas/WorkflowBranchStep'
+      - $ref: '#/components/schemas/WorkflowRandomCohortStep'
+      - $ref: '#/components/schemas/WorkflowTriggerWorkflowStep'
+      description: A step within a workflow. Each workflow step, regardless of its type, share a common set of core attributes (`type`, `ref`, `name`, `description`, `conditions`).
+      example:
+        channel_group_key: null
+        channel_key: postmark
+        channel_overrides: null
+        channel_type: email
+        conditions: null
+        description: This is a description of the channel step
+        name: Email channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          html_body: <p>Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+          settings:
+            layout_key: default
+          subject: Welcome to {{ vars.app_name }}
+          text_body: 'Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} Get started here: {{ data.sign_in_url }}.'
+        type: channel
+      title: WorkflowStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowStep
+      x-validate: null
+    WorkflowInAppFeedStep:
+      description: An in-app feed step within a workflow. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: knock-in-app
+        channel_overrides: null
+        channel_type: in_app_feed
+        conditions: null
+        description: This is a description of the channel step
+        name: In-app feed channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          action_buttons:
+          - action: https://example.com
+            label: Button 1
+          action_url: https://example.com
+          markdown_body: Hello, world!
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_overrides:
+          anyOf:
+          - $ref: '#/components/schemas/InAppFeedChannelSettings'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A map of channel overrides for the channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of the channel step. Always `in_app_feed` for in-app feed steps.
+          enum:
+          - in_app_feed
+          example: in_app_feed
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/InAppFeedTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowInAppFeedStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowInAppFeedStep
+      x-validate: null
+    WorkflowBatchStep:
+      description: A batch function step. Read more in the [docs](https://docs.knock.app/designing-workflows/batch-function).
+      example:
+        description: Batch step description
+        name: Batch step
+        ref: batch_step
+        settings:
+          batch_key: data.project_id
+          batch_window:
+            unit: minutes
+            value: 10
+        type: batch
+      properties:
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Batch step description
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Batch step
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: batch_step
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the batch step.
+          properties:
+            batch_execution_mode:
+              description: 'The execution mode of the batch step. One of: `accumulate` or `flush_leading`. When set to `flush_leading`, the first item in the batch will be executed immediately, and the rest will be batched. See [these docs](https://docs.knock.app/designing-workflows/batch-function#immediately-flushing-the-first-item-in-a-batch) for more information.'
+              enum:
+              - accumulate
+              - flush_leading
+              example: accumulate
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            batch_items_max_limit:
+              description: 'The maximum number of batch items allowed in a batch. Between: 2 and 1000.'
+              example: 1000
+              nullable: true
+              type: integer
+              x-struct: null
+              x-validate: null
+            batch_items_render_limit:
+              description: 'The maximum number of batch items allowed to be rendered into a template. Between: 1 and 100. Defaults to 10.'
+              example: 10
+              nullable: true
+              type: integer
+              x-struct: null
+              x-validate: null
+            batch_key:
+              description: The data property to use to batch notifications per recipient.
+              example: data.project_id
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            batch_order:
+              description: 'The order describing whether to return the first or last ten batch items in the activities variable. One of: `asc` or `desc`.'
+              enum:
+              - asc
+              - desc
+              example: asc
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            batch_until_field_path:
+              description: The data path to resolve the batch window. The resolved value must be an ISO-8601 timestamp.
+              example: recipient.batch_until
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            batch_window:
+              anyOf:
+              - $ref: '#/components/schemas/Duration'
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              description: The window of time to collect events in the batch.
+              type: object
+              x-struct: null
+              x-validate: null
+            batch_window_extension_limit:
+              anyOf:
+              - $ref: '#/components/schemas/Duration'
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              description: A duration object that describes the maximum duration a batch window can be extended to from opening when using a [sliding batch window](https://docs.knock.app/designing-workflows/batch-function#using-a-sliding-batch-window).
+              type: object
+              x-struct: null
+              x-validate: null
+            batch_window_type:
+              description: 'The type of the batch window used. One of: `fixed` or `sliding`.'
+              enum:
+              - fixed
+              - sliding
+              example: fixed
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - batch
+          example: batch
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowBatchStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowBatchStep
+      x-validate: null
+    WorkflowUpdateUserStep:
+      description: An update user step. Updates properties of a specific user referenced in the workflow.
+      example:
+        description: Update user step description.
+        name: Update user
+        ref: update_user_1
+        settings:
+          recipient_gid: gid://Object/$users/user-123
+          recipient_mode: reference
+          update_properties: '{"name": "Updated User"}'
+        type: update_user
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Update user step description.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Update user
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: update_user_1
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the update user step.
+          properties:
+            recipient_gid:
+              description: 'The global identifier (GID) of the user to update. Required when recipient_mode is ''reference''. Format: gid://Object/$users/{id}'
+              example: gid://Object/$users/user-123
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            recipient_mode:
+              description: The recipient mode determining how the user is selected. 'current' uses the workflow's current user. 'reference' uses a specific user ID.
+              enum:
+              - current
+              - reference
+              example: reference
+              type: string
+              x-struct: null
+              x-validate: null
+            update_properties:
+              description: A JSON string or Liquid template that evaluates to the properties to update on the user.
+              example: '{"name": "Updated User", "email": "user@example.com"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - recipient_mode
+          - update_properties
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - update_user
+          example: update_user
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowUpdateUserStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowUpdateUserStep
+      x-validate: null
+    WorkflowWebhookStep:
+      description: A webhook step within a workflow to send an HTTP request to a generic channel. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: pagerduty
+        channel_type: http
+        conditions: null
+        description: This is a description of the channel step
+        name: Webhook channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          body: null
+          headers:
+          - key: X-API-Key
+            value: '1234567890'
+          method: get
+          query_params:
+          - key: key
+            value: value
+          url: https://example.com
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of the channel step. Always `http` for webhook steps.
+          enum:
+          - http
+          example: http
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/WebhookTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowWebhookStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowWebhookStep
+      x-validate: null
+    SmsChannelSettings:
+      description: SMS channel settings. Only used as configuration as part of a workflow channel step.
+      example:
+        link_tracking: true
+      properties:
+        link_tracking:
+          description: Whether to track link clicks on SMS notifications.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: SmsChannelSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.SmsChannelSettings
+      x-validate: null
+    WorkflowUpdateTenantStep:
+      description: An update tenant step. Updates properties of a specific tenant referenced in the workflow.
+      example:
+        description: Update tenant step description.
+        name: Update tenant
+        ref: update_tenant_1
+        settings:
+          recipient_gid: gid://Object/$tenants/tenant-123
+          recipient_mode: reference
+          update_properties: '{"name": "Updated Tenant"}'
+        type: update_tenant
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Update tenant step description.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Update tenant
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: update_tenant_1
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the update tenant step.
+          properties:
+            recipient_gid:
+              description: 'The global identifier (GID) of the tenant to update. Required when recipient_mode is ''reference''. Format: gid://Object/$tenants/{id}'
+              example: gid://Object/$tenants/tenant-123
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            recipient_mode:
+              description: The recipient mode determining how the tenant is selected. 'current' uses the workflow's current tenant. 'reference' uses a specific tenant ID.
+              enum:
+              - current
+              - reference
+              example: reference
+              type: string
+              x-struct: null
+              x-validate: null
+            update_properties:
+              description: A JSON string or Liquid template that evaluates to the properties to update on the tenant.
+              example: '{"name": "Updated Tenant", "status": "active"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - recipient_mode
+          - update_properties
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - update_tenant
+          example: update_tenant
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowUpdateTenantStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowUpdateTenantStep
+      x-validate: null
+    WorkflowAIAgentStep:
+      description: An AI agent function step. Fetches data from an AI model and merges it into the workflow's `data` scope for use in later steps. Supports Liquid templating in the prompt. Read more in the [docs](https://docs.knock.app/designing-workflows/ai-agent-function).
+      example:
+        name: AI agent step
+        ref: ai_agent_step
+        settings:
+          model: anthropic:claude-haiku-4-5
+          request_prompt: You are a helpful assistant.
+          response_type: text
+        type: ai_agent
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: AI agent step description
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: AI agent step
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: ai_1
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the AI agent step.
+          properties:
+            halt_on_error:
+              description: Whether to halt the workflow if the AI fetch fails.
+              example: true
+              nullable: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+            model:
+              description: The AI model to use in `provider:model` format (e.g. `anthropic:claude-haiku-4-5`, `openai:gpt-5.2-chat-latest`). See the documentation for a list of supported models.
+              example: anthropic:claude-haiku-4-5
+              type: string
+              x-struct: null
+              x-validate: null
+            request_prompt:
+              description: The prompt template for the AI request. Supports Liquid templating.
+              example: You are a helpful assistant.
+              type: string
+              x-struct: null
+              x-validate: null
+            response_schema:
+              description: A JSON schema string for structured output. Required when `response_type` is `json`. Must not be set when `response_type` is `text`.
+              example: '{"type": "object", "properties": {"summary": {"type": "string"}}}'
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            response_type:
+              description: The type of response to expect from the AI model.
+              enum:
+              - text
+              - json
+              example: text
+              type: string
+              x-struct: null
+              x-validate: null
+            web_search_enabled:
+              description: Whether to enable web search for the AI request.
+              example: false
+              nullable: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          required:
+          - model
+          - response_type
+          - request_prompt
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - ai_agent
+          example: ai_agent
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowAIAgentStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowAIAgentStep
+      x-validate: null
+    SmsTemplate:
+      description: An SMS template.
+      example:
+        settings:
+          payload_overrides: '{"name": "John"}'
+          to_number: '+1234567890'
+        text_body: Hello, world!
+      properties:
+        settings:
+          anyOf:
+          - description: The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides) for the SMS template.
+            properties:
+              payload_overrides:
+                description: A JSON object that overrides the payload sent to the SMS provider.
+                example: '{"name": "John"}'
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              to_number:
+                description: An override for the phone number to send the SMS to. When not set, defaults to `recipient.phone_number`.
+                example: '+1234567890'
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The settings for the SMS template. Can be omitted.
+          type: object
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: The message of the SMS.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - text_body
+      title: SmsTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.SmsTemplate
+      x-validate: null
+    ConditionGroupAnyMatch:
+      description: A group of conditions that any must be met. Can contain nested alls.
+      example:
+        any:
+        - all:
+          - argument: some_property
+            operator: equal_to
+            variable: recipient.property
+      properties:
+        any:
+          description: An array of conditions or nested condition groups to evaluate.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/Condition'
+            - $ref: '#/components/schemas/ConditionGroupAllMatch'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      title: ConditionGroupAnyMatch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAnyMatch
+      x-validate: null
+    WorkflowSmsStep:
+      description: A SMS step within a workflow. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: twilio
+        channel_overrides: null
+        channel_type: sms
+        conditions: null
+        description: This is a description of the channel step
+        name: SMS channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          settings:
+            payload_overrides: '{"name": "John"}'
+            to_number: '+1234567890'
+          text_body: Hello, world!
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_overrides:
+          anyOf:
+          - $ref: '#/components/schemas/SmsChannelSettings'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A map of channel overrides for the channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of the channel step. Always `sms` for SMS steps.
+          enum:
+          - sms
+          example: sms
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/SmsTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowSmsStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowSmsStep
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: some_property
+        operator: equal_to
+        variable: recipient.property
+      properties:
+        argument:
+          description: The argument to be evaluated. Arguments can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
+          example: some_property
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the evaluation of the condition.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - contains_all
+          - not_contains_all
+          - is_timestamp_before
+          - is_timestamp_on_or_after
+          - is_timestamp_between
+          - is_between
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - is_timestamp
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated. Variables can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      title: Condition
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Condition
+      x-validate: null
+    ConditionGroupAllMatch:
+      description: A group of conditions that must all be met.
+      example:
+        all:
+        - argument: some_property
+          operator: equal_to
+          variable: recipient.property
+      properties:
+        all:
+          description: A list of conditions.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      title: ConditionGroupAllMatch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAllMatch
+      x-validate: null
+    EmailPartialBlock:
+      description: A partial block in an email template, used to render a reusable partial component.
+      example:
+        attrs:
+          foo: bar
+        key: my_partial
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        name: my_partial
+        type: partial
+      properties:
+        attrs:
+          additionalProperties: true
+          description: The attributes to pass to the partial block.
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: The key of the partial block to invoke.
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the partial block.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - partial
+          example: partial
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - key
+      - attrs
+      title: EmailPartialBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.PartialBlock
+      x-validate: null
+    InAppFeedChannelSettings:
+      description: In-app feed channel settings. Only used as configuration as part of a workflow channel step.
+      example:
+        link_tracking: true
+      properties:
+        link_tracking:
+          description: Whether to track link clicks on in-app feed notifications.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: InAppFeedChannelSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.InAppFeedChannelSettings
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    WorkflowUpdateObjectStep:
+      description: An update object step. Updates properties of a specific object referenced in the workflow.
+      example:
+        description: Update object step description.
+        name: Update object
+        ref: update_object_1
+        settings:
+          recipient_gid: gid://Object/projects/123
+          update_properties: '{"status": "active"}'
+        type: update_object
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Update object step description.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Update object
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: update_object_1
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the update object step.
+          properties:
+            recipient_gid:
+              description: 'The global identifier (GID) of the object to update. Format: gid://Object/{collection}/{id}'
+              example: gid://Object/projects/123
+              type: string
+              x-struct: null
+              x-validate: null
+            update_properties:
+              description: A JSON string or Liquid template that evaluates to the properties to update on the object.
+              example: '{"status": "active", "updated_at": "{{ timestamp }}"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - recipient_gid
+          - update_properties
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - update_object
+          example: update_object
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowUpdateObjectStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowUpdateObjectStep
+      x-validate: null
+    WorkflowTriggerWorkflowStep:
+      description: A workflow trigger function step. Read more in the [docs](https://docs.knock.app/designing-workflows/trigger-workflow-function).
+      example:
+        name: Trigger workflow step
+        ref: trigger_workflow_step
+        settings:
+          actor: '{{ actor.id }}'
+          cancellation_key: '{{ workflow.cancellation_key }}'
+          data: '{{ data | json }}'
+          recipients: '{{ recipient.id }}'
+          tenant: '{{ tenant.id }}'
+          workflow_key: dinosaurs-loose
+        type: trigger_workflow
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this trigger workflow step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: A description for the workflow step.
+          example: Trigger workflow step description
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Trigger workflow step
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: trigger_workflow_step
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the workflow trigger workflow step.
+          properties:
+            actor:
+              description: The actor to trigger the workflow with. Supports liquid.
+              example: '{{ actor.id }}'
+              type: string
+              x-struct: null
+              x-validate: null
+            cancellation_key:
+              description: The cancellation key to trigger the workflow with. Supports liquid.
+              example: '{{ workflow.cancellation_key }}'
+              type: string
+              x-struct: null
+              x-validate: null
+            data:
+              description: The data to be supplied to the workflow. Supports liquid.
+              example: '{{ data | json }}'
+              type: string
+              x-struct: null
+              x-validate: null
+            recipients:
+              description: The recipients or recipient to trigger the workflow for. Supports liquid.
+              example: '{{ recipient.id }}'
+              type: string
+              x-struct: null
+              x-validate: null
+            tenant:
+              description: The tenant to trigger the workflow with. Supports liquid.
+              example: '{{ tenant.id }}'
+              type: string
+              x-struct: null
+              x-validate: null
+            workflow_key:
+              description: The key of the workflow to trigger. Supports liquid.
+              example: dinosaurs-loose
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - trigger_workflow
+          example: trigger_workflow
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowTriggerWorkflowStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowTriggerWorkflowStep
+      x-validate: null
+    WorkflowBranchStep:
+      description: A branch function step. Read more in the [docs](https://docs.knock.app/designing-workflows/branch-function).
+      example:
+        branches:
+        - conditions:
+            all:
+            - argument: pro
+              operator: equal_to
+              variable: recipient.plan_type
+          name: Pro plan
+          steps: []
+          terminates: false
+        - conditions: null
+          name: Default
+          steps: []
+          terminates: false
+        description: Branch description
+        name: Branch 1
+        ref: branch_1
+        type: branch
+      properties:
+        branches:
+          description: A list of workflow branches to be evaluated.
+          items:
+            description: A branch in a branch step.
+            example:
+              conditions:
+                all:
+                - argument: pro
+                  operator: equal_to
+                  variable: recipient.plan_type
+              name: Pro plan
+              steps: []
+              terminates: false
+            properties:
+              conditions:
+                anyOf:
+                - $ref: '#/components/schemas/ConditionGroup'
+                - nullable: true
+                  x-struct: null
+                  x-validate: null
+                description: A set of conditions to be evaluated for this branch.
+                type: object
+                x-struct: null
+                x-validate: null
+              name:
+                description: The name of the branch.
+                example: The name of the branch.
+                type: string
+                x-struct: null
+                x-validate: null
+              steps:
+                description: A list of steps that will be executed if the branch is chosen.
+                items:
+                  $ref: '#/components/schemas/WorkflowStep'
+                type: array
+                x-struct: null
+                x-validate: null
+              terminates:
+                description: If the workflow should halt at the end of the branch. Defaults to false if not provided.
+                example: true
+                type: boolean
+                x-struct: null
+                x-validate: null
+            title: WorkflowBranchStepBranch
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Branch description
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Branch
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: branch_step
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of step.
+          enum:
+          - branch
+          example: branch
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - branches
+      title: WorkflowBranchStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowBranchStep
+      x-validate: null
+    Duration:
+      description: A duration of time, represented as a unit and a value.
+      example:
+        unit: minutes
+        value: 10
+      properties:
+        unit:
+          description: The unit of time.
+          enum:
+          - minutes
+          - hours
+          - days
+          - weeks
+          - months
+          example: minutes
+          type: string
+          x-struct: null
+          x-validate: null
+        value:
+          description: The value of the duration.
+          example: 10
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - unit
+      - value
+      title: Duration
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Duration
+      x-validate: null
+    InAppFeedTemplate:
+      description: An in-app feed template.
+      example:
+        action_buttons:
+        - action: https://example.com
+          label: Button 1
+        action_url: https://example.com
+        markdown_body: Hello, world!
+      properties:
+        action_buttons:
+          description: The action buttons of the in-app feed message.
+          items:
+            description: A single-action button to be rendered in an in-app feed cell.
+            properties:
+              action:
+                description: The URI for this action.
+                example: https://example.com
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the action button.
+                example: Button 1
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - label
+            - action
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        action_url:
+          description: The URL to navigate to when the in-app feed is tapped. Can be omitted for multi-action templates, where the action buttons will be used instead.
+          example: https://example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        markdown_body:
+          description: The markdown body of the in-app feed.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - markdown_body
+      title: InAppFeedTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.InAppFeedTemplate
+      x-validate: null
+    WorkflowDelayStep:
+      description: A delay function step. Read more in the [docs](https://docs.knock.app/designing-workflows/delay-function).
+      example:
+        conditions: {}
+        description: Delay for 10 seconds
+        name: Delay
+        ref: delay_step
+        settings:
+          delay_for:
+            unit: seconds
+            value: 10
+        type: delay
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this delay step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Delay for 10 seconds
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Delay
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: delay_step
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the delay step. Both fields can be set to compute a delay where `delay_for` is an offset from the `delay_until_field_path`.
+          properties:
+            delay_for:
+              anyOf:
+              - $ref: '#/components/schemas/Duration'
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              description: A duration object that describes how long to wait before proceeding to the next step.
+              type: object
+              x-struct: null
+              x-validate: null
+            delay_until_field_path:
+              description: When set will use the path to resolve the delay into a timestamp from the property referenced
+              example: recipient.delay_until
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - delay
+          example: delay
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowDelayStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowDelayStep
+      x-validate: null
+    SendWindow:
+      description: A send window time for a notification. Describes a single day.
+      example:
+        day: monday
+        from: 09:00
+        type: send
+        until: '17:00'
+      properties:
+        day:
+          description: The day of the week.
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          type: string
+          x-struct: null
+          x-validate: null
+        from:
+          description: The start time of the send window.
+          example: 09:00
+          format: time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of send window.
+          enum:
+          - send
+          - do_not_send
+          example: send
+          type: string
+          x-struct: null
+          x-validate: null
+        until:
+          description: The end time of the send window.
+          example: '17:00'
+          format: time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - day
+      - type
+      title: SendWindow
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.SendWindow
+      x-validate: null
+    ChatTemplate:
+      description: A chat template.
+      example:
+        json_body: null
+        markdown_body: '**Hello**, world!'
+        summary: Hello, world!
+      properties:
+        json_body:
+          description: A JSON template for the chat notification message payload. Only present if not using the markdown body.
+          example: '{"type": "text", "text": "Hello, world!"}'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        markdown_body:
+          description: The markdown body of the chat template.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        summary:
+          description: The summary of the chat template. Used by some chat apps in their push notifications.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - markdown_body
+      title: ChatTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChatTemplate
+      x-validate: null
+    EmailDividerBlock:
+      description: A divider block in an email template.
+      example:
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: divider
+      properties:
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - divider
+          example: divider
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      title: EmailDividerBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.DividerBlock
+      x-validate: null
+    EmailHtmlBlock:
+      description: An HTML block in an email template.
+      example:
+        content: <p>Hello, world!</p>
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: html
+      properties:
+        content:
+          description: The HTML content of the block. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - html
+          example: html
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - content
+      title: EmailHtmlBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.HtmlBlock
+      x-validate: null
+    WorkflowUpdateDataStep:
+      description: An update data function step. Merges data into the workflow's `data` scope for use in subsequent steps.
+      example:
+        description: Update data step description.
+        name: Update data
+        ref: update_data_1
+        settings:
+          data: '{"key": "value"}'
+        type: update_data
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Update data step description.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Update data
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: update_data_1
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the update data step.
+          properties:
+            data:
+              description: A JSON string or Liquid template that evaluates to the data to merge into the workflow's data scope.
+              example: '{"key": "value"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - data
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - update_data
+          example: update_data
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowUpdateDataStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowUpdateDataStep
+      x-validate: null
+    EmailVisualBlocks:
+      description: The visual blocks that make up the email template.
+      example:
+      - content: '# Hello, {{ recipient.name }}!
+
+
+          Welcome to **{{ vars.app_name }}**. [Get started here]({{ data.sign_in_url }}).'
+        type: markdown
+      - content: <p>Hello, {{ recipient.name }}!</p><p>Welcome to <strong>{{ vars.app_name }}</strong>. <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+        type: html
+      - type: divider
+      - attrs:
+          foo: bar
+        key: my-partial
+        name: My partial
+        type: partial
+      - type: image
+        url: https://example.com/image.png
+      - buttons:
+        - action: https://example.com/button-action
+          label: Click me
+          type: button
+          variant: solid
+        type: button_set
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/EmailButtonSetBlock'
+        - $ref: '#/components/schemas/EmailDividerBlock'
+        - $ref: '#/components/schemas/EmailHtmlBlock'
+        - $ref: '#/components/schemas/EmailImageBlock'
+        - $ref: '#/components/schemas/EmailMarkdownBlock'
+        - $ref: '#/components/schemas/EmailPartialBlock'
+        type: object
+        x-struct: null
+        x-validate: null
+      title: EmailVisualBlocks
+      type: array
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailTemplate.EmailVisualBlocks
+      x-validate: null
+    WorkflowRandomCohortStep:
+      description: An experiment step. Deterministically assigns recipients to percentage-based cohorts for A/B testing and experimentation.
+      example:
+        cohort_branches:
+        - name: Control
+          percentage: '50'
+          steps: []
+          terminates: false
+        - name: Variant
+          percentage: '50'
+          steps: []
+          terminates: false
+        description: Experiment step description.
+        name: Experiment
+        ref: experiment_1
+        type: random_cohort
+      properties:
+        cohort_branches:
+          description: A list of cohort branches. Must have between 2 and 10 branches, and percentages must sum to 100.
+          items:
+            $ref: '#/components/schemas/WorkflowRandomCohortStepBranch'
+          type: array
+          x-struct: null
+          x-validate: null
+        cohort_key:
+          description: The key used to deterministically assign recipients to cohorts. Defaults to the recipient ID if not provided.
+          example: tenant.id
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Experiment step description.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Experiment
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: experiment_1
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of step.
+          enum:
+          - random_cohort
+          example: random_cohort
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - cohort_branches
+      title: WorkflowRandomCohortStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowRandomCohortStep
+      x-validate: null
+    EmailButtonSetBlock:
+      description: A button set block in an email template.
+      example:
+        buttons:
+        - action: https://example.com/button-action
+          label: Click me
+          size_attrs:
+            is_fullwidth: false
+            size: sm
+          style_attrs:
+            background_color: '#000000'
+            border_color: '#000000'
+            border_radius: 6
+            border_width: 1
+            text_color: '#FFFFFF'
+          variant: solid
+        layout_attrs:
+          column_gap: 8
+          horizontal_align: left
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in the button set.
+          items:
+            $ref: '#/components/schemas/EmailButtonSetBlockButton'
+          type: array
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            column_gap:
+              description: The column_gap layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            horizontal_align:
+              description: The horizontal alignment of the block.
+              enum:
+              - left
+              - center
+              - right
+              type: string
+              x-struct: null
+              x-validate: null
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          - horizontal_align
+          - column_gap
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - button_set
+          example: button_set
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - buttons
+      title: EmailButtonSetBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ButtonSetBlock
+      x-validate: null
+    EmailMarkdownBlock:
+      description: A markdown block in an email template.
+      example:
+        content: '# Hello, world!'
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: markdown
+      properties:
+        content:
+          description: The markdown content of the block. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - markdown
+          example: markdown
+          type: string
+          x-struct: null
+          x-validate: null
+        variant:
+          description: The flavor of markdown to use for the block.
+          enum:
+          - default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - content
+      title: EmailMarkdownBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.MarkdownBlock
+      x-validate: null
+    EmailTemplate:
+      description: An email message template.
+      example:
+        html_body: <p>Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+        settings:
+          layout_key: default
+        subject: Welcome to {{ vars.app_name }}
+        text_body: 'Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} Get started here: {{ data.sign_in_url }}.'
+      properties:
+        html_body:
+          description: An HTML or MJML template for the email body. **Required** if `visual_blocks` is not provided. Only one of `html_body` or `visual_blocks` should be set. When `is_mjml` is true, this must contain MJML components. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          example: <p>Hello, world!</p>
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        is_mjml:
+          description: Whether this template uses MJML format. When true, the template content will be compiled from MJML to HTML. Only valid when the selected layout is also MJML or when no layout is selected.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The [settings](https://docs.knock.app/integrations/email/settings) for the email template. Must be supplied with at least `layout_key`.
+          example:
+            layout_key: default
+          properties:
+            attachment_key:
+              description: The object path in the workflow trigger's `data` payload to resolve attachments.Defaults to `attachments`.
+              example: attachments
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            layout_key:
+              description: The `key` of the [email layout](https://docs.knock.app/integrations/email/layouts) that wraps the email template. When omitted, the email template will need to define the `<html>` structure.
+              example: default
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            pre_content:
+              description: A liquid template that will be injected into the email layout above the message template content. Useful for setting variables that should be available to the email layout.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          title: EmailTemplateSettings
+          type: object
+          x-struct: null
+          x-validate: null
+        subject:
+          description: The subject of the email. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: A text template for the email body. When omitted, the email template will be autogenerated from the `html_body` or `visual_blocks`.
+          example: Hello, world!
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        visual_blocks:
+          anyOf:
+          - $ref: '#/components/schemas/EmailVisualBlocks'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The visual blocks that make up the email template. **Required** if `html_body` is not provided. Only one of `html_body` or `visual_blocks` should be set.
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - subject
+      - settings
+      title: EmailTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailTemplate
+      x-validate: null
+    WorkflowPushStep:
+      description: A push step within a workflow. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: apns
+        channel_overrides: null
+        channel_type: push
+        conditions: null
+        description: This is a description of the channel step
+        name: Push channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          settings:
+            delivery_type: content
+            payload_overrides: '{"name": "John"}'
+          text_body: Hello, world!
+          title: Hello, world!
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_overrides:
+          anyOf:
+          - $ref: '#/components/schemas/PushChannelSettings'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A map of channel overrides for the channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of the channel step. Always `push` for push steps.
+          enum:
+          - push
+          example: push
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/PushTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowPushStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowPushStep
+      x-validate: null
+    BroadcastRequest:
+      description: A broadcast request for upserting a broadcast.
+      example:
+        categories:
+        - announcement
+        description: A broadcast to all users
+        name: My Broadcast
+        settings:
+          is_commercial: true
+          override_preferences: false
+        steps:
+        - channel_key: in-app-feed
+          name: Channel 1
+          ref: channel_1
+          template:
+            action_url: '{{ vars.app_url }}'
+            markdown_body: Hello **{{ recipient.name }}**
+          type: channel
+        target_audience_key: all-users
+      properties:
+        categories:
+          description: A list of categories that the broadcast belongs to.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a broadcast object. Useful for adding notes about the broadcast for internal purposes. Maximum of 280 characters allowed.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the broadcast. Must be at maximum 255 characters in length.
+          type: string
+          x-struct: null
+          x-validate: null
+        scheduled_at:
+          description: The timestamp of when the broadcast is scheduled to be sent.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: A map of broadcast settings.
+          properties:
+            is_commercial:
+              description: Whether the broadcast is commercial. Defaults to true.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+            override_preferences:
+              description: Whether to ignore recipient preferences for a given type of notification. If true, will send for every channel in the workflow even if the recipient has opted out of a certain kind. Defaults to false.
+              example: false
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        steps:
+          description: A list of broadcast step objects in the broadcast. Broadcasts only support channel, branch, and delay steps.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/WorkflowWebhookStep'
+            - $ref: '#/components/schemas/WorkflowInAppFeedStep'
+            - $ref: '#/components/schemas/WorkflowChatStep'
+            - $ref: '#/components/schemas/WorkflowSmsStep'
+            - $ref: '#/components/schemas/WorkflowPushStep'
+            - $ref: '#/components/schemas/WorkflowEmailStep'
+            - $ref: '#/components/schemas/WorkflowBranchStep'
+            - $ref: '#/components/schemas/WorkflowDelayStep'
+            - $ref: '#/components/schemas/WorkflowRandomCohortStep'
+            description: A step within a broadcast. Each step, regardless of its type, share a common set of core attributes (`type`, `ref`, `name`, `description`, `conditions`).
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        target_audience_key:
+          description: The key of the audience to target for this broadcast.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - name
+      - steps
+      title: BroadcastRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.BroadcastRequest
+      x-validate: null
+    PushTemplate:
+      description: A push notification template.
+      example:
+        settings:
+          delivery_type: content
+          payload_overrides: '{"name": "John"}'
+        text_body: Hello, world!
+        title: Hello, world!
+      properties:
+        settings:
+          description: The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides) for the push template.
+          properties:
+            delivery_type:
+              description: The delivery type of the push notification. Set as silent to send a data-only notification. When set to `silent`, no body will be sent.
+              enum:
+              - silent
+              - content
+              example: content
+              type: string
+              x-struct: null
+              x-validate: null
+            payload_overrides:
+              description: A JSON object that overrides the payload sent to the push provider.
+              example: '{"name": "John"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - delivery_type
+          type: object
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: The body of the push notification.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        title:
+          description: The title of the push notification.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - title
+      - text_body
+      - settings
+      title: PushTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PushTemplate
+      x-validate: null
+    RequestTemplate:
+      description: A request template for a fetch function step.
+      example:
+        body: null
+        headers:
+        - key: X-API-Key
+          value: '1234567890'
+        method: get
+        query_params:
+        - key: key
+          value: value
+        url: https://example.com
+      properties:
+        body:
+          description: The body of the request. Only used for POST or PUT requests.
+          example: '{"key": "value"}'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        headers:
+          description: The headers of the request. Can be a template string or a list of key-value pairs.
+          example:
+          - key: X-API-Key
+            value: '1234567890'
+          oneOf:
+          - description: A template string that should resolve to a JSON object representing the headers.
+            example: '{{ data.request_headers }}'
+            title: RequestTemplateHeadersString
+            type: string
+            x-struct: null
+            x-validate: null
+          - description: A list of key-value pairs for the request headers. Each object should contain key and value fields with string values.
+            example:
+            - key: X-API-Key
+              value: '1234567890'
+            items:
+              properties:
+                key:
+                  description: The key of the header.
+                  example: X-API-Key
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                value:
+                  description: The value of the header.
+                  example: '1234567890'
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              required:
+              - key
+              - value
+              type: object
+              x-struct: null
+              x-validate: null
+            title: RequestTemplateHeadersArray
+            type: array
+            x-struct: null
+            x-validate: null
+          title: RequestTemplateHeaders
+          type: object
+          x-struct: null
+          x-validate: null
+        method:
+          description: The HTTP method of the request.
+          enum:
+          - get
+          - post
+          - put
+          - delete
+          - patch
+          example: post
+          type: string
+          x-struct: null
+          x-validate: null
+        query_params:
+          description: The query params of the request. Can be a template string or a list of key-value pairs.
+          example:
+          - key: key
+            value: value
+          oneOf:
+          - description: A template string that should resolve to a JSON object representing the query params.
+            example: '{{ data.request_query_params }}'
+            title: RequestTemplateQueryParamsString
+            type: string
+            x-struct: null
+            x-validate: null
+          - description: A list of key-value pairs for the request query params. Each object should contain key and value fields with string values.
+            example:
+            - key: key
+              value: value
+            items:
+              properties:
+                key:
+                  description: The key of the query param.
+                  example: key
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                value:
+                  description: The value of the query param.
+                  example: value
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              required:
+              - key
+              - value
+              type: object
+              x-struct: null
+              x-validate: null
+            title: RequestTemplateQueryParamsArray
+            type: array
+            x-struct: null
+            x-validate: null
+          title: RequestTemplateQueryParams
+          type: object
+          x-struct: null
+          x-validate: null
+        url:
+          description: The URL of the request.
+          example: https://example.com
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      - method
+      title: RequestTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.RequestTemplate
+      x-validate: null
+    BroadcastSendRequest:
+      description: A request to send or schedule a broadcast.
+      example:
+        send_at: '2024-03-20T10:00:00Z'
+      properties:
+        send_at:
+          description: When to send the broadcast. If provided, the broadcast will be scheduled to send at this time. Must be in ISO 8601 UTC format. If not provided, the broadcast will be sent immediately.
+          example: '2024-03-20T10:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      title: BroadcastSendRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.BroadcastSendRequest
+      x-validate: null
+    Broadcast:
+      description: A broadcast object.
+      example:
+        categories:
+        - marketing
+        - promotions
+        created_at: '2022-12-16T19:07:50.027113Z'
+        description: Holiday promotion broadcast for December
+        environment: development
+        key: december-promotion
+        name: December Promotion
+        scheduled_at: null
+        sent_at: null
+        settings:
+          is_commercial: true
+          override_preferences: false
+        sha: f7e9d3b2a1c8e6m4k5j7h9g0i2l3n4p6q8r0t1u3v5w7x9y
+        status: draft
+        steps:
+        - channel_key: in-app-feed
+          description: Main in-app feed
+          name: In-app step
+          ref: in_app_feed_1
+          template:
+            action_url: '{{ vars.app_url }}'
+            markdown_body: Hello **{{ recipient.name }}**
+          type: channel
+        target_audience_key: premium-users
+        updated_at: '2023-02-08T22:15:19.846681Z'
+        valid: true
+      properties:
+        archived_at:
+          description: The timestamp of when the broadcast was archived.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        categories:
+          description: A list of categories that the broadcast belongs to.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the broadcast was created. (read-only).
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a broadcast object. Useful for adding notes about the broadcast for internal purposes. Maximum of 280 characters allowed.
+          type: string
+          x-struct: null
+          x-validate: null
+        environment:
+          description: The slug of the environment in which the broadcast exists. (read-only).
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: The unique key string for the broadcast object. Must be at minimum 3 characters and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the broadcast. Must be at maximum 255 characters in length.
+          type: string
+          x-struct: null
+          x-validate: null
+        scheduled_at:
+          description: The timestamp of when the broadcast is scheduled to be sent.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        sent_at:
+          description: The timestamp of when the broadcast was sent. (read-only).
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: A map of broadcast settings.
+          properties:
+            is_commercial:
+              description: Whether the broadcast is commercial. Defaults to true.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+            override_preferences:
+              description: Whether to ignore recipient preferences for a given type of notification. If true, will send for every channel in the workflow even if the recipient has opted out of a certain kind. Defaults to false.
+              example: false
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        sha:
+          description: The SHA hash of the workflow data. (read-only).
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: 'The current status of the broadcast. One of: `draft`, `scheduled`, `sent`.'
+          enum:
+          - draft
+          - scheduled
+          - sent
+          type: string
+          x-struct: null
+          x-validate: null
+        steps:
+          description: A list of broadcast step objects in the broadcast. Broadcasts only support channel, branch, and delay steps.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/WorkflowWebhookStep'
+            - $ref: '#/components/schemas/WorkflowInAppFeedStep'
+            - $ref: '#/components/schemas/WorkflowChatStep'
+            - $ref: '#/components/schemas/WorkflowSmsStep'
+            - $ref: '#/components/schemas/WorkflowPushStep'
+            - $ref: '#/components/schemas/WorkflowEmailStep'
+            - $ref: '#/components/schemas/WorkflowBranchStep'
+            - $ref: '#/components/schemas/WorkflowDelayStep'
+            - $ref: '#/components/schemas/WorkflowRandomCohortStep'
+            description: A step within a broadcast. Each step, regardless of its type, share a common set of core attributes (`type`, `ref`, `name`, `description`, `conditions`).
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        target_audience_key:
+          description: The key of the audience to target for this broadcast.
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the broadcast was last updated. (read-only).
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        valid:
+          description: Whether the broadcast and its steps are in a valid state. (read-only).
+          type: boolean
+          x-struct: null
+          x-validate: null
+      required:
+      - key
+      - name
+      - status
+      - steps
+      - valid
+      - environment
+      - created_at
+      - updated_at
+      - sha
+      title: Broadcast
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Broadcast
+      x-validate: null
+    EmailImageBlock:
+      description: An image block in an email template.
+      example:
+        alt: Example image
+        layout_attrs:
+          horizontal_align: center
+          padding_bottom: 4
+          padding_left: 0
+          padding_right: 0
+          padding_top: 4
+        style_attrs:
+          width: 25%
+        type: image
+        url: https://example.com/image.jpg
+      properties:
+        action:
+          description: Optional action URL for the image.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        alt:
+          description: Alt text for the image.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            horizontal_align:
+              description: The horizontal alignment of the block.
+              enum:
+              - left
+              - center
+              - right
+              type: string
+              x-struct: null
+              x-validate: null
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          - horizontal_align
+          type: object
+          x-struct: null
+          x-validate: null
+        style_attrs:
+          description: The style attributes of the image.
+          properties:
+            width:
+              description: The width of the image.
+              example: 100%
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - image
+          example: image
+          type: string
+          x-struct: null
+          x-validate: null
+        url:
+          description: The URL of the image to display.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - url
+      title: EmailImageBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ImageBlock
+      x-validate: null
+    WorkflowThrottleStep:
+      description: A throttle function step. Read more in the [docs](https://docs.knock.app/designing-workflows/throttle-function).
+      example:
+        name: Throttle step
+        ref: throttle_step
+        settings:
+          throttle_key: data.project_id
+          throttle_limit: 1
+          throttle_window:
+            unit: minutes
+            value: 10
+        type: throttle
+      properties:
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A conditions object that describes one or more conditions to be met in order for the step to be executed.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Throttle step description
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Throttle step
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: throttle_step
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the throttle step.
+          properties:
+            throttle_key:
+              description: The data property to use to throttle notifications per recipient.
+              example: data.project_id
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            throttle_limit:
+              description: The maximum number of workflows to allow within the duration window. Defaults to 1.
+              example: 1
+              nullable: true
+              type: integer
+              x-struct: null
+              x-validate: null
+            throttle_window:
+              anyOf:
+              - $ref: '#/components/schemas/Duration'
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              description: The duration of the throttle window.
+              nullable: true
+              type: object
+              x-struct: null
+              x-validate: null
+            throttle_window_field_path:
+              description: The data path to resolve a dynamic throttle window. The resolved value must be an ISO-8601 timestamp. See more in the [docs](https://docs.knock.app/designing-workflows/throttle-function#set-a-dynamic-throttle-window).
+              example: recipient.throttle_window
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the workflow step.
+          enum:
+          - throttle
+          example: throttle
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - settings
+      title: WorkflowThrottleStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowThrottleStep
+      x-validate: null
+    WorkflowEmailStep:
+      description: An email step within a workflow. Read more in the [docs](https://docs.knock.app/designing-workflows/channel-step).
+      example:
+        channel_group_key: null
+        channel_key: postmark
+        channel_overrides: null
+        channel_type: email
+        conditions: null
+        description: This is a description of the channel step
+        name: Email channel step
+        ref: channel_step
+        send_windows: null
+        template:
+          html_body: <p>Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+          settings:
+            layout_key: default
+          subject: Welcome to {{ vars.app_name }}
+          text_body: 'Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} Get started here: {{ data.sign_in_url }}.'
+        type: channel
+      properties:
+        channel_group_key:
+          description: The key of the channel group to which the channel step will be sending a notification. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: email
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of a specific configured channel instance (e.g., 'knock-email', 'postmark', 'sendgrid-marketing') to send the notification through. Either `channel_key` or `channel_group_key` must be provided, but not both.
+          example: postmark
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_overrides:
+          anyOf:
+          - $ref: '#/components/schemas/EmailChannelSettings'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A map of channel overrides for the channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The category of channel for this step. Always `email` for email steps. This identifies the type of notification (email, sms, push, etc.) while `channel_key` specifies which configured provider instance to use.
+          enum:
+          - email
+          example: email
+          type: string
+          x-struct: null
+          x-validate: null
+        conditions:
+          anyOf:
+          - $ref: '#/components/schemas/ConditionGroup'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: A set of conditions to be evaluated for this channel step.
+          type: object
+          x-struct: null
+          x-validate: null
+        description:
+          description: An arbitrary string attached to a workflow step. Useful for adding notes about the workflow for internal purposes.
+          example: Send a message to the channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A name for the workflow step.
+          example: Channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The reference key of the workflow step. Must be unique per workflow.
+          example: channel_step
+          type: string
+          x-struct: null
+          x-validate: null
+        send_windows:
+          description: A list of send window objects. Must include one send window object per day of the week.
+          items:
+            $ref: '#/components/schemas/SendWindow'
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        template:
+          $ref: '#/components/schemas/EmailTemplate'
+        type:
+          description: The type of the workflow step.
+          enum:
+          - channel
+          example: channel
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - ref
+      - template
+      title: WorkflowEmailStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.WorkflowEmailStep
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

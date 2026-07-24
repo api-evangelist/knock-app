@@ -1,0 +1,1724 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Tenants API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Tenants
+paths:
+  /v1/tenants/{id}:
+    delete:
+      callbacks: {}
+      description: Delete a tenant and all associated data. This operation cannot be undone.
+      operationId: deleteTenant
+      parameters:
+      - description: The unique identifier for the tenant.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete a tenant
+      tags:
+      - Tenants
+      x-ratelimit-tier: 2
+    get:
+      callbacks: {}
+      description: Get a tenant by ID.
+      operationId: getTenant
+      parameters:
+      - description: The unique identifier for the tenant.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.
+        in: query
+        name: resolve_full_preference_settings
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+          description: OK
+      summary: Get a tenant
+      tags:
+      - Tenants
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: Sets a tenant within an environment, performing an upsert operation. Any existing properties will be merged with the incoming properties.
+      operationId: setTenant
+      parameters:
+      - description: The unique identifier for the tenant.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: When true, merges environment-level default preferences into the tenant's `settings.preference_set` field before returning the response. Defaults to false.
+        in: query
+        name: resolve_full_preference_settings
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Jurassic Park
+              settings:
+                branding:
+                  icon_url: https://example.com/trex_silhouette_icon.png
+                  logo_url: https://example.com/amber_fossil_logo.png
+                  primary_color: '#DF1A22'
+                  primary_color_contrast: '#FFDE00'
+            schema:
+              $ref: '#/components/schemas/SetTenantRequest'
+        description: Tenant
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetTenantResponse'
+          description: OK
+      summary: Set a tenant
+      tags:
+      - Tenants
+      x-ratelimit-tier: 3
+  /v1/tenants:
+    get:
+      callbacks: {}
+      description: List tenants for the current environment.
+      operationId: listTenants
+      parameters:
+      - description: Filter tenants by ID.
+        in: query
+        name: tenant_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter tenants by name.
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTenantsResponse'
+          description: OK
+      summary: List tenants
+      tags:
+      - Tenants
+      x-ratelimit-tier: 4
+  /v1/tenants/bulk/delete:
+    post:
+      callbacks: {}
+      description: Delete up to 1,000 tenants at a time in a single operation. This operation cannot be undone.
+      operationId: bulkDeleteTenants
+      parameters:
+      - description: The IDs of the tenants to delete.
+        in: query
+        name: tenant_ids[]
+        required: true
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk delete tenants
+      tags:
+      - Tenants
+      x-ratelimit-tier: 1
+  /v1/tenants/bulk/set:
+    post:
+      callbacks: {}
+      description: Set or update up to 1,000 tenants in a single operation.
+      operationId: bulkSetTenants
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              tenants:
+              - id: tenant_1
+                name: Acme Corp, Inc.
+            schema:
+              $ref: '#/components/schemas/BulkSetTenantsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk set tenants
+      tags:
+      - Tenants
+      x-ratelimit-tier: 1
+components:
+  schemas:
+    SlackTokenConnection:
+      description: A Slack connection token.
+      example:
+        access_token: xoxb-1234567890
+        channel_id: C01234567890
+        user_id: U01234567890
+      properties:
+        access_token:
+          description: A Slack access token.
+          example: xoxb-1234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: A Slack channel ID from the Slack provider.
+          example: C01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        user_id:
+          description: A Slack user ID from the Slack provider.
+          example: U01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: SlackTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
+      x-validate: null
+    TenantRequest:
+      additionalProperties: true
+      description: A tenant to be set in the system. You can supply any additional properties on the tenant object.
+      example:
+        id: tenant_123
+        name: ACME Corp, Inc.
+        settings:
+          branding:
+            icon_url: https://example.com/icon.png
+            logo_url: https://example.com/logo.png
+            primary_color: '#000000'
+            primary_color_contrast: '#FFFFFF'
+      properties:
+        channel_data:
+          description: The channel data for the tenant.
+          oneOf:
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the tenant.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the tenant.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          description: The preferences for the tenant.
+          oneOf:
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the tenant. Includes branding and preference set.
+          properties:
+            branding:
+              description: The branding for the tenant.
+              properties:
+                icon_url:
+                  description: The icon URL for the tenant. Must point to a valid image with an image MIME type.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                logo_url:
+                  description: The logo URL for the tenant. Must point to a valid image with an image MIME type.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color:
+                  description: The primary color for the tenant, provided as a hex value.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color_contrast:
+                  description: The primary color contrast for the tenant, provided as a hex value.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              type: object
+              x-struct: null
+              x-validate: null
+            preference_set:
+              description: The preference set for the tenant. Used to override the default preference set.
+              oneOf:
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              - $ref: '#/components/schemas/PreferenceSetRequest'
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: TenantRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.TenantRequest
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
+      x-validate: null
+    InlinePreferenceSetRequest:
+      additionalProperties:
+        $ref: '#/components/schemas/PreferenceSetRequest'
+      description: Inline set preferences for a recipient, where the key is the preference set id. Preferences that are set inline will be merged into any existing preferences rather than replacing them.
+      example:
+        default:
+          categories:
+            transactional:
+              channel_types:
+                email: false
+          channel_types:
+            email: true
+      title: InlinePreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlinePreferenceSetRequest
+      x-validate: null
+    ListTenantsResponse:
+      description: A response containing a list of tenants.
+      example:
+        entries:
+        - __typename: Tenant
+          id: tenant_jp123
+          name: Jurassic Park
+          settings:
+            branding:
+              icon_url: https://example.com/trex_silhouette_icon.png
+              logo_url: https://example.com/amber_fossil_logo.png
+              primary_color: '#DF1A22'
+              primary_color_contrast: '#FFDE00'
+            preference_set:
+              categories:
+                safety:
+                  channel_types:
+                    email: true
+                    push: true
+              channel_types:
+                email: true
+                in_app_feed: true
+                push: true
+              id: default
+              workflows:
+                park_alert:
+                  channel_types:
+                    email: true
+                    push: true
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of tenants.
+          items:
+            $ref: '#/components/schemas/Tenant'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListTenantsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListTenantsResponse
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
+      example:
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+      properties:
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      title: SlackIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-validate: null
+    InlineChannelDataRequest:
+      additionalProperties:
+        description: Channel data for a given channel type.
+        nullable: false
+        oneOf:
+        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+        - $ref: '#/components/schemas/SlackChannelData'
+        - $ref: '#/components/schemas/MsTeamsChannelData'
+        - $ref: '#/components/schemas/DiscordChannelData'
+        x-struct: null
+        x-validate: null
+      description: A request to set channel data for a type of channel inline.
+      example:
+        97c5837d-c65c-4d54-aa39-080eeb81c69d:
+          tokens:
+          - push_token_xxx
+      title: InlineChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
+      x-validate: null
+    SetTenantRequest:
+      additionalProperties: true
+      description: A tenant to be set in the system. You can supply any additional properties on the tenant object.
+      example:
+        name: Jurassic Park
+        settings:
+          branding:
+            icon_url: https://example.com/trex_silhouette_icon.png
+            logo_url: https://example.com/amber_fossil_logo.png
+            primary_color: '#DF1A22'
+            primary_color_contrast: '#FFDE00'
+      properties:
+        channel_data:
+          description: The channel data for the tenant.
+          oneOf:
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the tenant.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the tenant. Includes branding and preference set.
+          properties:
+            branding:
+              description: The branding for the tenant.
+              properties:
+                icon_url:
+                  description: The icon URL for the tenant. Must point to a valid image with an image MIME type.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                logo_url:
+                  description: The logo URL for the tenant. Must point to a valid image with an image MIME type.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color:
+                  description: The primary color for the tenant, provided as a hex value.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color_contrast:
+                  description: The primary color contrast for the tenant, provided as a hex value.
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              type: object
+              x-struct: null
+              x-validate: null
+            preference_set:
+              description: The preference set for the tenant. Used to override the default preference set.
+              oneOf:
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              - $ref: '#/components/schemas/PreferenceSetRequest'
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+      title: SetTenantRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SetTenantRequest
+      x-validate: null
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: PushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    MsTeamsChannelData:
+      description: Microsoft Teams channel data.
+      example:
+        connections:
+        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_tenant_id: null
+          ms_teams_user_id: null
+        ms_teams_tenant_id: null
+      properties:
+        connections:
+          description: List of Microsoft Teams connections.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MsTeamsTokenConnection'
+            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: MsTeamsChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
+      x-validate: null
+    BulkSetTenantsRequest:
+      description: A request to set tenants in bulk.
+      example:
+        tenants:
+        - id: tenant_1
+          name: Acme Corp, Inc.
+      properties:
+        tenants:
+          description: The tenants to be upserted.
+          items:
+            $ref: '#/components/schemas/InlineTenantRequest'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tenants
+      title: BulkSetTenantsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetTenantsRequest
+      x-validate: null
+    SlackChannelData:
+      description: Slack channel data.
+      example:
+        connections:
+        - access_token: xoxb-1234567890
+          channel_id: C01234567890
+          user_id: U01234567890
+        token:
+          access_token: xoxb-1234567890
+      properties:
+        connections:
+          description: List of Slack channel connections.
+          items:
+            description: A Slack connection, either an access token or an incoming webhook
+            nullable: false
+            oneOf:
+            - $ref: '#/components/schemas/SlackTokenConnection'
+            - $ref: '#/components/schemas/SlackIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        token:
+          description: A Slack connection token.
+          example:
+            access_token: xoxb-1234567890
+          nullable: true
+          properties:
+            access_token:
+              description: A Slack access token.
+              example: xoxb-1234567890
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - access_token
+          title: SlackChannelDataTokenObject
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: SlackChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
+      x-validate: null
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelTypeSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: frog_genome
+        operator: contains
+        variable: specimen.dna_sequence
+      properties:
+        argument:
+          description: The argument value to compare against in the condition.
+          example: some_property
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the condition evaluation.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - contains_all
+          - is_timestamp
+          - is_not_timestamp
+          - is_timestamp_on_or_after
+          - is_timestamp_before
+          - is_timestamp_on_or_after_date
+          - is_timestamp_before_date
+          - is_timestamp_between
+          - is_between
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated in the condition.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      - argument
+      title: Condition
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
+      example:
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    PreferenceSetChannelTypes:
+      description: Channel type preferences.
+      example:
+        email: true
+        sms:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+      properties:
+        chat:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        email:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        http:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        in_app_feed:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        push:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        sms:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetChannelTypes
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-validate: null
+    DiscordIncomingWebhookConnection:
+      description: Discord incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Discord incoming webhook object.
+          properties:
+            url:
+              description: Incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: DiscordIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
+      x-validate: null
+    PreferenceSet:
+      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can have multiple preference sets.
+      example:
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+          push: false
+          sms:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+        commercial_subscribed: true
+        id: default
+        workflows: null
+      properties:
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+            title: PreferenceSetCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the preference set.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+            title: PreferenceSetWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: PreferenceSet
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
+      x-validate: null
+    AWSSNSPushChannelDataDevicesOnly:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: AWSSNSPushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
+      x-validate: null
+    OneSignalChannelDataPlayerIdsOnly:
+      description: OneSignal channel data.
+      example:
+        player_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+      properties:
+        player_ids:
+          description: A list of OneSignal player IDs.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          items:
+            description: OneSignal player ID.
+            format: uuid
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - player_ids
+      title: OneSignalChannelDataPlayerIdsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
+      x-validate: null
+    Tenant:
+      additionalProperties: true
+      description: A tenant entity.
+      example:
+        __typename: Tenant
+        id: tenant_jp123
+        name: Jurassic Park
+        settings:
+          branding:
+            icon_url: https://example.com/trex_silhouette_icon.png
+            logo_url: https://example.com/amber_fossil_logo.png
+            primary_color: '#DF1A22'
+            primary_color_contrast: '#FFDE00'
+          preference_set:
+            categories:
+              safety:
+                channel_types:
+                  email: true
+                  push: true
+            channel_types:
+              email: true
+              in_app_feed: true
+              push: true
+            id: default
+            workflows:
+              park_alert:
+                channel_types:
+                  email: true
+                  push: true
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Tenant
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the tenant.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the tenant.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The settings for the tenant. Includes branding and preference set.
+          nullable: true
+          properties:
+            branding:
+              description: The branding for the tenant.
+              nullable: true
+              properties:
+                icon_url:
+                  description: The icon URL for the tenant. Must point to a valid image with an image MIME type.
+                  example: https://example.com/trex_silhouette_icon.png
+                  format: uri
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                logo_url:
+                  description: The logo URL for the tenant. Must point to a valid image with an image MIME type.
+                  example: https://example.com/amber_fossil_logo.png
+                  format: uri
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color:
+                  description: The primary color for the tenant, provided as a hex value.
+                  example: '#DF1A22'
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                primary_color_contrast:
+                  description: The primary color contrast for the tenant, provided as a hex value.
+                  example: '#FFDE00'
+                  nullable: true
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              type: object
+              x-struct: null
+              x-validate: null
+            preference_set:
+              anyOf:
+              - $ref: '#/components/schemas/PreferenceSet'
+              - nullable: true
+                x-struct: null
+                x-validate: null
+              description: The preference set for the tenant. Used to override the default preference set.
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      title: Tenant
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Tenant
+      x-validate: null
+    DiscordChannelConnection:
+      description: Discord channel connection.
+      example:
+        channel_id: '123456789012345678'
+      properties:
+        channel_id:
+          description: Discord channel ID.
+          example: '123456789012345678'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      title: DiscordChannelConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-validate: null
+    InlineTenantRequest:
+      description: An request to set a tenant inline.
+      example:
+        id: tenant_1
+        name: Acme Corp, Inc.
+      oneOf:
+      - description: The unique identifier for the tenant.
+        type: string
+        x-struct: null
+        x-validate: null
+      - $ref: '#/components/schemas/TenantRequest'
+      title: InlineTenantRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineTenantRequest
+      x-validate: null
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
+      x-validate: null
+    SetTenantResponse:
+      description: The response from setting a tenant.
+      example:
+        __typename: Tenant
+        created_at: '1993-05-24T08:30:00Z'
+        id: ingen_isla_nublar
+        name: Jurassic Park
+        settings:
+          branding:
+            icon_url: https://example.com/trex_silhouette_icon.png
+            logo_url: https://example.com/amber_fossil_logo.png
+            primary_color: '#DF1A22'
+            primary_color_contrast: '#FFDE00'
+        updated_at: '1993-06-11T15:45:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/Tenant'
+      title: SetTenantResponse
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SetTenantResponse
+      x-validate: null
+    BulkOperation:
+      description: A bulk operation entity.
+      example:
+        __typename: BulkOperation
+        completed_at: null
+        error_count: 0
+        error_items: []
+        estimated_total_rows: 1000
+        failed_at: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2024-05-22T12:00:00Z'
+        name: Bulk operation name
+        processed_rows: 0
+        progress_path: https://api.switchboard.com/v1/bulk_operations/123e4567-e89b-12d3-a456-426614174000
+        started_at: null
+        status: processing
+        success_count: 0
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: BulkOperation
+          type: string
+          x-struct: null
+          x-validate: null
+        completed_at:
+          description: Timestamp when the bulk operation was completed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        error_count:
+          description: The number of failed operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        error_items:
+          description: A list of items that failed to be processed.
+          items:
+            properties:
+              collection:
+                description: The collection this object belongs to.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Unique identifier for the object.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        estimated_total_rows:
+          description: The estimated total number of rows to process.
+          example: 1000
+          type: integer
+          x-struct: null
+          x-validate: null
+        failed_at:
+          description: Timestamp when the bulk operation failed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the bulk operation.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the bulk operation.
+          example: Bulk operation name
+          type: string
+          x-struct: null
+          x-validate: null
+        processed_rows:
+          description: The number of rows processed so far.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        progress_path:
+          description: The URI to the bulk operation's progress.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        started_at:
+          description: Timestamp when the bulk operation was started.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the bulk operation.
+          enum:
+          - queued
+          - processing
+          - completed
+          - failed
+          example: queued
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        success_count:
+          description: The number of successful operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - name
+      - status
+      - estimated_total_rows
+      - processed_rows
+      - success_count
+      - updated_at
+      - inserted_at
+      title: BulkOperation
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkOperation
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            nullable: true
+            type: array
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
+      x-validate: null
+    PreferenceSetRequest:
+      description: A request to set a preference set for a recipient.
+      example:
+        __persistence_strategy__: merge
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+        channels:
+          2f641633-95d3-4555-9222-9f1eb7888a80:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+        commercial_subscribed: true
+        workflows:
+          dinosaurs-loose:
+            channel_types:
+              email: false
+      properties:
+        __persistence_strategy__:
+          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set, 'merge' will merge with existing preferences.
+          enum:
+          - merge
+          - replace
+          type: string
+          x-struct: null
+          x-validate: null
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+              transactional: true
+            title: PreferenceSetRequestCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+                  sms: true
+              welcome-sequence: true
+            title: PreferenceSetRequestWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
+      x-validate: null
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
+      example:
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
+      properties:
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

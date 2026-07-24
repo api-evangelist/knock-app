@@ -1,0 +1,1023 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Feeds API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Feeds
+paths:
+  /v1/users/{user_id}/feeds/{id}:
+    get:
+      callbacks: {}
+      description: 'Returns a paginated list of feed items for a user in reverse chronological order, including metadata about the feed. If the user has not yet been identified within Knock, an empty feed will be returned.
+
+
+        You can customize the response using [response filters](/integrations/in-app/knock#customizing-api-response-content) to exclude or only include specific properties on your resources.
+
+
+        **Notes:**
+
+        * When making this call from a client-side environment, use your publishable key along with a user token.
+
+        * This endpoint’s rate limit is always scoped per-user and per-environment. This is true even for requests made without a signed user token.
+
+        * Any [attachments](/integrations/email/attachments) present in trigger data are automatically excluded from both the `data` and `activities` fields of `UserInAppFeedResponse`.
+
+        '
+      operationId: listUserInAppFeedItems
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The status of the feed items.
+        example: unread
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - unread
+          - read
+          - unseen
+          - seen
+          - all
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The workflow key associated with the message in the feed.
+        example: my_source
+        in: query
+        name: source
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The tenant associated with the feed items.
+        example: my_tenant
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether the feed items have a tenant.
+        example: true
+        in: query
+        name: has_tenant
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: The workflow categories of the feed items.
+        example:
+        - my_workflow_category
+        in: query
+        name: workflow_categories[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: The archived status of the feed items.
+        example: exclude
+        in: query
+        name: archived
+        required: false
+        schema:
+          enum:
+          - exclude
+          - include
+          - only
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The trigger data of the feed items (as a JSON string).
+        example: '{ "key": "value" }'
+        in: query
+        name: trigger_data
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The locale to render the feed items in. Must be in the IETF 5646 format (e.g. `en-US`). When not provided, will default to the locale that the feed items were rendered in. Only available for enterprise plan customers using custom translations.
+        example: en-US
+        in: query
+        name: locale
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Comma-separated list of field paths to exclude from the response. Use dot notation for nested fields (e.g., `entries.archived_at`). Limited to 3 levels deep.
+        example: entries.archived_at,entries.clicked_at
+        in: query
+        name: exclude
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The mode to render the feed items in. Can be `compact` or `rich`. Defaults to `rich`. When `mode` is `compact`, feed items will not have `activities` and `total_activities` fields; the `data` field will not include nested arrays and objects; and the `actors` field will only have up to one actor.
+        example: compact
+        in: query
+        name: mode
+        required: false
+        schema:
+          default: rich
+          enum:
+          - compact
+          - rich
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInAppFeedResponse'
+          description: OK
+      summary: List feed items
+      tags:
+      - Feeds
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/feeds/{id}/settings:
+    get:
+      callbacks: {}
+      description: Returns the feed settings for a user.
+      operationId: getUserInAppFeedSettings
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInAppFeedSettingsResponse'
+          description: OK
+      summary: Get feed settings
+      tags:
+      - Feeds
+      x-ratelimit-tier: 4
+components:
+  schemas:
+    UserInAppFeedSettingsResponse:
+      description: The response for the user's feed settings.
+      example:
+        features:
+          branding_required: true
+      properties:
+        features:
+          description: Features configuration for the user's feed.
+          properties:
+            branding_required:
+              description: Whether branding is required for the user's feed.
+              type: boolean
+              x-struct: null
+              x-validate: null
+          required:
+          - branding_required
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - features
+      title: UserInAppFeedSettingsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedSettingsResponse
+      x-validate: null
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        __typename: Object
+        collection: assets
+        created_at: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Object
+          type: string
+          x-struct: null
+          x-validate: null
+        collection:
+          description: The collection this object belongs to.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          type: string
+          x-struct: null
+          x-validate: null
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - collection
+      - updated_at
+      title: Object
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    UserInAppFeedResponse:
+      description: A paginated list of feed items.
+      example:
+        entries:
+        - __typename: FeedItem
+          activities:
+          - __typename: Activity
+            actor: null
+            data:
+              foo: bar
+            id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+            inserted_at: '2024-01-01T00:00:00Z'
+            recipient:
+              __typename: User
+              avatar: null
+              created_at: null
+              email: jane@ingen.net
+              id: jane
+              name: Jane Doe
+              phone_number: null
+              timezone: null
+              updated_at: '2024-05-22T12:00:00Z'
+            updated_at: '2024-01-01T00:00:00Z'
+          actors:
+          - __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          blocks:
+          - content: This is a message in an app feed
+            name: body
+            rendered: <p>This is a message in an app feed</p>
+            type: markdown
+          data:
+            foo: bar
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2021-01-01T00:00:00Z'
+          source:
+            __typename: Workflow
+            categories:
+            - collaboration
+            key: my_source
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+          tenant: acme_corp
+          total_activities: 10
+          total_actors: 5
+          updated_at: '2021-01-01T00:00:00Z'
+        meta:
+          __typename: FeedMetadata
+          total_count: 100
+          unread_count: 10
+          unseen_count: 5
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+        vars:
+          foo: bar
+      properties:
+        entries:
+          description: The list of feed items in the user's feed.
+          items:
+            $ref: '#/components/schemas/InAppFeedItem'
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        meta:
+          description: The metadata for the user's feed.
+          example:
+            __typename: FeedMetadata
+            total_count: 100
+            unread_count: 10
+            unseen_count: 5
+          properties:
+            __typename:
+              description: The typename of the schema.
+              example: FeedMetadata
+              type: string
+              x-struct: null
+              x-validate: null
+            total_count:
+              description: The total number of feed items in the user's feed.
+              example: 100
+              type: integer
+              x-struct: null
+              x-validate: null
+            unread_count:
+              description: The number of unread feed items in the user's feed.
+              example: 10
+              type: integer
+              x-struct: null
+              x-validate: null
+            unseen_count:
+              description: The number of unseen feed items in the user's feed.
+              example: 5
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - total_count
+          - unread_count
+          - unseen_count
+          type: object
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        vars:
+          additionalProperties: true
+          description: Additional variables for the feed item.
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - entries
+      - page_info
+      - vars
+      - meta
+      title: UserInAppFeedResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedResponse
+      x-validate: null
+    MessageInAppFeedButtonSetBlock:
+      description: A button set block in a message in an app feed.
+      example:
+        buttons:
+        - action: action_1
+          label: Action 1
+          name: primary
+        name: actions
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in an in app feed message.
+          items:
+            description: A button in an in app feed message.
+            nullable: false
+            properties:
+              action:
+                description: The action to take when the button is clicked.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the button.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              name:
+                description: The name of the button.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - action
+            - label
+            - name
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the button set in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - button_set
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - buttons
+      title: MessageInAppFeedButtonSetBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
+      x-validate: null
+    User:
+      additionalProperties: true
+      description: A [User](/concepts/users) represents an individual in your system who can receive notifications through Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
+      example:
+        __typename: User
+        created_at: null
+        email: ian.malcolm@chaos.theory
+        id: user_id
+        name: Dr. Ian Malcolm
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: User
+          type: string
+          x-struct: null
+          x-validate: null
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - updated_at
+      title: User
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.User
+      x-validate: null
+    MessageInAppFeedContentBlock:
+      description: A block in a message in an app feed.
+      example:
+        content: This is a message in an app feed
+        name: body
+        rendered: <p>This is a message in an app feed</p>
+        type: markdown
+      properties:
+        content:
+          description: The content of the block in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the block in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        rendered:
+          description: The rendered HTML version of the content.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - markdown
+          - text
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - rendered
+      - content
+      title: MessageInAppFeedContentBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
+      x-validate: null
+    Activity:
+      description: An activity associated with a workflow trigger request. Messages produced after a [batch step](/designing-workflows/batch-function) can be associated with one or more activities. Non-batched messages will always be associated with a single activity.
+      example:
+        __typename: Activity
+        actor: null
+        data:
+          foo: bar
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2024-01-01T00:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Activity
+          type: string
+          x-struct: null
+          x-validate: null
+        actor:
+          anyOf:
+          - $ref: '#/components/schemas/Recipient'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The actor who performed the activity.
+          type: object
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: The workflow trigger `data` payload associated with the activity.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the activity.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the activity was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        updated_at:
+          description: Timestamp when the activity was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      title: Activity
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Activity
+      x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    InAppFeedItem:
+      description: An in-app feed message in a user's feed.
+      example:
+        __typename: FeedItem
+        activities:
+        - __typename: Activity
+          actor: null
+          data:
+            foo: bar
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2024-01-01T00:00:00Z'
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          updated_at: '2024-01-01T00:00:00Z'
+        actors:
+        - __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        blocks:
+        - content: This is a message in an app feed
+          name: body
+          rendered: <p>This is a message in an app feed</p>
+          type: markdown
+        data:
+          foo: bar
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2021-01-01T00:00:00Z'
+        source:
+          __typename: Workflow
+          categories:
+          - collaboration
+          key: my_source
+          version_id: 123e4567-e89b-12d3-a456-426614174000
+        tenant: acme_corp
+        total_activities: 10
+        total_actors: 5
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: FeedItem
+          type: string
+          x-struct: null
+          x-validate: null
+        activities:
+          description: List of activities associated with this feed item.
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+          x-struct: null
+          x-validate: null
+        actors:
+          description: List of actors associated with this feed item.
+          items:
+            $ref: '#/components/schemas/Recipient'
+          type: array
+          x-struct: null
+          x-validate: null
+        archived_at:
+          description: Timestamp when the feed item was archived.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        blocks:
+          description: Content blocks that make up the feed item.
+          items:
+            description: A content block for the feed, can be content or a button set.
+            nullable: false
+            oneOf:
+            - $ref: '#/components/schemas/MessageInAppFeedContentBlock'
+            - $ref: '#/components/schemas/MessageInAppFeedButtonSetBlock'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        clicked_at:
+          description: Timestamp when the feed item was clicked.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Additional data associated with the feed item.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the feed.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        interacted_at:
+          description: Timestamp when the feed item was interacted with.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        link_clicked_at:
+          description: Timestamp when a link within the feed item was clicked.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        read_at:
+          description: Timestamp when the feed item was marked as read.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        seen_at:
+          description: Timestamp when the feed item was marked as seen.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        source:
+          description: Source information for the feed item.
+          nullable: false
+          properties:
+            __typename:
+              description: The typename of the schema.
+              example: Workflow
+              type: string
+              x-struct: null
+              x-validate: null
+            categories:
+              description: Categories this workflow belongs to.
+              items:
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            key:
+              description: The key of the workflow.
+              nullable: false
+              type: string
+              x-struct: null
+              x-validate: null
+            version_id:
+              description: The workflow version ID.
+              format: uuid
+              nullable: false
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - key
+          - version_id
+          - categories
+          type: object
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: Tenant ID that the feed item belongs to.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        total_activities:
+          description: Total number of activities related to this feed item.
+          example: 10
+          type: integer
+          x-struct: null
+          x-validate: null
+        total_actors:
+          description: Total number of actors related to this feed item.
+          example: 5
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - inserted_at
+      - updated_at
+      - actors
+      - activities
+      - blocks
+      - source
+      - tenant
+      - total_activities
+      - total_actors
+      - data
+      title: InAppFeedItem
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InAppFeedItem
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

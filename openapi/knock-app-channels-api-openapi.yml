@@ -1,0 +1,326 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Channels API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Channels
+paths:
+  /v1/channels:
+    get:
+      callbacks: {}
+      description: 'Returns a paginated list of channels. Note: the list of channels is across the entire account, not scoped to an environment.'
+      operationId: listChannels
+      parameters:
+      - description: A channel id to filter the results by.
+        in: query
+        name: id
+        required: false
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Associated resources to include in the response. Accepts `environment_settings` to include per-environment channel configuration.
+        in: query
+        name: include
+        required: false
+        schema:
+          items:
+            enum:
+            - environment_settings
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Channel. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - archived_at: null
+                    created_at: '2021-01-01T00:00:00Z'
+                    custom_icon_url: null
+                    id: 01234567-89ab-cdef-0123-456789abcdef
+                    key: my-sendgrid-channel
+                    name: My Sendgrid Channel
+                    provider: sendgrid
+                    type: email
+                    updated_at: '2021-01-01T00:00:00Z'
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Channel'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedChannelResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List channels
+      tags:
+      - Channels
+  /v1/channels/{channel_key}:
+    get:
+      callbacks: {}
+      description: Returns a channel with all environment-specific settings. Secret values in provider settings are obfuscated unless they are Liquid templates (e.g., `{{ vars.api_key }}`).
+      operationId: getChannel
+      parameters:
+      - description: The key of the channel to retrieve.
+        in: path
+        name: channel_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+          description: OK
+      summary: Get a channel
+      tags:
+      - Channels
+components:
+  schemas:
+    Channel:
+      description: A configured channel, which is a way to route messages to a provider.
+      example:
+        archived_at: null
+        created_at: '2021-01-01T00:00:00Z'
+        custom_icon_url: null
+        id: 01234567-89ab-cdef-0123-456789abcdef
+        key: my-sendgrid-channel
+        name: My Sendgrid Channel
+        provider: sendgrid
+        type: email
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        archived_at:
+          description: The timestamp of when the channel was deleted.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the channel was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        custom_icon_url:
+          description: Optional URL to a custom icon for the channel. Only used for display purposes in the dashboard.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        description:
+          description: Optional description of the channel's purpose or usage.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        environment_settings:
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelEnvironmentSettings'
+          description: Per-environment settings for this channel, keyed by environment slug (e.g., 'development', 'production'). Only included when requested via the `include` parameter or when retrieving a single channel.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the channel.
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: Unique identifier for the channel within a project (immutable once created).
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The human-readable name of the channel.
+          type: string
+          x-struct: null
+          x-validate: null
+        provider:
+          description: The ID of the provider that this channel uses to deliver messages. Learn more about the providers available [in our documentation](https://docs.knock.app/integrations/overview).
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of channel, determining what kind of messages it can send.
+          enum:
+          - email
+          - in_app
+          - in_app_feed
+          - in_app_guide
+          - sms
+          - push
+          - chat
+          - http
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the channel was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - name
+      - key
+      - type
+      - provider
+      - created_at
+      - updated_at
+      title: Channel
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Channel
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    ChannelEnvironmentSettings:
+      description: Environment-specific settings for a channel.
+      example:
+        channel_settings:
+          from_address: hello@example.com
+          from_name: Example Inc
+        id: 550e8400-e29b-41d4-a716-446655440001
+        is_sandbox: false
+        is_valid: true
+        provider_settings:
+          api_key: '{{ vars.sendgrid_api_key }}'
+          check_delivery_status: true
+          link_tracking: true
+          open_tracking: true
+      properties:
+        channel_settings:
+          additionalProperties: true
+          description: Channel-type-specific settings (e.g., from_address for email). Structure varies by channel type.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for these environment settings.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        is_sandbox:
+          description: Whether the channel is in sandbox mode for this environment. Sandbox mode may prevent actual message delivery.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        is_valid:
+          description: Whether the channel configuration is valid and ready to send messages in this environment.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        provider_settings:
+          additionalProperties: true
+          description: Provider-specific settings (e.g., API keys, credentials). Structure varies by provider. Secret values are obfuscated unless they are Liquid templates.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - is_valid
+      - is_sandbox
+      title: ChannelEnvironmentSettings
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChannelEnvironmentSettings
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

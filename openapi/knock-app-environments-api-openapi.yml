@@ -1,0 +1,242 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Environments API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- description: Environments are isolated instances of your account that map to your infrastructure.
+  name: Environments
+paths:
+  /v1/environments/{environment_slug}:
+    get:
+      callbacks: {}
+      description: Returns a single environment by the `environment_slug`.
+      operationId: getEnvironment
+      parameters:
+      - description: The slug of the environment to retrieve.
+        in: path
+        name: environment_slug
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+          description: OK
+      summary: Get an environment
+      tags:
+      - Environments
+  /v1/environments:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of environments. The environments will be returned in order of their index, with the `development` environment first.
+      operationId: listEnvironments
+      parameters:
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Environment. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - created_at: '2022-10-31T19:59:03Z'
+                    deleted_at: null
+                    hide_pii_data: false
+                    label_color: '#000000'
+                    last_commit_at: '2022-10-31T19:59:03Z'
+                    name: Development
+                    order: 0
+                    owner: system
+                    slug: development
+                    updated_at: '2022-10-31T19:59:03Z'
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Environment'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedEnvironmentResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List environments
+      tags:
+      - Environments
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    Environment:
+      description: An environment object.
+      example:
+        created_at: '2022-10-31T19:59:03Z'
+        deleted_at: null
+        hide_pii_data: false
+        label_color: '#000000'
+        last_commit_at: '2022-10-31T19:59:03Z'
+        name: Development
+        order: 0
+        owner: system
+        slug: development
+        updated_at: '2022-10-31T19:59:03Z'
+      properties:
+        created_at:
+          description: The timestamp of when the environment was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        deleted_at:
+          description: The timestamp of when the environment was deleted.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        hide_pii_data:
+          default: false
+          description: Whether PII data is hidden from the environment. Read more in the [data obfuscation docs](https://docs.knock.app/manage-your-account/data-obfuscation).
+          type: boolean
+          x-struct: null
+          x-validate: null
+        label_color:
+          description: The color of the environment label to display in the dashboard.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        last_commit_at:
+          description: The timestamp of the most-recent commit in the environment.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: A human-readable name for the environment. Cannot exceed 255 characters.
+          type: string
+          x-struct: null
+          x-validate: null
+        order:
+          description: The order of the environment. The lowest number is the first environment, the highest number is the last environment. The order will not always be sequential.
+          type: integer
+          x-struct: null
+          x-validate: null
+        owner:
+          description: The owner of the environment.
+          enum:
+          - system
+          - user
+          example: user
+          type: string
+          x-struct: null
+          x-validate: null
+        slug:
+          description: A unique slug for the environment. Cannot exceed 255 characters.
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the environment was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - name
+      - slug
+      - order
+      - created_at
+      - updated_at
+      - owner
+      title: Environment
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Environment
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

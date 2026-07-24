@@ -1,0 +1,603 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Email layouts API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- description: Email layouts wrap your email templates and provide a consistent look and feel.
+  name: Email layouts
+paths:
+  /v1/email_layouts:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of email layouts available in a given environment.
+      operationId: listEmailLayouts
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned.
+        in: query
+        name: hide_uncommitted_changes
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of EmailLayout. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - created_at: '2021-01-01T00:00:00Z'
+                    environment: development
+                    footer_links:
+                    - text: Example
+                      url: http://example.com
+                    html_layout: <html><body>Hello, world!</body></html>
+                    key: transactional
+                    name: Transactional
+                    sha: '1234567890'
+                    text_layout: Hello, world!
+                    updated_at: '2021-01-01T00:00:00Z'
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/EmailLayout'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedEmailLayoutResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List email layouts
+      tags:
+      - Email layouts
+  /v1/email_layouts/{email_layout_key}:
+    get:
+      callbacks: {}
+      description: Retrieve an email layout by its key, in a given environment.
+      operationId: getEmailLayout
+      parameters:
+      - description: The key of the email layout to show.
+        in: path
+        name: email_layout_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned.
+        in: query
+        name: hide_uncommitted_changes
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailLayout'
+          description: OK
+      summary: Get email layout
+      tags:
+      - Email layouts
+    put:
+      callbacks: {}
+      description: 'Updates an email layout, or creates a new one if it does not yet exist.
+
+
+        Note: this endpoint only operates in the "development" environment.
+
+        '
+      operationId: upsertEmailLayout
+      parameters:
+      - description: The key of the email layout to upsert.
+        in: path
+        name: email_layout_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to annotate the resource. Only used in the Knock CLI.
+        in: query
+        name: annotate
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks.
+        in: query
+        name: force
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Whether to commit the resource at the same time as modifying it.
+        in: query
+        name: commit
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: The message to commit the resource with, only used if `commit` is `true`.
+        in: query
+        name: commit_message
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: Wraps the EmailLayoutRequest request under the email_layout key.
+              example:
+                email_layout:
+                  footer_links:
+                  - text: Example
+                    url: http://example.com
+                  html_layout: <html><body>Hello, world!</body></html>
+                  name: Transactional
+                  text_layout: Hello, world!
+              properties:
+                email_layout:
+                  $ref: '#/components/schemas/EmailLayoutRequest'
+              required:
+              - email_layout
+              title: WrappedEmailLayoutRequestRequest
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Email layout
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the EmailLayout response under the `email_layout` key.
+                example:
+                  email_layout:
+                    created_at: '2021-01-01T00:00:00Z'
+                    environment: development
+                    footer_links:
+                    - text: Example
+                      url: http://example.com
+                    html_layout: <html><body>Hello, world!</body></html>
+                    key: transactional
+                    name: Transactional
+                    sha: '1234567890'
+                    text_layout: Hello, world!
+                    updated_at: '2021-01-01T00:00:00Z'
+                properties:
+                  email_layout:
+                    $ref: '#/components/schemas/EmailLayout'
+                required:
+                - email_layout
+                title: WrappedEmailLayoutResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Upsert email layout
+      tags:
+      - Email layouts
+  /v1/email_layouts/{email_layout_key}/validate:
+    put:
+      callbacks: {}
+      description: 'Validates an email layout payload without persisting it.
+
+
+        Note: this endpoint only operates in the "development" environment.
+
+        '
+      operationId: validateEmailLayout
+      parameters:
+      - description: The key of the email layout to validate.
+        in: path
+        name: email_layout_key
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: Wraps the EmailLayoutRequest request under the email_layout key.
+              example:
+                email_layout:
+                  footer_links:
+                  - text: Example
+                    url: http://example.com
+                  html_layout: <html><body>Hello, world!</body></html>
+                  name: Transactional
+                  text_layout: Hello, world!
+              properties:
+                email_layout:
+                  $ref: '#/components/schemas/EmailLayoutRequest'
+              required:
+              - email_layout
+              title: WrappedEmailLayoutRequestRequest
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Email layout
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the EmailLayout response under the `email_layout` key.
+                example:
+                  email_layout:
+                    created_at: '2021-01-01T00:00:00Z'
+                    environment: development
+                    footer_links:
+                    - text: Example
+                      url: http://example.com
+                    html_layout: <html><body>Hello, world!</body></html>
+                    key: transactional
+                    name: Transactional
+                    sha: '1234567890'
+                    text_layout: Hello, world!
+                    updated_at: '2021-01-01T00:00:00Z'
+                properties:
+                  email_layout:
+                    $ref: '#/components/schemas/EmailLayout'
+                required:
+                - email_layout
+                title: WrappedEmailLayoutResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Validate email layout
+      tags:
+      - Email layouts
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    EmailLayout:
+      description: A versioned email layout used within an environment.
+      example:
+        created_at: '2021-01-01T00:00:00Z'
+        environment: development
+        footer_links:
+        - text: Example
+          url: http://example.com
+        html_layout: <html><body>Hello, world!</body></html>
+        key: transactional
+        name: Transactional
+        sha: '1234567890'
+        text_layout: Hello, world!
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        created_at:
+          description: The timestamp of when the email layout was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        environment:
+          description: The environment of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        footer_links:
+          description: A list of one or more items to show in the footer of the email layout.
+          items:
+            properties:
+              text:
+                description: The text to display as the link.
+                type: string
+                x-struct: null
+                x-validate: null
+              url:
+                description: The URL to link to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - text
+            - url
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        html_layout:
+          description: The complete HTML or MJML content of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        is_mjml:
+          description: Whether this layout uses MJML format. When true, html_layout must contain <mjml> tags.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        key:
+          description: The unique key for this email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The human-readable name of this email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        sha:
+          description: The SHA of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        text_layout:
+          description: The complete plaintext content of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the email layout was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - key
+      - name
+      - html_layout
+      - text_layout
+      - sha
+      - created_at
+      title: EmailLayout
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailLayout
+      x-validate: null
+    EmailLayoutRequest:
+      description: A request to update or create an email layout.
+      example:
+        footer_links:
+        - text: Example
+          url: http://example.com
+        html_layout: <html><body>Hello, world!</body></html>
+        name: Transactional
+        text_layout: Hello, world!
+      properties:
+        footer_links:
+          description: A list of one or more items to show in the footer of the email layout.
+          items:
+            properties:
+              text:
+                description: The text to display as the link.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              url:
+                description: The URL to link to.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - text
+            - url
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        html_layout:
+          description: The complete HTML or MJML content of the email layout.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        is_mjml:
+          description: Whether this layout uses MJML format. When true, html_layout must contain <mjml> tags.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        name:
+          description: The friendly name of this email layout.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        text_layout:
+          description: The complete plain text content of the email layout.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - name
+      - html_layout
+      - text_layout
+      title: EmailLayoutRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailLayoutRequest
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

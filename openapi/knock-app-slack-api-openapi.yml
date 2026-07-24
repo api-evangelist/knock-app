@@ -1,0 +1,373 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Slack API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Slack
+paths:
+  /v1/providers/slack/{channel_id}/channels:
+    get:
+      callbacks: {}
+      description: List Slack channels for a Slack workspace.
+      operationId: listChannelsForSlackProvider
+      parameters:
+      - description: The ID of the Knock Slack channel to get channels for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the access token object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: access_token_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first "page" of the collection.
+        in: query
+        name: query_options.cursor
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The maximum number of channels to return. Defaults to 200.
+        in: query
+        name: query_options.limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided.
+        in: query
+        name: query_options.exclude_archived
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `"public_channel,private_channel"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned.
+        in: query
+        name: query_options.types
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Encoded team ID (T1234) to list channels in, required if org token is used.
+        in: query
+        name: query_options.team_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelsForSlackProviderResponse'
+          description: OK
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Authentication error response
+                example:
+                  code: authorization
+                  message: Access token not set.
+                  status: 403
+                  type: authentication_error
+                properties:
+                  code:
+                    description: The error code.
+                    example: authorization
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  message:
+                    description: The error message.
+                    example: Access token not set.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  status:
+                    description: The HTTP status code.
+                    example: 403
+                    type: integer
+                    x-struct: null
+                    x-validate: null
+                  type:
+                    description: The error type.
+                    example: authentication_error
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - code
+                - message
+                - status
+                - type
+                title: AuthenticationError
+                type: object
+                x-struct: null
+                x-validate: null
+          description: Forbidden
+      summary: List channels
+      tags:
+      - Slack
+      x-ratelimit-tier: 2
+  /v1/providers/slack/{channel_id}/auth_check:
+    get:
+      callbacks: {}
+      description: Check if a Slack channel is authenticated.
+      operationId: slackProviderAuthCheck
+      parameters:
+      - description: The ID of the Knock Slack channel to check.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the access token object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: access_token_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlackAuthCheckResponse'
+          description: OK
+      summary: Check auth
+      tags:
+      - Slack
+      x-ratelimit-tier: 2
+  /v1/providers/slack/{channel_id}/revoke_access:
+    put:
+      callbacks: {}
+      description: Revoke access for a Slack channel.
+      operationId: slackProviderRevokeAccess
+      parameters:
+      - description: The ID of the Knock Slack channel to revoke access for.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: A JSON encoded string containing the access token object reference.
+        example: '{"collection":"projects","object_id":"project_123"}'
+        in: query
+        name: access_token_object
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A response indicating the operation was successful.
+                example:
+                  ok: ok
+                properties:
+                  ok:
+                    description: OK response.
+                    example: ok
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                title: SuccessResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+        '403':
+          content:
+            application/json:
+              schema:
+                description: Authentication error response
+                example:
+                  code: authorization
+                  message: Access token not set.
+                  status: 403
+                  type: authentication_error
+                properties:
+                  code:
+                    description: The error code.
+                    example: authorization
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  message:
+                    description: The error message.
+                    example: Access token not set.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  status:
+                    description: The HTTP status code.
+                    example: 403
+                    type: integer
+                    x-struct: null
+                    x-validate: null
+                  type:
+                    description: The error type.
+                    example: authentication_error
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - code
+                - message
+                - status
+                - type
+                title: AuthenticationError
+                type: object
+                x-struct: null
+                x-validate: null
+          description: Forbidden
+      summary: Revoke access
+      tags:
+      - Slack
+      x-ratelimit-tier: 2
+components:
+  schemas:
+    SlackAuthCheckResponse:
+      description: The response from a Slack auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Slack connection object.
+          properties:
+            ok:
+              description: Whether the Slack connection is valid.
+              nullable: false
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Slack connection if it is not valid.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: SlackAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackAuthCheckResponse
+      x-validate: null
+    ChannelsForSlackProviderResponse:
+      description: The response from a Slack provider request, containing a list of channels.
+      example:
+        next_cursor: null
+        slack_channels:
+        - context_team_id: T01234567890
+          id: C01234567890
+          is_im: false
+          is_private: false
+          name: general
+      properties:
+        next_cursor:
+          description: Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first "page" of the collection.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        slack_channels:
+          description: List of Slack channels.
+          items:
+            description: A Slack channel.
+            properties:
+              context_team_id:
+                description: The team ID that the Slack channel belongs to.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: A Slack channel ID from the Slack provider.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              is_im:
+                description: Whether the Slack channel is an IM channel.
+                nullable: false
+                type: boolean
+                x-struct: null
+                x-validate: null
+              is_private:
+                description: Whether the Slack channel is private.
+                nullable: false
+                type: boolean
+                x-struct: null
+                x-validate: null
+              name:
+                description: Slack channel name.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - name
+            - is_private
+            - is_im
+            - context_team_id
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - slack_channels
+      - next_cursor
+      title: ChannelsForSlackProviderResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelsForSlackProviderResponse
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

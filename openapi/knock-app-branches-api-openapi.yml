@@ -1,0 +1,278 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Branches API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- description: Branches in Knock are a way to isolate changes to your Knock resources.
+  name: Branches
+paths:
+  /v1/branches:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of branches. The branches will be returned in order of their last commit time (newest first).
+      operationId: listBranches
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Branch. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - created_at: '2022-10-31T19:59:03Z'
+                    deleted_at: null
+                    last_commit_at: '2022-10-31T19:59:03Z'
+                    slug: feature-branch
+                    updated_at: '2022-10-31T19:59:03Z'
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Branch'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedBranchResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List branches
+      tags:
+      - Branches
+  /v1/branches/{branch_slug}:
+    delete:
+      callbacks: {}
+      description: Deletes a branch by the `branch_slug`.
+      operationId: deleteBranch
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of the branch to delete.
+        in: path
+        name: branch_slug
+        required: true
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete a branch
+      tags:
+      - Branches
+    get:
+      callbacks: {}
+      description: Returns a single branch by the `branch_slug`.
+      operationId: getBranch
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of the branch to retrieve.
+        in: path
+        name: branch_slug
+        required: true
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+          description: OK
+      summary: Get a branch
+      tags:
+      - Branches
+    post:
+      callbacks: {}
+      description: Creates a new branch off of the development environment with the given slug.
+      operationId: createBranch
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug for the new branch to create.
+        in: path
+        name: branch_slug
+        required: true
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+          description: Created
+      summary: Create a branch
+      tags:
+      - Branches
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    Branch:
+      description: A branch object.
+      example:
+        created_at: '2022-10-31T19:59:03Z'
+        deleted_at: null
+        last_commit_at: '2022-10-31T19:59:03Z'
+        slug: feature-branch
+        updated_at: '2022-10-31T19:59:03Z'
+      properties:
+        created_at:
+          description: The timestamp of when the branch was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        deleted_at:
+          description: The timestamp of when the branch was deleted.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        last_commit_at:
+          description: The timestamp of the most-recent commit in the branch.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        slug:
+          description: A unique slug for the branch. Cannot exceed 255 characters.
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the branch was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - slug
+      - created_at
+      - updated_at
+      title: Branch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Branch
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

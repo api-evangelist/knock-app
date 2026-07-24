@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts API keys API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: API keys
+paths:
+  /v1/api_keys/exchange:
+    post:
+      callbacks: {}
+      description: Given an authenticated service token and an environment, will exchange the service token for a secret API key that can be used to make requests to the public API.
+      operationId: exchangeForApiKey
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Returns an API key that can be used to make requests to the public API.
+                example:
+                  api_key: sk_1234567890
+                properties:
+                  api_key:
+                    description: The secret API key exchanged from the service token.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - api_key
+                title: ExchangeForApiKeyResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Exchange for API key
+      tags:
+      - API keys
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

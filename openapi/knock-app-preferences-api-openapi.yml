@@ -1,0 +1,1070 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Preferences API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Preferences
+paths:
+  /v1/objects/{collection}/{object_id}/preferences/{id}/workflows:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the workflow preferences for an object's preference set.
+      operationId: updateObjectPreferenceWorkflows
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflows in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types/{type}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific channel type preference for an object's preference set.
+      operationId: updateObjectPreferenceChannelType
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a channel type preference
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}/categories/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific category preference for an object's preference set. Deprecated.
+      operationId: updateObjectPreferenceCategory
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a category preference
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of preference sets for the specified object.
+      operationId: listObjectPreferenceSets
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A list of preference sets for the object
+                example:
+                - categories:
+                    marketing: false
+                    transactional:
+                      channel_types:
+                        email: false
+                  channel_types:
+                    email: true
+                    push: false
+                    sms:
+                      conditions:
+                      - argument: US
+                        operator: equal_to
+                        variable: recipient.country_code
+                  commercial_subscribed: true
+                  id: default
+                  workflows: null
+                items:
+                  $ref: '#/components/schemas/PreferenceSet'
+                title: ListObjectPreferenceSetsResponse
+                type: array
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List preference sets
+      tags:
+      - Preferences
+      x-ratelimit-tier: 4
+  /v1/objects/{collection}/{object_id}/preferences/{id}/workflows/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific workflow preference for an object's preference set.
+      operationId: updateObjectPreferenceWorkflow
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a workflow preference
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}/categories:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the category preferences for an object's preference set.
+      operationId: updateObjectPreferenceCategories
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update categories in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the channel type preferences for an object's preference set.
+      operationId: updateObjectPreferenceChannelTypes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel types in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}:
+    delete:
+      callbacks: {}
+      description: Unsets the preference set for the object, removing it entirely.
+      operationId: deleteObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete object preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Returns the preference set for the specified object and preference set `id`.
+      operationId: getObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Get object preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: 'Sets preferences within the given preference set. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use ''__persistence_strategy'': ''merge'' to merge with existing preferences instead. If no object exists in the current environment for the given `:collection` and `:object_id`, Knock will create the object as part of this request. The preference set `:id` can be either `default` or a `tenant.id`. Learn more about [per-tenant preferences](/preferences/tenant-preferences).'
+      operationId: updateObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              __persistence_strategy__: merge
+              categories:
+                marketing: false
+                transactional:
+                  channel_types:
+                    email: false
+              channel_types:
+                email: true
+              channels:
+                2f641633-95d3-4555-9222-9f1eb7888a80:
+                  conditions:
+                  - argument: US
+                    operator: equal_to
+                    variable: recipient.country_code
+                aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+              commercial_subscribed: true
+              workflows:
+                dinosaurs-loose:
+                  channel_types:
+                    email: false
+            schema:
+              $ref: '#/components/schemas/PreferenceSetRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/categories/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single category in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceCategory
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update category in user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/workflows:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the workflows in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceWorkflows
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflows in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/categories:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the categories in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceCategories
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update categories in user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/channel_types/{type}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single channel type in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceChannelType
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel type in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences:
+    get:
+      callbacks: {}
+      description: Retrieves a list of all preference sets for a specific user.
+      operationId: listUserPreferenceSets
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A list of preference sets for the user.
+                example:
+                - categories:
+                    marketing: false
+                    transactional:
+                      channel_types:
+                        email: false
+                  channel_types:
+                    email: true
+                    push: false
+                    sms:
+                      conditions:
+                      - argument: US
+                        operator: equal_to
+                        variable: recipient.country_code
+                  commercial_subscribed: true
+                  id: default
+                  workflows: null
+                items:
+                  $ref: '#/components/schemas/PreferenceSet'
+                title: ListUserPreferenceSetsResponse
+                type: array
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List user preference sets
+      tags:
+      - Preferences
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}/preferences/{id}/workflows/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single workflow in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceWorkflow
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflow in user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}:
+    delete:
+      callbacks: {}
+      description: Unsets the preference set for the user, removing it entirely.
+      operationId: deleteUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Retrieves a specific preference set for a user identified by the preference set ID.
+      operationId: getUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the tenant.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Get user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: 'Updates a complete preference set for a user. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use ''__persistence_strategy__'': ''merge'' to merge with existing preferences instead.'
+      operationId: updateUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              __persistence_strategy__: merge
+              categories:
+                marketing: false
+                transactional:
+                  channel_types:
+                    email: false
+              channel_types:
+                email: true
+              channels:
+                2f641633-95d3-4555-9222-9f1eb7888a80:
+                  conditions:
+                  - argument: US
+                    operator: equal_to
+                    variable: recipient.country_code
+                aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+              commercial_subscribed: true
+              workflows:
+                dinosaurs-loose:
+                  channel_types:
+                    email: false
+            schema:
+              $ref: '#/components/schemas/PreferenceSetRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update user preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/channel_types:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the channel types in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceChannelTypes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel types in preference set
+      tags:
+      - Preferences
+      x-ratelimit-tier: 3
+components:
+  schemas:
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelTypeSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: frog_genome
+        operator: contains
+        variable: specimen.dna_sequence
+      properties:
+        argument:
+          description: The argument value to compare against in the condition.
+          example: some_property
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the condition evaluation.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - contains_all
+          - is_timestamp
+          - is_not_timestamp
+          - is_timestamp_on_or_after
+          - is_timestamp_before
+          - is_timestamp_on_or_after_date
+          - is_timestamp_before_date
+          - is_timestamp_between
+          - is_between
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated in the condition.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      - argument
+      title: Condition
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
+      x-validate: null
+    PreferenceSetChannelTypes:
+      description: Channel type preferences.
+      example:
+        email: true
+        sms:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+      properties:
+        chat:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        email:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        http:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        in_app_feed:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        push:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        sms:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetChannelTypes
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            nullable: true
+            type: array
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
+      x-validate: null
+    PreferenceSetRequest:
+      description: A request to set a preference set for a recipient.
+      example:
+        __persistence_strategy__: merge
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+        channels:
+          2f641633-95d3-4555-9222-9f1eb7888a80:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+        commercial_subscribed: true
+        workflows:
+          dinosaurs-loose:
+            channel_types:
+              email: false
+      properties:
+        __persistence_strategy__:
+          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set, 'merge' will merge with existing preferences.
+          enum:
+          - merge
+          - replace
+          type: string
+          x-struct: null
+          x-validate: null
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+              transactional: true
+            title: PreferenceSetRequestCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+                  sms: true
+              welcome-sequence: true
+            title: PreferenceSetRequestWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
+      x-validate: null
+    PreferenceSet:
+      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can have multiple preference sets.
+      example:
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+          push: false
+          sms:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+        commercial_subscribed: true
+        id: default
+        workflows: null
+      properties:
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+            title: PreferenceSetCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the preference set.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+            title: PreferenceSetWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: PreferenceSet
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

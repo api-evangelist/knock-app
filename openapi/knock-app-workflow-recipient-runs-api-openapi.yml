@@ -1,0 +1,560 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Workflow recipient runs API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Workflow recipient runs
+paths:
+  /v1/workflow_recipient_runs/{id}:
+    get:
+      callbacks: {}
+      description: Returns a single workflow recipient run with its associated events.
+      operationId: getWorkflowRecipientRun
+      parameters:
+      - description: The unique identifier for the workflow recipient run (per-recipient).
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRecipientRunDetail'
+          description: OK
+      summary: Get a workflow recipient run
+      tags:
+      - Workflow recipient runs
+      x-ratelimit-tier: 2
+      x-retention-policy: true
+  /v1/workflow_recipient_runs:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of workflow recipient runs for the current environment.
+      operationId: listWorkflowRecipientRuns
+      parameters:
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs for the given workflow key.
+        in: query
+        name: workflow
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs with the given status.
+        in: query
+        name: status[]
+        required: false
+        schema:
+          items:
+            enum:
+            - queued
+            - processing
+            - paused
+            - completed
+            - cancelled
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs for the given tenant.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs that have errors.
+        in: query
+        name: has_errors
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs for the given recipient. Accepts a user ID string or an object reference with `id` and `collection`.
+        in: query
+        name: recipient
+        required: false
+        schema:
+          $ref: '#/components/schemas/RecipientReference'
+      - description: Limits the results to workflow recipient runs started after the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: starting_at
+        required: false
+        schema:
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to workflow recipient runs started before the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: ending_at
+        required: false
+        schema:
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowRecipientRunsResponse'
+          description: OK
+      summary: List workflow recipient runs
+      tags:
+      - Workflow recipient runs
+      x-ratelimit-tier: 2
+      x-retention-policy: true
+components:
+  schemas:
+    WorkflowRecipientRun:
+      description: A workflow recipient run represents an individual execution of a workflow for a specific recipient.
+      example:
+        __typename: WorkflowRecipientRun
+        actor: user_456
+        error_count: 0
+        id: 550e8400-e29b-41d4-a716-446655440000
+        inserted_at: '2025-01-01T00:00:00Z'
+        recipient: user_123
+        status: completed
+        tenant: tenant_abc
+        trigger_source:
+          cancellation_key: comment-123-user-456
+          type: api
+        updated_at: '2025-01-01T00:05:00Z'
+        workflow: comment-created
+        workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: WorkflowRecipientRun
+          type: string
+          x-struct: null
+          x-validate: null
+        actor:
+          anyOf:
+          - $ref: '#/components/schemas/RecipientReference'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The actor who triggered the workflow recipient run.
+          x-struct: null
+          x-validate: null
+        error_count:
+          description: The number of errors encountered during the workflow recipient run.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the workflow recipient run (per-recipient).
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          example: '2025-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/RecipientReference'
+        status:
+          description: The current status of the workflow recipient run. One of `queued`, `processing`, `paused`, `completed`, or `cancelled`.
+          enum:
+          - queued
+          - processing
+          - paused
+          - completed
+          - cancelled
+          example: completed
+          type: string
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant associated with the workflow recipient run.
+          example: tenant_abc
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        trigger_source:
+          $ref: '#/components/schemas/WorkflowRecipientRunTriggerSource'
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          example: '2025-01-01T00:05:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          description: The key of the workflow that was executed.
+          example: comment-created
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow_run_id:
+          description: The identifier for the top-level workflow run shared across all recipients in a single trigger.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - workflow_run_id
+      - workflow
+      - status
+      - recipient
+      - trigger_source
+      - inserted_at
+      - updated_at
+      title: WorkflowRecipientRun
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRun
+      x-validate: null
+    WorkflowRecipientRunEvent:
+      description: An event that occurred during a workflow recipient run.
+      example:
+        __typename: WorkflowRecipientRunEvent
+        attempt: 1
+        data:
+          channel_type: email
+          message_id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        event: message_enqueued
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2025-01-01T00:00:00Z'
+        status: ok
+        step_ref: email_step_1
+        step_type: channel
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: WorkflowRecipientRunEvent
+          type: string
+          x-struct: null
+          x-validate: null
+        attempt:
+          description: The attempt number of the workflow recipient run event. Increments for each retry.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Event-specific data associated with the event.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        event:
+          description: The type of event that occurred.
+          example: message_enqueued
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the event.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          example: '2025-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: Whether the event represents a successful or error state.
+          enum:
+          - ok
+          - error
+          example: ok
+          type: string
+          x-struct: null
+          x-validate: null
+        step_ref:
+          description: The reference of the workflow step associated with this event.
+          example: email_step_1
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        step_type:
+          description: The type of workflow step associated with this event.
+          example: channel
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - event
+      - status
+      - inserted_at
+      title: WorkflowRecipientRunEvent
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunEvent
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    WorkflowRecipientRunDetail:
+      allOf:
+      - $ref: '#/components/schemas/WorkflowRecipientRun'
+      - properties:
+          events:
+            description: A list of events that occurred during the workflow recipient run.
+            items:
+              $ref: '#/components/schemas/WorkflowRecipientRunEvent'
+            type: array
+            x-struct: null
+            x-validate: null
+        required:
+        - events
+        type: object
+        x-struct: null
+        x-validate: null
+      description: A single workflow recipient run with its events.
+      example:
+        __typename: WorkflowRecipientRun
+        actor: user_456
+        error_count: 0
+        events:
+        - __typename: WorkflowRecipientRunEvent
+          attempt: 1
+          data:
+            channel_type: email
+            message_id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          event: message_enqueued
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2025-01-01T00:00:00Z'
+          status: ok
+          step_ref: email_step_1
+          step_type: channel
+        id: 550e8400-e29b-41d4-a716-446655440000
+        inserted_at: '2025-01-01T00:00:00Z'
+        recipient: user_123
+        status: completed
+        tenant: tenant_abc
+        trigger_source:
+          cancellation_key: comment-123-user-456
+          type: api
+        updated_at: '2025-01-01T00:05:00Z'
+        workflow: comment-created
+        workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
+      title: WorkflowRecipientRunDetail
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunDetail
+      x-validate: null
+    ListWorkflowRecipientRunsResponse:
+      description: A paginated list of workflow recipient runs.
+      example:
+        items:
+        - __typename: WorkflowRecipientRun
+          actor: user_456
+          error_count: 0
+          id: 550e8400-e29b-41d4-a716-446655440000
+          inserted_at: '2025-01-01T00:00:00Z'
+          recipient: user_123
+          status: completed
+          tenant: tenant_abc
+          trigger_source:
+            cancellation_key: comment-123-user-456
+            type: api
+          updated_at: '2025-01-01T00:05:00Z'
+          workflow: comment-created
+          workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of workflow recipient runs.
+          items:
+            $ref: '#/components/schemas/WorkflowRecipientRun'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListWorkflowRecipientRunsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListWorkflowRecipientRunsResponse
+      x-validate: null
+    WorkflowRecipientRunTriggerSource:
+      description: Describes how the workflow was triggered.
+      example:
+        cancellation_key: comment-123-user-456
+        type: api
+      properties:
+        audience_key:
+          description: The key of the audience that triggered the workflow.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        cancellation_key:
+          description: The cancellation key provided when the workflow was triggered via the API.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        schedule_id:
+          description: The ID of the schedule that triggered the workflow.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of trigger source. One of `api`, `audience`, `schedule`, `broadcast`, `workflow_step`, `integration`, or `rehearsal`.
+          enum:
+          - api
+          - audience
+          - schedule
+          - broadcast
+          - workflow_step
+          - integration
+          - rehearsal
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      title: WorkflowRecipientRunTriggerSource
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunTriggerSource
+      x-validate: null
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        nullable: false
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

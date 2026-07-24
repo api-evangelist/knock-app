@@ -1,0 +1,1247 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Templates API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- name: Templates
+paths:
+  /v1/templates/preview:
+    post:
+      callbacks: {}
+      description: 'Renders a template preview, without requiring a template to be persisted within Knock.
+
+        This is useful for previewing templates in isolation, without the need to use a workflow.
+
+
+        For email templates, you can optionally specify a layout by key or provide inline layout content.
+
+        '
+      operationId: previewTemplate
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewTemplateRequest'
+        description: Params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewTemplateResponse'
+          description: OK
+      summary: Preview a template
+      tags:
+      - Templates
+components:
+  schemas:
+    EmailDividerBlock:
+      description: A divider block in an email template.
+      example:
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: divider
+      properties:
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - divider
+          example: divider
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      title: EmailDividerBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.DividerBlock
+      x-validate: null
+    EmailHtmlBlock:
+      description: An HTML block in an email template.
+      example:
+        content: <p>Hello, world!</p>
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: html
+      properties:
+        content:
+          description: The HTML content of the block. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - html
+          example: html
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - content
+      title: EmailHtmlBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.HtmlBlock
+      x-validate: null
+    PreviewTemplateResponse:
+      description: A response to a template preview request.
+      example:
+        content_type: email
+        result: success
+        template:
+          html_body: <p>Welcome to Acme!</p>
+          subject: Hello John
+          text_body: Welcome to Acme!
+      properties:
+        content_type:
+          description: The content type of the preview.
+          enum:
+          - email
+          - in_app_feed
+          - push
+          - chat
+          - sms
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          description: A list of errors encountered during rendering. Present when result is "error".
+          items:
+            description: A rendering error with optional location information.
+            example:
+              field: html_content
+              line: 1
+              message: 'Reason: expected end of string, line: 1'
+            properties:
+              field:
+                description: The template field that caused the error, if available.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              line:
+                description: The line number where the error occurred, if available.
+                nullable: true
+                type: integer
+                x-struct: null
+                x-validate: null
+              message:
+                description: A human-readable description of the error.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - message
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        result:
+          description: The result of the preview.
+          enum:
+          - success
+          - error
+          type: string
+          x-struct: null
+          x-validate: null
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/EmailTemplate'
+          - $ref: '#/components/schemas/InAppFeedTemplate'
+          - $ref: '#/components/schemas/PushTemplate'
+          - $ref: '#/components/schemas/ChatTemplate'
+          - $ref: '#/components/schemas/SmsTemplate'
+          description: The rendered template, ready to be previewed.
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - result
+      - content_type
+      title: PreviewTemplateResponse
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PreviewTemplateResponse
+      x-validate: null
+    EmailVisualBlocks:
+      description: The visual blocks that make up the email template.
+      example:
+      - content: '# Hello, {{ recipient.name }}!
+
+
+          Welcome to **{{ vars.app_name }}**. [Get started here]({{ data.sign_in_url }}).'
+        type: markdown
+      - content: <p>Hello, {{ recipient.name }}!</p><p>Welcome to <strong>{{ vars.app_name }}</strong>. <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+        type: html
+      - type: divider
+      - attrs:
+          foo: bar
+        key: my-partial
+        name: My partial
+        type: partial
+      - type: image
+        url: https://example.com/image.png
+      - buttons:
+        - action: https://example.com/button-action
+          label: Click me
+          type: button
+          variant: solid
+        type: button_set
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/EmailButtonSetBlock'
+        - $ref: '#/components/schemas/EmailDividerBlock'
+        - $ref: '#/components/schemas/EmailHtmlBlock'
+        - $ref: '#/components/schemas/EmailImageBlock'
+        - $ref: '#/components/schemas/EmailMarkdownBlock'
+        - $ref: '#/components/schemas/EmailPartialBlock'
+        type: object
+        x-struct: null
+        x-validate: null
+      title: EmailVisualBlocks
+      type: array
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailTemplate.EmailVisualBlocks
+      x-validate: null
+    EmailButtonSetBlock:
+      description: A button set block in an email template.
+      example:
+        buttons:
+        - action: https://example.com/button-action
+          label: Click me
+          size_attrs:
+            is_fullwidth: false
+            size: sm
+          style_attrs:
+            background_color: '#000000'
+            border_color: '#000000'
+            border_radius: 6
+            border_width: 1
+            text_color: '#FFFFFF'
+          variant: solid
+        layout_attrs:
+          column_gap: 8
+          horizontal_align: left
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in the button set.
+          items:
+            $ref: '#/components/schemas/EmailButtonSetBlockButton'
+          type: array
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            column_gap:
+              description: The column_gap layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            horizontal_align:
+              description: The horizontal alignment of the block.
+              enum:
+              - left
+              - center
+              - right
+              type: string
+              x-struct: null
+              x-validate: null
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          - horizontal_align
+          - column_gap
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - button_set
+          example: button_set
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - buttons
+      title: EmailButtonSetBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ButtonSetBlock
+      x-validate: null
+    EmailPartialBlock:
+      description: A partial block in an email template, used to render a reusable partial component.
+      example:
+        attrs:
+          foo: bar
+        key: my_partial
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        name: my_partial
+        type: partial
+      properties:
+        attrs:
+          additionalProperties: true
+          description: The attributes to pass to the partial block.
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: The key of the partial block to invoke.
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the partial block.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - partial
+          example: partial
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - key
+      - attrs
+      title: EmailPartialBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.PartialBlock
+      x-validate: null
+    PreviewTemplateRequest:
+      description: A request to preview a template, without requiring a template to be persisted within Knock.
+      example:
+        channel_type: email
+        data:
+          order_id: 123
+        recipient: user_123
+        template:
+          html_body: <p>Welcome!</p>
+          settings:
+            layout_key: default
+          subject: Hello {{ recipient.name }}
+      properties:
+        actor:
+          anyOf:
+          - $ref: '#/components/schemas/RecipientReference'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The actor to reference in the preview.
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The channel type of the template to preview.
+          enum:
+          - email
+          - sms
+          - push
+          - chat
+          - in_app_feed
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: The data to pass to the template for rendering.
+          type: object
+          x-struct: null
+          x-validate: null
+        layout:
+          description: Email layout configuration. Only applicable for email channel type. Falls back to environment default if not provided.
+          nullable: true
+          properties:
+            html_content:
+              description: Inline HTML content for the layout. Must include `{{ content }}` placeholder.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            key:
+              description: The key of an existing email layout to use.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            text_content:
+              description: Inline text content for the layout.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/RecipientReference'
+        template:
+          anyOf:
+          - $ref: '#/components/schemas/EmailTemplate'
+          - $ref: '#/components/schemas/SmsTemplate'
+          - $ref: '#/components/schemas/PushTemplate'
+          - $ref: '#/components/schemas/ChatTemplate'
+          - $ref: '#/components/schemas/InAppFeedTemplate'
+          description: The template content to preview. Structure depends on channel_type.
+          type: object
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant to associate with the preview. Must not contain whitespace.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          description: Optional workflow context for variable hydration. When provided, recipient/actor/tenant are resolved via Knock.
+          nullable: true
+          properties:
+            categories:
+              description: Workflow categories.
+              items:
+                type: string
+                x-struct: null
+                x-validate: null
+              nullable: true
+              type: array
+              x-struct: null
+              x-validate: null
+            key:
+              description: The workflow key.
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - key
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_type
+      - template
+      - recipient
+      title: PreviewTemplateRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PreviewTemplateRequest
+      x-validate: null
+    EmailMarkdownBlock:
+      description: A markdown block in an email template.
+      example:
+        content: '# Hello, world!'
+        layout_attrs:
+          padding_bottom: 8
+          padding_left: 4
+          padding_right: 4
+          padding_top: 8
+        type: markdown
+      properties:
+        content:
+          description: The markdown content of the block. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - markdown
+          example: markdown
+          type: string
+          x-struct: null
+          x-validate: null
+        variant:
+          description: The flavor of markdown to use for the block.
+          enum:
+          - default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - content
+      title: EmailMarkdownBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.MarkdownBlock
+      x-validate: null
+    PushTemplate:
+      description: A push notification template.
+      example:
+        settings:
+          delivery_type: content
+          payload_overrides: '{"name": "John"}'
+        text_body: Hello, world!
+        title: Hello, world!
+      properties:
+        settings:
+          description: The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides) for the push template.
+          properties:
+            delivery_type:
+              description: The delivery type of the push notification. Set as silent to send a data-only notification. When set to `silent`, no body will be sent.
+              enum:
+              - silent
+              - content
+              example: content
+              type: string
+              x-struct: null
+              x-validate: null
+            payload_overrides:
+              description: A JSON object that overrides the payload sent to the push provider.
+              example: '{"name": "John"}'
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - delivery_type
+          type: object
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: The body of the push notification.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        title:
+          description: The title of the push notification.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - title
+      - text_body
+      - settings
+      title: PushTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PushTemplate
+      x-validate: null
+    EmailTemplate:
+      description: An email message template.
+      example:
+        html_body: <p>Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>
+        settings:
+          layout_key: default
+        subject: Welcome to {{ vars.app_name }}
+        text_body: 'Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} Get started here: {{ data.sign_in_url }}.'
+      properties:
+        html_body:
+          description: An HTML or MJML template for the email body. **Required** if `visual_blocks` is not provided. Only one of `html_body` or `visual_blocks` should be set. When `is_mjml` is true, this must contain MJML components. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          example: <p>Hello, world!</p>
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        is_mjml:
+          description: Whether this template uses MJML format. When true, the template content will be compiled from MJML to HTML. Only valid when the selected layout is also MJML or when no layout is selected.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        settings:
+          description: The [settings](https://docs.knock.app/integrations/email/settings) for the email template. Must be supplied with at least `layout_key`.
+          example:
+            layout_key: default
+          properties:
+            attachment_key:
+              description: The object path in the workflow trigger's `data` payload to resolve attachments.Defaults to `attachments`.
+              example: attachments
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            layout_key:
+              description: The `key` of the [email layout](https://docs.knock.app/integrations/email/layouts) that wraps the email template. When omitted, the email template will need to define the `<html>` structure.
+              example: default
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            pre_content:
+              description: A liquid template that will be injected into the email layout above the message template content. Useful for setting variables that should be available to the email layout.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          title: EmailTemplateSettings
+          type: object
+          x-struct: null
+          x-validate: null
+        subject:
+          description: The subject of the email. Supports Liquid templating with variables like `{{ recipient.name }}`, `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See the [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables) for available variables.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: A text template for the email body. When omitted, the email template will be autogenerated from the `html_body` or `visual_blocks`.
+          example: Hello, world!
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        visual_blocks:
+          anyOf:
+          - $ref: '#/components/schemas/EmailVisualBlocks'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The visual blocks that make up the email template. **Required** if `html_body` is not provided. Only one of `html_body` or `visual_blocks` should be set.
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - subject
+      - settings
+      title: EmailTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailTemplate
+      x-validate: null
+    EmailButtonSetBlockButton:
+      description: A button in a button set block.
+      example:
+        action: https://example.com/button-action
+        label: Click me
+        size_attrs:
+          is_fullwidth: false
+          size: sm
+        style_attrs:
+          background_color: '#000000'
+          border_color: '#000000'
+          border_radius: 6
+          border_width: 1
+          text_color: '#FFFFFF'
+        variant: solid
+      properties:
+        action:
+          description: The action of the button.
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the button.
+          type: string
+          x-struct: null
+          x-validate: null
+        size_attrs:
+          description: The size attributes of the button.
+          properties:
+            is_fullwidth:
+              description: Whether the button is full width.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            size:
+              description: The size of the button.
+              enum:
+              - sm
+              - md
+              - lg
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        style_attrs:
+          description: The style attributes of the button.
+          properties:
+            background_color:
+              description: The background color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+            border_color:
+              description: The border color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+            border_radius:
+              description: The border radius of the button.
+              type: integer
+              x-struct: null
+              x-validate: null
+            border_width:
+              description: The border width of the button.
+              type: integer
+              x-struct: null
+              x-validate: null
+            text_color:
+              description: The text color of the button.
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        variant:
+          description: The variant of the button.
+          enum:
+          - solid
+          - outline
+          example: solid
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - label
+      - action
+      - variant
+      title: EmailButtonSetBlockButton
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ButtonSetBlock.Button
+      x-validate: null
+    InAppFeedTemplate:
+      description: An in-app feed template.
+      example:
+        action_buttons:
+        - action: https://example.com
+          label: Button 1
+        action_url: https://example.com
+        markdown_body: Hello, world!
+      properties:
+        action_buttons:
+          description: The action buttons of the in-app feed message.
+          items:
+            description: A single-action button to be rendered in an in-app feed cell.
+            properties:
+              action:
+                description: The URI for this action.
+                example: https://example.com
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the action button.
+                example: Button 1
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - label
+            - action
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        action_url:
+          description: The URL to navigate to when the in-app feed is tapped. Can be omitted for multi-action templates, where the action buttons will be used instead.
+          example: https://example.com
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        markdown_body:
+          description: The markdown body of the in-app feed.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - markdown_body
+      title: InAppFeedTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.InAppFeedTemplate
+      x-validate: null
+    EmailImageBlock:
+      description: An image block in an email template.
+      example:
+        alt: Example image
+        layout_attrs:
+          horizontal_align: center
+          padding_bottom: 4
+          padding_left: 0
+          padding_right: 0
+          padding_top: 4
+        style_attrs:
+          width: 25%
+        type: image
+        url: https://example.com/image.jpg
+      properties:
+        action:
+          description: Optional action URL for the image.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        alt:
+          description: Alt text for the image.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The ID of the block.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        layout_attrs:
+          description: The layout attributes of the block.
+          properties:
+            horizontal_align:
+              description: The horizontal alignment of the block.
+              enum:
+              - left
+              - center
+              - right
+              type: string
+              x-struct: null
+              x-validate: null
+            padding_bottom:
+              description: The padding_bottom layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_left:
+              description: The padding_left layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_right:
+              description: The padding_right layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+            padding_top:
+              description: The padding_top layout attribute of the block.
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - padding_top
+          - padding_right
+          - padding_bottom
+          - padding_left
+          - horizontal_align
+          type: object
+          x-struct: null
+          x-validate: null
+        style_attrs:
+          description: The style attributes of the image.
+          properties:
+            width:
+              description: The width of the image.
+              example: 100%
+              type: string
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the block.
+          enum:
+          - image
+          example: image
+          type: string
+          x-struct: null
+          x-validate: null
+        url:
+          description: The URL of the image to display.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        version:
+          description: The version of the block schema. This is automatically managed by Knock and should not be set manually. Currently all blocks are at version 1.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - url
+      title: EmailImageBlock
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailBlocks.ImageBlock
+      x-validate: null
+    SmsTemplate:
+      description: An SMS template.
+      example:
+        settings:
+          payload_overrides: '{"name": "John"}'
+          to_number: '+1234567890'
+        text_body: Hello, world!
+      properties:
+        settings:
+          anyOf:
+          - description: The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides) for the SMS template.
+            properties:
+              payload_overrides:
+                description: A JSON object that overrides the payload sent to the SMS provider.
+                example: '{"name": "John"}'
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              to_number:
+                description: An override for the phone number to send the SMS to. When not set, defaults to `recipient.phone_number`.
+                example: '+1234567890'
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The settings for the SMS template. Can be omitted.
+          type: object
+          x-struct: null
+          x-validate: null
+        text_body:
+          description: The message of the SMS.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - text_body
+      title: SmsTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.SmsTemplate
+      x-validate: null
+    ChatTemplate:
+      description: A chat template.
+      example:
+        json_body: null
+        markdown_body: '**Hello**, world!'
+        summary: Hello, world!
+      properties:
+        json_body:
+          description: A JSON template for the chat notification message payload. Only present if not using the markdown body.
+          example: '{"type": "text", "text": "Hello, world!"}'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        markdown_body:
+          description: The markdown body of the chat template.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+        summary:
+          description: The summary of the chat template. Used by some chat apps in their push notifications.
+          example: Hello, world!
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - markdown_body
+      title: ChatTemplate
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChatTemplate
+      x-validate: null
+    RecipientReference:
+      description: A recipient reference, used when referencing a recipient by either their ID (for a user), or by a reference for an object.
+      example:
+        collection: projects
+        id: project_1
+      oneOf:
+      - description: A user ID.
+        example: user_1
+        nullable: false
+        title: UserRecipientReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: An object reference.
+        example:
+          collection: projects
+          id: project_1
+        properties:
+          collection:
+            description: The collection of the object.
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: The ID of the object.
+            type: string
+            x-struct: null
+            x-validate: null
+        required:
+        - id
+        - collection
+        title: ObjectRecipientReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.RecipientReference
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.

@@ -1,0 +1,565 @@
+openapi: 3.0.3
+info:
+  title: Knock Audiences Accounts Commits API
+  version: '1.0'
+  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+tags:
+- description: Commits are versioned changes to resources.
+  name: Commits
+paths:
+  /v1/commits/{id}:
+    get:
+      callbacks: {}
+      description: Retrieve a single commit by its ID.
+      operationId: getCommit
+      parameters:
+      - description: The id of the commit to retrieve.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Commit'
+          description: OK
+      summary: Get a commit
+      tags:
+      - Commits
+  /v1/commits/{id}/promote:
+    put:
+      callbacks: {}
+      description: Promotes one change to the subsequent environment.
+      operationId: promoteOneCommit
+      parameters:
+      - description: The target commit ID to promote to the subsequent environment.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Wraps the Commit response under the `commit` key.
+                example:
+                  commit:
+                    author:
+                      email: john.doe@example.com
+                      name: John Doe
+                    commit_message: This is a commit message
+                    created_at: '2021-01-01T00:00:00Z'
+                    environment: development
+                    id: 123e4567-e89b-12d3-a456-426614174000
+                    resource:
+                      identifier: my-email-layout
+                      type: email_layout
+                properties:
+                  commit:
+                    $ref: '#/components/schemas/Commit'
+                required:
+                - commit
+                title: WrappedCommitResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Promote one commit
+      tags:
+      - Commits
+  /v1/commits/promote:
+    put:
+      callbacks: {}
+      description: Promote all changes across all resources to the target environment from its preceding environment.
+      operationId: promoteAllCommits
+      parameters:
+      - description: 'A slug of the target environment to which you want to promote all changes from its directly preceding environment.
+
+
+          For example, if you have three environments “development”, “staging”, and “production” (in that order), setting this param to “production” will promote all commits not currently in production from staging.
+
+
+          When this param is set to `"development"`, the `"branch"` param must be provided.
+
+          '
+        in: query
+        name: to_environment
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of the branch to promote all changes from.
+        in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter commits to promote by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources.
+        in: query
+        name: resource_type
+        required: false
+        schema:
+          oneOf:
+          - enum:
+            - audience
+            - email_layout
+            - guide
+            - message_type
+            - partial
+            - translation
+            - workflow
+            type: string
+            x-struct: null
+            x-validate: null
+          - items:
+              enum:
+              - audience
+              - email_layout
+              - guide
+              - message_type
+              - partial
+              - translation
+              - workflow
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+      - description: Filter commits to promote by resource identifier. Must be used together with resource_type.
+        in: query
+        name: resource_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: The response from promoting all changes.
+                example:
+                  result: success
+                properties:
+                  result:
+                    description: The result of the promote operation.
+                    example: success
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - result
+                title: PromoteAllResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Promote all changes
+      tags:
+      - Commits
+  /v1/commits:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of commits in a given environment. The commits are ordered from most recent first.
+      operationId: listCommits
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether to show commits in the given environment that have not been promoted to the subsequent environment (false) or commits which have been promoted (true).
+        in: query
+        name: promoted
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: Filter commits by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources.
+        in: query
+        name: resource_type
+        required: false
+        schema:
+          oneOf:
+          - enum:
+            - audience
+            - email_layout
+            - guide
+            - message_type
+            - partial
+            - translation
+            - workflow
+            type: string
+            x-struct: null
+            x-validate: null
+          - items:
+              enum:
+              - audience
+              - email_layout
+              - guide
+              - message_type
+              - partial
+              - translation
+              - workflow
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+      - description: Filter commits by resource identifier. Must be used together with resource_type. For most resources, this will be the resource key. In the case of translations, this will be the locale code and namespace, separated by a `/`. For example, `en/courses` or `en`.
+        in: query
+        name: resource_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of entries to fetch per-page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A paginated list of Commit. Contains a list of entries and page information.
+                example:
+                  entries:
+                  - author:
+                      email: john.doe@example.com
+                      name: John Doe
+                    commit_message: This is a commit message
+                    created_at: '2021-01-01T00:00:00Z'
+                    environment: development
+                    id: 123e4567-e89b-12d3-a456-426614174000
+                    resource:
+                      identifier: my-email-layout
+                      type: email_layout
+                  page_info:
+                    after: null
+                    before: null
+                    page_size: 25
+                properties:
+                  entries:
+                    description: A list of entries.
+                    items:
+                      $ref: '#/components/schemas/Commit'
+                    nullable: false
+                    type: array
+                    x-struct: null
+                    x-validate: null
+                  page_info:
+                    $ref: '#/components/schemas/PageInfo'
+                required:
+                - entries
+                - page_info
+                title: PaginatedCommitResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List commits
+      tags:
+      - Commits
+    put:
+      callbacks: {}
+      description: Commit all changes across all resources in the development environment.
+      operationId: commitAllChanges
+      parameters:
+      - description: The environment slug.
+        in: query
+        name: environment
+        required: true
+        schema:
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The slug of a branch to use. This option can only be used when `environment` is `"development"`.
+        in: query
+        name: branch
+        required: false
+        schema:
+          example: feature-branch
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: An optional message to include in a commit.
+        in: query
+        name: commit_message
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter changes to commit by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources.
+        in: query
+        name: resource_type
+        required: false
+        schema:
+          oneOf:
+          - enum:
+            - audience
+            - email_layout
+            - guide
+            - message_type
+            - partial
+            - translation
+            - workflow
+            type: string
+            x-struct: null
+            x-validate: null
+          - items:
+              enum:
+              - audience
+              - email_layout
+              - guide
+              - message_type
+              - partial
+              - translation
+              - workflow
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+      - description: Filter changes to commit by resource identifier. Must be used together with resource_type.
+        in: query
+        name: resource_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: The response from committing all changes.
+                example:
+                  result: success
+                properties:
+                  result:
+                    description: The result of the commit operation.
+                    example: success
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - result
+                title: CommitAllResponse
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Commit all changes
+      tags:
+      - Commits
+components:
+  schemas:
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    Commit:
+      description: A commit is a change to a resource within an environment, made by an author.
+      example:
+        author:
+          email: john.doe@example.com
+          name: John Doe
+        commit_message: This is a commit message
+        created_at: '2021-01-01T00:00:00Z'
+        environment: development
+        id: 123e4567-e89b-12d3-a456-426614174000
+        resource:
+          identifier: my-email-layout
+          type: email_layout
+      properties:
+        author:
+          description: The author of the commit.
+          example:
+            email: john.doe@example.com
+            name: John Doe
+          properties:
+            email:
+              description: The email address of the commit author.
+              type: string
+              x-struct: null
+              x-validate: null
+            name:
+              description: The name of the commit author.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - email
+          title: CommitAuthor
+          type: object
+          x-struct: null
+          x-validate: null
+        commit_message:
+          description: The optional message about the commit.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the commit was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        environment:
+          description: The environment of the commit.
+          example: development
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the commit.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        resource:
+          description: The resource object associated with the commit.
+          example:
+            identifier: my-email-layout
+            type: email_layout
+          properties:
+            identifier:
+              description: The unique identifier for the resource.
+              type: string
+              x-struct: null
+              x-validate: null
+            type:
+              description: The type of the resource object.
+              enum:
+              - audience
+              - email_layout
+              - guide
+              - message_type
+              - partial
+              - translation
+              - workflow
+              example: workflow
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - identifier
+          - type
+          title: CommitResource
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - resource
+      - author
+      - environment
+      - created_at
+      title: Commit
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Commit
+      x-validate: null
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
