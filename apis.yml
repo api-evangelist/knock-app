@@ -1,222 +1,6 @@
 aid: knock-app
 url: https://raw.githubusercontent.com/api-evangelist/knock-app/refs/heads/main/apis.yml
 apis:
-- aid: knock-app:knock-workflows-api
-  name: Knock Workflows API
-  tags:
-  - Workflows
-  - Notifications
-  - Messaging
-  - Triggers
-  humanURL: https://docs.knock.app/api-reference/workflows
-  properties:
-  - url: https://docs.knock.app/api-reference/workflows
-    type: Documentation
-  - url: https://docs.knock.app/send-notifications/triggering-workflows/api
-    type: Documentation
-  - url: openapi/knock-workflows-api-openapi.yml
-    type: OpenAPI
-  - url: json-schema/knock-workflow-trigger-schema.json
-    type: JSONSchema
-  - url: examples/knock-trigger-workflow-example.json
-    type: Examples
-  - url: graphql/knock-app-graphql.md
-    type: GraphQL
-  description: Trigger and cancel notification workflows and inspect workflow recipient
-    runs. Workflows are Knock's core programmable model — orchestrating channel steps
-    (email, SMS, push, in-app, chat, webhook) and function steps (batch, delay, branch,
-    throttle, fetch, AI agent, trigger-workflow) with conditions and preferences across
-    recipients.
-- aid: knock-app:knock-users-api
-  name: Knock Users API
-  tags:
-  - Users
-  - Recipients
-  - Preferences
-  - In-App Feed
-  - Guides
-  humanURL: https://docs.knock.app/api-reference/users
-  properties:
-  - url: https://docs.knock.app/api-reference/users
-    type: Documentation
-  - url: openapi/knock-users-api-openapi.yml
-    type: OpenAPI
-  - url: examples/knock-identify-user-example.json
-    type: Examples
-  description: Identify, list, update, delete, and merge users plus manage their channel
-    data, preferences, in-app feeds, guides, subscriptions, messages, and schedules.
-    The primary recipient surface for Knock.
-- aid: knock-app:knock-messages-api
-  name: Knock Messages API
-  tags:
-  - Messages
-  - Engagement
-  - Delivery
-  humanURL: https://docs.knock.app/api-reference/messages
-  properties:
-  - url: https://docs.knock.app/api-reference/messages
-    type: Documentation
-  - url: openapi/knock-messages-api-openapi.yml
-    type: OpenAPI
-  - url: json-schema/knock-message-schema.json
-    type: JSONSchema
-  description: Read, list, and update Knock messages — the per-recipient delivery
-    records produced by workflow runs. Includes activity, delivery log, and event
-    timelines plus mark-as-seen/read/interacted/archived single and batch endpoints.
-- aid: knock-app:knock-objects-api
-  name: Knock Objects API
-  tags:
-  - Objects
-  - Non-User Recipients
-  humanURL: https://docs.knock.app/api-reference/objects
-  properties:
-  - url: https://docs.knock.app/api-reference/objects
-    type: Documentation
-  - url: openapi/knock-objects-api-openapi.yml
-    type: OpenAPI
-  description: Create and manage non-user Objects in Knock and their channel data,
-    preferences, subscriptions, and messages. Objects model accounts, projects, devices,
-    or any non-human notification target.
-- aid: knock-app:knock-tenants-api
-  name: Knock Tenants API
-  tags:
-  - Tenants
-  - Multi-Tenancy
-  - Branding
-  humanURL: https://docs.knock.app/api-reference/tenants
-  properties:
-  - url: https://docs.knock.app/api-reference/tenants
-    type: Documentation
-  - url: openapi/knock-tenants-api-openapi.yml
-    type: OpenAPI
-  description: Manage Tenants — the top-level accounts or workspaces in your product.
-    Tenants power tenant-scoped branding, preferences, and message-targeting.
-- aid: knock-app:knock-schedules-api
-  name: Knock Schedules API
-  tags:
-  - Schedules
-  - Recurring
-  - Cron
-  humanURL: https://docs.knock.app/api-reference/schedules
-  properties:
-  - url: https://docs.knock.app/api-reference/schedules
-    type: Documentation
-  - url: https://docs.knock.app/concepts/schedules
-    type: Documentation
-  - url: openapi/knock-schedules-api-openapi.yml
-    type: OpenAPI
-  - url: examples/knock-create-schedule-example.json
-    type: Examples
-  description: Create, list, update, and delete workflow Schedules. Schedules fire
-    workflows at one-off or recurring times for specific recipients with timezone
-    and repeat-rule support.
-- aid: knock-app:knock-audiences-api
-  name: Knock Audiences API
-  tags:
-  - Audiences
-  - Segments
-  - Lifecycle
-  humanURL: https://docs.knock.app/api-reference/audiences
-  properties:
-  - url: https://docs.knock.app/api-reference/audiences
-    type: Documentation
-  - url: openapi/knock-audiences-api-openapi.yml
-    type: OpenAPI
-  description: Manage static Audiences and their members. Audiences power lifecycle
-    messaging — when a user joins an audience, configured workflows fire automatically.
-- aid: knock-app:knock-channels-api
-  name: Knock Channels API
-  tags:
-  - Channels
-  - Providers
-  - Bulk
-  humanURL: https://docs.knock.app/api-reference/channels
-  properties:
-  - url: https://docs.knock.app/api-reference/channels
-    type: Documentation
-  - url: openapi/knock-channels-api-openapi.yml
-    type: OpenAPI
-  description: Inspect channels and run bulk message-status updates scoped to a channel.
-    Channels represent configured provider integrations (Resend, SendGrid, Twilio,
-    APNS, Slack, etc.).
-- aid: knock-app:knock-providers-api
-  name: Knock Providers API
-  tags:
-  - Providers
-  - OAuth
-  - SlackKit
-  - TeamsKit
-  humanURL: https://docs.knock.app/api-reference/providers
-  properties:
-  - url: https://docs.knock.app/api-reference/providers
-    type: Documentation
-  - url: openapi/knock-providers-api-openapi.yml
-    type: OpenAPI
-  description: OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other
-    inbound provider integrations — authorize, revoke, and inspect connections to
-    chat providers on behalf of users or tenants.
-- aid: knock-app:knock-integrations-api
-  name: Knock Integrations API
-  tags:
-  - Integrations
-  - SlackKit
-  - TeamsKit
-  humanURL: https://docs.knock.app/api-reference/integrations
-  properties:
-  - url: https://docs.knock.app/api-reference/integrations
-    type: Documentation
-  - url: openapi/knock-integrations-api-openapi.yml
-    type: OpenAPI
-  description: Inspect integrations configured for the current environment. Used by
-    SlackKit and TeamsKit clients to discover the destinations available for a recipient.
-- aid: knock-app:knock-bulk-operations-api
-  name: Knock Bulk Operations API
-  tags:
-  - Bulk
-  - Operations
-  - Async
-  humanURL: https://docs.knock.app/api-reference/bulk_operations
-  properties:
-  - url: https://docs.knock.app/api-reference/bulk_operations
-    type: Documentation
-  - url: openapi/knock-bulk-operations-api-openapi.yml
-    type: OpenAPI
-  description: Track and inspect long-running bulk operations. Many Knock endpoints
-    (bulk identify users, bulk delete, bulk channel-status updates) return a bulk-operation
-    handle; this surface exposes its lifecycle.
-- aid: knock-app:knock-notify-api
-  name: Knock Notify API
-  tags:
-  - Notify
-  - Events
-  humanURL: https://docs.knock.app/api-reference/overview
-  properties:
-  - url: openapi/knock-notify-api-openapi.yml
-    type: OpenAPI
-  description: Internal notify endpoints used by the Knock event-driven trigger surface.
-    Used to send notifications when workflows fire from source events, schedules,
-    audiences, or programmatic triggers.
-- aid: knock-app:knock-management-api
-  name: Knock Management API (mAPI)
-  tags:
-  - Management
-  - Resources
-  - CLI
-  - MCP
-  - DevOps
-  humanURL: https://docs.knock.app/mapi
-  properties:
-  - url: https://docs.knock.app/mapi
-    type: Documentation
-  - url: https://docs.knock.app/developer-tools/management-api
-    type: Documentation
-  - url: openapi/knock-management-api-openapi.yml
-    type: OpenAPI
-  description: Knock Management API (mAPI) — the resource-management surface at control.knock.app.
-    Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates,
-    Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members,
-    Channel Groups, Environments, Branches, Commits, and API Keys. Powers the Knock
-    CLI and MCP server.
 - aid: knock-app:knock-webhooks
   name: Knock Outbound Webhooks
   tags:
@@ -231,10 +15,1747 @@ apis:
     type: Documentation
   - url: asyncapi/knock-webhooks-asyncapi.yml
     type: AsyncAPI
-  description: Outbound webhooks fire message lifecycle (sent, delivered, seen, read,
-    interacted, archived, link_clicked, bounced, undelivered) and environment-change
-    (workflow / email_layout / translation / partial / source_event_action updates
-    and commits) events as JSON POSTs to subscriber URLs configured in the Knock dashboard.
+  description: >-
+    Outbound webhooks fire message lifecycle (sent, delivered, seen, read, interacted, archived, link_clicked,
+    bounced, undelivered) and environment-change (workflow / email_layout / translation / partial / source_event_action
+    updates and commits) events as JSON POSTs to subscriber URLs configured in the Knock dashboard.
+- aid: knock-app:knock-app-accounts-api
+  name: Knock Accounts API
+  description: Resources for managing your Knock account.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-api-keys-api
+  name: Knock API keys API
+  description: The API keys API from Knock — 1 operation(s) for api keys.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - API keys
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-audiences-api
+  name: Knock Audiences API
+  description: The Audiences API from Knock — 4 operation(s) for audiences.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Audiences
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-audiences-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-branches-api
+  name: Knock Branches API
+  description: Branches in Knock are a way to isolate changes to your Knock resources.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Branches
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-branches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-broadcasts-api
+  name: Knock Broadcasts API
+  description: The Broadcasts API from Knock — 5 operation(s) for broadcasts.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Broadcasts
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-broadcasts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-bulk-operations-api
+  name: Knock Bulk operations API
+  description: The Bulk operations API from Knock — 12 operation(s) for bulk operations.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Bulk operations
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-bulk-operations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-channel-data-api
+  name: Knock Channel data API
+  description: The Channel data API from Knock — 2 operation(s) for channel data.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Channel data
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-channel-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-channel-groups-api
+  name: Knock Channel Groups API
+  description: The Channel Groups API from Knock — 2 operation(s) for channel groups.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Channel Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-channel-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-channels-api
+  name: Knock Channels API
+  description: The Channels API from Knock — 2 operation(s) for channels.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-channels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-commits-api
+  name: Knock Commits API
+  description: Commits are versioned changes to resources.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Commits
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-commits-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-email-layouts-api
+  name: Knock Email layouts API
+  description: Email layouts wrap your email templates and provide a consistent look and feel.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Email layouts
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-email-layouts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-environments-api
+  name: Knock Environments API
+  description: Environments are isolated instances of your account that map to your infrastructure.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Environments
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-environments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-feeds-api
+  name: Knock Feeds API
+  description: The Feeds API from Knock — 2 operation(s) for feeds.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-feeds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-guides-api
+  name: Knock Guides API
+  description: >-
+    Guides let you define in-app guides that can be displayed to users based on priority and other conditions.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Guides
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-guides-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-integrations-api
+  name: Knock Integrations API
+  description: The Integrations API from Knock — 2 operation(s) for integrations.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-members-api
+  name: Knock Members API
+  description: The Members API from Knock — 2 operation(s) for members.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-members-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-message-types-api
+  name: Knock Message types API
+  description: >-
+    A message type allows you to specify an in-app schema that defines the fields available for your in-app
+    notifications.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Message types
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-message-types-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-messages-api
+  name: Knock Messages API
+  description: The Messages API from Knock — 24 operation(s) for messages.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-microsoft-teams-api
+  name: Knock Microsoft Teams API
+  description: The Microsoft Teams API from Knock — 4 operation(s) for microsoft teams.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Microsoft Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-microsoft-teams-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-objects-api
+  name: Knock Objects API
+  description: The Objects API from Knock — 19 operation(s) for objects.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-objects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-partials-api
+  name: Knock Partials API
+  description: Partials allow you to reuse content across templates.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Partials
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-partials-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-preferences-api
+  name: Knock Preferences API
+  description: The Preferences API from Knock — 16 operation(s) for preferences.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-providers-api
+  name: Knock Providers API
+  description: The Providers API from Knock — 7 operation(s) for providers.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-providers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-schedules-api
+  name: Knock Schedules API
+  description: The Schedules API from Knock — 3 operation(s) for schedules.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-slack-api
+  name: Knock Slack API
+  description: The Slack API from Knock — 3 operation(s) for slack.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Slack
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-slack-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-subscriptions-api
+  name: Knock Subscriptions API
+  description: The Subscriptions API from Knock — 4 operation(s) for subscriptions.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-templates-api
+  name: Knock Templates API
+  description: The Templates API from Knock — 1 operation(s) for templates.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-tenants-api
+  name: Knock Tenants API
+  description: The Tenants API from Knock — 4 operation(s) for tenants.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-translations-api
+  name: Knock Translations API
+  description: Translations are per-locale string files that can be used in your templates.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Translations
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-translations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-users-api
+  name: Knock Users API
+  description: The Users API from Knock — 28 operation(s) for users.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-variables-api
+  name: Knock Variables API
+  description: The Variables API from Knock — 2 operation(s) for variables.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-variables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-workflow-recipient-runs-api
+  name: Knock Workflow recipient runs API
+  description: The Workflow recipient runs API from Knock — 2 operation(s) for workflow recipient runs.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Workflow recipient runs
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-workflow-recipient-runs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-workflow-triggers-api
+  name: Knock Workflow Triggers API
+  description: The Workflow Triggers API from Knock — 2 operation(s) for workflow triggers.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Workflow Triggers
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-workflow-triggers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
+- aid: knock-app:knock-app-workflows-api
+  name: Knock Workflows API
+  description: Workflows let you express your cross-channel notification logic.
+  humanURL: https://docs.knock.app/api-reference/workflows
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/knock-app-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/workflows
+  - type: Documentation
+    url: https://docs.knock.app/send-notifications/triggering-workflows/api
+  - type: JSONSchema
+    url: json-schema/knock-workflow-trigger-schema.json
+  - type: Examples
+    url: examples/knock-trigger-workflow-example.json
+  - type: GraphQL
+    url: graphql/knock-app-graphql.md
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/users
+  - type: Examples
+    url: examples/knock-identify-user-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/messages
+  - type: JSONSchema
+    url: json-schema/knock-message-schema.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/objects
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/tenants
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/schedules
+  - type: Documentation
+    url: https://docs.knock.app/concepts/schedules
+  - type: Examples
+    url: examples/knock-create-schedule-example.json
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/audiences
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/channels
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/providers
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/integrations
+  - type: Documentation
+    url: https://docs.knock.app/api-reference/bulk_operations
+  - type: Documentation
+    url: https://docs.knock.app/mapi
+  - type: Documentation
+    url: https://docs.knock.app/developer-tools/management-api
 name: Knock
 tags:
 - Notifications
@@ -253,7 +1774,20 @@ tags:
 - AI Agents
 - Developer Platform
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/knock-app.png
 access: 3rd-Party
 common:
 - type: AgenticAccess
