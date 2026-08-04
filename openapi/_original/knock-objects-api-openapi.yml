@@ -1,0 +1,4253 @@
+openapi: 3.0.3
+info:
+  title: Knock Objects API
+  version: '1.0'
+  description: Create and manage non-user Objects in Knock and their channel data, preferences, subscriptions, and messages.
+    Objects model accounts, projects, devices, or any non-human notification target.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+paths:
+  /v1/objects/{collection}/{object_id}/preferences/{id}/workflows:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the workflow preferences for an object's preference set.
+      operationId: updateObjectPreferenceWorkflows
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflows in preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types/{type}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific channel type preference for an object's preference set.
+      operationId: updateObjectPreferenceChannelType
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a channel type preference
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/bulk/delete:
+    post:
+      callbacks: {}
+      description: Bulk deletes objects from the specified collection.
+      operationId: bulkDeleteObjects
+      parameters:
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              object_ids:
+              - obj_123
+              - obj_456
+              - obj_789
+            schema:
+              $ref: '#/components/schemas/BulkDeleteObjectsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk delete objects
+      tags:
+      - Objects
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/objects/{collection}/{id}/schedules:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of schedules for an object.
+      operationId: listObjectSchedules
+      parameters:
+      - description: The ID of the object to list schedules for.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection of the object to list schedules for.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter schedules by tenant id.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Filter schedules by workflow id.
+        in: query
+        name: workflow
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSchedulesResponse'
+          description: OK
+      summary: List object schedules
+      tags:
+      - Schedules
+      - Objects
+      x-ratelimit-tier: 4
+  /v1/objects/{collection}/{id}/messages:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of messages for a specific object in the given collection. Allows filtering by
+        message status and provides various sorting options.
+      operationId: listMessagesForObject
+      parameters:
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items with the corresponding tenant.
+        example: tenant_123
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items with the corresponding channel ID.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: channel_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages with the given delivery status.
+        example:
+        - delivered
+        in: query
+        name: status[]
+        required: false
+        schema:
+          items:
+            enum:
+            - queued
+            - sent
+            - delivered
+            - delivery_attempted
+            - undelivered
+            - not_sent
+            - bounced
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages with the given engagement status.
+        example:
+        - unread
+        in: query
+        name: engagement_status[]
+        required: false
+        schema:
+          items:
+            enum:
+            - seen
+            - unseen
+            - read
+            - unread
+            - archived
+            - unarchived
+            - link_clicked
+            - interacted
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: 'Limits the results to only the message IDs given (max 50). Note: when using this option, the results
+          will be subject to any other filters applied to the query.'
+        example:
+        - 1jNaXzB2RZX3LY8wVQnfCKyPnv7
+        in: query
+        name: message_ids[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages related to any of the provided categories.
+        example:
+        - workflow_123
+        in: query
+        name: workflow_categories[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages triggered by the given workflow key.
+        example: comment-created
+        in: query
+        name: source
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages associated with the top-level workflow run ID returned by the workflow
+          trigger request.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: workflow_run_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages for a specific recipient's workflow run.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: workflow_recipient_run_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering)
+          for more information.
+        example: '{"comment_id": "123"}'
+        in: query
+        name: trigger_data
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        example: projects
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the object.
+        example: project-123
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMessagesResponse'
+          description: OK
+      summary: List messages
+      tags:
+      - Messages
+      - Objects
+      x-ratelimit-tier: 4
+      x-retention-policy: true
+  /v1/objects/{collection}/{object_id}/preferences/{id}/categories/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific category preference for an object's preference set. Deprecated.
+      operationId: updateObjectPreferenceCategory
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a category preference
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/preferences:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of preference sets for the specified object.
+      operationId: listObjectPreferenceSets
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A list of preference sets for the object
+                example:
+                - categories:
+                    marketing: false
+                    transactional:
+                      channel_types:
+                        email: false
+                  channel_types:
+                    email: true
+                    push: false
+                    sms:
+                      conditions:
+                      - argument: US
+                        operator: equal_to
+                        variable: recipient.country_code
+                  commercial_subscribed: true
+                  id: default
+                  workflows: null
+                items:
+                  $ref: '#/components/schemas/PreferenceSet'
+                title: ListObjectPreferenceSetsResponse
+                type: array
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List preference sets
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 4
+  /v1/objects/{collection}/{object_id}/preferences/{id}/workflows/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a specific workflow preference for an object's preference set.
+      operationId: updateObjectPreferenceWorkflow
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a workflow preference
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/bulk/subscriptions/add:
+    post:
+      callbacks: {}
+      description: Add subscriptions for all objects in a single collection. If a subscription for an object in the collection
+        already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients)
+        for the `recipient` field.
+      operationId: bulkAddSubscriptions
+      parameters:
+      - description: The collection this object belongs to.
+        example: projects
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              subscriptions:
+              - id: project-1
+                properties: null
+                recipients:
+                - id: user_1
+            schema:
+              $ref: '#/components/schemas/BulkUpsertSubscriptionsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk add subscriptions
+      tags:
+      - Objects
+      - Subscriptions
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/objects/{collection}/{object_id}/preferences/{id}/categories:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the category preferences for an object's preference set.
+      operationId: updateObjectPreferenceCategories
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update categories in preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{id}:
+    delete:
+      callbacks: {}
+      description: Permanently removes an object from the specified collection. This operation cannot be undone.
+      operationId: deleteObject
+      parameters:
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the object.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete an object
+      tags:
+      - Objects
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Retrieves a specific object by its ID from the specified collection. Returns the object with all its properties.
+      operationId: getObject
+      parameters:
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the object.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+          description: OK
+      summary: Get an object
+      tags:
+      - Objects
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: Creates a new object or updates an existing one in the specified collection. This operation is used to
+        identify objects with their properties, as well as optional preferences and channel data.
+      operationId: setObject
+      parameters:
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the object.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_data:
+                97c5837d-c65c-4d54-aa39-080eeb81c69d:
+                  tokens:
+                  - push_token_123
+              description: My product description
+              locale: en-US
+              name: My product
+              preferences:
+                default:
+                  channel_types:
+                    email: true
+                  workflows:
+                    dinosaurs-loose:
+                      channel_types:
+                        email: true
+              price: 100.0
+              timezone: America/New_York
+            schema:
+              $ref: '#/components/schemas/SetObjectRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+          description: OK
+      summary: Set an object
+      tags:
+      - Objects
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/channel_data/{channel_id}:
+    delete:
+      callbacks: {}
+      description: Unsets the channel data for the specified object and channel.
+      operationId: unsetObjectChannelData
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Unset channel data
+      tags:
+      - Channel data
+      - Objects
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Returns the channel data for the specified object and channel.
+      operationId: getObjectChannelData
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelData'
+          description: OK
+      summary: Get channel data
+      tags:
+      - Channel data
+      - Objects
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: Sets the channel data for the specified object and channel. If no object exists in the current environment
+        for the given `collection` and `object_id`, Knock will create the object as part of this request.
+      operationId: setObjectChannelData
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              data:
+                tokens:
+                - push_token_1
+            schema:
+              $ref: '#/components/schemas/ChannelDataRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelData'
+          description: OK
+      summary: Set channel data
+      tags:
+      - Channel data
+      - Objects
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of objects from the specified collection. Optionally includes preference data
+        for the objects.
+      operationId: listObjects
+      parameters:
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Includes preferences of the objects in the response.
+        in: query
+        name: include[]
+        required: false
+        schema:
+          items:
+            enum:
+            - preferences
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListObjectsResponse'
+          description: OK
+      summary: List objects in a collection
+      tags:
+      - Objects
+      x-ratelimit-tier: 4
+  /v1/objects/{collection}/{object_id}/preferences/{id}/channel_types:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the channel type preferences for an object's preference set.
+      operationId: updateObjectPreferenceChannelTypes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel types in preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/bulk/subscriptions/delete:
+    post:
+      callbacks: {}
+      description: Delete subscriptions for many objects in a single collection type. If a subscription for an object in the
+        collection doesn't exist, it will be skipped.
+      operationId: bulkDeleteSubscriptions
+      parameters:
+      - description: The collection this object belongs to.
+        example: projects
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              subscriptions:
+              - id: subscribed-to-object-1
+                recipients:
+                - collection: projects
+                  id: subscriber-project-1
+                - subscriber-user-1
+              - id: subscribed-to-object-2
+                recipients:
+                - subscriber-user-2
+            schema:
+              $ref: '#/components/schemas/BulkDeleteSubscriptionsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk delete subscriptions
+      tags:
+      - Objects
+      - Subscriptions
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/objects/{collection}/{object_id}/preferences/{id}:
+    delete:
+      callbacks: {}
+      description: Unsets the preference set for the object, removing it entirely.
+      operationId: deleteObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete object preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Returns the preference set for the specified object and preference set `id`.
+      operationId: getObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Get object preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: 'Sets preferences within the given preference set. By default, this is a destructive operation and will
+        replace any existing preferences with the preferences given. Use ''__persistence_strategy'': ''merge'' to merge with
+        existing preferences instead. If no object exists in the current environment for the given `:collection` and `:object_id`,
+        Knock will create the object as part of this request. The preference set `:id` can be either `default` or a `tenant.id`.
+        Learn more about [per-tenant preferences](/preferences/tenant-preferences).'
+      operationId: updateObjectPreferenceSet
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              __persistence_strategy__: merge
+              categories:
+                marketing: false
+                transactional:
+                  channel_types:
+                    email: false
+              channel_types:
+                email: true
+              channels:
+                2f641633-95d3-4555-9222-9f1eb7888a80:
+                  conditions:
+                  - argument: US
+                    operator: equal_to
+                    variable: recipient.country_code
+                aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+              commercial_subscribed: true
+              workflows:
+                dinosaurs-loose:
+                  channel_types:
+                    email: false
+            schema:
+              $ref: '#/components/schemas/PreferenceSetRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update a preference set
+      tags:
+      - Objects
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/{object_id}/subscriptions:
+    delete:
+      callbacks: {}
+      description: Delete subscriptions for the specified recipients from an object. Returns the list of deleted subscriptions.
+      operationId: deleteSubscriptionsForObject
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteSubscriptionsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionsResponse'
+          description: OK
+      summary: Delete subscriptions
+      tags:
+      - Subscriptions
+      - Objects
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: List subscriptions for an object. Either list the recipients that subscribe to the provided object, or
+        list the objects that the provided object is subscribed to. Determined by the `mode` query parameter.
+      operationId: listSubscriptionsForObject
+      parameters:
+      - description: Mode of the request. `recipient` to list the objects that the provided object is subscribed to, `object`
+          to list the recipients that subscribe to the provided object.
+        in: query
+        name: mode
+        required: false
+        schema:
+          default: object
+          enum:
+          - recipient
+          - object
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Additional fields to include in the response.
+        in: query
+        name: include[]
+        required: false
+        schema:
+          items:
+            enum:
+            - preferences
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Recipients to filter by (only used if mode is `object`).
+        in: query
+        name: recipients[]
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/RecipientReference'
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Objects to filter by (only used if mode is `recipient`).
+        in: query
+        name: objects[]
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/ObjectReference'
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSubscriptionsResponse'
+          description: OK
+      summary: List subscriptions
+      tags:
+      - Subscriptions
+      - Objects
+      x-ratelimit-tier: 4
+    post:
+      callbacks: {}
+      description: Add subscriptions for an object. If a subscription already exists, it will be updated. This endpoint also
+        handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the
+        `recipient`.
+      operationId: addSubscriptionsForObject
+      parameters:
+      - description: Unique identifier for the object.
+        in: path
+        name: object_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              properties:
+                key: value
+              recipients:
+              - user_1
+              - user_2
+            schema:
+              $ref: '#/components/schemas/UpsertSubscriptionsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionsResponse'
+          description: OK
+      summary: Add subscriptions
+      tags:
+      - Subscriptions
+      - Objects
+      x-ratelimit-tier: 3
+  /v1/objects/{collection}/bulk/set:
+    post:
+      callbacks: {}
+      description: Bulk sets up to 1,000 objects at a time in the specified collection.
+      operationId: bulkSetObjects
+      parameters:
+      - description: The collection this object belongs to.
+        in: path
+        name: collection
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              objects:
+              - id: project_1
+                name: My project
+            schema:
+              $ref: '#/components/schemas/BulkSetObjectsRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk set objects
+      tags:
+      - Objects
+      - Bulk operations
+      x-ratelimit-tier: 1
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...)
+        for server-side.
+  schemas:
+    UpsertSubscriptionsRequest:
+      description: A request to upsert subscriptions for a set of recipients.
+      example:
+        properties:
+          key: value
+        recipients:
+        - user_1
+        - user_2
+      properties:
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the subscription relationship.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        recipients:
+          description: The recipients of the subscription. You can subscribe up to 100 recipients to an object at a time.
+          items:
+            $ref: '#/components/schemas/RecipientRequest'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - recipients
+      title: UpsertSubscriptionsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UpsertSubscriptionsRequest
+      x-validate: null
+    RecipientRequest:
+      description: Specifies a recipient in a request. This can either be a user identifier (string), an inline user request
+        (object), or an inline object request, which is determined by the presence of a `collection` property.
+      example:
+        id: user_1
+      nullable: false
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        title: UserRecipient
+        type: string
+        x-struct: null
+        x-validate: null
+      - $ref: '#/components/schemas/InlineIdentifyUserRequest'
+      - $ref: '#/components/schemas/InlineIdentifyObjectRequest'
+      title: RecipientRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientRequest
+      x-validate: null
+    InlineIdentifyObjectRequest:
+      additionalProperties: true
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        collection: projects
+        id: project_1
+        name: My project
+      properties:
+        channel_data:
+          description: An optional set of [channel data](/managing-recipients/setting-channel-data) for the object. This is
+            a list of `ChannelData` objects.
+          oneOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+        collection:
+          description: The collection this object belongs to.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the object.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          description: An optional set of [preferences](/concepts/preferences) for the object.
+          oneOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - collection
+      title: InlineIdentifyObjectRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyObjectRequest
+      x-validate: null
+    InlinePreferenceSetRequest:
+      additionalProperties:
+        $ref: '#/components/schemas/PreferenceSetRequest'
+      description: Inline set preferences for a recipient, where the key is the preference set id. Preferences that are set
+        inline will be merged into any existing preferences rather than replacing them.
+      example:
+        default:
+          categories:
+            transactional:
+              channel_types:
+                email: false
+          channel_types:
+            email: true
+      title: InlinePreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlinePreferenceSetRequest
+      x-validate: null
+    PreferenceSetRequest:
+      description: A request to set a preference set for a recipient.
+      example:
+        __persistence_strategy__: merge
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+        channels:
+          2f641633-95d3-4555-9222-9f1eb7888a80:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+        commercial_subscribed: true
+        workflows:
+          dinosaurs-loose:
+            channel_types:
+              email: false
+      properties:
+        __persistence_strategy__:
+          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set,
+            'merge' will merge with existing preferences.
+          enum:
+          - merge
+          - replace
+          type: string
+          x-struct: null
+          x-validate: null
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+              transactional: true
+            title: PreferenceSetRequestCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel
+            type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel
+            ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not
+            receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+                  sms: true
+              welcome-sequence: true
+            title: PreferenceSetRequestWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel
+              type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel
+              ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            nullable: true
+            type: array
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: frog_genome
+        operator: contains
+        variable: specimen.dna_sequence
+      properties:
+        argument:
+          description: The argument value to compare against in the condition.
+          example: some_property
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the condition evaluation.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - contains_all
+          - is_timestamp
+          - is_not_timestamp
+          - is_timestamp_on_or_after
+          - is_timestamp_before
+          - is_timestamp_on_or_after_date
+          - is_timestamp_before_date
+          - is_timestamp_between
+          - is_between
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated in the condition.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      - argument
+      title: Condition
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object
+          with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-validate: null
+    PreferenceSetChannelTypes:
+      description: Channel type preferences.
+      example:
+        email: true
+        sms:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+      properties:
+        chat:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        email:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        http:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        in_app_feed:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        push:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        sms:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetChannelTypes
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes
+      x-validate: null
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelTypeSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    InlineChannelDataRequest:
+      additionalProperties:
+        description: Channel data for a given channel type.
+        nullable: false
+        oneOf:
+        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+        - $ref: '#/components/schemas/SlackChannelData'
+        - $ref: '#/components/schemas/MsTeamsChannelData'
+        - $ref: '#/components/schemas/DiscordChannelData'
+        x-struct: null
+        x-validate: null
+      description: A request to set channel data for a type of channel inline.
+      example:
+        97c5837d-c65c-4d54-aa39-080eeb81c69d:
+          tokens:
+          - push_token_xxx
+      title: InlineChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
+      x-validate: null
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    DiscordIncomingWebhookConnection:
+      description: Discord incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Discord incoming webhook object.
+          properties:
+            url:
+              description: Incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: DiscordIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
+      x-validate: null
+    DiscordChannelConnection:
+      description: Discord channel connection.
+      example:
+        channel_id: '123456789012345678'
+      properties:
+        channel_id:
+          description: Discord channel ID.
+          example: '123456789012345678'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      title: DiscordChannelConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-validate: null
+    MsTeamsChannelData:
+      description: Microsoft Teams channel data.
+      example:
+        connections:
+        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_tenant_id: null
+          ms_teams_user_id: null
+        ms_teams_tenant_id: null
+      properties:
+        connections:
+          description: List of Microsoft Teams connections.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MsTeamsTokenConnection'
+            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: MsTeamsChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
+      x-validate: null
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
+      x-validate: null
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
+      example:
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
+      properties:
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
+      x-validate: null
+    SlackChannelData:
+      description: Slack channel data.
+      example:
+        connections:
+        - access_token: xoxb-1234567890
+          channel_id: C01234567890
+          user_id: U01234567890
+        token:
+          access_token: xoxb-1234567890
+      properties:
+        connections:
+          description: List of Slack channel connections.
+          items:
+            description: A Slack connection, either an access token or an incoming webhook
+            nullable: false
+            oneOf:
+            - $ref: '#/components/schemas/SlackTokenConnection'
+            - $ref: '#/components/schemas/SlackIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        token:
+          description: A Slack connection token.
+          example:
+            access_token: xoxb-1234567890
+          nullable: true
+          properties:
+            access_token:
+              description: A Slack access token.
+              example: xoxb-1234567890
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - access_token
+          title: SlackChannelDataTokenObject
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: SlackChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
+      x-validate: null
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
+      example:
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+      properties:
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      title: SlackIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-validate: null
+    SlackTokenConnection:
+      description: A Slack connection token.
+      example:
+        access_token: xoxb-1234567890
+        channel_id: C01234567890
+        user_id: U01234567890
+      properties:
+        access_token:
+          description: A Slack access token.
+          example: xoxb-1234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: A Slack channel ID from the Slack provider.
+          example: C01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        user_id:
+          description: A Slack user ID from the Slack provider.
+          example: U01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: SlackTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
+      x-validate: null
+    OneSignalChannelDataPlayerIdsOnly:
+      description: OneSignal channel data.
+      example:
+        player_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+      properties:
+        player_ids:
+          description: A list of OneSignal player IDs.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          items:
+            description: OneSignal player ID.
+            format: uuid
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - player_ids
+      title: OneSignalChannelDataPlayerIdsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
+      x-validate: null
+    AWSSNSPushChannelDataDevicesOnly:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See
+                  [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: AWSSNSPushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
+      x-validate: null
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
+      example:
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting
+              up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: PushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
+      x-validate: null
+    InlineIdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user
+        is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing
+        any properties specified.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: jane@ingen.net
+        id: user_1
+        name: Jane Doe
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for
+            SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: InlineIdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
+      x-validate: null
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        nullable: false
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+    BulkUpsertSubscriptionsRequest:
+      description: A request to upsert subscriptions for many groups of 1 subscribed-to object, N subscriber recipients.
+      example:
+        subscriptions:
+        - id: project-1
+          properties: null
+          recipients:
+          - id: user_1
+      properties:
+        subscriptions:
+          description: A nested list of subscriptions.
+          items:
+            description: A list of subscriptions. 1 subscribed-to id, and N subscriber recipients.
+            properties:
+              id:
+                description: Unique identifier for the object.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              properties:
+                additionalProperties: true
+                description: The custom properties associated with the subscription relationship.
+                nullable: true
+                type: object
+                x-struct: null
+                x-validate: null
+              recipients:
+                description: The recipients of the subscription. You can subscribe up to 100 recipients to an object at a
+                  time.
+                items:
+                  $ref: '#/components/schemas/RecipientRequest'
+                nullable: false
+                type: array
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - recipients
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - subscriptions
+      title: BulkUpsertSubscriptionsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkUpsertSubscriptionsRequest
+      x-validate: null
+    ObjectReference:
+      description: A reference to a recipient object.
+      example:
+        collection: projects
+        id: project_123
+      properties:
+        collection:
+          description: The collection the recipient object belongs to.
+          example: projects
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: An identifier for the recipient object.
+          example: project_123
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      title: ObjectReference
+      type: object
+      x-struct: null
+      x-validate: null
+    SetObjectRequest:
+      additionalProperties: true
+      description: A set of parameters to set an object with. Does not include the object id or collection.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        description: My product description
+        locale: en-US
+        name: My product
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        price: 100.0
+        timezone: America/New_York
+      properties:
+        channel_data:
+          $ref: '#/components/schemas/InlineChannelDataRequest'
+        locale:
+          description: The locale of the object. Used for [message localization](/concepts/translations).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the object.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          $ref: '#/components/schemas/InlinePreferenceSetRequest'
+        timezone:
+          description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: SetObjectRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SetObjectRequest
+      x-validate: null
+    ListMessagesResponse:
+      description: A paginated list of messages.
+      example:
+        items:
+        - __typename: Message
+          actors:
+          - mr_arnold
+          - mr_muldoon
+          archived_at: null
+          channel_id: 123e4567-e89b-12d3-a456-426614174000
+          clicked_at: null
+          data:
+            affected_areas:
+            - visitor_center
+            - raptor_pen
+            - trex_paddock
+            attraction_id: paddock_rex_01
+            evacuation_protocol: active
+            message: Life finds a way
+            severity: critical
+            system_status: fences_failing
+          engagement_statuses:
+          - read
+          - seen
+          id: 2w3YUpTTOxuDvZFji8OMsKrG176
+          inserted_at: '1993-06-11T21:15:00Z'
+          interacted_at: null
+          link_clicked_at: null
+          metadata:
+            external_id: 123e4567-e89b-12d3-a456-426614174000
+          read_at: '1993-06-11T21:30:00Z'
+          recipient: dr_grant
+          scheduled_at: null
+          seen_at: '1993-06-11T21:29:45Z'
+          source:
+            __typename: NotificationSource
+            categories:
+            - security
+            - emergency
+            key: security-breach-alert
+            step_ref: alert_step_1
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+            workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
+            workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
+          status: sent
+          tenant: ingen_isla_nublar
+          updated_at: '1993-06-11T21:30:05Z'
+          workflow: security-breach-alert
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of messages.
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListMessagesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessagesResponse
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    Message:
+      description: Represents a single message that was generated by a workflow for a given channel.
+      example:
+        __typename: Message
+        actors:
+        - mr_arnold
+        - mr_muldoon
+        archived_at: null
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        clicked_at: null
+        data:
+          affected_areas:
+          - visitor_center
+          - raptor_pen
+          - trex_paddock
+          attraction_id: paddock_rex_01
+          evacuation_protocol: active
+          message: Life finds a way
+          severity: critical
+          system_status: fences_failing
+        engagement_statuses:
+        - read
+        - seen
+        id: 2w3YUpTTOxuDvZFji8OMsKrG176
+        inserted_at: '1993-06-11T21:15:00Z'
+        interacted_at: null
+        link_clicked_at: null
+        metadata:
+          external_id: 123e4567-e89b-12d3-a456-426614174000
+        read_at: '1993-06-11T21:30:00Z'
+        recipient: dr_grant
+        scheduled_at: null
+        seen_at: '1993-06-11T21:29:45Z'
+        source:
+          __typename: NotificationSource
+          categories:
+          - security
+          - emergency
+          key: security-breach-alert
+          step_ref: alert_step_1
+          version_id: 123e4567-e89b-12d3-a456-426614174000
+          workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
+          workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
+        status: sent
+        tenant: ingen_isla_nublar
+        updated_at: '1993-06-11T21:30:05Z'
+        workflow: security-breach-alert
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Message
+          type: string
+          x-struct: null
+          x-validate: null
+        actors:
+          description: 'One or more actors that are associated with this message. Note: this is a list that can contain up
+            to 10 actors if the message is produced from a [batch](/designing-workflows/batch-function).'
+          items:
+            $ref: '#/components/schemas/RecipientReference'
+          type: array
+          x-struct: null
+          x-validate: null
+        archived_at:
+          description: Timestamp when the message was archived.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel:
+          description: A configured channel, which is a way to route messages to a provider.
+          example:
+            created_at: '2021-01-01T00:00:00Z'
+            id: 01234567-89ab-cdef-0123-456789abcdef
+            key: my-sendgrid-channel
+            name: My Sendgrid Channel
+            provider: sendgrid
+            type: email
+            updated_at: '2021-01-01T00:00:00Z'
+          properties:
+            created_at:
+              description: The timestamp of when the channel was created.
+              format: date-time
+              type: string
+              x-struct: null
+              x-validate: null
+            id:
+              description: The unique identifier for the channel.
+              type: string
+              x-struct: null
+              x-validate: null
+            key:
+              description: Unique identifier for the channel within a project (immutable once created).
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            name:
+              description: The human-readable name of the channel.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            provider:
+              description: The ID of the provider that this channel uses to deliver messages.
+              type: string
+              x-struct: null
+              x-validate: null
+            type:
+              description: The type of channel, determining what kind of messages it can send.
+              enum:
+              - email
+              - in_app
+              - in_app_feed
+              - in_app_guide
+              - sms
+              - push
+              - chat
+              - http
+              type: string
+              x-struct: null
+              x-validate: null
+            updated_at:
+              description: The timestamp of when the channel was last updated.
+              format: date-time
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - id
+          - type
+          - provider
+          - created_at
+          - updated_at
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_id:
+          deprecated: true
+          description: Deprecated, use channel.id instead.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        clicked_at:
+          description: Timestamp when the message was clicked.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Data associated with the message’s workflow run. Includes the workflow trigger request’s `data` payload
+            merged with any additional data returned by a [fetch function](/designing-workflows/fetch-function). For messages
+            produced after a [batch step](/designing-workflows/batch-function), includes the payload `data` from the most-recent
+            trigger request (the final `activity` in the batch).
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        engagement_statuses:
+          description: A list of engagement statuses.
+          example:
+          - read
+          - seen
+          items:
+            description: 'An engagement status for a message. Can be one of: read, seen, interacted, link_clicked, archived.'
+            enum:
+            - seen
+            - read
+            - interacted
+            - link_clicked
+            - archived
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the message.
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        interacted_at:
+          description: Timestamp when the message was interacted with.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        link_clicked_at:
+          description: Timestamp when a link in the message was clicked.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        metadata:
+          additionalProperties: true
+          description: The metadata associated with the message.
+          example:
+            external_id: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        read_at:
+          description: Timestamp when the message was read.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/RecipientReference'
+        scheduled_at:
+          description: Timestamp when the message was scheduled to be sent.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        seen_at:
+          description: Timestamp when the message was seen.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        source:
+          description: The workflow or guide that triggered the message.
+          example:
+            __typename: NotificationSource
+            categories:
+            - collaboration
+            key: comment-created
+            step_ref: email_step_1
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+            workflow_recipient_run_id: 456e7890-a12b-34c5-d678-456789012345
+            workflow_run_id: 987e6543-e21c-34b5-c678-987654321000
+          properties:
+            __typename:
+              example: NotificationSource
+              type: string
+              x-struct: null
+              x-validate: null
+            categories:
+              description: The categories associated with the message.
+              items:
+                type: string
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            key:
+              description: The key of the workflow or guide that triggered the message.
+              type: string
+              x-struct: null
+              x-validate: null
+            step_ref:
+              description: The step reference for the step in the workflow that generated the message.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            type:
+              description: Whether this message was generated from a workflow, broadcast, or guide.
+              enum:
+              - broadcast
+              - workflow
+              - guide
+              type: string
+              x-struct: null
+              x-validate: null
+            version_id:
+              description: The ID of the version of the workflow or guide that triggered the message.
+              format: uuid
+              type: string
+              x-struct: null
+              x-validate: null
+            workflow_recipient_run_id:
+              description: The unique identifier for the workflow recipient run that generated this message. Only present
+                for workflow/broadcast messages.
+              format: uuid
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            workflow_run_id:
+              description: The unique identifier for the workflow run that generated this message. Only present for workflow/broadcast
+                messages.
+              format: uuid
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - key
+          - version_id
+          - categories
+          type: object
+          x-struct: null
+          x-validate: null
+        status:
+          description: The message delivery status.
+          enum:
+          - queued
+          - sent
+          - delivered
+          - delivery_attempted
+          - undelivered
+          - not_sent
+          - bounced
+          example: sent
+          type: string
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The ID of the `tenant` associated with the message. Only present when a `tenant` is provided on a workflow
+            trigger request.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          deprecated: true
+          description: The key of the workflow that generated the message.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - channel_id
+      - status
+      - inserted_at
+      - updated_at
+      - recipient
+      - engagement_statuses
+      - source
+      title: Message
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Message
+      x-validate: null
+    BulkDeleteSubscriptionsRequest:
+      description: A request to delete subscriptions for many groups of 1 subscribed-to object, N subscriber recipients.
+      example:
+        subscriptions:
+        - id: subscribed-to-object-1
+          recipients:
+          - collection: projects
+            id: subscriber-project-1
+          - subscriber-user-1
+        - id: subscribed-to-object-2
+          recipients:
+          - subscriber-user-2
+      properties:
+        subscriptions:
+          description: A nested list of subscriptions.
+          items:
+            description: A list of subscriptions. 1 subscribed-to id, and N subscriber recipients.
+            properties:
+              id:
+                description: Unique identifier for the object.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              recipients:
+                description: The recipients of the subscription. You can subscribe up to 100 recipients to an object at a
+                  time.
+                items:
+                  $ref: '#/components/schemas/RecipientReference'
+                nullable: false
+                type: array
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - recipients
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - subscriptions
+      title: BulkDeleteSubscriptionsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkDeleteSubscriptionsRequest
+      x-validate: null
+    ListSubscriptionsResponse:
+      description: A response containing a list of subscriptions.
+      example:
+        entries:
+        - __typename: Subscription
+          inserted_at: '2021-01-01T00:00:00Z'
+          object:
+            __typename: Object
+            collection: assets
+            created_at: null
+            id: specimen_25
+            properties:
+              classification: Theropod
+              config:
+                biz: baz
+                foo: bar
+              name: Velociraptor
+              status: contained
+            updated_at: '2024-05-22T12:00:00Z'
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          updated_at: '2021-01-01T00:00:00Z'
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of subscriptions.
+          items:
+            $ref: '#/components/schemas/Subscription'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListSubscriptionsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSubscriptionsResponse
+      x-validate: null
+    Subscription:
+      description: A subscription object.
+      example:
+        __typename: Subscription
+        inserted_at: '2021-01-01T00:00:00Z'
+        object:
+          __typename: Object
+          collection: assets
+          created_at: null
+          id: specimen_25
+          properties:
+            classification: Theropod
+            config:
+              biz: baz
+              foo: bar
+            name: Velociraptor
+            status: contained
+          updated_at: '2024-05-22T12:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Subscription
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          $ref: '#/components/schemas/Object'
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the subscription relationship.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - recipient
+      - object
+      - inserted_at
+      - updated_at
+      title: Subscription
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Subscription
+      x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        __typename: Object
+        collection: assets
+        created_at: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Object
+          type: string
+          x-struct: null
+          x-validate: null
+        collection:
+          description: The collection this object belongs to.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          type: string
+          x-struct: null
+          x-validate: null
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - collection
+      - updated_at
+      title: Object
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    User:
+      additionalProperties: true
+      description: A [User](/concepts/users) represents an individual in your system who can receive notifications through
+        Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
+      example:
+        __typename: User
+        created_at: null
+        email: ian.malcolm@chaos.theory
+        id: user_id
+        name: Dr. Ian Malcolm
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: User
+          type: string
+          x-struct: null
+          x-validate: null
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for
+            SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - updated_at
+      title: User
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.User
+      x-validate: null
+    ChannelData:
+      description: Channel data for a given channel type.
+      example:
+        __typename: ChannelData
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        data:
+          devices:
+          - locale: null
+            timezone: null
+            token: device_1
+          tokens:
+          - push_token_1
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: ChannelData
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          description: Channel data for a given channel type.
+          oneOf:
+          - $ref: '#/components/schemas/PushChannelDataFull'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataFull'
+          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+          - $ref: '#/components/schemas/SlackChannelData'
+          - $ref: '#/components/schemas/MsTeamsChannelData'
+          - $ref: '#/components/schemas/DiscordChannelData'
+          type: object
+          x-struct: null
+          x-validate: null
+        provider:
+          description: The type of provider.
+          enum:
+          - push_fcm
+          - push_apns
+          - push_aws_sns
+          - push_expo
+          - push_one_signal
+          - chat_slack
+          - chat_ms_teams
+          - chat_discord
+          - http_knock_webhook
+          example: push_fcm
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      - data
+      - __typename
+      title: ChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelData
+      x-validate: null
+    AWSSNSPushChannelDataFull:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See
+                  [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting
+              up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      - devices
+      title: AWSSNSPushChannelDataFull
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataFull
+      x-validate: null
+    PushChannelDataFull:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: null
+          token: push_token_1
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      - devices
+      title: PushChannelDataFull
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataFull
+      x-validate: null
+    ListSchedulesResponse:
+      description: A response containing a list of schedules.
+      example:
+        entries:
+        - __typename: Schedule
+          actor: null
+          data: null
+          id: 123e4567-e89b-12d3-a456-426614174000
+          inserted_at: '2021-01-01T00:00:00Z'
+          last_occurrence_at: null
+          next_occurrence_at: null
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          repeats:
+          - __typename: ScheduleRepeat
+            day_of_month: null
+            days:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            frequency: daily
+            hours: null
+            interval: 1
+            minutes: null
+          tenant: null
+          updated_at: '2021-01-01T00:00:00Z'
+          workflow: workflow_123
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of schedules.
+          items:
+            $ref: '#/components/schemas/Schedule'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListSchedulesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSchedulesResponse
+      x-validate: null
+    Schedule:
+      description: A schedule represents a recurring workflow execution.
+      example:
+        __typename: Schedule
+        actor: null
+        data: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2021-01-01T00:00:00Z'
+        last_occurrence_at: null
+        next_occurrence_at: null
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        repeats:
+        - __typename: ScheduleRepeat
+          day_of_month: null
+          days:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+          frequency: daily
+          hours: null
+          interval: 1
+          minutes: null
+        tenant: null
+        updated_at: '2021-01-01T00:00:00Z'
+        workflow: workflow_123
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Schedule
+          type: string
+          x-struct: null
+          x-validate: null
+        actor:
+          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed
+            the action.
+          oneOf:
+          - $ref: '#/components/schemas/Recipient'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the
+            full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation)
+            in your logs.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the schedule.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        last_occurrence_at:
+          description: The last occurrence of the schedule.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        next_occurrence_at:
+          description: The next occurrence of the schedule.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        repeats:
+          description: The repeat rule for the schedule.
+          items:
+            $ref: '#/components/schemas/ScheduleRepeatRule'
+          type: array
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides
+            associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          description: The workflow the schedule is applied to.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - workflow
+      - recipient
+      - repeats
+      - inserted_at
+      - updated_at
+      title: Schedule
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Schedule
+      x-validate: null
+    ScheduleRepeatRule:
+      description: The repeat rule for the schedule.
+      example:
+        __typename: ScheduleRepeat
+        day_of_month: null
+        days:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+        - sat
+        - sun
+        frequency: daily
+        hours: null
+        interval: 1
+        minutes: null
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: ScheduleRepeat
+          type: string
+          x-struct: null
+          x-validate: null
+        day_of_month:
+          description: The day of the month to repeat the schedule.
+          example: 1
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+        days:
+          description: The days of the week to repeat the schedule.
+          example:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          items:
+            description: An identifier for a day of the week.
+            enum:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        frequency:
+          description: The frequency of the schedule.
+          enum:
+          - daily
+          - weekly
+          - monthly
+          - hourly
+          example: daily
+          type: string
+          x-struct: null
+          x-validate: null
+        hours:
+          description: The hour of the day to repeat the schedule.
+          example: 0
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+        interval:
+          default: 1
+          description: The interval of the schedule.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+        minutes:
+          description: The minute of the hour to repeat the schedule.
+          example: 0
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - frequency
+      title: ScheduleRepeatRule
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ScheduleRepeatRule
+      x-validate: null
+    DeleteSubscriptionsRequest:
+      description: A request to delete subscriptions for a set of recipients.
+      example:
+        recipients:
+        - user_123
+      properties:
+        recipients:
+          description: The recipients of the subscription. You can subscribe up to 100 recipients to an object at a time.
+          items:
+            $ref: '#/components/schemas/RecipientReference'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - recipients
+      title: DeleteSubscriptionsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DeleteSubscriptionsRequest
+      x-validate: null
+    ChannelDataRequest:
+      description: A request to set channel data for a type of channel.
+      example:
+        data:
+          tokens:
+          - push_token_1
+      properties:
+        data:
+          description: Channel data for a given channel type.
+          nullable: false
+          oneOf:
+          - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+          - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+          - $ref: '#/components/schemas/SlackChannelData'
+          - $ref: '#/components/schemas/MsTeamsChannelData'
+          - $ref: '#/components/schemas/DiscordChannelData'
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - data
+      title: ChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelDataRequest
+      x-validate: null
+    BulkOperation:
+      description: A bulk operation entity.
+      example:
+        __typename: BulkOperation
+        completed_at: null
+        error_count: 0
+        error_items: []
+        estimated_total_rows: 1000
+        failed_at: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2024-05-22T12:00:00Z'
+        name: Bulk operation name
+        processed_rows: 0
+        progress_path: https://api.switchboard.com/v1/bulk_operations/123e4567-e89b-12d3-a456-426614174000
+        started_at: null
+        status: processing
+        success_count: 0
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: BulkOperation
+          type: string
+          x-struct: null
+          x-validate: null
+        completed_at:
+          description: Timestamp when the bulk operation was completed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        error_count:
+          description: The number of failed operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        error_items:
+          description: A list of items that failed to be processed.
+          items:
+            properties:
+              collection:
+                description: The collection this object belongs to.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Unique identifier for the object.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        estimated_total_rows:
+          description: The estimated total number of rows to process.
+          example: 1000
+          type: integer
+          x-struct: null
+          x-validate: null
+        failed_at:
+          description: Timestamp when the bulk operation failed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the bulk operation.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the bulk operation.
+          example: Bulk operation name
+          type: string
+          x-struct: null
+          x-validate: null
+        processed_rows:
+          description: The number of rows processed so far.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        progress_path:
+          description: The URI to the bulk operation's progress.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        started_at:
+          description: Timestamp when the bulk operation was started.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the bulk operation.
+          enum:
+          - queued
+          - processing
+          - completed
+          - failed
+          example: queued
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        success_count:
+          description: The number of successful operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - name
+      - status
+      - estimated_total_rows
+      - processed_rows
+      - success_count
+      - updated_at
+      - inserted_at
+      title: BulkOperation
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkOperation
+      x-validate: null
+    BulkSetObjectsRequest:
+      description: A request to set objects in bulk.
+      example:
+        objects:
+        - id: project_1
+          name: My project
+      properties:
+        objects:
+          description: A list of objects.
+          items:
+            $ref: '#/components/schemas/BulkSetObjectRequest'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - objects
+      title: BulkSetObjectsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetObjectsRequest
+      x-validate: null
+    BulkSetObjectRequest:
+      additionalProperties: true
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        id: project_1
+        name: My project
+      properties:
+        channel_data:
+          description: An optional set of [channel data](/managing-recipients/setting-channel-data) for the object. This is
+            a list of `ChannelData` objects.
+          oneOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: An optional name for the object.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          description: An optional set of [preferences](/concepts/preferences) for the object.
+          oneOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: BulkSetObjectRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetObjectRequest
+      x-validate: null
+    ListObjectsResponse:
+      description: A paginated list of objects in a collection.
+      example:
+        entries:
+        - __typename: Object
+          collection: assets
+          created_at: null
+          id: specimen_25
+          properties:
+            classification: Theropod
+            config:
+              biz: baz
+              foo: bar
+            name: Velociraptor
+            status: contained
+          updated_at: '2024-05-22T12:00:00Z'
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of objects.
+          items:
+            $ref: '#/components/schemas/Object'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListObjectsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListObjectsResponse
+      x-validate: null
+    BulkDeleteObjectsRequest:
+      description: Request body for bulk deleting objects.
+      example:
+        object_ids:
+        - obj_123
+        - obj_456
+        - obj_789
+      properties:
+        object_ids:
+          description: List of object IDs to delete.
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - object_ids
+      title: BulkDeleteObjectsRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Objects.BulkDeleteObjectsRequest
+      x-validate: null
+    SubscriptionsResponse:
+      description: A response containing a list of subscriptions.
+      example:
+      - __typename: Subscription
+        inserted_at: '2021-01-01T00:00:00Z'
+        object:
+          __typename: Object
+          collection: assets
+          created_at: null
+          id: specimen_25
+          properties:
+            classification: Theropod
+            config:
+              biz: baz
+              foo: bar
+            name: Velociraptor
+            status: contained
+          updated_at: '2024-05-22T12:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2021-01-01T00:00:00Z'
+      items:
+        $ref: '#/components/schemas/Subscription'
+      title: SubscriptionsResponse
+      type: array
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SubscriptionsResponse
+      x-validate: null
+    PreferenceSet:
+      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can
+        have multiple preference sets.
+      example:
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+          push: false
+          sms:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+        commercial_subscribed: true
+        id: default
+        workflows: null
+      properties:
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+            title: PreferenceSetCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel
+            type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel
+            ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not
+            receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the preference set.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+            title: PreferenceSetWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: PreferenceSet
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
+      x-validate: null

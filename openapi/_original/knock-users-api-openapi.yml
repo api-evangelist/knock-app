@@ -1,0 +1,5430 @@
+openapi: 3.0.3
+info:
+  title: Knock Users API
+  version: '1.0'
+  description: Identify, list, update, delete, and merge users plus manage their channel data, preferences, in-app feeds,
+    guides, subscriptions, messages, and schedules. The primary recipient surface for Knock.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+paths:
+  /v1/users/{user_id}/guides/messages/seen:
+    put:
+      callbacks: {}
+      description: Records that a guide has been seen by a user, triggering any associated seen events.
+      operationId: markUserGuideAsSeen (2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_id: 123e4567-e89b-12d3-a456-426614174000
+              content:
+                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+                title: DNA Lab Tour Available
+              data:
+                next_time: '14:30'
+                spots_left: 8
+                tour_id: dna_lab_tour
+              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+              guide_key: tour_notification
+              guide_step_ref: lab_tours
+              is_final: false
+              metadata:
+                cta: Reserve Spot
+                theme: amber
+                type: banner
+              tenant: ingen_isla_nublar
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as seen
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/feeds/{id}:
+    get:
+      callbacks: {}
+      description: 'Returns a paginated list of feed items for a user in reverse chronological order, including metadata about
+        the feed. If the user has not yet been identified within Knock, an empty feed will be returned.
+
+
+        You can customize the response using [response filters](/integrations/in-app/knock#customizing-api-response-content)
+        to exclude or only include specific properties on your resources.
+
+
+        **Notes:**
+
+        * When making this call from a client-side environment, use your publishable key along with a user token.
+
+        * This endpoint’s rate limit is always scoped per-user and per-environment. This is true even for requests made without
+        a signed user token.
+
+        * Any [attachments](/integrations/email/attachments) present in trigger data are automatically excluded from both
+        the `data` and `activities` fields of `UserInAppFeedResponse`.
+
+        '
+      operationId: listUserInAppFeedItems
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The status of the feed items.
+        example: unread
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - unread
+          - read
+          - unseen
+          - seen
+          - all
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The workflow key associated with the message in the feed.
+        example: my_source
+        in: query
+        name: source
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The tenant associated with the feed items.
+        example: my_tenant
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Whether the feed items have a tenant.
+        example: true
+        in: query
+        name: has_tenant
+        required: false
+        schema:
+          type: boolean
+          x-struct: null
+          x-validate: null
+      - description: The workflow categories of the feed items.
+        example:
+        - my_workflow_category
+        in: query
+        name: workflow_categories[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: The archived status of the feed items.
+        example: exclude
+        in: query
+        name: archived
+        required: false
+        schema:
+          enum:
+          - exclude
+          - include
+          - only
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The trigger data of the feed items (as a JSON string).
+        example: '{ "key": "value" }'
+        in: query
+        name: trigger_data
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The locale to render the feed items in. Must be in the IETF 5646 format (e.g. `en-US`). When not provided,
+          will default to the locale that the feed items were rendered in. Only available for enterprise plan customers using
+          custom translations.
+        example: en-US
+        in: query
+        name: locale
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Comma-separated list of field paths to exclude from the response. Use dot notation for nested fields
+          (e.g., `entries.archived_at`). Limited to 3 levels deep.
+        example: entries.archived_at,entries.clicked_at
+        in: query
+        name: exclude
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The mode to render the feed items in. Can be `compact` or `rich`. Defaults to `rich`. When `mode` is
+          `compact`, feed items will not have `activities` and `total_activities` fields; the `data` field will not include
+          nested arrays and objects; and the `actors` field will only have up to one actor.
+        example: compact
+        in: query
+        name: mode
+        required: false
+        schema:
+          default: rich
+          enum:
+          - compact
+          - rich
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInAppFeedResponse'
+          description: OK
+      summary: List feed items
+      tags:
+      - Feeds
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/feeds/{id}/settings:
+    get:
+      callbacks: {}
+      description: Returns the feed settings for a user.
+      operationId: getUserInAppFeedSettings
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInAppFeedSettingsResponse'
+          description: OK
+      summary: Get feed settings
+      tags:
+      - Feeds
+      - Users
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}/subscriptions:
+    get:
+      callbacks: {}
+      description: Retrieves a paginated list of subscriptions for a specific user, in descending order.
+      operationId: listSubscriptionsForUser
+      parameters:
+      - description: The user ID to list subscriptions for.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Associated resources to include in the response.
+        in: query
+        name: include[]
+        required: false
+        schema:
+          items:
+            enum:
+            - preferences
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Only returns subscriptions for the specified object references.
+        in: query
+        name: objects[]
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/RecipientReference'
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSubscriptionsResponse'
+          description: OK
+      summary: List user subscriptions
+      tags:
+      - Subscriptions
+      - Users
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}:
+    delete:
+      callbacks: {}
+      description: Permanently delete a user and all associated data.
+      operationId: deleteUser
+      parameters:
+      - description: The ID of the user to delete.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete user
+      tags:
+      - Users
+      x-ratelimit-tier: 2
+    get:
+      callbacks: {}
+      description: Retrieve a specific user by their ID.
+      operationId: getUser
+      parameters:
+      - description: The ID of the user to retrieve.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: Get user
+      tags:
+      - Users
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: Create or update a user with the provided identification data. When you identify an existing user, the
+        system merges the properties you specific with what is currently set on the user, updating only the fields included
+        in your requests.
+      operationId: identifyUser
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_data:
+                97c5837d-c65c-4d54-aa39-080eeb81c69d:
+                  tokens:
+                  - push_token_123
+              email: ian.malcolm@chaos.theory
+              name: Dr. Ian Malcolm
+              preferences:
+                default:
+                  channel_types:
+                    email: true
+                  workflows:
+                    dinosaurs-loose:
+                      channel_types:
+                        email: true
+              timezone: America/New_York
+            schema:
+              $ref: '#/components/schemas/IdentifyUserRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: Identify user
+      tags:
+      - Users
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/categories/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single category in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceCategory
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update category in user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/guides/messages/{message_id}/seen:
+    put:
+      callbacks: {}
+      description: Records that a guide has been seen by a user, triggering any associated seen events.
+      operationId: markUserGuideAsSeen
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_id: 123e4567-e89b-12d3-a456-426614174000
+              content:
+                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+                title: DNA Lab Tour Available
+              data:
+                next_time: '14:30'
+                spots_left: 8
+                tour_id: dna_lab_tour
+              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+              guide_key: tour_notification
+              guide_step_ref: lab_tours
+              is_final: false
+              metadata:
+                cta: Reserve Spot
+                theme: amber
+                type: banner
+              tenant: ingen_isla_nublar
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as seen
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/guides/messages/archived:
+    delete:
+      callbacks: {}
+      description: Records that a guide has been unarchived, triggering any associated unarchived events.
+      operationId: markUserGuideAsUnarchived
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as unarchived
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+    put:
+      callbacks: {}
+      description: Records that a guide has been archived by a user, triggering any associated archived events.
+      operationId: markUserGuideAsArchived (2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as archived
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/channel_data/{channel_id}:
+    delete:
+      callbacks: {}
+      description: Deletes channel data for a specific user and channel ID.
+      operationId: unsetUserChannelData
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Unset channel data
+      tags:
+      - Channel data
+      - Users
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Retrieves the channel data for a specific user and channel ID.
+      operationId: getUserChannelData
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelData'
+          description: OK
+      summary: Get channel data
+      tags:
+      - Channel data
+      - Users
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: Updates or creates channel data for a specific user and channel ID. If no user exists in the current environment
+        for the given `user_id`, Knock will create the user entry as part of this request.
+      operationId: setUserChannelData
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              data:
+                tokens:
+                - push_token_1
+            schema:
+              $ref: '#/components/schemas/ChannelDataRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelData'
+          description: OK
+      summary: Set channel data
+      tags:
+      - Channel data
+      - Users
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/merge:
+    post:
+      callbacks: {}
+      description: Merge two users together, where the user specified with the `from_user_id` param will be merged into the
+        user specified by `user_id`.
+      operationId: mergeUser
+      parameters:
+      - description: The id of the user to merge into.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              from_user_id: user_1
+            schema:
+              $ref: '#/components/schemas/MergeUserRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: Merge users
+      tags:
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/guides/messages/interacted:
+    put:
+      callbacks: {}
+      description: Records that a user has interacted with a guide, triggering any associated interacted events.
+      operationId: markUserGuideAsInteracted (2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as interacted
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/guides/engagements/reset:
+    put:
+      callbacks: {}
+      description: Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next
+        interaction creates a fresh engagement.
+      operationId: resetUserGuideEngagement
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Reset guide engagement
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/bulk/preferences:
+    post:
+      callbacks: {}
+      description: Bulk sets the preferences for up to 1,000 users at a time. The preference set `:id` can be either `default` or
+        a `tenant.id`. Learn more about [per-tenant preferences](/preferences/tenant-preferences). Note that this is a destructive
+        operation and will replace any existing users' preferences with the preferences sent.
+      operationId: bulkSetUserPreferences
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              preferences:
+                __persistence_strategy__: merge
+                categories:
+                  marketing: false
+                  transactional:
+                    channel_types:
+                      email: false
+                channel_types:
+                  email: true
+                channels:
+                  2f641633-95d3-4555-9222-9f1eb7888a80:
+                    conditions:
+                    - argument: US
+                      operator: equal_to
+                      variable: recipient.country_code
+                  aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+                commercial_subscribed: true
+                workflows:
+                  dinosaurs-loose:
+                    channel_types:
+                      email: false
+              user_ids:
+              - user_1
+              - user_2
+            schema:
+              $ref: '#/components/schemas/BulkSetUserPreferencesRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk set preferences
+      tags:
+      - Users
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/users/{user_id}/guides/{channel_id}:
+    get:
+      callbacks: {}
+      description: Returns a list of eligible in-app guides for a specific user and channel.
+      operationId: listUserGuides
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The tenant ID to use for targeting and rendering guides.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The data (JSON encoded object) to use for targeting and rendering guides.
+        in: query
+        name: data
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The type of guides to filter by.
+        in: query
+        name: type
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuidesResponse'
+          description: OK
+      summary: List guides
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/bulk/identify:
+    post:
+      callbacks: {}
+      description: Identifies multiple users in a single operation. Allows creating or updating up to 1,000 users in a single
+        batch with various properties, preferences, and channel data.
+      operationId: bulkIdentifyUsers
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              users:
+              - email: jane@ingen.net
+                id: user_1
+                name: Jane Doe
+                timezone: America/New_York
+            schema:
+              $ref: '#/components/schemas/BulkIdentifyUsersRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk identify users
+      tags:
+      - Users
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/users/{user_id}/preferences/{id}/workflows:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the workflows in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceWorkflows
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflows in preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/categories:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the categories in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceCategories
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update categories in user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/guides/messages/{message_id}/interacted:
+    put:
+      callbacks: {}
+      description: Records that a user has interacted with a guide, triggering any associated interacted events.
+      operationId: markUserGuideAsInteracted
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as interacted
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/bulk/delete:
+    post:
+      callbacks: {}
+      description: Permanently deletes up to 1,000 users at a time.
+      operationId: bulkDeleteUsers
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkDeleteUsersRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkOperation'
+          description: OK
+      summary: Bulk delete users
+      tags:
+      - Users
+      - Bulk operations
+      x-ratelimit-tier: 1
+  /v1/users/{user_id}/preferences/{id}/channel_types/{type}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single channel type in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceChannelType
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel type in preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences:
+    get:
+      callbacks: {}
+      description: Retrieves a list of all preference sets for a specific user.
+      operationId: listUserPreferenceSets
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A list of preference sets for the user.
+                example:
+                - categories:
+                    marketing: false
+                    transactional:
+                      channel_types:
+                        email: false
+                  channel_types:
+                    email: true
+                    push: false
+                    sms:
+                      conditions:
+                      - argument: US
+                        operator: equal_to
+                        variable: recipient.country_code
+                  commercial_subscribed: true
+                  id: default
+                  workflows: null
+                items:
+                  $ref: '#/components/schemas/PreferenceSet'
+                title: ListUserPreferenceSetsResponse
+                type: array
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: List user preference sets
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}/schedules:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of schedules for a specific user, in descending order.
+      operationId: listUserSchedules
+      parameters:
+      - description: The user ID to list schedules for.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The workflow key to filter schedules for.
+        in: query
+        name: workflow
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The tenant ID to filter schedules for.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSchedulesResponse'
+          description: OK
+      summary: List user schedules
+      tags:
+      - Schedules
+      - Users
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}/guides/messages/{message_id}/archived:
+    put:
+      callbacks: {}
+      description: Records that a guide has been archived by a user, triggering any associated archived events.
+      operationId: markUserGuideAsArchived
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideActionRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as archived
+      tags:
+      - Guides
+      - Users
+      x-ratelimit-tier: 2
+  /v1/users/{user_id}/messages:
+    get:
+      callbacks: {}
+      description: Returns a paginated list of messages for a specific user. Messages are sorted with the most recent ones
+        appearing first. Messages outside the account's retention window will not be included in the results.
+      operationId: listMessagesForUser
+      parameters:
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items with the corresponding tenant.
+        example: tenant_123
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items with the corresponding channel ID.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: channel_id
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages with the given delivery status.
+        example:
+        - delivered
+        in: query
+        name: status[]
+        required: false
+        schema:
+          items:
+            enum:
+            - queued
+            - sent
+            - delivered
+            - delivery_attempted
+            - undelivered
+            - not_sent
+            - bounced
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages with the given engagement status.
+        example:
+        - unread
+        in: query
+        name: engagement_status[]
+        required: false
+        schema:
+          items:
+            enum:
+            - seen
+            - unseen
+            - read
+            - unread
+            - archived
+            - unarchived
+            - link_clicked
+            - interacted
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: 'Limits the results to only the message IDs given (max 50). Note: when using this option, the results
+          will be subject to any other filters applied to the query.'
+        example:
+        - 1jNaXzB2RZX3LY8wVQnfCKyPnv7
+        in: query
+        name: message_ids[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages related to any of the provided categories.
+        example:
+        - workflow_123
+        in: query
+        name: workflow_categories[]
+        required: false
+        schema:
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages triggered by the given workflow key.
+        example: comment-created
+        in: query
+        name: source
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages associated with the top-level workflow run ID returned by the workflow
+          trigger request.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: workflow_run_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to messages for a specific recipient's workflow run.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        in: query
+        name: workflow_recipient_run_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to only messages that were generated with the given data. See [trigger data filtering](/api-reference/overview/trigger-data-filtering)
+          for more information.
+        example: '{"comment_id": "123"}'
+        in: query
+        name: trigger_data
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted after or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.gte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lt
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Limits the results to items inserted before or on the given date.
+        example: '2025-01-01T00:00:00Z'
+        in: query
+        name: inserted_at.lte
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The user ID to list messages for.
+        example: user-123
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMessagesResponse'
+          description: OK
+      summary: List user messages
+      tags:
+      - Messages
+      - Users
+      x-ratelimit-tier: 4
+      x-retention-policy: true
+  /v1/users:
+    get:
+      callbacks: {}
+      description: Retrieve a paginated list of users in the environment. Defaults to 50 users per page.
+      operationId: listUsers
+      parameters:
+      - description: Associated resources to include in the response.
+        in: query
+        name: include[]
+        required: false
+        schema:
+          items:
+            enum:
+            - preferences
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries after.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The cursor to fetch entries before.
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The number of items per page (defaults to 50).
+        in: query
+        name: page_size
+        required: false
+        schema:
+          type: integer
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+          description: OK
+      summary: List users
+      tags:
+      - Users
+      x-ratelimit-tier: 4
+  /v1/users/{user_id}/preferences/{id}/workflows/{key}:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates a single workflow in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceWorkflow
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update workflow in user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}:
+    delete:
+      callbacks: {}
+      description: Unsets the preference set for the user, removing it entirely.
+      operationId: deleteUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '204':
+          description: No Content
+      summary: Delete user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+    get:
+      callbacks: {}
+      description: Retrieves a specific preference set for a user identified by the preference set ID.
+      operationId: getUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The unique identifier for the tenant.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Get user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 4
+    put:
+      callbacks: {}
+      description: 'Updates a complete preference set for a user. By default, this is a destructive operation and will replace
+        any existing preferences with the preferences given. Use ''__persistence_strategy__'': ''merge'' to merge with existing
+        preferences instead.'
+      operationId: updateUserPreferenceSet
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Unique identifier for the preference set.
+        in: path
+        name: id
+        required: true
+        schema:
+          default: default
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            example:
+              __persistence_strategy__: merge
+              categories:
+                marketing: false
+                transactional:
+                  channel_types:
+                    email: false
+              channel_types:
+                email: true
+              channels:
+                2f641633-95d3-4555-9222-9f1eb7888a80:
+                  conditions:
+                  - argument: US
+                    operator: equal_to
+                    variable: recipient.country_code
+                aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+              commercial_subscribed: true
+              workflows:
+                dinosaurs-loose:
+                  channel_types:
+                    email: false
+            schema:
+              $ref: '#/components/schemas/PreferenceSetRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update user preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+  /v1/users/{user_id}/preferences/{id}/channel_types:
+    put:
+      callbacks: {}
+      deprecated: true
+      description: Updates the channel types in a specific user preference set. This operation is deprecated.
+      operationId: updateUserPreferenceChannelTypes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceSet'
+          description: OK
+      summary: Update channel types in preference set
+      tags:
+      - Users
+      - Preferences
+      x-ratelimit-tier: 3
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...)
+        for server-side.
+  schemas:
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        nullable: false
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+    ListMessagesResponse:
+      description: A paginated list of messages.
+      example:
+        items:
+        - __typename: Message
+          actors:
+          - mr_arnold
+          - mr_muldoon
+          archived_at: null
+          channel_id: 123e4567-e89b-12d3-a456-426614174000
+          clicked_at: null
+          data:
+            affected_areas:
+            - visitor_center
+            - raptor_pen
+            - trex_paddock
+            attraction_id: paddock_rex_01
+            evacuation_protocol: active
+            message: Life finds a way
+            severity: critical
+            system_status: fences_failing
+          engagement_statuses:
+          - read
+          - seen
+          id: 2w3YUpTTOxuDvZFji8OMsKrG176
+          inserted_at: '1993-06-11T21:15:00Z'
+          interacted_at: null
+          link_clicked_at: null
+          metadata:
+            external_id: 123e4567-e89b-12d3-a456-426614174000
+          read_at: '1993-06-11T21:30:00Z'
+          recipient: dr_grant
+          scheduled_at: null
+          seen_at: '1993-06-11T21:29:45Z'
+          source:
+            __typename: NotificationSource
+            categories:
+            - security
+            - emergency
+            key: security-breach-alert
+            step_ref: alert_step_1
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+            workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
+            workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
+          status: sent
+          tenant: ingen_isla_nublar
+          updated_at: '1993-06-11T21:30:05Z'
+          workflow: security-breach-alert
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of messages.
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListMessagesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessagesResponse
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    Message:
+      description: Represents a single message that was generated by a workflow for a given channel.
+      example:
+        __typename: Message
+        actors:
+        - mr_arnold
+        - mr_muldoon
+        archived_at: null
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        clicked_at: null
+        data:
+          affected_areas:
+          - visitor_center
+          - raptor_pen
+          - trex_paddock
+          attraction_id: paddock_rex_01
+          evacuation_protocol: active
+          message: Life finds a way
+          severity: critical
+          system_status: fences_failing
+        engagement_statuses:
+        - read
+        - seen
+        id: 2w3YUpTTOxuDvZFji8OMsKrG176
+        inserted_at: '1993-06-11T21:15:00Z'
+        interacted_at: null
+        link_clicked_at: null
+        metadata:
+          external_id: 123e4567-e89b-12d3-a456-426614174000
+        read_at: '1993-06-11T21:30:00Z'
+        recipient: dr_grant
+        scheduled_at: null
+        seen_at: '1993-06-11T21:29:45Z'
+        source:
+          __typename: NotificationSource
+          categories:
+          - security
+          - emergency
+          key: security-breach-alert
+          step_ref: alert_step_1
+          version_id: 123e4567-e89b-12d3-a456-426614174000
+          workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
+          workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
+        status: sent
+        tenant: ingen_isla_nublar
+        updated_at: '1993-06-11T21:30:05Z'
+        workflow: security-breach-alert
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Message
+          type: string
+          x-struct: null
+          x-validate: null
+        actors:
+          description: 'One or more actors that are associated with this message. Note: this is a list that can contain up
+            to 10 actors if the message is produced from a [batch](/designing-workflows/batch-function).'
+          items:
+            $ref: '#/components/schemas/RecipientReference'
+          type: array
+          x-struct: null
+          x-validate: null
+        archived_at:
+          description: Timestamp when the message was archived.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel:
+          description: A configured channel, which is a way to route messages to a provider.
+          example:
+            created_at: '2021-01-01T00:00:00Z'
+            id: 01234567-89ab-cdef-0123-456789abcdef
+            key: my-sendgrid-channel
+            name: My Sendgrid Channel
+            provider: sendgrid
+            type: email
+            updated_at: '2021-01-01T00:00:00Z'
+          properties:
+            created_at:
+              description: The timestamp of when the channel was created.
+              format: date-time
+              type: string
+              x-struct: null
+              x-validate: null
+            id:
+              description: The unique identifier for the channel.
+              type: string
+              x-struct: null
+              x-validate: null
+            key:
+              description: Unique identifier for the channel within a project (immutable once created).
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            name:
+              description: The human-readable name of the channel.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            provider:
+              description: The ID of the provider that this channel uses to deliver messages.
+              type: string
+              x-struct: null
+              x-validate: null
+            type:
+              description: The type of channel, determining what kind of messages it can send.
+              enum:
+              - email
+              - in_app
+              - in_app_feed
+              - in_app_guide
+              - sms
+              - push
+              - chat
+              - http
+              type: string
+              x-struct: null
+              x-validate: null
+            updated_at:
+              description: The timestamp of when the channel was last updated.
+              format: date-time
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - id
+          - type
+          - provider
+          - created_at
+          - updated_at
+          type: object
+          x-struct: null
+          x-validate: null
+        channel_id:
+          deprecated: true
+          description: Deprecated, use channel.id instead.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        clicked_at:
+          description: Timestamp when the message was clicked.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Data associated with the message’s workflow run. Includes the workflow trigger request’s `data` payload
+            merged with any additional data returned by a [fetch function](/designing-workflows/fetch-function). For messages
+            produced after a [batch step](/designing-workflows/batch-function), includes the payload `data` from the most-recent
+            trigger request (the final `activity` in the batch).
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        engagement_statuses:
+          description: A list of engagement statuses.
+          example:
+          - read
+          - seen
+          items:
+            description: 'An engagement status for a message. Can be one of: read, seen, interacted, link_clicked, archived.'
+            enum:
+            - seen
+            - read
+            - interacted
+            - link_clicked
+            - archived
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the message.
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        interacted_at:
+          description: Timestamp when the message was interacted with.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        link_clicked_at:
+          description: Timestamp when a link in the message was clicked.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        metadata:
+          additionalProperties: true
+          description: The metadata associated with the message.
+          example:
+            external_id: 123e4567-e89b-12d3-a456-426614174000
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        read_at:
+          description: Timestamp when the message was read.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/RecipientReference'
+        scheduled_at:
+          description: Timestamp when the message was scheduled to be sent.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        seen_at:
+          description: Timestamp when the message was seen.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        source:
+          description: The workflow or guide that triggered the message.
+          example:
+            __typename: NotificationSource
+            categories:
+            - collaboration
+            key: comment-created
+            step_ref: email_step_1
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+            workflow_recipient_run_id: 456e7890-a12b-34c5-d678-456789012345
+            workflow_run_id: 987e6543-e21c-34b5-c678-987654321000
+          properties:
+            __typename:
+              example: NotificationSource
+              type: string
+              x-struct: null
+              x-validate: null
+            categories:
+              description: The categories associated with the message.
+              items:
+                type: string
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            key:
+              description: The key of the workflow or guide that triggered the message.
+              type: string
+              x-struct: null
+              x-validate: null
+            step_ref:
+              description: The step reference for the step in the workflow that generated the message.
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            type:
+              description: Whether this message was generated from a workflow, broadcast, or guide.
+              enum:
+              - broadcast
+              - workflow
+              - guide
+              type: string
+              x-struct: null
+              x-validate: null
+            version_id:
+              description: The ID of the version of the workflow or guide that triggered the message.
+              format: uuid
+              type: string
+              x-struct: null
+              x-validate: null
+            workflow_recipient_run_id:
+              description: The unique identifier for the workflow recipient run that generated this message. Only present
+                for workflow/broadcast messages.
+              format: uuid
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            workflow_run_id:
+              description: The unique identifier for the workflow run that generated this message. Only present for workflow/broadcast
+                messages.
+              format: uuid
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - key
+          - version_id
+          - categories
+          type: object
+          x-struct: null
+          x-validate: null
+        status:
+          description: The message delivery status.
+          enum:
+          - queued
+          - sent
+          - delivered
+          - delivery_attempted
+          - undelivered
+          - not_sent
+          - bounced
+          example: sent
+          type: string
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The ID of the `tenant` associated with the message. Only present when a `tenant` is provided on a workflow
+            trigger request.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          deprecated: true
+          description: The key of the workflow that generated the message.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - channel_id
+      - status
+      - inserted_at
+      - updated_at
+      - recipient
+      - engagement_statuses
+      - source
+      title: Message
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Message
+      x-validate: null
+    UserInAppFeedResponse:
+      description: A paginated list of feed items.
+      example:
+        entries:
+        - __typename: FeedItem
+          activities:
+          - __typename: Activity
+            actor: null
+            data:
+              foo: bar
+            id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+            inserted_at: '2024-01-01T00:00:00Z'
+            recipient:
+              __typename: User
+              avatar: null
+              created_at: null
+              email: jane@ingen.net
+              id: jane
+              name: Jane Doe
+              phone_number: null
+              timezone: null
+              updated_at: '2024-05-22T12:00:00Z'
+            updated_at: '2024-01-01T00:00:00Z'
+          actors:
+          - __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          blocks:
+          - content: This is a message in an app feed
+            name: body
+            rendered: <p>This is a message in an app feed</p>
+            type: markdown
+          data:
+            foo: bar
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2021-01-01T00:00:00Z'
+          source:
+            __typename: Workflow
+            categories:
+            - collaboration
+            key: my_source
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+          tenant: acme_corp
+          total_activities: 10
+          total_actors: 5
+          updated_at: '2021-01-01T00:00:00Z'
+        meta:
+          __typename: FeedMetadata
+          total_count: 100
+          unread_count: 10
+          unseen_count: 5
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+        vars:
+          foo: bar
+      properties:
+        entries:
+          description: The list of feed items in the user's feed.
+          items:
+            $ref: '#/components/schemas/InAppFeedItem'
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        meta:
+          description: The metadata for the user's feed.
+          example:
+            __typename: FeedMetadata
+            total_count: 100
+            unread_count: 10
+            unseen_count: 5
+          properties:
+            __typename:
+              description: The typename of the schema.
+              example: FeedMetadata
+              type: string
+              x-struct: null
+              x-validate: null
+            total_count:
+              description: The total number of feed items in the user's feed.
+              example: 100
+              type: integer
+              x-struct: null
+              x-validate: null
+            unread_count:
+              description: The number of unread feed items in the user's feed.
+              example: 10
+              type: integer
+              x-struct: null
+              x-validate: null
+            unseen_count:
+              description: The number of unseen feed items in the user's feed.
+              example: 5
+              type: integer
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - total_count
+          - unread_count
+          - unseen_count
+          type: object
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        vars:
+          additionalProperties: true
+          description: Additional variables for the feed item.
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - entries
+      - page_info
+      - vars
+      - meta
+      title: UserInAppFeedResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedResponse
+      x-validate: null
+    InAppFeedItem:
+      description: An in-app feed message in a user's feed.
+      example:
+        __typename: FeedItem
+        activities:
+        - __typename: Activity
+          actor: null
+          data:
+            foo: bar
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2024-01-01T00:00:00Z'
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          updated_at: '2024-01-01T00:00:00Z'
+        actors:
+        - __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        blocks:
+        - content: This is a message in an app feed
+          name: body
+          rendered: <p>This is a message in an app feed</p>
+          type: markdown
+        data:
+          foo: bar
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2021-01-01T00:00:00Z'
+        source:
+          __typename: Workflow
+          categories:
+          - collaboration
+          key: my_source
+          version_id: 123e4567-e89b-12d3-a456-426614174000
+        tenant: acme_corp
+        total_activities: 10
+        total_actors: 5
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: FeedItem
+          type: string
+          x-struct: null
+          x-validate: null
+        activities:
+          description: List of activities associated with this feed item.
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+          x-struct: null
+          x-validate: null
+        actors:
+          description: List of actors associated with this feed item.
+          items:
+            $ref: '#/components/schemas/Recipient'
+          type: array
+          x-struct: null
+          x-validate: null
+        archived_at:
+          description: Timestamp when the feed item was archived.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        blocks:
+          description: Content blocks that make up the feed item.
+          items:
+            description: A content block for the feed, can be content or a button set.
+            nullable: false
+            oneOf:
+            - $ref: '#/components/schemas/MessageInAppFeedContentBlock'
+            - $ref: '#/components/schemas/MessageInAppFeedButtonSetBlock'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        clicked_at:
+          description: Timestamp when the feed item was clicked.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Additional data associated with the feed item.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the feed.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        interacted_at:
+          description: Timestamp when the feed item was interacted with.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        link_clicked_at:
+          description: Timestamp when a link within the feed item was clicked.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        read_at:
+          description: Timestamp when the feed item was marked as read.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        seen_at:
+          description: Timestamp when the feed item was marked as seen.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        source:
+          description: Source information for the feed item.
+          nullable: false
+          properties:
+            __typename:
+              description: The typename of the schema.
+              example: Workflow
+              type: string
+              x-struct: null
+              x-validate: null
+            categories:
+              description: Categories this workflow belongs to.
+              items:
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            key:
+              description: The key of the workflow.
+              nullable: false
+              type: string
+              x-struct: null
+              x-validate: null
+            version_id:
+              description: The workflow version ID.
+              format: uuid
+              nullable: false
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - __typename
+          - key
+          - version_id
+          - categories
+          type: object
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: Tenant ID that the feed item belongs to.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        total_activities:
+          description: Total number of activities related to this feed item.
+          example: 10
+          type: integer
+          x-struct: null
+          x-validate: null
+        total_actors:
+          description: Total number of actors related to this feed item.
+          example: 5
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - inserted_at
+      - updated_at
+      - actors
+      - activities
+      - blocks
+      - source
+      - tenant
+      - total_activities
+      - total_actors
+      - data
+      title: InAppFeedItem
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InAppFeedItem
+      x-validate: null
+    MessageInAppFeedButtonSetBlock:
+      description: A button set block in a message in an app feed.
+      example:
+        buttons:
+        - action: action_1
+          label: Action 1
+          name: primary
+        name: actions
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in an in app feed message.
+          items:
+            description: A button in an in app feed message.
+            nullable: false
+            properties:
+              action:
+                description: The action to take when the button is clicked.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the button.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+              name:
+                description: The name of the button.
+                nullable: false
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - action
+            - label
+            - name
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the button set in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - button_set
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - buttons
+      title: MessageInAppFeedButtonSetBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
+      x-validate: null
+    MessageInAppFeedContentBlock:
+      description: A block in a message in an app feed.
+      example:
+        content: This is a message in an app feed
+        name: body
+        rendered: <p>This is a message in an app feed</p>
+        type: markdown
+      properties:
+        content:
+          description: The content of the block in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the block in a message in an app feed.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        rendered:
+          description: The rendered HTML version of the content.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - markdown
+          - text
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - rendered
+      - content
+      title: MessageInAppFeedContentBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
+      x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        __typename: Object
+        collection: assets
+        created_at: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Object
+          type: string
+          x-struct: null
+          x-validate: null
+        collection:
+          description: The collection this object belongs to.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          type: string
+          x-struct: null
+          x-validate: null
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - collection
+      - updated_at
+      title: Object
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    User:
+      additionalProperties: true
+      description: A [User](/concepts/users) represents an individual in your system who can receive notifications through
+        Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
+      example:
+        __typename: User
+        created_at: null
+        email: ian.malcolm@chaos.theory
+        id: user_id
+        name: Dr. Ian Malcolm
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: User
+          type: string
+          x-struct: null
+          x-validate: null
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for
+            SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - updated_at
+      title: User
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.User
+      x-validate: null
+    Activity:
+      description: An activity associated with a workflow trigger request. Messages produced after a [batch step](/designing-workflows/batch-function)
+        can be associated with one or more activities. Non-batched messages will always be associated with a single activity.
+      example:
+        __typename: Activity
+        actor: null
+        data:
+          foo: bar
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2024-01-01T00:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Activity
+          type: string
+          x-struct: null
+          x-validate: null
+        actor:
+          anyOf:
+          - $ref: '#/components/schemas/Recipient'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: The actor who performed the activity.
+          type: object
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: The workflow trigger `data` payload associated with the activity.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the activity.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the activity was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        updated_at:
+          description: Timestamp when the activity was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      title: Activity
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Activity
+      x-validate: null
+    ChannelData:
+      description: Channel data for a given channel type.
+      example:
+        __typename: ChannelData
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        data:
+          devices:
+          - locale: null
+            timezone: null
+            token: device_1
+          tokens:
+          - push_token_1
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: ChannelData
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          description: Channel data for a given channel type.
+          oneOf:
+          - $ref: '#/components/schemas/PushChannelDataFull'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataFull'
+          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+          - $ref: '#/components/schemas/SlackChannelData'
+          - $ref: '#/components/schemas/MsTeamsChannelData'
+          - $ref: '#/components/schemas/DiscordChannelData'
+          type: object
+          x-struct: null
+          x-validate: null
+        provider:
+          description: The type of provider.
+          enum:
+          - push_fcm
+          - push_apns
+          - push_aws_sns
+          - push_expo
+          - push_one_signal
+          - chat_slack
+          - chat_ms_teams
+          - chat_discord
+          - http_knock_webhook
+          example: push_fcm
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      - data
+      - __typename
+      title: ChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelData
+      x-validate: null
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    DiscordIncomingWebhookConnection:
+      description: Discord incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Discord incoming webhook object.
+          properties:
+            url:
+              description: Incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: DiscordIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
+      x-validate: null
+    DiscordChannelConnection:
+      description: Discord channel connection.
+      example:
+        channel_id: '123456789012345678'
+      properties:
+        channel_id:
+          description: Discord channel ID.
+          example: '123456789012345678'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      title: DiscordChannelConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-validate: null
+    MsTeamsChannelData:
+      description: Microsoft Teams channel data.
+      example:
+        connections:
+        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_tenant_id: null
+          ms_teams_user_id: null
+        ms_teams_tenant_id: null
+      properties:
+        connections:
+          description: List of Microsoft Teams connections.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MsTeamsTokenConnection'
+            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: MsTeamsChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
+      x-validate: null
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
+      x-validate: null
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
+      example:
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
+      properties:
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
+      x-validate: null
+    SlackChannelData:
+      description: Slack channel data.
+      example:
+        connections:
+        - access_token: xoxb-1234567890
+          channel_id: C01234567890
+          user_id: U01234567890
+        token:
+          access_token: xoxb-1234567890
+      properties:
+        connections:
+          description: List of Slack channel connections.
+          items:
+            description: A Slack connection, either an access token or an incoming webhook
+            nullable: false
+            oneOf:
+            - $ref: '#/components/schemas/SlackTokenConnection'
+            - $ref: '#/components/schemas/SlackIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        token:
+          description: A Slack connection token.
+          example:
+            access_token: xoxb-1234567890
+          nullable: true
+          properties:
+            access_token:
+              description: A Slack access token.
+              example: xoxb-1234567890
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - access_token
+          title: SlackChannelDataTokenObject
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: SlackChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
+      x-validate: null
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
+      example:
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+      properties:
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      title: SlackIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-validate: null
+    SlackTokenConnection:
+      description: A Slack connection token.
+      example:
+        access_token: xoxb-1234567890
+        channel_id: C01234567890
+        user_id: U01234567890
+      properties:
+        access_token:
+          description: A Slack access token.
+          example: xoxb-1234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: A Slack channel ID from the Slack provider.
+          example: C01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        user_id:
+          description: A Slack user ID from the Slack provider.
+          example: U01234567890
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: SlackTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
+      x-validate: null
+    OneSignalChannelDataPlayerIdsOnly:
+      description: OneSignal channel data.
+      example:
+        player_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+      properties:
+        player_ids:
+          description: A list of OneSignal player IDs.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          items:
+            description: OneSignal player ID.
+            format: uuid
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - player_ids
+      title: OneSignalChannelDataPlayerIdsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
+      x-validate: null
+    AWSSNSPushChannelDataFull:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See
+                  [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting
+              up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      - devices
+      title: AWSSNSPushChannelDataFull
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataFull
+      x-validate: null
+    PushChannelDataFull:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: null
+          token: push_token_1
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      - devices
+      title: PushChannelDataFull
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataFull
+      x-validate: null
+    ListSubscriptionsResponse:
+      description: A response containing a list of subscriptions.
+      example:
+        entries:
+        - __typename: Subscription
+          inserted_at: '2021-01-01T00:00:00Z'
+          object:
+            __typename: Object
+            collection: assets
+            created_at: null
+            id: specimen_25
+            properties:
+              classification: Theropod
+              config:
+                biz: baz
+                foo: bar
+              name: Velociraptor
+              status: contained
+            updated_at: '2024-05-22T12:00:00Z'
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          updated_at: '2021-01-01T00:00:00Z'
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of subscriptions.
+          items:
+            $ref: '#/components/schemas/Subscription'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListSubscriptionsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSubscriptionsResponse
+      x-validate: null
+    Subscription:
+      description: A subscription object.
+      example:
+        __typename: Subscription
+        inserted_at: '2021-01-01T00:00:00Z'
+        object:
+          __typename: Object
+          collection: assets
+          created_at: null
+          id: specimen_25
+          properties:
+            classification: Theropod
+            config:
+              biz: baz
+              foo: bar
+            name: Velociraptor
+            status: contained
+          updated_at: '2024-05-22T12:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Subscription
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          $ref: '#/components/schemas/Object'
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the subscription relationship.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - recipient
+      - object
+      - inserted_at
+      - updated_at
+      title: Subscription
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Subscription
+      x-validate: null
+    BulkDeleteUsersRequest:
+      description: A request to delete users in bulk.
+      example:
+        user_ids:
+        - user_1
+        - user_2
+      properties:
+        user_ids:
+          description: A list of user IDs.
+          items:
+            description: The unique identifier of the user.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - user_ids
+      title: BulkDeleteUsersRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkDeleteUsersRequest
+      x-validate: null
+    ListSchedulesResponse:
+      description: A response containing a list of schedules.
+      example:
+        entries:
+        - __typename: Schedule
+          actor: null
+          data: null
+          id: 123e4567-e89b-12d3-a456-426614174000
+          inserted_at: '2021-01-01T00:00:00Z'
+          last_occurrence_at: null
+          next_occurrence_at: null
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          repeats:
+          - __typename: ScheduleRepeat
+            day_of_month: null
+            days:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            frequency: daily
+            hours: null
+            interval: 1
+            minutes: null
+          tenant: null
+          updated_at: '2021-01-01T00:00:00Z'
+          workflow: workflow_123
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of schedules.
+          items:
+            $ref: '#/components/schemas/Schedule'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListSchedulesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSchedulesResponse
+      x-validate: null
+    Schedule:
+      description: A schedule represents a recurring workflow execution.
+      example:
+        __typename: Schedule
+        actor: null
+        data: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2021-01-01T00:00:00Z'
+        last_occurrence_at: null
+        next_occurrence_at: null
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        repeats:
+        - __typename: ScheduleRepeat
+          day_of_month: null
+          days:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+          frequency: daily
+          hours: null
+          interval: 1
+          minutes: null
+        tenant: null
+        updated_at: '2021-01-01T00:00:00Z'
+        workflow: workflow_123
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Schedule
+          type: string
+          x-struct: null
+          x-validate: null
+        actor:
+          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed
+            the action.
+          oneOf:
+          - $ref: '#/components/schemas/Recipient'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the
+            full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation)
+            in your logs.
+          nullable: true
+          type: object
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the schedule.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        last_occurrence_at:
+          description: The last occurrence of the schedule.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        next_occurrence_at:
+          description: The next occurrence of the schedule.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        repeats:
+          description: The repeat rule for the schedule.
+          items:
+            $ref: '#/components/schemas/ScheduleRepeatRule'
+          type: array
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides
+            associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        workflow:
+          description: The workflow the schedule is applied to.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - workflow
+      - recipient
+      - repeats
+      - inserted_at
+      - updated_at
+      title: Schedule
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Schedule
+      x-validate: null
+    ScheduleRepeatRule:
+      description: The repeat rule for the schedule.
+      example:
+        __typename: ScheduleRepeat
+        day_of_month: null
+        days:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+        - sat
+        - sun
+        frequency: daily
+        hours: null
+        interval: 1
+        minutes: null
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: ScheduleRepeat
+          type: string
+          x-struct: null
+          x-validate: null
+        day_of_month:
+          description: The day of the month to repeat the schedule.
+          example: 1
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+        days:
+          description: The days of the week to repeat the schedule.
+          example:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          items:
+            description: An identifier for a day of the week.
+            enum:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: true
+          type: array
+          x-struct: null
+          x-validate: null
+        frequency:
+          description: The frequency of the schedule.
+          enum:
+          - daily
+          - weekly
+          - monthly
+          - hourly
+          example: daily
+          type: string
+          x-struct: null
+          x-validate: null
+        hours:
+          description: The hour of the day to repeat the schedule.
+          example: 0
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+        interval:
+          default: 1
+          description: The interval of the schedule.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+        minutes:
+          description: The minute of the hour to repeat the schedule.
+          example: 0
+          nullable: true
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - frequency
+      title: ScheduleRepeatRule
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ScheduleRepeatRule
+      x-validate: null
+    ListUsersResponse:
+      description: A paginated list of users.
+      example:
+        entries:
+        - __typename: User
+          created_at: null
+          email: ian.malcolm@chaos.theory
+          id: user_id
+          name: Dr. Ian Malcolm
+          updated_at: '2024-05-22T12:00:00Z'
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of users.
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      title: ListUsersResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListUsersResponse
+      x-validate: null
+    BulkOperation:
+      description: A bulk operation entity.
+      example:
+        __typename: BulkOperation
+        completed_at: null
+        error_count: 0
+        error_items: []
+        estimated_total_rows: 1000
+        failed_at: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2024-05-22T12:00:00Z'
+        name: Bulk operation name
+        processed_rows: 0
+        progress_path: https://api.switchboard.com/v1/bulk_operations/123e4567-e89b-12d3-a456-426614174000
+        started_at: null
+        status: processing
+        success_count: 0
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: BulkOperation
+          type: string
+          x-struct: null
+          x-validate: null
+        completed_at:
+          description: Timestamp when the bulk operation was completed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        error_count:
+          description: The number of failed operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        error_items:
+          description: A list of items that failed to be processed.
+          items:
+            properties:
+              collection:
+                description: The collection this object belongs to.
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Unique identifier for the object.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        estimated_total_rows:
+          description: The estimated total number of rows to process.
+          example: 1000
+          type: integer
+          x-struct: null
+          x-validate: null
+        failed_at:
+          description: Timestamp when the bulk operation failed.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the bulk operation.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the bulk operation.
+          example: Bulk operation name
+          type: string
+          x-struct: null
+          x-validate: null
+        processed_rows:
+          description: The number of rows processed so far.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        progress_path:
+          description: The URI to the bulk operation's progress.
+          format: uri
+          type: string
+          x-struct: null
+          x-validate: null
+        started_at:
+          description: Timestamp when the bulk operation was started.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the bulk operation.
+          enum:
+          - queued
+          - processing
+          - completed
+          - failed
+          example: queued
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        success_count:
+          description: The number of successful operations.
+          example: 0
+          type: integer
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - name
+      - status
+      - estimated_total_rows
+      - processed_rows
+      - success_count
+      - updated_at
+      - inserted_at
+      title: BulkOperation
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkOperation
+      x-validate: null
+    GuideActionResponse:
+      description: A response for a guide action.
+      example:
+        status: ok
+      properties:
+        status:
+          description: The status of a guide's action.
+          example: ok
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - status
+      title: GuideActionResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Responses.GuideActionResponse
+      x-validate: null
+    ChannelDataRequest:
+      description: A request to set channel data for a type of channel.
+      example:
+        data:
+          tokens:
+          - push_token_1
+      properties:
+        data:
+          description: Channel data for a given channel type.
+          nullable: false
+          oneOf:
+          - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+          - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+          - $ref: '#/components/schemas/SlackChannelData'
+          - $ref: '#/components/schemas/MsTeamsChannelData'
+          - $ref: '#/components/schemas/DiscordChannelData'
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - data
+      title: ChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelDataRequest
+      x-validate: null
+    AWSSNSPushChannelDataDevicesOnly:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See
+                  [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: AWSSNSPushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
+      x-validate: null
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
+      example:
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting
+              up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+                  Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                nullable: true
+                type: string
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: PushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            nullable: false
+            type: string
+            x-struct: null
+            x-validate: null
+          nullable: false
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
+      x-validate: null
+    IdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to identify a user with. Does not include the user ID, as that's specified elsewhere
+        in the request. You can supply any additional properties you'd like to upsert for the user.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: ian.malcolm@chaos.theory
+        name: Dr. Ian Malcolm
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for
+            SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      title: IdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.IdentifyUserRequest
+      x-validate: null
+    InlinePreferenceSetRequest:
+      additionalProperties:
+        $ref: '#/components/schemas/PreferenceSetRequest'
+      description: Inline set preferences for a recipient, where the key is the preference set id. Preferences that are set
+        inline will be merged into any existing preferences rather than replacing them.
+      example:
+        default:
+          categories:
+            transactional:
+              channel_types:
+                email: false
+          channel_types:
+            email: true
+      title: InlinePreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlinePreferenceSetRequest
+      x-validate: null
+    PreferenceSetRequest:
+      description: A request to set a preference set for a recipient.
+      example:
+        __persistence_strategy__: merge
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+        channels:
+          2f641633-95d3-4555-9222-9f1eb7888a80:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+        commercial_subscribed: true
+        workflows:
+          dinosaurs-loose:
+            channel_types:
+              email: false
+      properties:
+        __persistence_strategy__:
+          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set,
+            'merge' will merge with existing preferences.
+          enum:
+          - merge
+          - replace
+          type: string
+          x-struct: null
+          x-validate: null
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+              transactional: true
+            title: PreferenceSetRequestCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel
+            type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel
+            ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not
+            receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+                  sms: true
+              welcome-sequence: true
+            title: PreferenceSetRequestWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel
+              type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - nullable: true
+              x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel
+              ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            nullable: true
+            type: array
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: frog_genome
+        operator: contains
+        variable: specimen.dna_sequence
+      properties:
+        argument:
+          description: The argument value to compare against in the condition.
+          example: some_property
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the condition evaluation.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - contains_all
+          - is_timestamp
+          - is_not_timestamp
+          - is_timestamp_on_or_after
+          - is_timestamp_before
+          - is_timestamp_on_or_after_date
+          - is_timestamp_before_date
+          - is_timestamp_between
+          - is_between
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated in the condition.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      - argument
+      title: Condition
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object
+          with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-validate: null
+    PreferenceSetChannelTypes:
+      description: Channel type preferences.
+      example:
+        email: true
+        sms:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+      properties:
+        chat:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        email:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        http:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        in_app_feed:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        push:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+        sms:
+          description: Whether the channel type is enabled for the preference set.
+          oneOf:
+          - type: boolean
+            x-struct: null
+            x-validate: null
+          - $ref: '#/components/schemas/PreferenceSetChannelTypeSetting'
+          x-struct: null
+          x-validate: null
+      title: PreferenceSetChannelTypes
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes
+      x-validate: null
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelTypeSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    InlineChannelDataRequest:
+      additionalProperties:
+        description: Channel data for a given channel type.
+        nullable: false
+        oneOf:
+        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+        - $ref: '#/components/schemas/SlackChannelData'
+        - $ref: '#/components/schemas/MsTeamsChannelData'
+        - $ref: '#/components/schemas/DiscordChannelData'
+        x-struct: null
+        x-validate: null
+      description: A request to set channel data for a type of channel inline.
+      example:
+        97c5837d-c65c-4d54-aa39-080eeb81c69d:
+          tokens:
+          - push_token_xxx
+      title: InlineChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
+      x-validate: null
+    GuidesResponse:
+      description: A response for a list of guides.
+      example:
+        entries:
+        - __typename: Guide
+          activation_url_patterns: []
+          activation_url_rules:
+          - argument: /workflows
+            directive: allow
+            operator: contains
+            variable: pathname
+          - argument: /guides
+            directive: allow
+            operator: equal_to
+            variable: pathname
+          active: true
+          bypass_global_group_limit: false
+          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
+          dashboard_url: https://dashboard.knock.app/~/guides/nps-survey
+          id: 53595157-2fac-4a17-8dd7-e6603e32cb3a
+          inserted_at: '2025-09-30T14:54:44.217756Z'
+          key: nps-survey
+          semver: 0.0.3
+          steps:
+          - content:
+              companyName: Knock
+              showFeedbackSection: true
+              showThanksToast: true
+            message:
+              archived_at: null
+              id: 33hjnKRKNx9ISRlixVBjhpkh28J
+              interacted_at: '2025-10-07T15:10:59.291Z'
+              link_clicked_at: null
+              read_at: '2025-10-07T15:10:59.291Z'
+              seen_at: '2025-10-06T18:46:03.210Z'
+            ref: step_1
+            schema_key: nps-survey
+            schema_semver: 0.0.3
+            schema_variant_key: default
+          type: nps-survey
+          updated_at: '2025-10-03T17:46:53.653663Z'
+        - __typename: Guide
+          activation_url_patterns:
+          - directive: allow
+            pathname: /dairy/*
+          - directive: allow
+            pathname: /produce
+            search: role=admin
+          - directive: allow
+            pathname: /
+          activation_url_rules: []
+          active: true
+          bypass_global_group_limit: false
+          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
+          dashboard_url: https://dashboard.knock.app/~/guides/changelog-card
+          id: 4fc4503e-ef8b-473a-ae07-14800639d30c
+          inserted_at: '2025-10-07T19:41:06.215233Z'
+          key: changelog-card
+          semver: 0.0.3
+          steps:
+          - content:
+              body: Lorem ipsum
+              dismissible: false
+              eyebrowText: New in Knock
+              image:
+                action: ''
+                alt: ''
+                url: https://bhoite.com/img/sculptures/2024/lander-r2/lander-r2.jpg
+              link: https://dashboard.knock.app/knock/development/guides/changelog-card/editor
+              title: Changelog card
+            message:
+              archived_at: null
+              id: null
+              interacted_at: null
+              link_clicked_at: null
+              read_at: null
+              seen_at: null
+            ref: step_1
+            schema_key: changelog-card
+            schema_semver: 0.0.3
+            schema_variant_key: default
+          type: changelog-card
+          updated_at: '2025-10-07T20:39:52.410146Z'
+        guide_group_display_logs:
+          default: '2025-08-16T00:47:14.025Z'
+        guide_groups:
+        - __typename: GuideGroup
+          display_interval: 3600
+          display_sequence:
+          - nps-survey
+          - changelog-card
+          inserted_at: '2025-07-24T21:06:27.394627Z'
+          key: default
+          updated_at: '2025-10-07T20:39:52.465400Z'
+        ineligible_guides:
+        - key: onboarding-tour
+          message: User has archived this guide already
+          reason: marked_as_archived
+        - key: premium-feature
+          message: User is not a member of the target audience
+          reason: not_in_target_audience
+      properties:
+        entries:
+          description: A list of guides.
+          items:
+            properties:
+              __typename:
+                description: The typename of the schema.
+                type: string
+                x-struct: null
+                x-validate: null
+              activation_url_patterns:
+                description: A list of URL Patterns to evaluate user's current location to activate the guide, if matched
+                items:
+                  properties:
+                    directive:
+                      description: The directive for the URL pattern ('allow' or 'block')
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    pathname:
+                      description: The pathname pattern to match (supports wildcards like /*)
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    search:
+                      description: The search query params to match
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                  type: object
+                  x-struct: null
+                  x-validate: null
+                type: array
+                x-struct: null
+                x-validate: null
+              activation_url_rules:
+                description: A list of URL rules to evaluate user's current location to activate the guide, if matched
+                items:
+                  properties:
+                    argument:
+                      description: The value to compare against
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    directive:
+                      description: The directive for the URL rule ('allow' or 'block')
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    operator:
+                      description: The comparison operator ('contains' or 'equal_to')
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    variable:
+                      description: The variable to evaluate ('pathname')
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                  type: object
+                  x-struct: null
+                  x-validate: null
+                type: array
+                x-struct: null
+                x-validate: null
+              active:
+                description: Whether the guide is active.
+                type: boolean
+                x-struct: null
+                x-validate: null
+              bypass_global_group_limit:
+                type: boolean
+                x-struct: null
+                x-validate: null
+              channel_id:
+                format: uuid
+                type: string
+                x-struct: null
+                x-validate: null
+              dashboard_url:
+                description: URL to this guide in the Knock dashboard
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: The unique identifier for the guide.
+                format: uuid
+                type: string
+                x-struct: null
+                x-validate: null
+              inserted_at:
+                format: date-time
+                type: string
+                x-struct: null
+                x-validate: null
+              key:
+                description: The key of the guide.
+                type: string
+                x-struct: null
+                x-validate: null
+              semver:
+                type: string
+                x-struct: null
+                x-validate: null
+              steps:
+                items:
+                  properties:
+                    content:
+                      additionalProperties: true
+                      type: object
+                      x-struct: null
+                      x-validate: null
+                    message:
+                      properties:
+                        archived_at:
+                          format: date-time
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                        id:
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                        interacted_at:
+                          format: date-time
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                        link_clicked_at:
+                          format: date-time
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                        read_at:
+                          format: date-time
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                        seen_at:
+                          format: date-time
+                          nullable: true
+                          type: string
+                          x-struct: null
+                          x-validate: null
+                      type: object
+                      x-struct: null
+                      x-validate: null
+                    ref:
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    schema_key:
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    schema_semver:
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                    schema_variant_key:
+                      type: string
+                      x-struct: null
+                      x-validate: null
+                  type: object
+                  x-struct: null
+                  x-validate: null
+                type: array
+                x-struct: null
+                x-validate: null
+              type:
+                description: The type of the guide.
+                type: string
+                x-struct: null
+                x-validate: null
+              updated_at:
+                format: date-time
+                type: string
+                x-struct: null
+                x-validate: null
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        guide_group_display_logs:
+          additionalProperties:
+            format: date-time
+            type: string
+            x-struct: null
+            x-validate: null
+          description: A map of guide group keys to their last display timestamps.
+          type: object
+          x-struct: null
+          x-validate: null
+        guide_groups:
+          description: A list of guide groups with their display sequences and intervals.
+          items:
+            properties:
+              __typename:
+                type: string
+                x-struct: null
+                x-validate: null
+              display_interval:
+                type: integer
+                x-struct: null
+                x-validate: null
+              display_sequence:
+                items:
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                type: array
+                x-struct: null
+                x-validate: null
+              inserted_at:
+                format: date-time
+                type: string
+                x-struct: null
+                x-validate: null
+              key:
+                type: string
+                x-struct: null
+                x-validate: null
+              updated_at:
+                format: date-time
+                type: string
+                x-struct: null
+                x-validate: null
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        ineligible_guides:
+          description: Markers for guides the user is not eligible to see.
+          items:
+            properties:
+              key:
+                description: The guide's key identifier
+                type: string
+                x-struct: null
+                x-validate: null
+              message:
+                description: Human-readable explanation of ineligibility
+                type: string
+                x-struct: null
+                x-validate: null
+              reason:
+                description: Reason code for ineligibility
+                enum:
+                - guide_not_active
+                - marked_as_archived
+                - target_conditions_not_met
+                - not_in_target_audience
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - key
+            - reason
+            - message
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - entries
+      - guide_groups
+      - guide_group_display_logs
+      - ineligible_guides
+      title: GuidesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Responses.GuidesResponse
+      x-validate: null
+    BulkIdentifyUsersRequest:
+      description: A request to identify a list of users.
+      example:
+        users:
+        - email: jane@ingen.net
+          id: user_1
+          name: Jane Doe
+          timezone: America/New_York
+      properties:
+        users:
+          description: A list of users.
+          items:
+            $ref: '#/components/schemas/InlineIdentifyUserRequest'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - users
+      title: BulkIdentifyUsersRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkIdentifyUsersRequest
+      x-validate: null
+    InlineIdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user
+        is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing
+        any properties specified.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: jane@ingen.net
+        id: user_1
+        name: Jane Doe
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          nullable: false
+          type: string
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for
+            SMS channels).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          nullable: true
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+            Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: InlineIdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
+      x-validate: null
+    UserInAppFeedSettingsResponse:
+      description: The response for the user's feed settings.
+      example:
+        features:
+          branding_required: true
+      properties:
+        features:
+          description: Features configuration for the user's feed.
+          properties:
+            branding_required:
+              description: Whether branding is required for the user's feed.
+              type: boolean
+              x-struct: null
+              x-validate: null
+          required:
+          - branding_required
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - features
+      title: UserInAppFeedSettingsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedSettingsResponse
+      x-validate: null
+    BulkSetUserPreferencesRequest:
+      description: A request to set preferences for a set of users in bulk.
+      example:
+        preferences:
+          __persistence_strategy__: merge
+          categories:
+            marketing: false
+            transactional:
+              channel_types:
+                email: false
+          channel_types:
+            email: true
+          channels:
+            2f641633-95d3-4555-9222-9f1eb7888a80:
+              conditions:
+              - argument: US
+                operator: equal_to
+                variable: recipient.country_code
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          commercial_subscribed: true
+          workflows:
+            dinosaurs-loose:
+              channel_types:
+                email: false
+        user_ids:
+        - user_1
+        - user_2
+      properties:
+        preferences:
+          $ref: '#/components/schemas/PreferenceSetRequest'
+        user_ids:
+          description: A list of user IDs.
+          items:
+            description: The unique identifier of the user.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - preferences
+      - user_ids
+      title: BulkSetUserPreferencesRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetUserPreferencesRequest
+      x-validate: null
+    MergeUserRequest:
+      description: A set of parameters to merge one user into another.
+      example:
+        from_user_id: user_1
+      properties:
+        from_user_id:
+          description: The user ID to merge from.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - from_user_id
+      title: MergeUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MergeUserRequest
+      x-validate: null
+    PreferenceSet:
+      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can
+        have multiple preference sets.
+      example:
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+          push: false
+          sms:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+        commercial_subscribed: true
+        id: default
+        workflows: null
+      properties:
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+            title: PreferenceSetCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel
+            type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel
+            ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not
+            receive commercial workflow notifications.
+          nullable: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the preference set.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+            title: PreferenceSetWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - nullable: true
+            x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: PreferenceSet
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
+      x-validate: null
+    GuideActionRequest:
+      description: A request to trigger a guide action.
+      example:
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        content:
+          body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+          title: DNA Lab Tour Available
+        data:
+          next_time: '14:30'
+          spots_left: 8
+          tour_id: dna_lab_tour
+        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+        guide_key: tour_notification
+        guide_step_ref: lab_tours
+        is_final: false
+        metadata:
+          cta: Reserve Spot
+          theme: amber
+          type: banner
+        tenant: ingen_isla_nublar
+      properties:
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        content:
+          additionalProperties: true
+          description: The content of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: The data of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        guide_id:
+          description: The unique identifier for the guide.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        guide_key:
+          description: The key of the guide.
+          type: string
+          x-struct: null
+          x-validate: null
+        guide_step_ref:
+          description: The step reference of the guide.
+          type: string
+          x-struct: null
+          x-validate: null
+        is_final:
+          description: Whether the guide is final.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        metadata:
+          additionalProperties: true
+          description: The metadata of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant ID of the guide.
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      - guide_id
+      - guide_key
+      - guide_step_ref
+      title: GuideActionRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Requests.GuideActionRequest
+      x-validate: null

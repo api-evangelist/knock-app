@@ -1,0 +1,157 @@
+openapi: 3.0.3
+info:
+  title: Knock Integrations API
+  version: '1.0'
+  description: Inspect integrations configured for the current environment. Used by SlackKit and TeamsKit clients to discover
+    the destinations available for a recipient.
+  contact:
+    name: Knock
+    url: https://knock.app
+  license:
+    name: Proprietary
+servers:
+- url: https://api.knock.app
+  variables: {}
+security:
+- BearerAuth: []
+paths:
+  /v1/integrations/census/custom-destination:
+    post:
+      callbacks: {}
+      description: Processes a Census custom destination RPC request.
+      operationId: processCensusRpcRequest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  description: The unique identifier for the RPC request.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                jsonrpc:
+                  description: The JSON-RPC version.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                method:
+                  description: The method name to execute.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                params:
+                  additionalProperties: true
+                  description: The parameters for the method.
+                  type: object
+                  x-struct: null
+                  x-validate: null
+              required:
+              - id
+              - method
+              - jsonrpc
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    description: The request ID.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  result:
+                    additionalProperties: true
+                    description: The result of the RPC call.
+                    type: object
+                    x-struct: null
+                    x-validate: null
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Process a Census RPC request
+      tags:
+      - Integrations
+      x-ratelimit-tier: 3
+  /v1/integrations/hightouch/embedded-destination:
+    post:
+      callbacks: {}
+      description: Processes a Hightouch embedded destination RPC request.
+      operationId: processHightouchRpcRequest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  description: The unique identifier for the RPC request.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                jsonrpc:
+                  description: The JSON-RPC version.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                method:
+                  description: The method name to execute.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                params:
+                  additionalProperties: true
+                  description: The parameters for the method.
+                  type: object
+                  x-struct: null
+                  x-validate: null
+              required:
+              - id
+              - method
+              - jsonrpc
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    description: The request ID.
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  result:
+                    additionalProperties: true
+                    description: The result of the RPC call.
+                    type: object
+                    x-struct: null
+                    x-validate: null
+                type: object
+                x-struct: null
+                x-validate: null
+          description: OK
+      summary: Process a Hightouch RPC request
+      tags:
+      - Integrations
+      x-ratelimit-tier: 3
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...)
+        for server-side.
+  schemas: {}
