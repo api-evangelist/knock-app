@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Channel data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channel data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Returns the channel data for the specified object and channel."
+        },
+        {
+          "info": {
+            "name": "Set channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the channel data for the specified object and channel. If no object exists in the current environment for the given `collection` and `object_id`, Knock will create the object as part of this request."
+        },
+        {
+          "info": {
+            "name": "Unset channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Unsets the channel data for the specified object and channel."
+        },
+        {
+          "info": {
+            "name": "Get channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Retrieves the channel data for a specific user and channel ID."
+        },
+        {
+          "info": {
+            "name": "Set channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates or creates channel data for a specific user and channel ID. If no user exists in the current environment for the given `user_id`, Knock will create the user entry as part of this request."
+        },
+        {
+          "info": {
+            "name": "Unset channel data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/channel_data/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Deletes channel data for a specific user and channel ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

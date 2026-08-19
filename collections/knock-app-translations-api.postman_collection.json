@@ -1,0 +1,757 @@
+{
+  "item": [
+    {
+      "id": "96774b6f-17b6-46b5-b248-34fa15cd59fc",
+      "name": "Translations",
+      "description": {
+        "content": "Translations are per-locale string files that can be used in your templates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8aaf2e3-a87d-4ba4-b893-3480c7e10dfe",
+          "name": "List translations",
+          "request": {
+            "name": "List translations",
+            "description": {
+              "content": "Returns a paginated list of translations available in a given environment. The translations are returned in alphabetical order by locale code.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "translations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale_code",
+                  "value": "<string>",
+                  "description": "A specific locale code to filter translations for."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "A specific namespace to filter translations for."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "A specific tenant to filter translations for."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+                },
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d990b2d-f244-4158-9d65-2a7244b4510d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "translations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n      \"format\": \"json\",\n      \"inserted_at\": \"2021-01-01T00:00:00Z\",\n      \"locale_code\": \"en\",\n      \"namespace\": \"my_app\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b89dcf3b-b9c5-49ac-832e-f3cf340888af",
+          "name": "Validate translation",
+          "request": {
+            "name": "Validate translation",
+            "description": {
+              "content": "Validates a translation payload without persisting it.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "translations",
+                ":locale_code",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locale_code",
+                  "description": "(Required) The translation's locale code."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"translation\": {\n    \"content\": \"<string>\",\n    \"format\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "904a9efc-ebc9-4b0c-b928-7532039eb665",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "translations",
+                    ":locale_code",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locale_code",
+                      "description": "(Required) The translation's locale code."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"translation\": {\n    \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n    \"format\": \"json\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"translation\": {\n    \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n    \"format\": \"json\",\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"locale_code\": \"en\",\n    \"namespace\": \"my_app\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2722d22-6251-476c-be49-ebea7f200731",
+          "name": "Get translation",
+          "request": {
+            "name": "Get translation",
+            "description": {
+              "content": "Retrieve a translation by its locale and namespace, in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "translations",
+                ":locale_code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "A specific namespace to filter translations for."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "A specific tenant to scope the translation to."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locale_code",
+                  "description": "(Required) A specific locale code to filter translations for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd3c6033-c935-4177-a6d4-4c081aa8a7f3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "translations",
+                    ":locale_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locale_code",
+                      "description": "(Required) A specific locale code to filter translations for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"translation\": {\n    \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n    \"format\": \"json\",\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"locale_code\": \"en\",\n    \"namespace\": \"my_app\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4cf9d9d5-2cac-48aa-ad98-c1f054c4d02f",
+          "name": "Upsert translation",
+          "request": {
+            "name": "Upsert translation",
+            "description": {
+              "content": "Updates a translation of a given locale code + namespace, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "translations",
+                ":locale_code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "(Required) An optional namespace that identifies the translation."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "An optional tenant to scope the translation to."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit",
+                  "value": "<boolean>",
+                  "description": "Whether to commit the resource at the same time as modifying it."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit_message",
+                  "value": "<string>",
+                  "description": "The message to commit the resource with, only used if `commit` is `true`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "locale_code",
+                  "description": "(Required) A locale code of the translation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"translation\": {\n    \"content\": \"<string>\",\n    \"format\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "83b23953-202a-4aed-9247-4ed0af23e399",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "translations",
+                    ":locale_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit_message",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "locale_code",
+                      "description": "(Required) A locale code of the translation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"translation\": {\n    \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n    \"format\": \"json\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"translation\": {\n    \"content\": \"{\\\"hello\\\":\\\"Hello, world!\\\"}\",\n    \"format\": \"json\",\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"locale_code\": \"en\",\n    \"namespace\": \"my_app\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fa27298d-f8ba-4461-b5fb-abb14135afd1",
+    "name": "Knock Audiences Accounts Translations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

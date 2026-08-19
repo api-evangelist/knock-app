@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Channel Groups API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channel Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channel groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/channel_groups",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of channel groups. Note: the list of channel groups is across the entire account, not scoped to an environment."
+        },
+        {
+          "info": {
+            "name": "Get a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to retrieve."
+              }
+            ]
+          },
+          "docs": "Get a channel group by its key."
+        },
+        {
+          "info": {
+            "name": "Upsert a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to upsert."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a channel group by key."
+        },
+        {
+          "info": {
+            "name": "Delete a channel group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/channel_groups/:channel_group_key",
+            "params": [
+              {
+                "name": "channel_group_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel group to delete."
+              }
+            ]
+          },
+          "docs": "Archives (soft deletes) a channel group by key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

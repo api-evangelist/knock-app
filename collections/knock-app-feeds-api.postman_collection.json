@@ -1,0 +1,453 @@
+{
+  "item": [
+    {
+      "id": "91ed1bc5-6a76-4706-a7b6-5e5f9563e614",
+      "name": "Feeds",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "08df43fd-534c-4c5e-b6b5-083fccefb47a",
+          "name": "List feed items",
+          "request": {
+            "name": "List feed items",
+            "description": {
+              "content": "Returns a paginated list of feed items for a user in reverse chronological order, including metadata about the feed. If the user has not yet been identified within Knock, an empty feed will be returned.\n\nYou can customize the response using [response filters](/integrations/in-app/knock#customizing-api-response-content) to exclude or only include specific properties on your resources.\n\n**Notes:**\n* When making this call from a client-side environment, use your publishable key along with a user token.\n* This endpoint’s rate limit is always scoped per-user and per-environment. This is true even for requests made without a signed user token.\n* Any [attachments](/integrations/email/attachments) present in trigger data are automatically excluded from both the `data` and `activities` fields of `UserInAppFeedResponse`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "feeds",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "The status of the feed items."
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "The workflow key associated with the message in the feed."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The tenant associated with the feed items."
+                },
+                {
+                  "disabled": false,
+                  "key": "has_tenant",
+                  "value": "<boolean>",
+                  "description": "Whether the feed items have a tenant."
+                },
+                {
+                  "disabled": false,
+                  "key": "workflow_categories[]",
+                  "value": "<string>",
+                  "description": "The workflow categories of the feed items."
+                },
+                {
+                  "disabled": false,
+                  "key": "workflow_categories[]",
+                  "value": "<string>",
+                  "description": "The workflow categories of the feed items."
+                },
+                {
+                  "disabled": false,
+                  "key": "archived",
+                  "value": "<string>",
+                  "description": "The archived status of the feed items."
+                },
+                {
+                  "disabled": false,
+                  "key": "trigger_data",
+                  "value": "<string>",
+                  "description": "The trigger data of the feed items (as a JSON string)."
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "<string>",
+                  "description": "The locale to render the feed items in. Must be in the IETF 5646 format (e.g. `en-US`). When not provided, will default to the locale that the feed items were rendered in. Only available for enterprise plan customers using custom translations."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude",
+                  "value": "<string>",
+                  "description": "Comma-separated list of field paths to exclude from the response. Use dot notation for nested fields (e.g., `entries.archived_at`). Limited to 3 levels deep."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "rich",
+                  "description": "The mode to render the feed items in. Can be `compact` or `rich`. Defaults to `rich`. When `mode` is `compact`, feed items will not have `activities` and `total_activities` fields; the `data` field will not include nested arrays and objects; and the `actors` field will only have up to one actor."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                },
+                {
+                  "disabled": false,
+                  "key": "inserted_at.gt",
+                  "value": "<string>",
+                  "description": "Limits the results to items inserted after the given date."
+                },
+                {
+                  "disabled": false,
+                  "key": "inserted_at.gte",
+                  "value": "<string>",
+                  "description": "Limits the results to items inserted after or on the given date."
+                },
+                {
+                  "disabled": false,
+                  "key": "inserted_at.lt",
+                  "value": "<string>",
+                  "description": "Limits the results to items inserted before the given date."
+                },
+                {
+                  "disabled": false,
+                  "key": "inserted_at.lte",
+                  "value": "<string>",
+                  "description": "Limits the results to items inserted before or on the given date."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier for the channel."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f89e208-fea0-4906-bf08-ca2f8140f57a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "feeds",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "unread"
+                    },
+                    {
+                      "key": "source",
+                      "value": "my_source"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "my_tenant"
+                    },
+                    {
+                      "key": "has_tenant",
+                      "value": "true"
+                    },
+                    {
+                      "key": "workflow_categories[]",
+                      "value": "my_workflow_category"
+                    },
+                    {
+                      "key": "archived",
+                      "value": "exclude"
+                    },
+                    {
+                      "key": "trigger_data",
+                      "value": "{ \"key\": \"value\" }"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "entries.archived_at,entries.clicked_at"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "compact"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "inserted_at.gt",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "inserted_at.gte",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "inserted_at.lt",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "inserted_at.lte",
+                      "value": "2025-01-01T00:00:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier for the channel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"FeedItem\",\n      \"id\": \"2FVHPWxRqNuXQ9krvNP5A6Z4qXe\",\n      \"inserted_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"actors\": [\n        {\n          \"__typename\": \"User\",\n          \"id\": \"string\",\n          \"updated_at\": \"1950-01-31T15:45:36.281Z\",\n          \"avatar\": \"string\",\n          \"created_at\": \"1950-12-30T07:31:15.012Z\",\n          \"email\": \"string\",\n          \"name\": \"string\",\n          \"phone_number\": \"string\",\n          \"timezone\": \"string\"\n        },\n        {\n          \"__typename\": \"User\",\n          \"id\": \"string\",\n          \"updated_at\": \"1998-07-15T06:03:41.633Z\",\n          \"avatar\": \"string\",\n          \"created_at\": \"1951-04-30T04:53:10.660Z\",\n          \"email\": \"string\",\n          \"name\": \"string\",\n          \"phone_number\": \"string\",\n          \"timezone\": \"string\"\n        }\n      ],\n      \"activities\": [\n        {\n          \"__typename\": \"Activity\",\n          \"actor\": null,\n          \"data\": {\n            \"foo\": \"bar\"\n          },\n          \"inserted_at\": \"2024-01-01T00:00:00Z\",\n          \"recipient\": {\n            \"__typename\": \"User\",\n            \"avatar\": null,\n            \"created_at\": null,\n            \"email\": \"jane@ingen.net\",\n            \"name\": \"Jane Doe\",\n            \"phone_number\": null,\n            \"timezone\": null,\n            \"updated_at\": \"2024-05-22T12:00:00Z\"\n          },\n          \"updated_at\": \"2024-01-01T00:00:00Z\"\n        },\n        {\n          \"__typename\": \"Activity\",\n          \"actor\": null,\n          \"data\": {\n            \"foo\": \"bar\"\n          },\n          \"inserted_at\": \"2024-01-01T00:00:00Z\",\n          \"recipient\": {\n            \"__typename\": \"User\",\n            \"avatar\": null,\n            \"created_at\": null,\n            \"email\": \"jane@ingen.net\",\n            \"name\": \"Jane Doe\",\n            \"phone_number\": null,\n            \"timezone\": null,\n            \"updated_at\": \"2024-05-22T12:00:00Z\"\n          },\n          \"updated_at\": \"2024-01-01T00:00:00Z\"\n        }\n      ],\n      \"blocks\": [\n        {\n          \"content\": \"This is a message in an app feed\",\n          \"name\": \"body\",\n          \"rendered\": \"<p>This is a message in an app feed</p>\",\n          \"type\": \"markdown\"\n        },\n        {\n          \"content\": \"This is a message in an app feed\",\n          \"name\": \"body\",\n          \"rendered\": \"<p>This is a message in an app feed</p>\",\n          \"type\": \"markdown\"\n        }\n      ],\n      \"source\": {\n        \"__typename\": \"Workflow\",\n        \"key\": \"string\",\n        \"version_id\": \"dd0a49ef-136e-af6f-cab4-612c3614387c\",\n        \"categories\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"tenant\": \"string\",\n      \"total_activities\": 10,\n      \"total_actors\": 5,\n      \"data\": {\n        \"key_0\": 8781.004140287048,\n        \"key_1\": \"string\"\n      },\n      \"archived_at\": \"string\",\n      \"clicked_at\": \"string\",\n      \"interacted_at\": \"string\",\n      \"link_clicked_at\": \"string\",\n      \"read_at\": \"string\",\n      \"seen_at\": \"string\"\n    },\n    {\n      \"__typename\": \"FeedItem\",\n      \"id\": \"2FVHPWxRqNuXQ9krvNP5A6Z4qXe\",\n      \"inserted_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"actors\": [\n        {\n          \"__typename\": \"User\",\n          \"id\": \"string\",\n          \"updated_at\": \"2003-07-22T23:06:16.070Z\",\n          \"avatar\": \"string\",\n          \"created_at\": \"1969-08-18T23:23:32.492Z\",\n          \"email\": \"string\",\n          \"name\": \"string\",\n          \"phone_number\": \"string\",\n          \"timezone\": \"string\"\n        },\n        {\n          \"__typename\": \"User\",\n          \"id\": \"string\",\n          \"updated_at\": \"1963-11-05T10:49:45.435Z\",\n          \"avatar\": \"string\",\n          \"created_at\": \"1963-09-07T11:16:02.263Z\",\n          \"email\": \"string\",\n          \"name\": \"string\",\n          \"phone_number\": \"string\",\n          \"timezone\": \"string\"\n        }\n      ],\n      \"activities\": [\n        {\n          \"__typename\": \"Activity\",\n          \"actor\": null,\n          \"data\": {\n            \"foo\": \"bar\"\n          },\n          \"inserted_at\": \"2024-01-01T00:00:00Z\",\n          \"recipient\": {\n            \"__typename\": \"User\",\n            \"avatar\": null,\n            \"created_at\": null,\n            \"email\": \"jane@ingen.net\",\n            \"name\": \"Jane Doe\",\n            \"phone_number\": null,\n            \"timezone\": null,\n            \"updated_at\": \"2024-05-22T12:00:00Z\"\n          },\n          \"updated_at\": \"2024-01-01T00:00:00Z\"\n        },\n        {\n          \"__typename\": \"Activity\",\n          \"actor\": null,\n          \"data\": {\n            \"foo\": \"bar\"\n          },\n          \"inserted_at\": \"2024-01-01T00:00:00Z\",\n          \"recipient\": {\n            \"__typename\": \"User\",\n            \"avatar\": null,\n            \"created_at\": null,\n            \"email\": \"jane@ingen.net\",\n            \"name\": \"Jane Doe\",\n            \"phone_number\": null,\n            \"timezone\": null,\n            \"updated_at\": \"2024-05-22T12:00:00Z\"\n          },\n          \"updated_at\": \"2024-01-01T00:00:00Z\"\n        }\n      ],\n      \"blocks\": [\n        {\n          \"content\": \"This is a message in an app feed\",\n          \"name\": \"body\",\n          \"rendered\": \"<p>This is a message in an app feed</p>\",\n          \"type\": \"markdown\"\n        },\n        {\n          \"content\": \"This is a message in an app feed\",\n          \"name\": \"body\",\n          \"rendered\": \"<p>This is a message in an app feed</p>\",\n          \"type\": \"markdown\"\n        }\n      ],\n      \"source\": {\n        \"__typename\": \"Workflow\",\n        \"key\": \"string\",\n        \"version_id\": \"b865d23a-c5e4-19bf-29aa-ecd664460ccc\",\n        \"categories\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"tenant\": \"string\",\n      \"total_activities\": 10,\n      \"total_actors\": 5,\n      \"data\": {\n        \"key_0\": \"string\"\n      },\n      \"archived_at\": \"string\",\n      \"clicked_at\": \"string\",\n      \"interacted_at\": \"string\",\n      \"link_clicked_at\": \"string\",\n      \"read_at\": \"string\",\n      \"seen_at\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  },\n  \"vars\": {\n    \"key_0\": \"string\"\n  },\n  \"meta\": {\n    \"__typename\": \"FeedMetadata\",\n    \"total_count\": 100,\n    \"unread_count\": 10,\n    \"unseen_count\": 5\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe91599b-dfb3-449d-9ed6-9067c848d41c",
+          "name": "Get feed settings",
+          "request": {
+            "name": "Get feed settings",
+            "description": {
+              "content": "Returns the feed settings for a user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "feeds",
+                ":id",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier for the channel."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e48db79e-a41c-49d4-b6f0-b23d04c35a42",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "feeds",
+                    ":id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier for the channel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"features\": {\n    \"branding_required\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5db54fb2-23c1-470b-8996-efcfb7b476b9",
+    "name": "Knock Audiences Accounts Feeds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,657 @@
+{
+  "item": [
+    {
+      "id": "3a17b8b2-10f2-47cf-a8f1-f06eb4b61eca",
+      "name": "Email layouts",
+      "description": {
+        "content": "Email layouts wrap your email templates and provide a consistent look and feel.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d7e4dafd-a034-43a1-83f0-dc3447777209",
+          "name": "List email layouts",
+          "request": {
+            "name": "List email layouts",
+            "description": {
+              "content": "Returns a paginated list of email layouts available in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "email_layouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ac516c9-0522-40c8-9490-839013ee9f20",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email_layouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"created_at\": \"2021-01-01T00:00:00Z\",\n      \"environment\": \"development\",\n      \"footer_links\": [\n        {\n          \"text\": \"Example\",\n          \"url\": \"http://example.com\"\n        }\n      ],\n      \"html_layout\": \"<html><body>Hello, world!</body></html>\",\n      \"key\": \"transactional\",\n      \"name\": \"Transactional\",\n      \"sha\": \"1234567890\",\n      \"text_layout\": \"Hello, world!\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "348cbc6d-6eec-475a-b06c-b0bc63c0310a",
+          "name": "Get email layout",
+          "request": {
+            "name": "Get email layout",
+            "description": {
+              "content": "Retrieve an email layout by its key, in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "email_layouts",
+                ":email_layout_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email_layout_key",
+                  "description": "(Required) The key of the email layout to show."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a51c062a-257e-42f4-ae49-1e0116200686",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email_layouts",
+                    ":email_layout_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email_layout_key",
+                      "description": "(Required) The key of the email layout to show."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"name\": \"string\",\n  \"html_layout\": \"string\",\n  \"text_layout\": \"string\",\n  \"sha\": \"string\",\n  \"created_at\": \"2019-12-12T12:31:01.536Z\",\n  \"environment\": \"string\",\n  \"footer_links\": [\n    {\n      \"text\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"text\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"is_mjml\": false,\n  \"updated_at\": \"1968-12-02T15:10:49.798Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb525706-762f-4e0c-994a-894668654871",
+          "name": "Upsert email layout",
+          "request": {
+            "name": "Upsert email layout",
+            "description": {
+              "content": "Updates an email layout, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates in the \"development\" environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "email_layouts",
+                ":email_layout_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit",
+                  "value": "<boolean>",
+                  "description": "Whether to commit the resource at the same time as modifying it."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit_message",
+                  "value": "<string>",
+                  "description": "The message to commit the resource with, only used if `commit` is `true`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email_layout_key",
+                  "description": "(Required) The key of the email layout to upsert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_layout\": {\n    \"name\": \"<string>\",\n    \"html_layout\": \"<string>\",\n    \"text_layout\": \"<string>\",\n    \"footer_links\": [\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"is_mjml\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d32aeea-13d1-4725-8d0a-3e925f09f3e2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email_layouts",
+                    ":email_layout_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit_message",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email_layout_key",
+                      "description": "(Required) The key of the email layout to upsert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_layout\": {\n    \"name\": \"<string>\",\n    \"html_layout\": \"<string>\",\n    \"text_layout\": \"<string>\",\n    \"footer_links\": [\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"is_mjml\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"email_layout\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"html_layout\": \"string\",\n    \"text_layout\": \"string\",\n    \"sha\": \"string\",\n    \"created_at\": \"2013-08-27T08:20:37.733Z\",\n    \"environment\": \"string\",\n    \"footer_links\": [\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"is_mjml\": true,\n    \"updated_at\": \"1950-07-22T01:12:53.347Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66e310ae-8868-47c3-94c5-df83ad44c15b",
+          "name": "Validate email layout",
+          "request": {
+            "name": "Validate email layout",
+            "description": {
+              "content": "Validates an email layout payload without persisting it.\n\nNote: this endpoint only operates in the \"development\" environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "email_layouts",
+                ":email_layout_key",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "email_layout_key",
+                  "description": "(Required) The key of the email layout to validate."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_layout\": {\n    \"name\": \"<string>\",\n    \"html_layout\": \"<string>\",\n    \"text_layout\": \"<string>\",\n    \"footer_links\": [\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"is_mjml\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f3ac1821-4b33-43b4-bf50-81205f545a95",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email_layouts",
+                    ":email_layout_key",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "email_layout_key",
+                      "description": "(Required) The key of the email layout to validate."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_layout\": {\n    \"name\": \"<string>\",\n    \"html_layout\": \"<string>\",\n    \"text_layout\": \"<string>\",\n    \"footer_links\": [\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      },\n      {\n        \"text\": \"<string>\",\n        \"url\": \"<string>\"\n      }\n    ],\n    \"is_mjml\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"email_layout\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"html_layout\": \"string\",\n    \"text_layout\": \"string\",\n    \"sha\": \"string\",\n    \"created_at\": \"2013-08-27T08:20:37.733Z\",\n    \"environment\": \"string\",\n    \"footer_links\": [\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"is_mjml\": true,\n    \"updated_at\": \"1950-07-22T01:12:53.347Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d9fa4aeb-6791-472d-91de-936579b47f22",
+    "name": "Knock Audiences Accounts Email layouts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

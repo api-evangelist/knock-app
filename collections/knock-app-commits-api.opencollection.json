@@ -1,0 +1,203 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Commits API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/commits/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the commit to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve a single commit by its ID."
+        },
+        {
+          "info": {
+            "name": "Promote one commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/commits/:id/promote",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The target commit ID to promote to the subsequent environment."
+              }
+            ]
+          },
+          "docs": "Promotes one change to the subsequent environment."
+        },
+        {
+          "info": {
+            "name": "Promote all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/commits/promote",
+            "params": [
+              {
+                "name": "to_environment",
+                "value": "",
+                "type": "query",
+                "description": "A slug of the target environment to which you want to promote all changes from its directly preceding environment.\n\nFor example, if you have three environments “development”, “staging”, and “production” (in that order), setting this param to “production” will promote all commits not currently in production from staging.\n\nWhen this param is set to `\"development\"`, the `\"branch\"` param must be provided.\n"
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the branch to promote all changes from."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits to promote by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits to promote by resource identifier. Must be used together with resource_type."
+              }
+            ]
+          },
+          "docs": "Promote all changes across all resources to the target environment from its preceding environment."
+        },
+        {
+          "info": {
+            "name": "List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/commits",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "promoted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to show commits in the given environment that have not been promoted to the subsequent environment (false) or commits which have been promoted (true)."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits by resource identifier. Must be used together with resource_type. For most resources, this will be the resource key. In the case of translations, this will be the locale code and namespace, separated by a `/`. For example, `en/courses` or `en`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of commits in a given environment. The commits are ordered from most recent first."
+        },
+        {
+          "info": {
+            "name": "Commit all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/commits",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "An optional message to include in a commit."
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter changes to commit by resource type(s). Accepts a single type or array of types. Can be combined with resource_id to filter for specific resources."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter changes to commit by resource identifier. Must be used together with resource_type."
+              }
+            ]
+          },
+          "docs": "Commit all changes across all resources in the development environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

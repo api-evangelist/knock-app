@@ -1,0 +1,312 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Accounts Audiences API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/audiences/:key/members",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of members for the specified audience."
+        },
+        {
+          "info": {
+            "name": "Add members",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/audiences/:key/members",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience."
+              },
+              {
+                "name": "create_audience",
+                "value": "",
+                "type": "query",
+                "description": "Create the audience if it does not exist."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more members to the specified audience."
+        },
+        {
+          "info": {
+            "name": "Remove members",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/audiences/:key/members",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more members from the specified audience."
+        },
+        {
+          "info": {
+            "name": "Get an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve an audience by its key in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to upsert."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an audience of a given key, or creates a new one if it does not yet exist."
+        },
+        {
+          "info": {
+            "name": "Archive an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/audiences/:audience_key",
+            "params": [
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to archive."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              }
+            ]
+          },
+          "docs": "Archives a given audience across all environments."
+        },
+        {
+          "info": {
+            "name": "Validate an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/audiences/:audience_key/validate",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "audience_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the audience to validate."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates an audience payload without persisting it."
+        },
+        {
+          "info": {
+            "name": "List audiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/audiences",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of audiences for the given environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

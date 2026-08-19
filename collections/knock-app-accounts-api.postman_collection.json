@@ -1,0 +1,121 @@
+{
+  "item": [
+    {
+      "id": "a784ee96-9ee2-4f96-b4ec-3c22d89c6e97",
+      "name": "Accounts",
+      "description": {
+        "content": "Resources for managing your Knock account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "048447ba-b2f2-475b-b971-b19289d12afd",
+          "name": "Verify scope",
+          "request": {
+            "name": "Verify scope",
+            "description": {
+              "content": "Return information about the current calling scope. Will either be a service token or from an OAuth context.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whoami"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86ffc8a0-0df6-4df4-9b16-9e01f6bffab3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whoami"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_features\": {\n    \"batch_items_render_limit_allowed\": false,\n    \"custom_branding_allowed\": false,\n    \"data_retention_days\": 30,\n    \"data_warehouse_extension_allowed\": false,\n    \"datadog_extension_allowed\": true,\n    \"dsync_allowed\": false,\n    \"guides_monthly_notified_recipients_limit\": 500,\n    \"guides_per_tenant_scope_allowed\": false,\n    \"heap_extension_allowed\": false,\n    \"knock_branding_required\": true,\n    \"litmus_email_preview_allowed\": false,\n    \"message_sent_limit\": 10000,\n    \"new_relic_extension_allowed\": false,\n    \"segment_extension_allowed\": false,\n    \"self_serve_allowed\": true,\n    \"sso_allowed\": false,\n    \"tenant_preferences_allowed\": false,\n    \"translations_allowed\": false\n  },\n  \"account_name\": \"Acme, Inc.\",\n  \"account_slug\": \"acme\",\n  \"service_token_name\": \"My Service Token\",\n  \"type\": \"service_token\",\n  \"user_id\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "935292c2-46be-4052-a5cc-5a61c184a632",
+    "name": "Knock Audiences Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

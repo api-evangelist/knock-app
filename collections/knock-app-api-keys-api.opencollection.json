@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts API keys API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange for API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/api_keys/exchange",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              }
+            ]
+          },
+          "docs": "Given an authenticated service token and an environment, will exchange the service token for a secret API key that can be used to make requests to the public API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,359 @@
+{
+  "item": [
+    {
+      "id": "b679d6d2-b273-4e14-abb8-1f68fa7c45c2",
+      "name": "Members",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4c99469a-f3dc-4298-82ef-4e2162065e31",
+          "name": "Remove a member",
+          "request": {
+            "name": "Remove a member",
+            "description": {
+              "content": "Removes a member from the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "members",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The ID of the member to remove."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "872d9d81-0e47-469e-aca6-fd5b49e9433a",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the member to remove."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64ef0794-db48-437c-a210-82a9249ffc14",
+          "name": "Get a member",
+          "request": {
+            "name": "Get a member",
+            "description": {
+              "content": "Returns a single member by their ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "members",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The ID of the member to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93e39a57-d597-44b4-88cd-dca59a273863",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The ID of the member to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"c8b74408-0d92-ebd9-5aa7-16f381a29972\",\n  \"role\": \"owner\",\n  \"user\": {\n    \"id\": \"630d1f00-c622-90fe-80e7-25e6593872a1\",\n    \"email\": \"FOB@jRuzDTrWVQOsrnP.idfm\",\n    \"created_at\": \"1953-06-29T22:58:47.841Z\",\n    \"updated_at\": \"1978-05-03T06:11:00.038Z\",\n    \"avatar_url\": \"string\",\n    \"name\": \"string\"\n  },\n  \"created_at\": \"2017-06-04T12:02:50.101Z\",\n  \"updated_at\": \"1949-09-03T08:48:15.977Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ef8fd1c-5ea0-4128-a2cc-bcd2809dfc44",
+          "name": "List members",
+          "request": {
+            "name": "List members",
+            "description": {
+              "content": "Returns a paginated list of members for the current account. Optionally filter by role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "Filter members by role. One of: owner, admin, member, production_only_member, billing, support."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "Filter members by email address (exact match)."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a8c170d-5ace-4422-ae17-2ea0451b7566",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"id\": \"bf8af2c4-fc97-f602-8300-6551353fc523\",\n      \"role\": \"member\",\n      \"user\": {\n        \"id\": \"6c1b0109-caba-0f6c-a570-a145b24b2b27\",\n        \"email\": \"jWPs4cnUMOoSY@aVcivitsH.zb\",\n        \"created_at\": \"2007-01-12T11:52:31.732Z\",\n        \"updated_at\": \"2015-02-11T13:18:02.227Z\",\n        \"avatar_url\": \"string\",\n        \"name\": \"string\"\n      },\n      \"created_at\": \"1948-05-26T20:32:17.677Z\",\n      \"updated_at\": \"1965-04-08T17:05:24.114Z\"\n    },\n    {\n      \"id\": \"e7606e66-ee11-6307-3bb6-c0f9cd2b14c9\",\n      \"role\": \"member\",\n      \"user\": {\n        \"id\": \"fba23fcb-4eed-9aa8-7a3a-29bfb3120c28\",\n        \"email\": \"uGFXcs@bHhPIddRoVcysldXOFXJuKzlUJhdKT.dh\",\n        \"created_at\": \"1976-11-19T13:26:03.759Z\",\n        \"updated_at\": \"2007-07-09T04:43:01.302Z\",\n        \"avatar_url\": \"string\",\n        \"name\": \"string\"\n      },\n      \"created_at\": \"1971-01-04T10:22:52.858Z\",\n      \"updated_at\": \"1971-08-13T17:11:37.923Z\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "24417fef-2839-4ca4-85c8-fc2fba77d405",
+    "name": "Knock Audiences Accounts Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

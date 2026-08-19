@@ -1,0 +1,264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Broadcasts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Broadcasts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/broadcasts/:broadcast_key/send",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a broadcast immediately or schedules it to send at a future time.\n"
+        },
+        {
+          "info": {
+            "name": "Validate a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/broadcasts/:broadcast_key/validate",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a broadcast payload without persisting it.\n"
+        },
+        {
+          "info": {
+            "name": "List broadcasts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/broadcasts",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of broadcasts available in a given environment. The broadcasts are returned ordered by creation time (newest first)."
+        },
+        {
+          "info": {
+            "name": "Get a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/broadcasts/:broadcast_key",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast to retrieve."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Get a broadcast by its key in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert a broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/broadcasts/:broadcast_key",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a broadcast of a given key, or creates a new one if it does not yet exist.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a scheduled broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/broadcasts/:broadcast_key/cancel",
+            "params": [
+              {
+                "name": "broadcast_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the broadcast."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ]
+          },
+          "docs": "Cancels sending a scheduled broadcast. The broadcast will return to draft status.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

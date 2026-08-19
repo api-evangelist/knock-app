@@ -1,0 +1,166 @@
+{
+  "item": [
+    {
+      "id": "cd1f806c-3c36-43cd-ad51-1985f22ea81c",
+      "name": "Templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d3ecb2f-f11c-4d59-ba1e-8ce6a59038cf",
+          "name": "Preview a template",
+          "request": {
+            "name": "Preview a template",
+            "description": {
+              "content": "Renders a template preview, without requiring a template to be persisted within Knock.\nThis is useful for previewing templates in isolation, without the need to use a workflow.\n\nFor email templates, you can optionally specify a layout by key or provide inline layout content.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "templates",
+                "preview"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_type\": \"<string>\",\n  \"template\": {\n    \"subject\": \"<string>\",\n    \"settings\": {\n      \"attachment_key\": \"<string>\",\n      \"layout_key\": \"<string>\",\n      \"pre_content\": \"<string>\"\n    },\n    \"html_body\": \"<string>\",\n    \"is_mjml\": \"<boolean>\",\n    \"text_body\": \"<string>\",\n    \"visual_blocks\": [\n      {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buttons\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"layout_attrs\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"buttons\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"layout_attrs\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"version\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ]\n  },\n  \"recipient\": \"<string>\",\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"key_0\": \"string\"\n  },\n  \"layout\": {\n    \"html_content\": \"<string>\",\n    \"key\": \"<string>\",\n    \"text_content\": \"<string>\"\n  },\n  \"tenant\": \"<string>\",\n  \"workflow\": {\n    \"key\": \"<string>\",\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be130607-ada3-407b-8f9c-fab2c2f281b9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "templates",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_type\": \"email\",\n  \"data\": {\n    \"order_id\": 123\n  },\n  \"recipient\": \"user_123\",\n  \"template\": {\n    \"html_body\": \"<p>Welcome!</p>\",\n    \"settings\": {\n      \"layout_key\": \"default\"\n    },\n    \"subject\": \"Hello {{ recipient.name }}\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"content_type\": \"push\",\n  \"errors\": [\n    {\n      \"field\": \"html_content\",\n      \"line\": 1,\n      \"message\": \"Reason: expected end of string, line: 1\"\n    },\n    {\n      \"field\": \"html_content\",\n      \"line\": 1,\n      \"message\": \"Reason: expected end of string, line: 1\"\n    }\n  ],\n  \"template\": {\n    \"html_body\": \"<p>Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} <a href='{{ data.sign_in_url }}'>Get started here</a>.</p>\",\n    \"settings\": {\n      \"layout_key\": \"default\"\n    },\n    \"subject\": \"Welcome to {{ vars.app_name }}\",\n    \"text_body\": \"Hello, {{ recipient.name }}! Welcome to {{ vars.app_name }} Get started here: {{ data.sign_in_url }}.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "99ec814d-ad28-4bea-89fe-3ea2587898de",
+    "name": "Knock Audiences Accounts Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

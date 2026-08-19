@@ -1,0 +1,497 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Guides API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Guides",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to retrieve."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Get a guide by its key."
+        },
+        {
+          "info": {
+            "name": "Upsert a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to upsert."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a guide of a given key, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on guides in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Archive a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/guides/:guide_key",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide to archive."
+              }
+            ]
+          },
+          "docs": "Archives a given guide across all environments."
+        },
+        {
+          "info": {
+            "name": "List guides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/guides",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of guides available in a given environment."
+        },
+        {
+          "info": {
+            "name": "Activate a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/guides/:guide_key/activate",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates (or deactivates) a guide in a given environment. You can either set the active status immediately or schedule it.\n\nNote: This immediately enables or disables a guide in a given environment without needing to go through environment promotion.\n"
+        },
+        {
+          "info": {
+            "name": "Validate a guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/guides/:guide_key/validate",
+            "params": [
+              {
+                "name": "guide_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the guide."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a guide payload without persisting it.\n\nNote: Validating a guide is only done in the development environment context.\n"
+        },
+        {
+          "info": {
+            "name": "Mark guide as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/seen",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been seen by a user, triggering any associated seen events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as seen",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/seen",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been seen by a user, triggering any associated seen events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as archived",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been archived by a user, triggering any associated archived events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as unarchived",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been unarchived, triggering any associated unarchived events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/interacted",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a user has interacted with a guide, triggering any associated interacted events."
+        },
+        {
+          "info": {
+            "name": "Reset guide engagement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/engagements/reset",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next interaction creates a fresh engagement."
+        },
+        {
+          "info": {
+            "name": "List guides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/:channel_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The tenant ID to use for targeting and rendering guides."
+              },
+              {
+                "name": "data",
+                "value": "",
+                "type": "query",
+                "description": "The data (JSON encoded object) to use for targeting and rendering guides."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of guides to filter by."
+              }
+            ]
+          },
+          "docs": "Returns a list of eligible in-app guides for a specific user and channel."
+        },
+        {
+          "info": {
+            "name": "Mark guide as interacted",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/interacted",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a user has interacted with a guide, triggering any associated interacted events."
+        },
+        {
+          "info": {
+            "name": "Mark guide as archived",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/guides/messages/:message_id/archived",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a guide has been archived by a user, triggering any associated archived events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

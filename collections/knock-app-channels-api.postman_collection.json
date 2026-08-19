@@ -1,0 +1,281 @@
+{
+  "item": [
+    {
+      "id": "b0a0ee51-70ea-421c-b548-71f204f0a307",
+      "name": "Channels",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b54ebab-4660-46a2-96ee-96a529962273",
+          "name": "List channels",
+          "request": {
+            "name": "List channels",
+            "description": {
+              "content": "Returns a paginated list of channels. Note: the list of channels is across the entire account, not scoped to an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "A channel id to filter the results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Associated resources to include in the response. Accepts `environment_settings` to include per-environment channel configuration."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Associated resources to include in the response. Accepts `environment_settings` to include per-environment channel configuration."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11811c34-5f52-4630-9aea-2ebdc26d20ae",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"type\": \"chat\",\n      \"provider\": \"string\",\n      \"created_at\": \"1965-12-23T00:31:27.567Z\",\n      \"updated_at\": \"1986-04-18T04:40:31.981Z\",\n      \"archived_at\": \"1995-10-16T01:21:26.396Z\",\n      \"custom_icon_url\": \"string\",\n      \"description\": \"string\",\n      \"environment_settings\": {\n        \"key_0\": {\n          \"id\": \"c97163a8-fc05-0260-eab5-51526e12091f\",\n          \"is_valid\": true,\n          \"is_sandbox\": true,\n          \"channel_settings\": {\n            \"key_0\": 2293.9641331868465,\n            \"key_1\": false,\n            \"key_2\": \"string\",\n            \"key_3\": 2305\n          },\n          \"provider_settings\": {\n            \"key_0\": \"string\",\n            \"key_1\": 7063.628250144814\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"type\": \"sms\",\n      \"provider\": \"string\",\n      \"created_at\": \"2013-01-18T20:00:02.985Z\",\n      \"updated_at\": \"1965-02-11T15:13:17.105Z\",\n      \"archived_at\": \"2007-12-02T15:57:30.417Z\",\n      \"custom_icon_url\": \"string\",\n      \"description\": \"string\",\n      \"environment_settings\": {\n        \"key_0\": {\n          \"id\": \"662337e9-2175-eb04-02da-d6631acf3584\",\n          \"is_valid\": true,\n          \"is_sandbox\": true,\n          \"channel_settings\": {\n            \"key_0\": true,\n            \"key_1\": 6362.732329012212,\n            \"key_2\": 8583.456349988854\n          },\n          \"provider_settings\": {\n            \"key_0\": true,\n            \"key_1\": false\n          }\n        }\n      }\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d51245a-9d4d-43f0-ac72-16ad597f9c41",
+          "name": "Get a channel",
+          "request": {
+            "name": "Get a channel",
+            "description": {
+              "content": "Returns a channel with all environment-specific settings. Secret values in provider settings are obfuscated unless they are Liquid templates (e.g., `{{ vars.api_key }}`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channels",
+                ":channel_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_key",
+                  "description": "(Required) The key of the channel to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c36bcba-7aef-48f3-aa5a-40ed9c8e90d2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channels",
+                    ":channel_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_key",
+                      "description": "(Required) The key of the channel to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"type\": \"in_app_guide\",\n  \"provider\": \"string\",\n  \"created_at\": \"1986-09-07T16:10:06.353Z\",\n  \"updated_at\": \"1997-03-17T12:10:41.567Z\",\n  \"archived_at\": \"2023-06-02T23:16:58.414Z\",\n  \"custom_icon_url\": \"string\",\n  \"description\": \"string\",\n  \"environment_settings\": {\n    \"key_0\": {\n      \"id\": \"0ba8b7d6-17ea-e373-62fa-b46f8d37b29e\",\n      \"is_valid\": true,\n      \"is_sandbox\": false,\n      \"channel_settings\": {\n        \"key_0\": \"string\",\n        \"key_1\": 4797.881728740738\n      },\n      \"provider_settings\": {\n        \"key_0\": \"string\",\n        \"key_1\": true\n      }\n    },\n    \"key_1\": {\n      \"id\": \"02fda103-1b86-9e1b-c685-56714ef12256\",\n      \"is_valid\": false,\n      \"is_sandbox\": true,\n      \"channel_settings\": {\n        \"key_0\": 8422\n      },\n      \"provider_settings\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"key_2\": {\n      \"id\": \"438eba2e-5c16-36a1-adb6-ee0d47d676cc\",\n      \"is_valid\": true,\n      \"is_sandbox\": true,\n      \"channel_settings\": {\n        \"key_0\": 3086\n      },\n      \"provider_settings\": {\n        \"key_0\": false\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "28168642-c5a2-44da-8106-59de11744772",
+    "name": "Knock Audiences Accounts Channels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

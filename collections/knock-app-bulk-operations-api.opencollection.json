@@ -1,0 +1,258 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Bulk operations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bulk operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bulk operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/bulk_operations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the bulk operation to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a bulk operation (if it exists) and displays the current state of it."
+        },
+        {
+          "info": {
+            "name": "Bulk update message statuses for channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/channels/:channel_id/messages/bulk/:action",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the channel to update messages for."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "path",
+                "description": "The target status to be applied to the messages."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk update the status of messages for a specific channel. The channel is specified by the `channel_id` parameter. The action to perform is specified by the `action` parameter, where the action is a status change action (e.g. `archive`, `unarchive`)."
+        },
+        {
+          "info": {
+            "name": "Bulk delete objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/delete",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk deletes objects from the specified collection."
+        },
+        {
+          "info": {
+            "name": "Bulk add subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/add",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add subscriptions for all objects in a single collection. If a subscription for an object in the collection already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient` field."
+        },
+        {
+          "info": {
+            "name": "Bulk delete subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/delete",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete subscriptions for many objects in a single collection type. If a subscription for an object in the collection doesn't exist, it will be skipped."
+        },
+        {
+          "info": {
+            "name": "Bulk set objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/set",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk sets up to 1,000 objects at a time in the specified collection."
+        },
+        {
+          "info": {
+            "name": "Create schedules in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/schedules/bulk/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk creates up to 1,000 schedules at a time. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+        },
+        {
+          "info": {
+            "name": "Bulk delete tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/tenants/bulk/delete",
+            "params": [
+              {
+                "name": "tenant_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "The IDs of the tenants to delete."
+              }
+            ]
+          },
+          "docs": "Delete up to 1,000 tenants at a time in a single operation. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Bulk set tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/tenants/bulk/set",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set or update up to 1,000 tenants in a single operation."
+        },
+        {
+          "info": {
+            "name": "Bulk set preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/preferences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk sets the preferences for up to 1,000 users at a time. The preference set `:id` can be either `default` or a `tenant.id`. Learn more about [per-tenant preferences](/preferences/tenant-preferences). Note that this is a destructive operation and will replace any existing users' preferences with the preferences sent."
+        },
+        {
+          "info": {
+            "name": "Bulk identify users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/identify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Identifies multiple users in a single operation. Allows creating or updating up to 1,000 users in a single batch with various properties, preferences, and channel data."
+        },
+        {
+          "info": {
+            "name": "Bulk delete users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/users/bulk/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently deletes up to 1,000 users at a time."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

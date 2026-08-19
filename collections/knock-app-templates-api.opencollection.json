@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Templates API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Preview a template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/templates/preview",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renders a template preview, without requiring a template to be persisted within Knock.\nThis is useful for previewing templates in isolation, without the need to use a workflow.\n\nFor email templates, you can optionally specify a layout by key or provide inline layout content.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

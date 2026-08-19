@@ -1,0 +1,382 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Preferences API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update workflows in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/workflows"
+          },
+          "docs": "Updates the workflow preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Update a channel type preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/channel_types/:type"
+          },
+          "docs": "Updates a specific channel type preference for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Update a category preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/categories/:key"
+          },
+          "docs": "Updates a specific category preference for an object's preference set. Deprecated."
+        },
+        {
+          "info": {
+            "name": "List preference sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of preference sets for the specified object."
+        },
+        {
+          "info": {
+            "name": "Update a workflow preference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/workflows/:key"
+          },
+          "docs": "Updates a specific workflow preference for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Update categories in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/categories"
+          },
+          "docs": "Updates the category preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Update channel types in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id/channel_types"
+          },
+          "docs": "Updates the channel type preferences for an object's preference set."
+        },
+        {
+          "info": {
+            "name": "Get object preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Returns the preference set for the specified object and preference set `id`."
+        },
+        {
+          "info": {
+            "name": "Update a preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets preferences within the given preference set. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use '__persistence_strategy': 'merge' to merge with existing preferences instead. If no object exists in the current environment for the given `:collection` and `:object_id`, Knock will create the object as part of this request. The preference set `:id` can be either `default` or a `tenant.id`. Learn more about [per-tenant preferences"
+        },
+        {
+          "info": {
+            "name": "Delete object preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/preferences/:id",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Unsets the preference set for the object, removing it entirely."
+        },
+        {
+          "info": {
+            "name": "Update category in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/categories/:key"
+          },
+          "docs": "Updates a single category in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Update workflows in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/workflows"
+          },
+          "docs": "Updates the workflows in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Update categories in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/categories"
+          },
+          "docs": "Updates the categories in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Update channel type in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/channel_types/:type"
+          },
+          "docs": "Updates a single channel type in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "List user preference sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all preference sets for a specific user."
+        },
+        {
+          "info": {
+            "name": "Update workflow in user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/workflows/:key"
+          },
+          "docs": "Updates a single workflow in a specific user preference set. This operation is deprecated."
+        },
+        {
+          "info": {
+            "name": "Get user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier for the tenant."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific preference set for a user identified by the preference set ID."
+        },
+        {
+          "info": {
+            "name": "Update user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a complete preference set for a user. By default, this is a destructive operation and will replace any existing preferences with the preferences given. Use '__persistence_strategy__': 'merge' to merge with existing preferences instead."
+        },
+        {
+          "info": {
+            "name": "Delete user preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the preference set."
+              }
+            ]
+          },
+          "docs": "Unsets the preference set for the user, removing it entirely."
+        },
+        {
+          "info": {
+            "name": "Update channel types in preference set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/users/:user_id/preferences/:id/channel_types"
+          },
+          "docs": "Updates the channel types in a specific user preference set. This operation is deprecated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

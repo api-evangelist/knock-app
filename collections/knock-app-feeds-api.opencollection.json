@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Feeds API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List feed items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/feeds/:id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              },
+              {
+                "name": "status",
+                "value": "unread",
+                "type": "query",
+                "description": "The status of the feed items."
+              },
+              {
+                "name": "source",
+                "value": "my_source",
+                "type": "query",
+                "description": "The workflow key associated with the message in the feed."
+              },
+              {
+                "name": "tenant",
+                "value": "my_tenant",
+                "type": "query",
+                "description": "The tenant associated with the feed items."
+              },
+              {
+                "name": "has_tenant",
+                "value": "true",
+                "type": "query",
+                "description": "Whether the feed items have a tenant."
+              },
+              {
+                "name": "workflow_categories[]",
+                "value": "my_workflow_category",
+                "type": "query",
+                "description": "The workflow categories of the feed items."
+              },
+              {
+                "name": "archived",
+                "value": "exclude",
+                "type": "query",
+                "description": "The archived status of the feed items."
+              },
+              {
+                "name": "trigger_data",
+                "value": "{ \"key\": \"value\" }",
+                "type": "query",
+                "description": "The trigger data of the feed items (as a JSON string)."
+              },
+              {
+                "name": "locale",
+                "value": "en-US",
+                "type": "query",
+                "description": "The locale to render the feed items in. Must be in the IETF 5646 format (e.g. `en-US`). When not provided, will default to the locale that the feed items were rendered in. Only available for enterprise plan customers using custom translations."
+              },
+              {
+                "name": "exclude",
+                "value": "entries.archived_at,entries.clicked_at",
+                "type": "query",
+                "description": "Comma-separated list of field paths to exclude from the response. Use dot notation for nested fields (e.g., `entries.archived_at`). Limited to 3 levels deep."
+              },
+              {
+                "name": "mode",
+                "value": "compact",
+                "type": "query",
+                "description": "The mode to render the feed items in. Can be `compact` or `rich`. Defaults to `rich`. When `mode` is `compact`, feed items will not have `activities` and `total_activities` fields; the `data` field will not include nested arrays and objects; and the `actors` field will only have up to one actor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "inserted_at.gt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after the given date."
+              },
+              {
+                "name": "inserted_at.gte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted after or on the given date."
+              },
+              {
+                "name": "inserted_at.lt",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before the given date."
+              },
+              {
+                "name": "inserted_at.lte",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to items inserted before or on the given date."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of feed items for a user in reverse chronological order, including metadata about the feed. If the user has not yet been identified within Knock, an empty feed will be returned.\n\nYou can customize the response using [response filters](/integrations/in-app/knock#customizing-api-response-content) to exclude or only include specific properties on your resources.\n\n**Notes:**\n* When making this call from a client-side environment, use your publishable key along with a user to"
+        },
+        {
+          "info": {
+            "name": "Get feed settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/feeds/:id/settings",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the channel."
+              }
+            ]
+          },
+          "docs": "Returns the feed settings for a user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

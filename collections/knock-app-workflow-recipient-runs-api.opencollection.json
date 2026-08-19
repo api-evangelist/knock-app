@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Workflow recipient runs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflow recipient runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a workflow recipient run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/workflow_recipient_runs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the workflow recipient run (per-recipient)."
+              }
+            ]
+          },
+          "docs": "Returns a single workflow recipient run with its associated events."
+        },
+        {
+          "info": {
+            "name": "List workflow recipient runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/workflow_recipient_runs",
+            "params": [
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              },
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs for the given workflow key."
+              },
+              {
+                "name": "status[]",
+                "value": "",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs with the given status."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs for the given tenant."
+              },
+              {
+                "name": "has_errors",
+                "value": "",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs that have errors."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs for the given recipient. Accepts a user ID string or an object reference with `id` and `collection`."
+              },
+              {
+                "name": "starting_at",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs started after the given date."
+              },
+              {
+                "name": "ending_at",
+                "value": "2025-01-01T00:00:00Z",
+                "type": "query",
+                "description": "Limits the results to workflow recipient runs started before the given date."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of workflow recipient runs for the current environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

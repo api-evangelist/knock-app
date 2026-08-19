@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Schedules API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List object schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:id/schedules",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the object to list schedules for."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection of the object to list schedules for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Filter schedules by tenant id."
+              },
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "Filter schedules by workflow id."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of schedules for an object."
+        },
+        {
+          "info": {
+            "name": "List schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/schedules",
+            "params": [
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow key."
+              },
+              {
+                "name": "recipients[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by recipient references."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tenant ID."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of schedules for the current environment, filtered by workflow and optionally by recipients and tenant."
+        },
+        {
+          "info": {
+            "name": "Create schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates one or more schedules for a workflow with the specified recipients, timing, and data. Schedules can be one-time or recurring. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+        },
+        {
+          "info": {
+            "name": "Update schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one or more existing schedules with new timing, data, or other properties. All specified schedule IDs will be updated with the same values. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields."
+        },
+        {
+          "info": {
+            "name": "Delete schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently deletes one or more schedules identified by the provided schedule IDs. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "List user schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/schedules",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user ID to list schedules for."
+              },
+              {
+                "name": "workflow",
+                "value": "",
+                "type": "query",
+                "description": "The workflow key to filter schedules for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "The tenant ID to filter schedules for."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of schedules for a specific user, in descending order."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

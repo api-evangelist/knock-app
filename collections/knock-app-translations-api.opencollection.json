@@ -1,0 +1,276 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Translations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Translations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List translations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/translations",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "query",
+                "description": "A specific locale code to filter translations for."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "A specific namespace to filter translations for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "A specific tenant to filter translations for."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of translations available in a given environment. The translations are returned in alphabetical order by locale code.\n"
+        },
+        {
+          "info": {
+            "name": "Validate translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/translations/:locale_code/validate",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "The translation's locale code."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a translation payload without persisting it.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Get translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/translations/:locale_code",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "A specific locale code to filter translations for."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "A specific namespace to filter translations for."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "A specific tenant to scope the translation to."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve a translation by its locale and namespace, in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/translations/:locale_code",
+            "params": [
+              {
+                "name": "locale_code",
+                "value": "",
+                "type": "path",
+                "description": "A locale code of the translation."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "An optional namespace that identifies the translation."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "An optional tenant to scope the translation to."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Optionally specify the returned content format. Supports 'json' and 'po'. Defaults to 'json'."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a translation of a given locale code + namespace, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on translations in the \"development\" environment.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,955 @@
+{
+  "item": [
+    {
+      "id": "a9fbaf53-d5f4-48d3-a176-7e72de010c6a",
+      "name": "Subscriptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d64cad5c-6268-4653-9988-f43118404386",
+          "name": "Bulk add subscriptions",
+          "request": {
+            "name": "Bulk add subscriptions",
+            "description": {
+              "content": "Add subscriptions for all objects in a single collection. If a subscription for an object in the collection already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient` field.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                "bulk",
+                "subscriptions",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection this object belongs to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriptions\": [\n    {\n      \"id\": \"<string>\",\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": {\n        \"key_0\": 9334.122676241574\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": {\n        \"key_0\": true\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "784f22b0-7009-4795-9d3f-a3e08794f24c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    "bulk",
+                    "subscriptions",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection this object belongs to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"id\": \"project-1\",\n      \"properties\": null,\n      \"recipients\": [\n        {\n          \"id\": \"user_1\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"__typename\": \"BulkOperation\",\n  \"id\": \"69e66148-1abe-3718-eef0-8f2076b89816\",\n  \"name\": \"Bulk operation name\",\n  \"status\": \"queued\",\n  \"estimated_total_rows\": 1000,\n  \"processed_rows\": 0,\n  \"success_count\": 0,\n  \"updated_at\": \"1991-05-07T04:51:56.919Z\",\n  \"inserted_at\": \"1998-01-25T01:19:16.938Z\",\n  \"completed_at\": \"1988-04-04T19:15:32.121Z\",\n  \"error_count\": 0,\n  \"error_items\": [\n    {\n      \"id\": \"string\",\n      \"collection\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"collection\": \"string\"\n    }\n  ],\n  \"failed_at\": \"1961-07-13T20:07:06.100Z\",\n  \"progress_path\": \"http://LgJO.ivCIFA6lZHkctU5uFo,LSk0-WnFsE9h3ZyAOI\",\n  \"started_at\": \"1985-02-27T18:11:34.061Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad3a8e66-504d-47da-93cf-507fcb7f49ec",
+          "name": "Bulk delete subscriptions",
+          "request": {
+            "name": "Bulk delete subscriptions",
+            "description": {
+              "content": "Delete subscriptions for many objects in a single collection type. If a subscription for an object in the collection doesn't exist, it will be skipped.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                "bulk",
+                "subscriptions",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection this object belongs to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriptions\": [\n    {\n      \"id\": \"<string>\",\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a1c31846-0fda-4512-a6f4-a9f118613219",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    "bulk",
+                    "subscriptions",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection this object belongs to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptions\": [\n    {\n      \"id\": \"subscribed-to-object-1\",\n      \"recipients\": [\n        {\n          \"collection\": \"projects\",\n          \"id\": \"subscriber-project-1\"\n        },\n        \"subscriber-user-1\"\n      ]\n    },\n    {\n      \"id\": \"subscribed-to-object-2\",\n      \"recipients\": [\n        \"subscriber-user-2\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"__typename\": \"BulkOperation\",\n  \"id\": \"1821bb8d-4825-55aa-f999-88a79e2e008c\",\n  \"name\": \"Bulk operation name\",\n  \"status\": \"queued\",\n  \"estimated_total_rows\": 1000,\n  \"processed_rows\": 0,\n  \"success_count\": 0,\n  \"updated_at\": \"1951-11-07T12:52:43.954Z\",\n  \"inserted_at\": \"1951-08-24T02:19:55.233Z\",\n  \"completed_at\": \"1957-02-13T23:28:32.727Z\",\n  \"error_count\": 0,\n  \"error_items\": [\n    {\n      \"id\": \"string\",\n      \"collection\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"collection\": \"string\"\n    }\n  ],\n  \"failed_at\": \"1975-04-14T02:09:12.884Z\",\n  \"progress_path\": \"https://toKQuL.phfsTZzBT.uAycsR\",\n  \"started_at\": \"1993-03-28T10:31:48.169Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e68173a1-f001-4beb-9ed3-0e57f27c12cd",
+          "name": "Delete subscriptions",
+          "request": {
+            "name": "Delete subscriptions",
+            "description": {
+              "content": "Delete subscriptions for the specified recipients from an object. Returns the list of deleted subscriptions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                ":object_id",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_id",
+                  "description": "(Required) Unique identifier for the object."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection this object belongs to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "660cb8f2-97e2-4e43-bf08-04a5ef203403",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    ":object_id",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_id",
+                      "description": "(Required) Unique identifier for the object."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection this object belongs to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipients\": [\n    \"user_123\",\n    \"user_123\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"__typename\": \"Subscription\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"2016-11-08T19:27:06.925Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1961-08-19T12:36:54.361Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"object\": {\n      \"__typename\": \"Object\",\n      \"id\": \"string\",\n      \"collection\": \"string\",\n      \"updated_at\": \"1968-02-07T07:13:09.468Z\",\n      \"created_at\": \"1976-04-02T16:08:14.876Z\",\n      \"properties\": {\n        \"key_0\": 4417.786782472685,\n        \"key_1\": 3559.733663642535\n      }\n    },\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\",\n    \"properties\": {\n      \"key_0\": 6772,\n      \"key_1\": true\n    }\n  },\n  {\n    \"__typename\": \"Subscription\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1950-02-08T00:09:07.524Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2001-11-26T10:19:59.445Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"object\": {\n      \"__typename\": \"Object\",\n      \"id\": \"string\",\n      \"collection\": \"string\",\n      \"updated_at\": \"1993-03-22T13:24:43.055Z\",\n      \"created_at\": \"1980-06-26T01:47:20.833Z\",\n      \"properties\": {\n        \"key_0\": 1121,\n        \"key_1\": false\n      }\n    },\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\",\n    \"properties\": {\n      \"key_0\": false,\n      \"key_1\": 3045.519121099367\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f8b9af1-510c-4c7b-906a-7a06715ed4a0",
+          "name": "List subscriptions",
+          "request": {
+            "name": "List subscriptions",
+            "description": {
+              "content": "List subscriptions for an object. Either list the recipients that subscribe to the provided object, or list the objects that the provided object is subscribed to. Determined by the `mode` query parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                ":object_id",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "object",
+                  "description": "Mode of the request. `recipient` to list the objects that the provided object is subscribed to, `object` to list the recipients that subscribe to the provided object."
+                },
+                {
+                  "disabled": false,
+                  "key": "include[]",
+                  "value": "<string>",
+                  "description": "Additional fields to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "include[]",
+                  "value": "<string>",
+                  "description": "Additional fields to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients[]",
+                  "value": "<string>",
+                  "description": "Recipients to filter by (only used if mode is `object`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients[]",
+                  "value": "<string>",
+                  "description": "Recipients to filter by (only used if mode is `object`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "objects[]",
+                  "value": "{\"collection\":\"<string>\",\"id\":\"<string>\"}",
+                  "description": "Objects to filter by (only used if mode is `recipient`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "objects[]",
+                  "value": "{\"collection\":\"<string>\",\"id\":\"<string>\"}",
+                  "description": "Objects to filter by (only used if mode is `recipient`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_id",
+                  "description": "(Required) Unique identifier for the object."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection this object belongs to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e7370ea-4cf4-4806-9897-95d867c59fa8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    ":object_id",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mode",
+                      "value": "object"
+                    },
+                    {
+                      "key": "include[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "recipients[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "objects[]",
+                      "value": "[object Object]"
+                    },
+                    {
+                      "key": "objects[]",
+                      "value": "[object Object]"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_id",
+                      "description": "(Required) Unique identifier for the object."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection this object belongs to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"Subscription\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1991-07-07T09:50:49.303Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2000-07-31T20:21:23.131Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"object\": {\n        \"__typename\": \"Object\",\n        \"id\": \"string\",\n        \"collection\": \"string\",\n        \"updated_at\": \"1967-03-15T04:28:10.514Z\",\n        \"created_at\": \"1988-02-05T15:53:36.765Z\",\n        \"properties\": {\n          \"key_0\": 4727,\n          \"key_1\": \"string\"\n        }\n      },\n      \"inserted_at\": \"2021-01-01T00:00:00Z\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\",\n      \"properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": false\n      }\n    },\n    {\n      \"__typename\": \"Subscription\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"2026-05-30T20:50:42.129Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2024-09-22T12:38:27.971Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"object\": {\n        \"__typename\": \"Object\",\n        \"id\": \"string\",\n        \"collection\": \"string\",\n        \"updated_at\": \"1948-01-24T07:47:36.112Z\",\n        \"created_at\": \"1957-09-09T00:44:47.872Z\",\n        \"properties\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"inserted_at\": \"2021-01-01T00:00:00Z\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\",\n      \"properties\": {\n        \"key_0\": 7955,\n        \"key_1\": 3076\n      }\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e30eb7b-7656-4f88-b77c-0dbf1451b394",
+          "name": "Add subscriptions",
+          "request": {
+            "name": "Add subscriptions",
+            "description": {
+              "content": "Add subscriptions for an object. If a subscription already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                ":object_id",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "object_id",
+                  "description": "(Required) Unique identifier for the object."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection this object belongs to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": {\n    \"key_0\": 2937.482427923798\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d2f93de-7d2d-4b2d-94f1-861a2a5169d7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    ":object_id",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "object_id",
+                      "description": "(Required) Unique identifier for the object."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection this object belongs to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key\": \"value\"\n  },\n  \"recipients\": [\n    \"user_1\",\n    \"user_2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"__typename\": \"Subscription\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1987-10-30T02:01:26.259Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1982-12-02T06:31:20.581Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"object\": {\n      \"__typename\": \"Object\",\n      \"id\": \"string\",\n      \"collection\": \"string\",\n      \"updated_at\": \"1955-11-11T17:03:57.211Z\",\n      \"created_at\": \"1989-10-28T16:26:49.866Z\",\n      \"properties\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      }\n    },\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\",\n    \"properties\": {\n      \"key_0\": 1136,\n      \"key_1\": 7489\n    }\n  },\n  {\n    \"__typename\": \"Subscription\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1977-08-02T01:00:26.682Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1983-03-27T05:45:47.654Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"object\": {\n      \"__typename\": \"Object\",\n      \"id\": \"string\",\n      \"collection\": \"string\",\n      \"updated_at\": \"1956-04-15T12:19:00.415Z\",\n      \"created_at\": \"1988-09-23T20:38:28.886Z\",\n      \"properties\": {\n        \"key_0\": 4055.1399094736516,\n        \"key_1\": 3488,\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    },\n    \"inserted_at\": \"2021-01-01T00:00:00Z\",\n    \"updated_at\": \"2021-01-01T00:00:00Z\",\n    \"properties\": {\n      \"key_0\": 4112,\n      \"key_1\": 5240,\n      \"key_2\": true\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc2b67fa-cb28-4668-89a1-f2dd58cf6bb7",
+          "name": "List user subscriptions",
+          "request": {
+            "name": "List user subscriptions",
+            "description": {
+              "content": "Retrieves a paginated list of subscriptions for a specific user, in descending order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include[]",
+                  "value": "<string>",
+                  "description": "Associated resources to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "include[]",
+                  "value": "<string>",
+                  "description": "Associated resources to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "objects[]",
+                  "value": "<string>",
+                  "description": "Only returns subscriptions for the specified object references."
+                },
+                {
+                  "disabled": false,
+                  "key": "objects[]",
+                  "value": "<string>",
+                  "description": "Only returns subscriptions for the specified object references."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The user ID to list subscriptions for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b4891d4-4d9c-4bc8-a78d-9caab25dac8d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objects[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "objects[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The user ID to list subscriptions for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"Subscription\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"2012-05-03T18:09:16.448Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2025-10-26T02:58:53.332Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"object\": {\n        \"__typename\": \"Object\",\n        \"id\": \"string\",\n        \"collection\": \"string\",\n        \"updated_at\": \"1965-05-03T04:51:37.755Z\",\n        \"created_at\": \"1999-01-20T03:36:14.887Z\",\n        \"properties\": {\n          \"key_0\": 8952.748232493075,\n          \"key_1\": 650\n        }\n      },\n      \"inserted_at\": \"2021-01-01T00:00:00Z\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\",\n      \"properties\": {\n        \"key_0\": \"string\",\n        \"key_1\": false\n      }\n    },\n    {\n      \"__typename\": \"Subscription\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1998-05-17T17:32:55.424Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1976-11-25T00:51:00.406Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"object\": {\n        \"__typename\": \"Object\",\n        \"id\": \"string\",\n        \"collection\": \"string\",\n        \"updated_at\": \"1972-01-03T13:41:31.310Z\",\n        \"created_at\": \"2018-10-03T02:06:03.542Z\",\n        \"properties\": {\n          \"key_0\": 690.6210565711634\n        }\n      },\n      \"inserted_at\": \"2021-01-01T00:00:00Z\",\n      \"updated_at\": \"2021-01-01T00:00:00Z\",\n      \"properties\": {\n        \"key_0\": 5973,\n        \"key_1\": 903.1396534195179\n      }\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "120a330e-b9a7-454a-9763-7193ec7c4e59",
+    "name": "Knock Audiences Accounts Subscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

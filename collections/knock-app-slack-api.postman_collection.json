@@ -1,0 +1,573 @@
+{
+  "item": [
+    {
+      "id": "a0e503af-95b8-452e-aeb6-fca087d87766",
+      "name": "Slack",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "706c2ae6-066a-468e-b42c-0c5340843fea",
+          "name": "List channels",
+          "request": {
+            "name": "List channels",
+            "description": {
+              "content": "List Slack channels for a Slack workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.cursor",
+                  "value": "<string>",
+                  "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of channels to return. Defaults to 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.exclude_archived",
+                  "value": "<boolean>",
+                  "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.types",
+                  "value": "<string>",
+                  "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.team_id",
+                  "value": "<string>",
+                  "description": "Encoded team ID (T1234) to list channels in, required if org token is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6b76fbc-ec5d-4385-8b74-b6eb8c32b40d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "query_options.cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "query_options.exclude_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query_options.types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.team_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slack_channels\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"is_private\": true,\n      \"is_im\": true,\n      \"context_team_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"is_private\": true,\n      \"is_im\": false,\n      \"context_team_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51971fa7-b690-42f9-9fd7-dd013d4b097c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "query_options.cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "query_options.exclude_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query_options.types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.team_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"authorization\",\n  \"message\": \"Access token not set.\",\n  \"status\": 403,\n  \"type\": \"authentication_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9955417f-dec5-4528-995e-bd826788f49c",
+          "name": "Check auth",
+          "request": {
+            "name": "Check auth",
+            "description": {
+              "content": "Check if a Slack channel is authenticated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "auth_check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to check."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a12f9d8-d0af-4cee-babc-a6a1ad22d84a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "auth_check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to check."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connection\": {\n    \"ok\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d12c810-ed18-4557-a3f4-5f1947edddb3",
+          "name": "Revoke access",
+          "request": {
+            "name": "Revoke access",
+            "description": {
+              "content": "Revoke access for a Slack channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "revoke_access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2323a098-acb5-492b-8148-64cc0c282d7d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "383e337a-896b-47d8-b5ba-c0f6a3d2ce38",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"authorization\",\n  \"message\": \"Access token not set.\",\n  \"status\": 403,\n  \"type\": \"authentication_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7d689b6f-7f54-4367-a434-8bb3aba23e94",
+    "name": "Knock Audiences Accounts Slack API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

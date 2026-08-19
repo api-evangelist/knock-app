@@ -1,0 +1,1105 @@
+{
+  "item": [
+    {
+      "id": "2107f09d-d91f-4bc5-b2b8-c06ac15fc128",
+      "name": "Audiences",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc587c44-30b5-4afa-b23c-872e150f45c4",
+          "name": "Remove members",
+          "request": {
+            "name": "Remove members",
+            "description": {
+              "content": "Removes one or more members from the specified audience.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":key",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The key of the audience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4a1405a-1360-4298-b0b7-0620ac1ed073",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":key",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of the audience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"97c5837d-c65c-4d54-aa39-080eeb81c69d\": {\n            \"tokens\": [\n              \"push_token_xxx\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"default\": {\n            \"categories\": {\n              \"transactional\": {\n                \"channel_types\": {\n                  \"email\": false\n                }\n              }\n            },\n            \"channel_types\": {\n              \"email\": true\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"ingen_isla_nublar\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"97c5837d-c65c-4d54-aa39-080eeb81c69d\": {\n            \"tokens\": [\n              \"push_token_xxx\"\n            ]\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"default\": {\n            \"categories\": {\n              \"transactional\": {\n                \"channel_types\": {\n                  \"email\": false\n                }\n              }\n            },\n            \"channel_types\": {\n              \"email\": true\n            }\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"ingen_isla_nublar\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "190f8240-57c9-449c-9367-90d8b29f0aab",
+          "name": "List members",
+          "request": {
+            "name": "List members",
+            "description": {
+              "content": "Returns a paginated list of members for the specified audience.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":key",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The key of the audience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3092f2f1-c5d1-449b-9a9e-00d8749c678c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":key",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of the audience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"AudienceMember\",\n      \"added_at\": \"2025-01-01T00:00:00Z\",\n      \"user_id\": \"user_123\",\n      \"user\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1993-11-19T11:33:51.222Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1998-08-03T18:04:02.390Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"tenant\": \"acme_corp\"\n    },\n    {\n      \"__typename\": \"AudienceMember\",\n      \"added_at\": \"2025-01-01T00:00:00Z\",\n      \"user_id\": \"user_123\",\n      \"user\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1973-08-31T18:27:03.835Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1981-01-09T16:57:11.661Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"tenant\": \"acme_corp\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5736f50b-096f-4a12-a7e9-24cf0dfa1ddd",
+          "name": "Add members",
+          "request": {
+            "name": "Add members",
+            "description": {
+              "content": "Adds one or more members to the specified audience.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":key",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "create_audience",
+                  "value": "<boolean>",
+                  "description": "Create the audience if it does not exist."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The key of the audience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"members\": [\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"user\": {\n        \"id\": \"<string>\",\n        \"avatar\": \"<string>\",\n        \"channel_data\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": \"<dateTime>\",\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"name\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"preferences\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"timezone\": \"<string>\"\n      },\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6286de83-770a-4450-a756-b5d8cdacceb7",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":key",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "create_audience",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The key of the audience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"members\": [\n    {\n      \"tenant\": \"ingen_isla_nublar\",\n      \"user\": {\n        \"email\": \"ellie@ingen.net\",\n        \"id\": \"dr_sattler\",\n        \"name\": \"Dr. Ellie Sattler\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b3129d7-fa07-469b-86b4-4a3abf904e3d",
+          "name": "Archive an audience",
+          "request": {
+            "name": "Archive an audience",
+            "description": {
+              "content": "Archives a given audience across all environments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":audience_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "audience_key",
+                  "description": "(Required) The key of the audience to archive."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7472b888-784a-482a-8434-1b2d45f1e1e8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":audience_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "audience_key",
+                      "description": "(Required) The key of the audience to archive."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aac9d526-8bb9-4b1d-8869-8666be9a9b8b",
+          "name": "Get an audience",
+          "request": {
+            "name": "Get an audience",
+            "description": {
+              "content": "Retrieve an audience by its key in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":audience_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "audience_key",
+                  "description": "(Required) The key of the audience to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "182f3aae-4f08-46e8-a87c-5788d4c0762d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":audience_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "audience_key",
+                      "description": "(Required) The key of the audience to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"2024-01-15T10:30:00Z\",\n  \"description\": \"Users participating in the beta program.\",\n  \"environment\": \"development\",\n  \"key\": \"beta-testers\",\n  \"name\": \"Beta testers\",\n  \"sha\": \"a1b2c3d4e5f6\",\n  \"type\": \"static\",\n  \"updated_at\": \"2024-06-20T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9e5361f-b629-48e2-a495-8343b5bc5725",
+          "name": "Upsert an audience",
+          "request": {
+            "name": "Upsert an audience",
+            "description": {
+              "content": "Updates an audience of a given key, or creates a new one if it does not yet exist.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":audience_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit",
+                  "value": "<boolean>",
+                  "description": "Whether to commit the resource at the same time as modifying it."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit_message",
+                  "value": "<string>",
+                  "description": "The message to commit the resource with, only used if `commit` is `true`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "audience_key",
+                  "description": "(Required) The key of the audience to upsert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"audience\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cac07f91-2ede-43f8-baa6-ce3a2f9f919c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":audience_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit_message",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "audience_key",
+                      "description": "(Required) The key of the audience to upsert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"audience\": {\n    \"description\": \"Manually managed list of beta testers\",\n    \"name\": \"Beta users\",\n    \"type\": \"static\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audience\": {\n    \"created_at\": \"2024-01-15T10:30:00Z\",\n    \"description\": \"Users participating in the beta program.\",\n    \"environment\": \"development\",\n    \"key\": \"beta-testers\",\n    \"name\": \"Beta testers\",\n    \"sha\": \"a1b2c3d4e5f6\",\n    \"type\": \"static\",\n    \"updated_at\": \"2024-06-20T14:45:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93c7bc09-4480-4674-9d7d-548398b83d50",
+          "name": "Validate an audience",
+          "request": {
+            "name": "Validate an audience",
+            "description": {
+              "content": "Validates an audience payload without persisting it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences",
+                ":audience_key",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "audience_key",
+                  "description": "(Required) The key of the audience to validate."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"audience\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c489e8d-a065-492b-ad56-4f9e13237a47",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences",
+                    ":audience_key",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "audience_key",
+                      "description": "(Required) The key of the audience to validate."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"audience\": {\n    \"description\": \"Manually managed list of beta testers\",\n    \"name\": \"Beta users\",\n    \"type\": \"static\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audience\": {\n    \"created_at\": \"2024-01-15T10:30:00Z\",\n    \"description\": \"Users participating in the beta program.\",\n    \"environment\": \"development\",\n    \"key\": \"beta-testers\",\n    \"name\": \"Beta testers\",\n    \"sha\": \"a1b2c3d4e5f6\",\n    \"type\": \"static\",\n    \"updated_at\": \"2024-06-20T14:45:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce701ce2-8e2c-42cd-9f14-d515a95dbc0f",
+          "name": "List audiences",
+          "request": {
+            "name": "List audiences",
+            "description": {
+              "content": "Returns a paginated list of audiences for the given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audiences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86aa0a8a-4ab2-4cc2-97ba-5c39b8931967",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audiences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"created_at\": \"2024-01-15T10:30:00Z\",\n      \"description\": \"Users participating in the beta program.\",\n      \"environment\": \"development\",\n      \"key\": \"beta-testers\",\n      \"name\": \"Beta testers\",\n      \"sha\": \"a1b2c3d4e5f6\",\n      \"type\": \"static\",\n      \"updated_at\": \"2024-06-20T14:45:00Z\"\n    },\n    {\n      \"created_at\": \"2024-01-15T10:30:00Z\",\n      \"description\": \"Users participating in the beta program.\",\n      \"environment\": \"development\",\n      \"key\": \"beta-testers\",\n      \"name\": \"Beta testers\",\n      \"sha\": \"a1b2c3d4e5f6\",\n      \"type\": \"static\",\n      \"updated_at\": \"2024-06-20T14:45:00Z\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8ecc550f-2cc2-4456-80a1-67fd532bb03f",
+    "name": "Knock Accounts Audiences API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

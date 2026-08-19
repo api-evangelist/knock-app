@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Email layouts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email layouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List email layouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/email_layouts",
+            "params": [
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of email layouts available in a given environment."
+        },
+        {
+          "info": {
+            "name": "Get email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/email_layouts/:email_layout_key",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to show."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "hide_uncommitted_changes",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieve an email layout by its key, in a given environment."
+        },
+        {
+          "info": {
+            "name": "Upsert email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/email_layouts/:email_layout_key",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to upsert."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              },
+              {
+                "name": "annotate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to annotate the resource. Only used in the Knock CLI."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+              },
+              {
+                "name": "commit",
+                "value": "",
+                "type": "query",
+                "description": "Whether to commit the resource at the same time as modifying it."
+              },
+              {
+                "name": "commit_message",
+                "value": "",
+                "type": "query",
+                "description": "The message to commit the resource with, only used if `commit` is `true`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an email layout, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates in the \"development\" environment.\n"
+        },
+        {
+          "info": {
+            "name": "Validate email layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.knock.app/v1/email_layouts/:email_layout_key/validate",
+            "params": [
+              {
+                "name": "email_layout_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the email layout to validate."
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "query",
+                "description": "The environment slug."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates an email layout payload without persisting it.\n\nNote: this endpoint only operates in the \"development\" environment.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

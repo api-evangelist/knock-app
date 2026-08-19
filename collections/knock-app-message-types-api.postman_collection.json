@@ -1,0 +1,657 @@
+{
+  "item": [
+    {
+      "id": "bf5f2bee-4441-4f10-98a7-adf294deea2b",
+      "name": "Message types",
+      "description": {
+        "content": "A message type allows you to specify an in-app schema that defines the fields available for your in-app notifications.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "410bf6fb-bc7b-4dcc-9f7a-5f2e764c68d5",
+          "name": "Validate message type",
+          "request": {
+            "name": "Validate message type",
+            "description": {
+              "content": "Validates a message type payload without persisting it.\n\nNote: this endpoint only operates on message types in the `development` environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "message_types",
+                ":message_type_key",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_type_key",
+                  "description": "(Required) The key of the message type to validate."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message_type\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"preview\": \"<string>\",\n    \"icon_name\": \"<string>\",\n    \"semver\": \"<string>\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d3602a3-4401-4365-8414-ea4f7bd908f1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "message_types",
+                    ":message_type_key",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_type_key",
+                      "description": "(Required) The key of the message type to validate."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message_type\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"preview\": \"<string>\",\n    \"icon_name\": \"<string>\",\n    \"semver\": \"1.0.0\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message_type\": {\n    \"key\": \"string\",\n    \"valid\": true,\n    \"owner\": \"system\",\n    \"environment\": \"string\",\n    \"created_at\": \"2011-06-03T05:45:18.190Z\",\n    \"name\": \"string\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      }\n    ],\n    \"preview\": \"string\",\n    \"semver\": \"1.0.0\",\n    \"updated_at\": \"1964-12-27T05:37:25.154Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"2018-08-23T03:40:51.422Z\",\n    \"deleted_at\": \"1999-12-23T17:26:38.405Z\",\n    \"description\": \"string\",\n    \"icon_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "872e2fc6-1b4c-4d3c-97cb-2ce382da5219",
+          "name": "Get message type",
+          "request": {
+            "name": "Get message type",
+            "description": {
+              "content": "Retrieve a message type by its key, in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "message_types",
+                ":message_type_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_type_key",
+                  "description": "(Required) The key of the message type to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c595cbd-71f3-4426-abdf-168dc835f05c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "message_types",
+                    ":message_type_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_type_key",
+                      "description": "(Required) The key of the message type to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"valid\": false,\n  \"owner\": \"system\",\n  \"environment\": \"string\",\n  \"created_at\": \"2000-08-30T11:03:06.244Z\",\n  \"name\": \"string\",\n  \"variants\": [\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"key\": \"boolean_field\",\n          \"label\": \"Boolean Field\",\n          \"settings\": {\n            \"default\": false,\n            \"description\": \"A description of the boolean field\",\n            \"required\": true\n          },\n          \"type\": \"boolean\"\n        },\n        {\n          \"key\": \"boolean_field\",\n          \"label\": \"Boolean Field\",\n          \"settings\": {\n            \"default\": false,\n            \"description\": \"A description of the boolean field\",\n            \"required\": true\n          },\n          \"type\": \"boolean\"\n        }\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"key\": \"boolean_field\",\n          \"label\": \"Boolean Field\",\n          \"settings\": {\n            \"default\": false,\n            \"description\": \"A description of the boolean field\",\n            \"required\": true\n          },\n          \"type\": \"boolean\"\n        },\n        {\n          \"key\": \"boolean_field\",\n          \"label\": \"Boolean Field\",\n          \"settings\": {\n            \"default\": false,\n            \"description\": \"A description of the boolean field\",\n            \"required\": true\n          },\n          \"type\": \"boolean\"\n        }\n      ]\n    }\n  ],\n  \"preview\": \"string\",\n  \"semver\": \"1.0.0\",\n  \"updated_at\": \"2008-02-19T17:26:29.461Z\",\n  \"sha\": \"string\",\n  \"archived_at\": \"1966-06-19T19:43:10.873Z\",\n  \"deleted_at\": \"1965-10-18T11:51:12.035Z\",\n  \"description\": \"string\",\n  \"icon_name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e8e69b9-4877-4716-a976-d918f4ab4ace",
+          "name": "Upsert message type",
+          "request": {
+            "name": "Upsert message type",
+            "description": {
+              "content": "Updates a message type, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates in the `development` environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "message_types",
+                ":message_type_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit",
+                  "value": "<boolean>",
+                  "description": "Whether to commit the resource at the same time as modifying it."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit_message",
+                  "value": "<string>",
+                  "description": "The message to commit the resource with, only used if `commit` is `true`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_type_key",
+                  "description": "(Required) The key of the message type to upsert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message_type\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"preview\": \"<string>\",\n    \"icon_name\": \"<string>\",\n    \"semver\": \"<string>\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"settings\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4956ed3f-adc8-41ea-a049-ba907bf6070a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "message_types",
+                    ":message_type_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit_message",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_type_key",
+                      "description": "(Required) The key of the message type to upsert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message_type\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"preview\": \"<string>\",\n    \"icon_name\": \"<string>\",\n    \"semver\": \"1.0.0\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message_type\": {\n    \"key\": \"string\",\n    \"valid\": false,\n    \"owner\": \"system\",\n    \"environment\": \"string\",\n    \"created_at\": \"1971-03-12T16:09:59.773Z\",\n    \"name\": \"string\",\n    \"variants\": [\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      },\n      {\n        \"key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"fields\": [\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          },\n          {\n            \"key\": \"boolean_field\",\n            \"label\": \"Boolean Field\",\n            \"settings\": {\n              \"default\": false,\n              \"description\": \"A description of the boolean field\",\n              \"required\": true\n            },\n            \"type\": \"boolean\"\n          }\n        ]\n      }\n    ],\n    \"preview\": \"string\",\n    \"semver\": \"1.0.0\",\n    \"updated_at\": \"1994-08-28T07:56:07.228Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"2016-04-18T13:45:24.042Z\",\n    \"deleted_at\": \"2012-11-15T23:19:25.776Z\",\n    \"description\": \"string\",\n    \"icon_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e082483d-87ca-4c85-aaa1-6c3432793a47",
+          "name": "List message types",
+          "request": {
+            "name": "List message types",
+            "description": {
+              "content": "Returns a paginated list of message types available in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "message_types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9c0cc82-409a-42df-bbf2-0f29d544e4e7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "message_types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"key\": \"string\",\n      \"valid\": false,\n      \"owner\": \"user\",\n      \"environment\": \"string\",\n      \"created_at\": \"1963-07-05T01:09:22.827Z\",\n      \"name\": \"string\",\n      \"variants\": [\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"preview\": \"string\",\n      \"semver\": \"1.0.0\",\n      \"updated_at\": \"1980-08-04T09:44:29.433Z\",\n      \"sha\": \"string\",\n      \"archived_at\": \"2012-03-17T10:44:16.303Z\",\n      \"deleted_at\": \"2026-04-22T14:26:47.685Z\",\n      \"description\": \"string\",\n      \"icon_name\": \"string\"\n    },\n    {\n      \"key\": \"string\",\n      \"valid\": false,\n      \"owner\": \"user\",\n      \"environment\": \"string\",\n      \"created_at\": \"1951-02-26T20:59:58.991Z\",\n      \"name\": \"string\",\n      \"variants\": [\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"key\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"preview\": \"string\",\n      \"semver\": \"1.0.0\",\n      \"updated_at\": \"2012-02-24T12:58:46.316Z\",\n      \"sha\": \"string\",\n      \"archived_at\": \"2017-11-22T14:16:09.258Z\",\n      \"deleted_at\": \"1981-08-15T14:00:41.103Z\",\n      \"description\": \"string\",\n      \"icon_name\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5796db3b-7171-4b2d-846b-f937dd1c38e7",
+    "name": "Knock Audiences Accounts Message types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

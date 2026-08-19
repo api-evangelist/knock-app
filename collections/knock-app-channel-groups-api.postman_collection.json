@@ -1,0 +1,468 @@
+{
+  "item": [
+    {
+      "id": "1614d7ea-49e7-42ec-b26a-efee271ec43c",
+      "name": "Channel Groups",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "05706dda-048f-4693-a330-858e4c8bcc5c",
+          "name": "List channel groups",
+          "request": {
+            "name": "List channel groups",
+            "description": {
+              "content": "Returns a paginated list of channel groups. Note: the list of channel groups is across the entire account, not scoped to an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channel_groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5fc52eb7-3459-45a8-8330-293dd675a9f6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channel_groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"channel_type\": \"email\",\n      \"operator\": \"any\",\n      \"source\": \"user\",\n      \"channel_rules\": [\n        {\n          \"index\": 5764,\n          \"rule_type\": \"always\",\n          \"channel\": {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"key\": \"string\",\n            \"type\": \"chat\",\n            \"provider\": \"string\",\n            \"created_at\": \"1967-06-30T02:22:52.051Z\",\n            \"updated_at\": \"2017-02-12T12:06:51.197Z\",\n            \"archived_at\": \"1955-07-15T20:05:47.868Z\",\n            \"custom_icon_url\": \"string\",\n            \"description\": \"string\",\n            \"environment_settings\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"created_at\": \"1972-02-06T12:54:06.892Z\",\n          \"updated_at\": \"2015-06-14T05:01:22.820Z\",\n          \"argument\": \"string\",\n          \"operator\": \"equal_to\",\n          \"variable\": \"string\"\n        },\n        {\n          \"index\": 3766,\n          \"rule_type\": \"if\",\n          \"channel\": {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"key\": \"string\",\n            \"type\": \"email\",\n            \"provider\": \"string\",\n            \"created_at\": \"2014-08-31T06:36:13.724Z\",\n            \"updated_at\": \"1990-10-14T20:00:26.669Z\",\n            \"archived_at\": \"1989-01-01T18:30:12.341Z\",\n            \"custom_icon_url\": \"string\",\n            \"description\": \"string\",\n            \"environment_settings\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"created_at\": \"1973-07-04T15:06:01.842Z\",\n          \"updated_at\": \"1985-06-09T15:45:19.847Z\",\n          \"argument\": \"string\",\n          \"operator\": \"equal_to\",\n          \"variable\": \"string\"\n        }\n      ],\n      \"created_at\": \"1968-11-04T04:41:18.770Z\",\n      \"updated_at\": \"1998-07-15T11:38:51.247Z\",\n      \"archived_at\": \"2009-02-13T07:04:47.531Z\"\n    },\n    {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"channel_type\": \"push\",\n      \"operator\": \"any\",\n      \"source\": \"user\",\n      \"channel_rules\": [\n        {\n          \"index\": 9469,\n          \"rule_type\": \"always\",\n          \"channel\": {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"key\": \"string\",\n            \"type\": \"push\",\n            \"provider\": \"string\",\n            \"created_at\": \"1958-11-10T16:11:48.464Z\",\n            \"updated_at\": \"1974-05-01T12:40:04.845Z\",\n            \"archived_at\": \"1952-02-22T04:52:24.315Z\",\n            \"custom_icon_url\": \"string\",\n            \"description\": \"string\",\n            \"environment_settings\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"created_at\": \"1991-12-29T01:46:13.437Z\",\n          \"updated_at\": \"1989-05-13T23:13:34.865Z\",\n          \"argument\": \"string\",\n          \"operator\": \"equal_to\",\n          \"variable\": \"string\"\n        },\n        {\n          \"index\": 1908,\n          \"rule_type\": \"if\",\n          \"channel\": {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"key\": \"string\",\n            \"type\": \"chat\",\n            \"provider\": \"string\",\n            \"created_at\": \"1969-08-09T19:10:15.803Z\",\n            \"updated_at\": \"1961-08-24T16:22:25.116Z\",\n            \"archived_at\": \"1996-10-24T17:22:21.067Z\",\n            \"custom_icon_url\": \"string\",\n            \"description\": \"string\",\n            \"environment_settings\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"created_at\": \"1998-12-06T11:31:25.959Z\",\n          \"updated_at\": \"1997-04-26T04:23:58.515Z\",\n          \"argument\": \"string\",\n          \"operator\": \"equal_to\",\n          \"variable\": \"string\"\n        }\n      ],\n      \"created_at\": \"1969-07-27T08:02:02.035Z\",\n      \"updated_at\": \"1985-12-22T01:17:21.800Z\",\n      \"archived_at\": \"1964-07-27T14:49:11.220Z\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a3cdb04-08a8-47eb-84e1-ba242e8ea781",
+          "name": "Delete a channel group",
+          "request": {
+            "name": "Delete a channel group",
+            "description": {
+              "content": "Archives (soft deletes) a channel group by key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channel_groups",
+                ":channel_group_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_group_key",
+                  "description": "(Required) The key of the channel group to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6764c9a-bbe4-45cf-8ebb-fd096e2545d0",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channel_groups",
+                    ":channel_group_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_group_key",
+                      "description": "(Required) The key of the channel group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35106623-2dd5-419b-80eb-40c34e2f94ec",
+          "name": "Get a channel group",
+          "request": {
+            "name": "Get a channel group",
+            "description": {
+              "content": "Get a channel group by its key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channel_groups",
+                ":channel_group_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_group_key",
+                  "description": "(Required) The key of the channel group to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "267ff85d-0470-4734-a375-8692993ed7a5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channel_groups",
+                    ":channel_group_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_group_key",
+                      "description": "(Required) The key of the channel group to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"channel_type\": \"http\",\n  \"operator\": \"any\",\n  \"source\": \"system\",\n  \"channel_rules\": [\n    {\n      \"index\": 6991,\n      \"rule_type\": \"always\",\n      \"channel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"type\": \"in_app_guide\",\n        \"provider\": \"string\",\n        \"created_at\": \"1980-04-24T01:19:07.119Z\",\n        \"updated_at\": \"1976-07-03T07:34:15.560Z\",\n        \"archived_at\": \"1982-03-06T09:35:13.844Z\",\n        \"custom_icon_url\": \"string\",\n        \"description\": \"string\",\n        \"environment_settings\": {\n          \"key_0\": {\n            \"id\": \"d097dbfc-33ac-95f3-035c-d16eac736c16\",\n            \"is_valid\": true,\n            \"is_sandbox\": true,\n            \"channel_settings\": {\n              \"key_0\": 4532.632300439076\n            },\n            \"provider_settings\": {\n              \"key_0\": 746,\n              \"key_1\": false,\n              \"key_2\": 1035.9151910520602\n            }\n          },\n          \"key_1\": {\n            \"id\": \"3941c0ec-326a-0613-f230-6a23c96ccb13\",\n            \"is_valid\": false,\n            \"is_sandbox\": true,\n            \"channel_settings\": {\n              \"key_0\": true,\n              \"key_1\": true,\n              \"key_2\": 8745\n            },\n            \"provider_settings\": {\n              \"key_0\": 6045.440759029995,\n              \"key_1\": 2460.176927067472\n            }\n          }\n        }\n      },\n      \"created_at\": \"1981-07-10T20:25:18.146Z\",\n      \"updated_at\": \"1998-01-27T16:43:49.962Z\",\n      \"argument\": \"string\",\n      \"operator\": \"equal_to\",\n      \"variable\": \"string\"\n    },\n    {\n      \"index\": 9179,\n      \"rule_type\": \"if\",\n      \"channel\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"type\": \"chat\",\n        \"provider\": \"string\",\n        \"created_at\": \"1956-08-22T02:07:29.383Z\",\n        \"updated_at\": \"2006-06-10T09:56:45.930Z\",\n        \"archived_at\": \"2002-11-27T15:07:47.189Z\",\n        \"custom_icon_url\": \"string\",\n        \"description\": \"string\",\n        \"environment_settings\": {\n          \"key_0\": {\n            \"id\": \"ab6ae25f-2683-88a4-15bf-c0276d607353\",\n            \"is_valid\": false,\n            \"is_sandbox\": true,\n            \"channel_settings\": {\n              \"key_0\": 4602.913288221325\n            },\n            \"provider_settings\": {\n              \"key_0\": 6006,\n              \"key_1\": 832\n            }\n          },\n          \"key_1\": {\n            \"id\": \"677685ef-3a39-6fd2-3469-e936fd8332c8\",\n            \"is_valid\": true,\n            \"is_sandbox\": false,\n            \"channel_settings\": {\n              \"key_0\": 7599.953245113371\n            },\n            \"provider_settings\": {\n              \"key_0\": 1488.6848135044172\n            }\n          },\n          \"key_2\": {\n            \"id\": \"3bffded0-60db-b23c-ee30-867fdf5dba0f\",\n            \"is_valid\": true,\n            \"is_sandbox\": true,\n            \"channel_settings\": {\n              \"key_0\": \"string\"\n            },\n            \"provider_settings\": {\n              \"key_0\": true\n            }\n          }\n        }\n      },\n      \"created_at\": \"2011-12-12T15:45:59.879Z\",\n      \"updated_at\": \"2010-01-03T12:39:32.347Z\",\n      \"argument\": \"string\",\n      \"operator\": \"equal_to\",\n      \"variable\": \"string\"\n    }\n  ],\n  \"created_at\": \"1995-07-26T08:07:35.179Z\",\n  \"updated_at\": \"2006-04-22T22:44:37.941Z\",\n  \"archived_at\": \"1971-11-26T06:52:08.181Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc1d4688-e21c-4f1b-bbee-f51b09eff111",
+          "name": "Upsert a channel group",
+          "request": {
+            "name": "Upsert a channel group",
+            "description": {
+              "content": "Creates or updates a channel group by key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "channel_groups",
+                ":channel_group_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_group_key",
+                  "description": "(Required) The key of the channel group to upsert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_group\": {\n    \"name\": \"<string>\",\n    \"channel_type\": \"<string>\",\n    \"channel_rules\": [\n      {\n        \"channel_key\": \"<string>\",\n        \"rule_type\": \"<string>\",\n        \"argument\": \"<string>\",\n        \"index\": \"<integer>\",\n        \"operator\": \"<string>\",\n        \"variable\": \"<string>\"\n      },\n      {\n        \"channel_key\": \"<string>\",\n        \"rule_type\": \"<string>\",\n        \"argument\": \"<string>\",\n        \"index\": \"<integer>\",\n        \"operator\": \"<string>\",\n        \"variable\": \"<string>\"\n      }\n    ],\n    \"operator\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99e9d22e-8b97-41db-8330-59dd41543402",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "channel_groups",
+                    ":channel_group_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_group_key",
+                      "description": "(Required) The key of the channel group to upsert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_group\": {\n    \"name\": \"<string>\",\n    \"channel_type\": \"<string>\",\n    \"channel_rules\": [\n      {\n        \"channel_key\": \"email-channel\",\n        \"index\": 0,\n        \"rule_type\": \"always\"\n      },\n      {\n        \"channel_key\": \"email-channel\",\n        \"index\": 0,\n        \"rule_type\": \"always\"\n      }\n    ],\n    \"operator\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"channel_group\": {\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"channel_type\": \"in_app_guide\",\n    \"operator\": \"all\",\n    \"source\": \"system\",\n    \"channel_rules\": [\n      {\n        \"index\": 6524,\n        \"rule_type\": \"always\",\n        \"channel\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"type\": \"in_app\",\n          \"provider\": \"string\",\n          \"created_at\": \"1987-03-04T15:44:06.842Z\",\n          \"updated_at\": \"2018-06-18T19:07:29.074Z\",\n          \"archived_at\": \"1973-07-09T12:50:13.303Z\",\n          \"custom_icon_url\": \"string\",\n          \"description\": \"string\",\n          \"environment_settings\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_4\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"created_at\": \"2022-07-22T14:51:37.220Z\",\n        \"updated_at\": \"2001-11-19T05:18:16.519Z\",\n        \"argument\": \"string\",\n        \"operator\": \"equal_to\",\n        \"variable\": \"string\"\n      },\n      {\n        \"index\": 63,\n        \"rule_type\": \"always\",\n        \"channel\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"type\": \"in_app\",\n          \"provider\": \"string\",\n          \"created_at\": \"2019-11-17T05:45:56.888Z\",\n          \"updated_at\": \"2012-06-18T01:41:12.171Z\",\n          \"archived_at\": \"1985-02-11T04:27:29.323Z\",\n          \"custom_icon_url\": \"string\",\n          \"description\": \"string\",\n          \"environment_settings\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"created_at\": \"1984-06-23T21:43:47.473Z\",\n        \"updated_at\": \"1971-09-06T18:34:03.572Z\",\n        \"argument\": \"string\",\n        \"operator\": \"equal_to\",\n        \"variable\": \"string\"\n      }\n    ],\n    \"created_at\": \"1955-01-13T20:13:30.128Z\",\n    \"updated_at\": \"1948-06-10T03:13:07.837Z\",\n    \"archived_at\": \"1982-01-03T15:17:59.565Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ffc9d009-ebf3-490c-98a2-fefd3dd33a92",
+    "name": "Knock Audiences Accounts Channel Groups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

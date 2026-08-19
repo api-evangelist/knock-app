@@ -1,0 +1,2052 @@
+{
+  "item": [
+    {
+      "id": "211bec24-3d9f-4a1f-be04-d209f6f0adfc",
+      "name": "Guides",
+      "description": {
+        "content": "Guides let you define in-app guides that can be displayed to users based on priority and other conditions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c846dd4-0f44-4641-9159-44a9edc0fe7f",
+          "name": "Archive a guide",
+          "request": {
+            "name": "Archive a guide",
+            "description": {
+              "content": "Archives a given guide across all environments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides",
+                ":guide_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guide_key",
+                  "description": "(Required) The key of the guide to archive."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7aca17d-5a0b-47e6-9d4d-b6c3f0e5be60",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides",
+                    ":guide_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guide_key",
+                      "description": "(Required) The key of the guide to archive."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05ad3df8-e18c-499d-aa5c-5d0a12804b8c",
+          "name": "Get a guide",
+          "request": {
+            "name": "Get a guide",
+            "description": {
+              "content": "Get a guide by its key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides",
+                ":guide_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guide_key",
+                  "description": "(Required) The key of the guide to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93f741ae-73b0-4217-976f-1a2487e869fe",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides",
+                    ":guide_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guide_key",
+                      "description": "(Required) The key of the guide to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"activation_url_patterns\": [\n    {\n      \"directive\": \"allow\",\n      \"pathname\": \"/dashboard/*\"\n    }\n  ],\n  \"active\": true,\n  \"archived_at\": null,\n  \"channel_key\": \"in-app-guide\",\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"description\": \"A guide to help users get started with the application\",\n  \"environment\": \"development\",\n  \"key\": \"getting-started\",\n  \"name\": \"Getting Started Guide\",\n  \"semver\": \"0.0.1\",\n  \"sha\": \"1234567890\",\n  \"steps\": [\n    {\n      \"name\": \"Welcome to the App\",\n      \"ref\": \"welcome-step\",\n      \"schema_key\": \"tooltip\",\n      \"schema_semver\": \"1.0.0\",\n      \"schema_variant_key\": \"default\",\n      \"values\": {\n        \"text_field\": \"value\"\n      }\n    }\n  ],\n  \"target_audience_id\": null,\n  \"target_property_conditions\": {\n    \"all\": [\n      {\n        \"argument\": \"some_property\",\n        \"operator\": \"equal_to\",\n        \"variable\": \"recipient.property\"\n      }\n    ]\n  },\n  \"type\": \"banner\",\n  \"updated_at\": \"2024-01-01T00:00:00Z\",\n  \"valid\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7661647a-4f57-420e-ae23-468312c59fda",
+          "name": "Upsert a guide",
+          "request": {
+            "name": "Upsert a guide",
+            "description": {
+              "content": "Updates a guide of a given key, or creates a new one if it does not yet exist.\n\nNote: this endpoint only operates on guides in the \"development\" environment.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides",
+                ":guide_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "<boolean>",
+                  "description": "When set to true, forces the upsert to override existing content regardless of environment restrictions. This bypasses the development-only environment check and origin environment checks."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit",
+                  "value": "<boolean>",
+                  "description": "Whether to commit the resource at the same time as modifying it."
+                },
+                {
+                  "disabled": false,
+                  "key": "commit_message",
+                  "value": "<string>",
+                  "description": "The message to commit the resource with, only used if `commit` is `true`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guide_key",
+                  "description": "(Required) The key of the guide to upsert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guide\": {\n    \"name\": \"<string>\",\n    \"channel_key\": \"<string>\",\n    \"steps\": [\n      {\n        \"ref\": \"<string>\",\n        \"schema_key\": \"<string>\",\n        \"schema_semver\": \"<string>\",\n        \"schema_variant_key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"values\": {\n          \"key_0\": 8775.508717560046,\n          \"key_1\": 6148.736810887213,\n          \"key_2\": 8044\n        }\n      },\n      {\n        \"ref\": \"<string>\",\n        \"schema_key\": \"<string>\",\n        \"schema_semver\": \"<string>\",\n        \"schema_variant_key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"values\": {\n          \"key_0\": true\n        }\n      }\n    ],\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"<string>\",\n        \"search\": \"<string>\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"<string>\",\n        \"search\": \"<string>\"\n      }\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"target_audience_id\": \"<string>\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5dc39927-861f-4624-8805-170e1e6f0b21",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides",
+                    ":guide_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "force",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "commit_message",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guide_key",
+                      "description": "(Required) The key of the guide to upsert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"guide\": {\n    \"name\": \"<string>\",\n    \"channel_key\": \"<string>\",\n    \"steps\": [\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      },\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      }\n    ],\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      }\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"target_audience_id\": \"<string>\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guide\": {\n    \"key\": \"string\",\n    \"active\": false,\n    \"name\": \"string\",\n    \"environment\": \"string\",\n    \"created_at\": \"1947-03-20T19:14:25.658Z\",\n    \"updated_at\": \"1956-05-20T04:23:57.977Z\",\n    \"sha\": \"string\",\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      }\n    ],\n    \"archived_at\": \"1947-06-25T22:49:48.206Z\",\n    \"channel_key\": \"string\",\n    \"deleted_at\": \"1970-02-26T14:25:14.026Z\",\n    \"description\": \"string\",\n    \"semver\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      },\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      }\n    ],\n    \"target_audience_id\": \"string\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"type\": \"string\",\n    \"valid\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf8d5e4b-70b7-4d93-9793-dbbb6ab27e90",
+          "name": "List guides",
+          "request": {
+            "name": "List guides",
+            "description": {
+              "content": "Returns a paginated list of guides available in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d76cb12-c8d7-4d77-be3b-e08a05a32d2a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"key\": \"string\",\n      \"active\": false,\n      \"name\": \"string\",\n      \"environment\": \"string\",\n      \"created_at\": \"1954-11-28T08:24:00.857Z\",\n      \"updated_at\": \"2009-11-05T21:16:27.502Z\",\n      \"sha\": \"string\",\n      \"activation_url_patterns\": [\n        {\n          \"directive\": \"allow\",\n          \"pathname\": \"/dashboard/*\",\n          \"search\": \"tab=settings\"\n        },\n        {\n          \"directive\": \"allow\",\n          \"pathname\": \"/dashboard/*\",\n          \"search\": \"tab=settings\"\n        }\n      ],\n      \"archived_at\": \"1990-08-27T07:27:48.625Z\",\n      \"channel_key\": \"string\",\n      \"deleted_at\": \"2016-06-13T05:18:10.481Z\",\n      \"description\": \"string\",\n      \"semver\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"Welcome to the App\",\n          \"ref\": \"welcome-step\",\n          \"schema_key\": \"tooltip\",\n          \"schema_semver\": \"1.0.0\",\n          \"schema_variant_key\": \"default\",\n          \"values\": {\n            \"text_field\": \"value\"\n          }\n        },\n        {\n          \"name\": \"Welcome to the App\",\n          \"ref\": \"welcome-step\",\n          \"schema_key\": \"tooltip\",\n          \"schema_semver\": \"1.0.0\",\n          \"schema_variant_key\": \"default\",\n          \"values\": {\n            \"text_field\": \"value\"\n          }\n        }\n      ],\n      \"target_audience_id\": \"string\",\n      \"target_property_conditions\": {\n        \"all\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"type\": \"string\",\n      \"valid\": false\n    },\n    {\n      \"key\": \"string\",\n      \"active\": false,\n      \"name\": \"string\",\n      \"environment\": \"string\",\n      \"created_at\": \"2019-12-10T20:46:42.232Z\",\n      \"updated_at\": \"1965-11-12T01:39:04.903Z\",\n      \"sha\": \"string\",\n      \"activation_url_patterns\": [\n        {\n          \"directive\": \"allow\",\n          \"pathname\": \"/dashboard/*\",\n          \"search\": \"tab=settings\"\n        },\n        {\n          \"directive\": \"allow\",\n          \"pathname\": \"/dashboard/*\",\n          \"search\": \"tab=settings\"\n        }\n      ],\n      \"archived_at\": \"1965-08-13T07:12:52.486Z\",\n      \"channel_key\": \"string\",\n      \"deleted_at\": \"2000-04-02T22:35:53.818Z\",\n      \"description\": \"string\",\n      \"semver\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"Welcome to the App\",\n          \"ref\": \"welcome-step\",\n          \"schema_key\": \"tooltip\",\n          \"schema_semver\": \"1.0.0\",\n          \"schema_variant_key\": \"default\",\n          \"values\": {\n            \"text_field\": \"value\"\n          }\n        },\n        {\n          \"name\": \"Welcome to the App\",\n          \"ref\": \"welcome-step\",\n          \"schema_key\": \"tooltip\",\n          \"schema_semver\": \"1.0.0\",\n          \"schema_variant_key\": \"default\",\n          \"values\": {\n            \"text_field\": \"value\"\n          }\n        }\n      ],\n      \"target_audience_id\": \"string\",\n      \"target_property_conditions\": {\n        \"all\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"type\": \"string\",\n      \"valid\": true\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4e6ed23-00e8-4466-ab14-6b85ed431ef4",
+          "name": "Activate a guide",
+          "request": {
+            "name": "Activate a guide",
+            "description": {
+              "content": "Activates (or deactivates) a guide in a given environment. You can either set the active status immediately or schedule it.\n\nNote: This immediately enables or disables a guide in a given environment without needing to go through environment promotion.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides",
+                ":guide_key",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guide_key",
+                  "description": "(Required) The key of the guide."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7fa6172-5696-4768-a360-4946cd699c14",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides",
+                    ":guide_key",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guide_key",
+                      "description": "(Required) The key of the guide."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guide\": {\n    \"key\": \"string\",\n    \"active\": false,\n    \"name\": \"string\",\n    \"environment\": \"string\",\n    \"created_at\": \"1947-03-20T19:14:25.658Z\",\n    \"updated_at\": \"1956-05-20T04:23:57.977Z\",\n    \"sha\": \"string\",\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      }\n    ],\n    \"archived_at\": \"1947-06-25T22:49:48.206Z\",\n    \"channel_key\": \"string\",\n    \"deleted_at\": \"1970-02-26T14:25:14.026Z\",\n    \"description\": \"string\",\n    \"semver\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      },\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      }\n    ],\n    \"target_audience_id\": \"string\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"type\": \"string\",\n    \"valid\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45da9b30-ac3c-41ec-bb87-07f6a64fcded",
+          "name": "Validate a guide",
+          "request": {
+            "name": "Validate a guide",
+            "description": {
+              "content": "Validates a guide payload without persisting it.\n\nNote: Validating a guide is only done in the development environment context.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "guides",
+                ":guide_key",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guide_key",
+                  "description": "(Required) The key of the guide."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guide\": {\n    \"name\": \"<string>\",\n    \"channel_key\": \"<string>\",\n    \"steps\": [\n      {\n        \"ref\": \"<string>\",\n        \"schema_key\": \"<string>\",\n        \"schema_semver\": \"<string>\",\n        \"schema_variant_key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"values\": {\n          \"key_0\": true,\n          \"key_1\": 4224,\n          \"key_2\": 77.38479711635549\n        }\n      },\n      {\n        \"ref\": \"<string>\",\n        \"schema_key\": \"<string>\",\n        \"schema_semver\": \"<string>\",\n        \"schema_variant_key\": \"<string>\",\n        \"name\": \"<string>\",\n        \"values\": {\n          \"key_0\": false\n        }\n      }\n    ],\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"<string>\",\n        \"search\": \"<string>\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"<string>\",\n        \"search\": \"<string>\"\n      }\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"target_audience_id\": \"<string>\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d4794769-e898-412a-bd13-c4a1de359c26",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "guides",
+                    ":guide_key",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guide_key",
+                      "description": "(Required) The key of the guide."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"guide\": {\n    \"name\": \"<string>\",\n    \"channel_key\": \"<string>\",\n    \"steps\": [\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      },\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      }\n    ],\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      }\n    ],\n    \"archived_at\": \"<dateTime>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"target_audience_id\": \"<string>\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guide\": {\n    \"key\": \"string\",\n    \"active\": false,\n    \"name\": \"string\",\n    \"environment\": \"string\",\n    \"created_at\": \"1947-03-20T19:14:25.658Z\",\n    \"updated_at\": \"1956-05-20T04:23:57.977Z\",\n    \"sha\": \"string\",\n    \"activation_url_patterns\": [\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      },\n      {\n        \"directive\": \"allow\",\n        \"pathname\": \"/dashboard/*\",\n        \"search\": \"tab=settings\"\n      }\n    ],\n    \"archived_at\": \"1947-06-25T22:49:48.206Z\",\n    \"channel_key\": \"string\",\n    \"deleted_at\": \"1970-02-26T14:25:14.026Z\",\n    \"description\": \"string\",\n    \"semver\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      },\n      {\n        \"name\": \"Welcome to the App\",\n        \"ref\": \"welcome-step\",\n        \"schema_key\": \"tooltip\",\n        \"schema_semver\": \"1.0.0\",\n        \"schema_variant_key\": \"default\",\n        \"values\": {\n          \"text_field\": \"value\"\n        }\n      }\n    ],\n    \"target_audience_id\": \"string\",\n    \"target_property_conditions\": {\n      \"all\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"type\": \"string\",\n    \"valid\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0268788f-029b-42ef-b38c-12bfbcfbf438",
+          "name": "Mark guide as seen",
+          "request": {
+            "name": "Mark guide as seen",
+            "description": {
+              "content": "Records that a guide has been seen by a user, triggering any associated seen events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                "seen"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3cc36051-3676-4197-9f65-09478843590b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    "seen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0390184-138a-45f8-b9b3-08e2788c1178",
+          "name": "Mark guide as seen",
+          "request": {
+            "name": "Mark guide as seen",
+            "description": {
+              "content": "Records that a guide has been seen by a user, triggering any associated seen events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                ":message_id",
+                "seen"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d32287e-c0d2-404f-9267-35a845af3f75",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    ":message_id",
+                    "seen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afbe82b7-89f7-4ecc-ac1b-c77611d73dec",
+          "name": "Mark guide as unarchived",
+          "request": {
+            "name": "Mark guide as unarchived",
+            "description": {
+              "content": "Records that a guide has been unarchived, triggering any associated unarchived events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                "archived"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd49338b-dd41-4b12-bf74-fac319ec8447",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    "archived"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06c77ecf-8c66-40d8-9f99-eede0b27b28f",
+          "name": "Mark guide as archived",
+          "request": {
+            "name": "Mark guide as archived",
+            "description": {
+              "content": "Records that a guide has been archived by a user, triggering any associated archived events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                "archived"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "180c9863-d423-4ebf-b809-54222dfc6721",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    "archived"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8121fc1-d782-4bb0-8b22-0fd25206896c",
+          "name": "Mark guide as interacted",
+          "request": {
+            "name": "Mark guide as interacted",
+            "description": {
+              "content": "Records that a user has interacted with a guide, triggering any associated interacted events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                "interacted"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99152a19-e267-456f-941f-419811776342",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    "interacted"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eeaba219-efe6-4bb8-8b96-e53bf989e1cb",
+          "name": "Reset guide engagement",
+          "request": {
+            "name": "Reset guide engagement",
+            "description": {
+              "content": "Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next interaction creates a fresh engagement.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "engagements",
+                "reset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2660f84e-aaee-41d4-8875-5fea7a6039b6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "engagements",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9ea32a0-5bca-4264-a803-2348e89d9f1c",
+          "name": "List guides",
+          "request": {
+            "name": "List guides",
+            "description": {
+              "content": "Returns a list of eligible in-app guides for a specific user and channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                ":channel_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The tenant ID to use for targeting and rendering guides."
+                },
+                {
+                  "disabled": false,
+                  "key": "data",
+                  "value": "<string>",
+                  "description": "The data (JSON encoded object) to use for targeting and rendering guides."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "The type of guides to filter by."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "channel_id",
+                  "description": "(Required) The unique identifier for the channel."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7430ab90-daad-4a75-a4ab-e9f3295f794a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    ":channel_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "data",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "channel_id",
+                      "description": "(Required) The unique identifier for the channel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"__typename\": \"string\",\n      \"activation_url_patterns\": [\n        {\n          \"directive\": \"string\",\n          \"pathname\": \"string\",\n          \"search\": \"string\"\n        },\n        {\n          \"directive\": \"string\",\n          \"pathname\": \"string\",\n          \"search\": \"string\"\n        }\n      ],\n      \"activation_url_rules\": [\n        {\n          \"argument\": \"string\",\n          \"directive\": \"string\",\n          \"operator\": \"string\",\n          \"variable\": \"string\"\n        },\n        {\n          \"argument\": \"string\",\n          \"directive\": \"string\",\n          \"operator\": \"string\",\n          \"variable\": \"string\"\n        }\n      ],\n      \"active\": true,\n      \"bypass_global_group_limit\": true,\n      \"channel_id\": \"dee06df6-7695-cea4-cb5a-054dae3af07b\",\n      \"dashboard_url\": \"string\",\n      \"id\": \"a025619d-7feb-390c-5a61-4e9c054170f9\",\n      \"inserted_at\": \"2011-05-02T02:05:51.531Z\",\n      \"key\": \"string\",\n      \"semver\": \"string\",\n      \"steps\": [\n        {\n          \"content\": {\n            \"key_0\": 9609,\n            \"key_1\": 632.499312005037,\n            \"key_2\": 3021.998095113587\n          },\n          \"message\": {\n            \"archived_at\": \"2026-02-15T09:23:54.137Z\",\n            \"id\": \"string\",\n            \"interacted_at\": \"1972-02-16T00:28:23.113Z\",\n            \"link_clicked_at\": \"2025-11-08T15:21:04.491Z\",\n            \"read_at\": \"1997-03-13T21:46:17.351Z\",\n            \"seen_at\": \"1973-09-17T01:51:53.595Z\"\n          },\n          \"ref\": \"string\",\n          \"schema_key\": \"string\",\n          \"schema_semver\": \"string\",\n          \"schema_variant_key\": \"string\"\n        },\n        {\n          \"content\": {\n            \"key_0\": true,\n            \"key_1\": false\n          },\n          \"message\": {\n            \"archived_at\": \"2012-11-21T19:36:46.785Z\",\n            \"id\": \"string\",\n            \"interacted_at\": \"2010-10-19T01:52:31.124Z\",\n            \"link_clicked_at\": \"2016-09-06T08:56:41.619Z\",\n            \"read_at\": \"1988-10-03T00:48:11.360Z\",\n            \"seen_at\": \"1990-11-12T03:48:46.553Z\"\n          },\n          \"ref\": \"string\",\n          \"schema_key\": \"string\",\n          \"schema_semver\": \"string\",\n          \"schema_variant_key\": \"string\"\n        }\n      ],\n      \"type\": \"string\",\n      \"updated_at\": \"1987-04-19T00:39:33.852Z\"\n    },\n    {\n      \"__typename\": \"string\",\n      \"activation_url_patterns\": [\n        {\n          \"directive\": \"string\",\n          \"pathname\": \"string\",\n          \"search\": \"string\"\n        },\n        {\n          \"directive\": \"string\",\n          \"pathname\": \"string\",\n          \"search\": \"string\"\n        }\n      ],\n      \"activation_url_rules\": [\n        {\n          \"argument\": \"string\",\n          \"directive\": \"string\",\n          \"operator\": \"string\",\n          \"variable\": \"string\"\n        },\n        {\n          \"argument\": \"string\",\n          \"directive\": \"string\",\n          \"operator\": \"string\",\n          \"variable\": \"string\"\n        }\n      ],\n      \"active\": false,\n      \"bypass_global_group_limit\": false,\n      \"channel_id\": \"49ce9f22-96cb-1412-a758-de3797e6faa3\",\n      \"dashboard_url\": \"string\",\n      \"id\": \"01d20a36-9086-140c-c001-d2854e0d651f\",\n      \"inserted_at\": \"1961-12-11T20:29:51.848Z\",\n      \"key\": \"string\",\n      \"semver\": \"string\",\n      \"steps\": [\n        {\n          \"content\": {\n            \"key_0\": 5014\n          },\n          \"message\": {\n            \"archived_at\": \"2017-08-24T16:51:53.607Z\",\n            \"id\": \"string\",\n            \"interacted_at\": \"2002-01-18T12:01:17.061Z\",\n            \"link_clicked_at\": \"1951-12-26T19:26:55.716Z\",\n            \"read_at\": \"2005-11-23T02:16:02.506Z\",\n            \"seen_at\": \"1988-01-24T08:52:13.679Z\"\n          },\n          \"ref\": \"string\",\n          \"schema_key\": \"string\",\n          \"schema_semver\": \"string\",\n          \"schema_variant_key\": \"string\"\n        },\n        {\n          \"content\": {\n            \"key_0\": \"string\"\n          },\n          \"message\": {\n            \"archived_at\": \"2007-11-28T16:19:32.473Z\",\n            \"id\": \"string\",\n            \"interacted_at\": \"1998-03-27T07:44:37.292Z\",\n            \"link_clicked_at\": \"1976-01-20T15:28:19.410Z\",\n            \"read_at\": \"2022-06-18T04:33:07.904Z\",\n            \"seen_at\": \"2022-10-10T16:48:30.478Z\"\n          },\n          \"ref\": \"string\",\n          \"schema_key\": \"string\",\n          \"schema_semver\": \"string\",\n          \"schema_variant_key\": \"string\"\n        }\n      ],\n      \"type\": \"string\",\n      \"updated_at\": \"1959-11-02T13:58:22.706Z\"\n    }\n  ],\n  \"guide_groups\": [\n    {\n      \"__typename\": \"string\",\n      \"display_interval\": 2837,\n      \"display_sequence\": [\n        \"string\",\n        \"string\"\n      ],\n      \"inserted_at\": \"1947-10-08T10:46:01.800Z\",\n      \"key\": \"string\",\n      \"updated_at\": \"2006-03-31T23:23:18.314Z\"\n    },\n    {\n      \"__typename\": \"string\",\n      \"display_interval\": 5356,\n      \"display_sequence\": [\n        \"string\",\n        \"string\"\n      ],\n      \"inserted_at\": \"1984-09-13T15:23:34.669Z\",\n      \"key\": \"string\",\n      \"updated_at\": \"2016-10-15T23:31:30.267Z\"\n    }\n  ],\n  \"guide_group_display_logs\": {\n    \"key_0\": \"1958-11-15T15:11:24.731Z\",\n    \"key_1\": \"2026-07-04T20:27:23.796Z\",\n    \"key_2\": \"2006-05-14T20:47:12.699Z\"\n  },\n  \"ineligible_guides\": [\n    {\n      \"key\": \"string\",\n      \"reason\": \"marked_as_archived\",\n      \"message\": \"string\"\n    },\n    {\n      \"key\": \"string\",\n      \"reason\": \"target_conditions_not_met\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6760537a-1640-4188-a25b-d0d93d2e9cfc",
+          "name": "Mark guide as interacted",
+          "request": {
+            "name": "Mark guide as interacted",
+            "description": {
+              "content": "Records that a user has interacted with a guide, triggering any associated interacted events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                ":message_id",
+                "interacted"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da978a47-7bf4-463d-8404-9e8a53f247db",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    ":message_id",
+                    "interacted"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4020b791-01d3-4a15-b677-2bb784bf6636",
+          "name": "Mark guide as archived",
+          "request": {
+            "name": "Mark guide as archived",
+            "description": {
+              "content": "Records that a guide has been archived by a user, triggering any associated archived events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "guides",
+                "messages",
+                ":message_id",
+                "archived"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The unique identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"<uuid>\",\n  \"guide_id\": \"<uuid>\",\n  \"guide_key\": \"<string>\",\n  \"guide_step_ref\": \"<string>\",\n  \"content\": {\n    \"key_0\": 7119.4894515915075\n  },\n  \"data\": {\n    \"key_0\": 7960.559174471647,\n    \"key_1\": \"string\"\n  },\n  \"is_final\": \"<boolean>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": 4995,\n    \"key_2\": true\n  },\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f73300e6-89f1-40e6-a010-088d77e024f7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "guides",
+                    "messages",
+                    ":message_id",
+                    "archived"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The unique identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"content\": {\n    \"body\": \"Limited spots available for today's behind-the-scenes DNA extraction demonstration.\",\n    \"title\": \"DNA Lab Tour Available\"\n  },\n  \"data\": {\n    \"next_time\": \"14:30\",\n    \"spots_left\": 8,\n    \"tour_id\": \"dna_lab_tour\"\n  },\n  \"guide_id\": \"7e9dc78c-b3b1-4127-a54e-71f1899b831a\",\n  \"guide_key\": \"tour_notification\",\n  \"guide_step_ref\": \"lab_tours\",\n  \"is_final\": false,\n  \"metadata\": {\n    \"cta\": \"Reserve Spot\",\n    \"theme\": \"amber\",\n    \"type\": \"banner\"\n  },\n  \"tenant\": \"ingen_isla_nublar\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a5907a49-9686-41eb-a10c-6386f9b64799",
+    "name": "Knock Audiences Accounts Guides API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

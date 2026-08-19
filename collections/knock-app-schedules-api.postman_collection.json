@@ -1,0 +1,816 @@
+{
+  "item": [
+    {
+      "id": "c76e4a68-2554-4e9c-8be3-c379256f4178",
+      "name": "Schedules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e76c8f2-30ec-4a83-bbe6-ea54a1c18350",
+          "name": "List object schedules",
+          "request": {
+            "name": "List object schedules",
+            "description": {
+              "content": "Returns a paginated list of schedules for an object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "objects",
+                ":collection",
+                ":id",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "Filter schedules by tenant id."
+                },
+                {
+                  "disabled": false,
+                  "key": "workflow",
+                  "value": "<string>",
+                  "description": "Filter schedules by workflow id."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the object to list schedules for."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "collection",
+                  "description": "(Required) The collection of the object to list schedules for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5fe705e-b1f3-447e-9e95-111dcdc33666",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "objects",
+                    ":collection",
+                    ":id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workflow",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the object to list schedules for."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "collection",
+                      "description": "(Required) The collection of the object to list schedules for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"id\": \"458da901-5212-71b7-4662-096dcdc690a3\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1981-03-15T04:19:30.889Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2021-03-11T17:42:03.484Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1969-02-16T18:02:50.292Z\",\n      \"updated_at\": \"1971-05-22T03:29:31.555Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1973-08-21T06:12:28.168Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1986-07-09T06:37:50.422Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": true\n      },\n      \"last_occurrence_at\": \"2019-01-14T19:48:03.241Z\",\n      \"next_occurrence_at\": \"1990-06-13T15:32:27.344Z\",\n      \"tenant\": \"string\"\n    },\n    {\n      \"id\": \"d5c4e28c-7a9e-e41f-8ae4-93e3b8fba6f9\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"2018-10-01T03:25:26.222Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1946-09-30T22:34:37.502Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1966-04-03T23:52:24.526Z\",\n      \"updated_at\": \"1988-05-28T15:29:54.504Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1971-08-08T08:23:23.116Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2003-02-22T00:46:07.653Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": 8067.2718046188775\n      },\n      \"last_occurrence_at\": \"1986-07-19T04:44:55.520Z\",\n      \"next_occurrence_at\": \"2008-07-28T20:41:52.457Z\",\n      \"tenant\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37ec92c9-5b52-4095-8b81-1236efae2a6a",
+          "name": "Delete schedules",
+          "request": {
+            "name": "Delete schedules",
+            "description": {
+              "content": "Permanently deletes one or more schedules identified by the provided schedule IDs. This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af9ae2c2-458e-491c-8099-f22270a56abc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"26c16cd0-1648-abc9-473c-b24cc24be558\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"2019-02-16T18:04:10.390Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2009-01-12T08:40:28.744Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"2024-09-06T17:43:50.068Z\",\n    \"updated_at\": \"1948-04-20T04:05:18.983Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1973-12-24T20:32:22.568Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1986-01-18T11:04:24.731Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": 4217,\n      \"key_1\": \"string\"\n    },\n    \"last_occurrence_at\": \"1955-06-17T19:22:37.430Z\",\n    \"next_occurrence_at\": \"1999-04-25T22:37:16.177Z\",\n    \"tenant\": \"string\"\n  },\n  {\n    \"id\": \"871e53c9-2120-2875-91a4-3207dc8c1215\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1975-12-25T06:48:01.593Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1976-12-21T19:32:13.968Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"1959-05-18T15:44:39.592Z\",\n    \"updated_at\": \"1954-03-15T15:06:10.268Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1974-10-25T18:13:27.390Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2017-04-08T07:04:44.079Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"last_occurrence_at\": \"1982-08-02T04:56:26.304Z\",\n    \"next_occurrence_at\": \"1948-12-18T22:34:28.378Z\",\n    \"tenant\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "538cfe04-0559-400d-bbfd-50c86f7d1826",
+          "name": "List schedules",
+          "request": {
+            "name": "List schedules",
+            "description": {
+              "content": "Returns a paginated list of schedules for the current environment, filtered by workflow and optionally by recipients and tenant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workflow",
+                  "value": "<string>",
+                  "description": "(Required) Filter by workflow key."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients[]",
+                  "value": "<string>",
+                  "description": "Filter by recipient references."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipients[]",
+                  "value": "<string>",
+                  "description": "Filter by recipient references."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "Filter by tenant ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a3b668c5-bf4f-4aa0-b4df-91f72456fa58",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workflow",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipients[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "recipients[]",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"id\": \"aa3ab9df-3f15-3646-92be-b992ff3da1f8\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"2011-01-08T22:17:38.489Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2016-09-22T23:54:47.453Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1989-07-24T08:10:05.953Z\",\n      \"updated_at\": \"2003-11-06T11:10:20.365Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1958-09-11T08:44:42.280Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1986-01-18T22:00:12.262Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": 5888,\n        \"key_1\": 4100.372986284204,\n        \"key_2\": 3851,\n        \"key_3\": 5393,\n        \"key_4\": 5495.237904364666\n      },\n      \"last_occurrence_at\": \"2004-08-20T22:32:06.502Z\",\n      \"next_occurrence_at\": \"1987-08-03T08:27:23.422Z\",\n      \"tenant\": \"string\"\n    },\n    {\n      \"id\": \"8fcd9af1-25f4-d6c6-d190-10506cc4d317\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1951-04-06T19:26:14.094Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1957-09-14T06:07:33.628Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1963-12-04T14:11:35.276Z\",\n      \"updated_at\": \"1962-01-04T17:42:42.495Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1984-04-16T12:09:40.147Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2016-04-03T21:21:01.603Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": 822.9940305327476,\n        \"key_1\": 2238\n      },\n      \"last_occurrence_at\": \"1979-08-29T04:53:46.518Z\",\n      \"next_occurrence_at\": \"2001-09-30T07:14:25.554Z\",\n      \"tenant\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6c4b010-64d8-4fb1-aeaa-2117c40de01f",
+          "name": "Create schedules",
+          "request": {
+            "name": "Create schedules",
+            "description": {
+              "content": "Creates one or more schedules for a workflow with the specified recipients, timing, and data. Schedules can be one-time or recurring. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workflow\": \"<string>\",\n  \"recipients\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"key_0\": false\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"<string>\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"<string>\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9926e903-8cad-4162-802b-50a2bb7c33e5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"key\": \"value\"\n  },\n  \"ending_at\": null,\n  \"recipients\": [\n    \"user_123\"\n  ],\n  \"repeats\": [\n    {\n      \"__typename\": \"ScheduleRepeat\",\n      \"day_of_month\": null,\n      \"days\": [\n        \"mon\",\n        \"tue\",\n        \"wed\",\n        \"thu\",\n        \"fri\",\n        \"sat\",\n        \"sun\"\n      ],\n      \"frequency\": \"daily\",\n      \"hours\": null,\n      \"interval\": 1,\n      \"minutes\": null\n    }\n  ],\n  \"scheduled_at\": null,\n  \"tenant\": \"acme_corp\",\n  \"workflow\": \"comment-created\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"221ec04d-1562-0a98-04d7-981aff0ff918\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1966-11-08T04:57:25.041Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2025-07-28T19:32:30.816Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"2022-08-29T14:01:46.730Z\",\n    \"updated_at\": \"2003-12-28T21:59:55.972Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1970-11-07T20:45:17.866Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1977-11-19T21:01:46.445Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": true,\n      \"key_1\": \"string\",\n      \"key_2\": 8679.959283309663\n    },\n    \"last_occurrence_at\": \"2017-11-19T12:54:54.401Z\",\n    \"next_occurrence_at\": \"1961-11-16T12:08:32.279Z\",\n    \"tenant\": \"string\"\n  },\n  {\n    \"id\": \"a2bbafc8-757e-295d-2446-0e0eb90b02b9\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"2005-11-11T10:09:07.560Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1997-08-25T09:46:18.407Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"1966-06-17T10:55:17.655Z\",\n    \"updated_at\": \"1997-11-20T15:41:18.588Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1949-05-10T09:52:30.626Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2024-04-02T12:54:03.491Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": true,\n      \"key_1\": 147\n    },\n    \"last_occurrence_at\": \"2022-08-16T05:18:30.790Z\",\n    \"next_occurrence_at\": \"1979-04-24T01:31:14.128Z\",\n    \"tenant\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77d86e08-7226-46f8-bd58-482f0ea0921c",
+          "name": "Update schedules",
+          "request": {
+            "name": "Update schedules",
+            "description": {
+              "content": "Updates one or more existing schedules with new timing, data, or other properties. All specified schedule IDs will be updated with the same values. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `actor`, `recipient`, and `tenant` fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"actor\": \"<string>\",\n  \"data\": {\n    \"key_0\": 7002.882327376402,\n    \"key_1\": \"string\"\n  },\n  \"ending_at\": \"<dateTime>\",\n  \"repeats\": [\n    {\n      \"frequency\": \"<string>\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    },\n    {\n      \"frequency\": \"<string>\",\n      \"__typename\": \"<string>\",\n      \"day_of_month\": \"<integer>\",\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hours\": \"<integer>\",\n      \"interval\": 1,\n      \"minutes\": \"<integer>\"\n    }\n  ],\n  \"scheduled_at\": \"<dateTime>\",\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d493239-5c39-459f-bc21-2e591232c5a5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"actor\": null,\n  \"data\": {\n    \"key\": \"value\"\n  },\n  \"ending_at\": null,\n  \"repeats\": [\n    {\n      \"__typename\": \"ScheduleRepeat\",\n      \"day_of_month\": null,\n      \"days\": [\n        \"mon\",\n        \"tue\",\n        \"wed\",\n        \"thu\",\n        \"fri\",\n        \"sat\",\n        \"sun\"\n      ],\n      \"frequency\": \"daily\",\n      \"hours\": null,\n      \"interval\": 1,\n      \"minutes\": null\n    }\n  ],\n  \"schedule_ids\": [\n    \"123e4567-e89b-12d3-a456-426614174000\"\n  ],\n  \"scheduled_at\": null,\n  \"tenant\": \"acme_corp\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"221ec04d-1562-0a98-04d7-981aff0ff918\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1966-11-08T04:57:25.041Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2025-07-28T19:32:30.816Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"2022-08-29T14:01:46.730Z\",\n    \"updated_at\": \"2003-12-28T21:59:55.972Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1970-11-07T20:45:17.866Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1977-11-19T21:01:46.445Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": true,\n      \"key_1\": \"string\",\n      \"key_2\": 8679.959283309663\n    },\n    \"last_occurrence_at\": \"2017-11-19T12:54:54.401Z\",\n    \"next_occurrence_at\": \"1961-11-16T12:08:32.279Z\",\n    \"tenant\": \"string\"\n  },\n  {\n    \"id\": \"a2bbafc8-757e-295d-2446-0e0eb90b02b9\",\n    \"workflow\": \"string\",\n    \"recipient\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"2005-11-11T10:09:07.560Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"1997-08-25T09:46:18.407Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"repeats\": [\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      },\n      {\n        \"frequency\": \"daily\",\n        \"__typename\": \"ScheduleRepeat\",\n        \"day_of_month\": 1,\n        \"days\": [\n          \"mon\",\n          \"tue\",\n          \"wed\",\n          \"thu\",\n          \"fri\"\n        ],\n        \"hours\": 0,\n        \"interval\": 1,\n        \"minutes\": 0\n      }\n    ],\n    \"inserted_at\": \"1966-06-17T10:55:17.655Z\",\n    \"updated_at\": \"1997-11-20T15:41:18.588Z\",\n    \"__typename\": \"Schedule\",\n    \"actor\": {\n      \"__typename\": \"User\",\n      \"id\": \"string\",\n      \"updated_at\": \"1949-05-10T09:52:30.626Z\",\n      \"avatar\": \"string\",\n      \"created_at\": \"2024-04-02T12:54:03.491Z\",\n      \"email\": \"string\",\n      \"name\": \"string\",\n      \"phone_number\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"data\": {\n      \"key_0\": true,\n      \"key_1\": 147\n    },\n    \"last_occurrence_at\": \"2022-08-16T05:18:30.790Z\",\n    \"next_occurrence_at\": \"1979-04-24T01:31:14.128Z\",\n    \"tenant\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82b877cb-e015-4aa4-a4bf-31340bacf0c8",
+          "name": "List user schedules",
+          "request": {
+            "name": "List user schedules",
+            "description": {
+              "content": "Returns a paginated list of schedules for a specific user, in descending order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "users",
+                ":user_id",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workflow",
+                  "value": "<string>",
+                  "description": "The workflow key to filter schedules for."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The tenant ID to filter schedules for."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of items per page (defaults to 50)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The user ID to list schedules for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "314385b7-438a-4ba5-a200-1f605e063918",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "users",
+                    ":user_id",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workflow",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The user ID to list schedules for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"id\": \"8859b007-6c12-e2ba-9f45-0ba920128ab9\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1978-06-16T03:48:01.397Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1987-07-08T01:11:20.630Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1981-06-01T11:49:51.403Z\",\n      \"updated_at\": \"1965-03-06T06:08:54.554Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1973-04-25T08:52:46.196Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1964-12-03T09:15:31.969Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"last_occurrence_at\": \"1985-02-15T18:08:28.821Z\",\n      \"next_occurrence_at\": \"2003-03-03T02:04:57.115Z\",\n      \"tenant\": \"string\"\n    },\n    {\n      \"id\": \"3f793d1f-4617-a20f-5e4d-75fc0e5e4ab4\",\n      \"workflow\": \"string\",\n      \"recipient\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1970-04-09T08:12:45.082Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"1951-12-24T07:22:55.438Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"repeats\": [\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        },\n        {\n          \"frequency\": \"daily\",\n          \"__typename\": \"ScheduleRepeat\",\n          \"day_of_month\": 1,\n          \"days\": [\n            \"mon\",\n            \"tue\",\n            \"wed\",\n            \"thu\",\n            \"fri\"\n          ],\n          \"hours\": 0,\n          \"interval\": 1,\n          \"minutes\": 0\n        }\n      ],\n      \"inserted_at\": \"1955-09-05T08:59:01.588Z\",\n      \"updated_at\": \"2019-09-26T19:01:02.374Z\",\n      \"__typename\": \"Schedule\",\n      \"actor\": {\n        \"__typename\": \"User\",\n        \"id\": \"string\",\n        \"updated_at\": \"1961-08-29T10:23:42.167Z\",\n        \"avatar\": \"string\",\n        \"created_at\": \"2002-10-05T07:02:22.868Z\",\n        \"email\": \"string\",\n        \"name\": \"string\",\n        \"phone_number\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"data\": {\n        \"key_0\": true,\n        \"key_1\": 5063,\n        \"key_2\": 1281.8380792926953\n      },\n      \"last_occurrence_at\": \"2025-01-16T05:00:58.948Z\",\n      \"next_occurrence_at\": \"1992-05-22T18:49:17.945Z\",\n      \"tenant\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"__typename\": \"PageInfo\",\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "889d42ae-2cea-4e2a-b9db-f738596f624a",
+    "name": "Knock Audiences Accounts Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

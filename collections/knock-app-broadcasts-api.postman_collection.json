@@ -1,0 +1,892 @@
+{
+  "item": [
+    {
+      "id": "a9665489-6318-457b-86b4-34f901841f1c",
+      "name": "Broadcasts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "302633ad-0bc1-4083-af75-1fb2db296803",
+          "name": "Send a broadcast",
+          "request": {
+            "name": "Send a broadcast",
+            "description": {
+              "content": "Sends a broadcast immediately or schedules it to send at a future time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts",
+                ":broadcast_key",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "broadcast_key",
+                  "description": "(Required) The key of the broadcast."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"send_at\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "772d0b3b-26a7-445b-a964-ea2b4638dfbf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts",
+                    ":broadcast_key",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "broadcast_key",
+                      "description": "(Required) The key of the broadcast."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"send_at\": \"2024-03-20T10:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"sent\",\n    \"steps\": [\n      {\n        \"channel_group_key\": null,\n        \"channel_key\": \"pagerduty\",\n        \"channel_type\": \"http\",\n        \"conditions\": null,\n        \"description\": \"This is a description of the channel step\",\n        \"name\": \"Webhook channel step\",\n        \"ref\": \"channel_step\",\n        \"send_windows\": null,\n        \"template\": {\n          \"body\": null,\n          \"headers\": [\n            {\n              \"key\": \"X-API-Key\",\n              \"value\": \"1234567890\"\n            }\n          ],\n          \"method\": \"get\",\n          \"query_params\": [\n            {\n              \"key\": \"key\",\n              \"value\": \"value\"\n            }\n          ],\n          \"url\": \"https://example.com\"\n        },\n        \"type\": \"channel\"\n      },\n      {\n        \"channel_group_key\": null,\n        \"channel_key\": \"pagerduty\",\n        \"channel_type\": \"http\",\n        \"conditions\": null,\n        \"description\": \"This is a description of the channel step\",\n        \"name\": \"Webhook channel step\",\n        \"ref\": \"channel_step\",\n        \"send_windows\": null,\n        \"template\": {\n          \"body\": null,\n          \"headers\": [\n            {\n              \"key\": \"X-API-Key\",\n              \"value\": \"1234567890\"\n            }\n          ],\n          \"method\": \"get\",\n          \"query_params\": [\n            {\n              \"key\": \"key\",\n              \"value\": \"value\"\n            }\n          ],\n          \"url\": \"https://example.com\"\n        },\n        \"type\": \"channel\"\n      }\n    ],\n    \"valid\": false,\n    \"environment\": \"string\",\n    \"created_at\": \"2013-06-04T01:39:11.827Z\",\n    \"updated_at\": \"1986-09-13T17:05:47.071Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"1996-07-08T00:01:57.702Z\",\n    \"categories\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"scheduled_at\": \"1984-03-16T08:24:07.604Z\",\n    \"sent_at\": \"2017-07-21T08:01:39.932Z\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f06de8c-7d64-40ad-84cd-d041c4dafd7e",
+          "name": "Validate a broadcast",
+          "request": {
+            "name": "Validate a broadcast",
+            "description": {
+              "content": "Validates a broadcast payload without persisting it.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts",
+                ":broadcast_key",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "broadcast_key",
+                  "description": "(Required) The key of the broadcast."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"broadcast\": {\n    \"name\": \"<string>\",\n    \"steps\": [\n      {\n        \"type\": \"<string>\",\n        \"ref\": \"<string>\",\n        \"template\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"body\": \"<string>\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"<string>\",\n        \"channel_key\": \"<string>\",\n        \"channel_type\": \"<string>\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"send_windows\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"type\": \"<string>\",\n        \"ref\": \"<string>\",\n        \"template\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"body\": \"<string>\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"<string>\",\n        \"channel_key\": \"<string>\",\n        \"channel_type\": \"<string>\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"send_windows\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ],\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"description\": \"<string>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"settings\": {\n      \"is_commercial\": \"<boolean>\",\n      \"override_preferences\": \"<boolean>\"\n    },\n    \"target_audience_key\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d5a2efb-4bc3-4dd8-bdd3-c78d5664840e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts",
+                    ":broadcast_key",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "broadcast_key",
+                      "description": "(Required) The key of the broadcast."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"broadcast\": {\n    \"name\": \"<string>\",\n    \"steps\": [\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      },\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      }\n    ],\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"description\": \"<string>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"scheduled\",\n    \"steps\": [\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      },\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      }\n    ],\n    \"valid\": false,\n    \"environment\": \"string\",\n    \"created_at\": \"1983-03-07T13:26:23.703Z\",\n    \"updated_at\": \"1953-02-24T01:32:22.744Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"2022-08-16T09:16:50.829Z\",\n    \"categories\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"scheduled_at\": \"1990-03-27T23:46:05.050Z\",\n    \"sent_at\": \"1993-06-07T15:47:23.086Z\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a7c8ba4-6c73-444e-9cb8-e899dd2d86ca",
+          "name": "List broadcasts",
+          "request": {
+            "name": "List broadcasts",
+            "description": {
+              "content": "Returns a paginated list of broadcasts available in a given environment. The broadcasts are returned ordered by creation time (newest first).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries after."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "The cursor to fetch entries before."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of entries to fetch per-page."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2b81af4-9f9e-4e45-b93e-c4cbc822942b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"key\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"scheduled\",\n      \"steps\": [\n        {\n          \"channel_group_key\": null,\n          \"channel_key\": \"pagerduty\",\n          \"channel_type\": \"http\",\n          \"conditions\": null,\n          \"description\": \"This is a description of the channel step\",\n          \"name\": \"Webhook channel step\",\n          \"ref\": \"channel_step\",\n          \"send_windows\": null,\n          \"template\": {\n            \"body\": null,\n            \"headers\": [\n              {\n                \"key\": \"X-API-Key\",\n                \"value\": \"1234567890\"\n              }\n            ],\n            \"method\": \"get\",\n            \"query_params\": [\n              {\n                \"key\": \"key\",\n                \"value\": \"value\"\n              }\n            ],\n            \"url\": \"https://example.com\"\n          },\n          \"type\": \"channel\"\n        },\n        {\n          \"channel_group_key\": null,\n          \"channel_key\": \"pagerduty\",\n          \"channel_type\": \"http\",\n          \"conditions\": null,\n          \"description\": \"This is a description of the channel step\",\n          \"name\": \"Webhook channel step\",\n          \"ref\": \"channel_step\",\n          \"send_windows\": null,\n          \"template\": {\n            \"body\": null,\n            \"headers\": [\n              {\n                \"key\": \"X-API-Key\",\n                \"value\": \"1234567890\"\n              }\n            ],\n            \"method\": \"get\",\n            \"query_params\": [\n              {\n                \"key\": \"key\",\n                \"value\": \"value\"\n              }\n            ],\n            \"url\": \"https://example.com\"\n          },\n          \"type\": \"channel\"\n        }\n      ],\n      \"valid\": false,\n      \"environment\": \"string\",\n      \"created_at\": \"2022-10-13T02:47:09.468Z\",\n      \"updated_at\": \"1988-05-13T16:37:29.711Z\",\n      \"sha\": \"string\",\n      \"archived_at\": \"1960-10-12T11:55:36.854Z\",\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"description\": \"string\",\n      \"scheduled_at\": \"2022-05-07T01:09:34.141Z\",\n      \"sent_at\": \"1967-06-16T19:44:46.585Z\",\n      \"settings\": {\n        \"is_commercial\": true,\n        \"override_preferences\": false\n      },\n      \"target_audience_key\": \"string\"\n    },\n    {\n      \"key\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"draft\",\n      \"steps\": [\n        {\n          \"channel_group_key\": null,\n          \"channel_key\": \"pagerduty\",\n          \"channel_type\": \"http\",\n          \"conditions\": null,\n          \"description\": \"This is a description of the channel step\",\n          \"name\": \"Webhook channel step\",\n          \"ref\": \"channel_step\",\n          \"send_windows\": null,\n          \"template\": {\n            \"body\": null,\n            \"headers\": [\n              {\n                \"key\": \"X-API-Key\",\n                \"value\": \"1234567890\"\n              }\n            ],\n            \"method\": \"get\",\n            \"query_params\": [\n              {\n                \"key\": \"key\",\n                \"value\": \"value\"\n              }\n            ],\n            \"url\": \"https://example.com\"\n          },\n          \"type\": \"channel\"\n        },\n        {\n          \"channel_group_key\": null,\n          \"channel_key\": \"pagerduty\",\n          \"channel_type\": \"http\",\n          \"conditions\": null,\n          \"description\": \"This is a description of the channel step\",\n          \"name\": \"Webhook channel step\",\n          \"ref\": \"channel_step\",\n          \"send_windows\": null,\n          \"template\": {\n            \"body\": null,\n            \"headers\": [\n              {\n                \"key\": \"X-API-Key\",\n                \"value\": \"1234567890\"\n              }\n            ],\n            \"method\": \"get\",\n            \"query_params\": [\n              {\n                \"key\": \"key\",\n                \"value\": \"value\"\n              }\n            ],\n            \"url\": \"https://example.com\"\n          },\n          \"type\": \"channel\"\n        }\n      ],\n      \"valid\": true,\n      \"environment\": \"string\",\n      \"created_at\": \"1991-09-05T03:39:42.513Z\",\n      \"updated_at\": \"2024-08-24T06:53:30.881Z\",\n      \"sha\": \"string\",\n      \"archived_at\": \"1978-11-11T10:52:58.696Z\",\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"description\": \"string\",\n      \"scheduled_at\": \"1960-05-18T10:57:11.727Z\",\n      \"sent_at\": \"1997-06-17T23:01:02.836Z\",\n      \"settings\": {\n        \"is_commercial\": true,\n        \"override_preferences\": false\n      },\n      \"target_audience_key\": \"string\"\n    }\n  ],\n  \"page_info\": {\n    \"after\": null,\n    \"before\": null,\n    \"page_size\": 25\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "099ba911-09f2-4ff6-956b-d8f4d2213132",
+          "name": "Get a broadcast",
+          "request": {
+            "name": "Get a broadcast",
+            "description": {
+              "content": "Get a broadcast by its key in a given environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts",
+                ":broadcast_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                },
+                {
+                  "disabled": false,
+                  "key": "hide_uncommitted_changes",
+                  "value": "<boolean>",
+                  "description": "Whether to hide uncommitted changes. When true, only committed changes will be returned. When false, both committed and uncommitted changes will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "broadcast_key",
+                  "description": "(Required) The key of the broadcast to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2d850164-abb0-40e0-b81f-999411dc09eb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts",
+                    ":broadcast_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "hide_uncommitted_changes",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "broadcast_key",
+                      "description": "(Required) The key of the broadcast to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"draft\",\n  \"steps\": [\n    {\n      \"type\": \"channel\",\n      \"ref\": \"channel_step\",\n      \"template\": {\n        \"url\": \"https://example.com\",\n        \"method\": \"post\",\n        \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n        \"headers\": [\n          {\n            \"key\": \"X-API-Key\",\n            \"value\": \"1234567890\"\n          },\n          {\n            \"key\": \"X-API-Key\",\n            \"value\": \"1234567890\"\n          }\n        ],\n        \"query_params\": [\n          {\n            \"key\": \"key\",\n            \"value\": \"value\"\n          },\n          {\n            \"key\": \"key\",\n            \"value\": \"value\"\n          }\n        ]\n      },\n      \"channel_group_key\": \"email\",\n      \"channel_key\": \"postmark\",\n      \"channel_type\": \"http\",\n      \"conditions\": {\n        \"all\": [\n          {\n            \"argument\": \"some_property\",\n            \"operator\": \"equal_to\",\n            \"variable\": \"recipient.property\"\n          }\n        ]\n      },\n      \"description\": \"Send a message to the channel\",\n      \"name\": \"Channel\",\n      \"send_windows\": [\n        {\n          \"day\": \"monday\",\n          \"type\": \"send\",\n          \"from\": \"08:44:34.264Z\",\n          \"until\": \"06:04:49.846Z\"\n        },\n        {\n          \"day\": \"sunday\",\n          \"type\": \"send\",\n          \"from\": \"11:29:24.016Z\",\n          \"until\": \"19:03:03.363Z\"\n        }\n      ]\n    },\n    {\n      \"type\": \"channel\",\n      \"ref\": \"channel_step\",\n      \"template\": {\n        \"url\": \"https://example.com\",\n        \"method\": \"post\",\n        \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n        \"headers\": [\n          {\n            \"key\": \"X-API-Key\",\n            \"value\": \"1234567890\"\n          },\n          {\n            \"key\": \"X-API-Key\",\n            \"value\": \"1234567890\"\n          }\n        ],\n        \"query_params\": [\n          {\n            \"key\": \"key\",\n            \"value\": \"value\"\n          },\n          {\n            \"key\": \"key\",\n            \"value\": \"value\"\n          }\n        ]\n      },\n      \"channel_group_key\": \"email\",\n      \"channel_key\": \"postmark\",\n      \"channel_type\": \"http\",\n      \"conditions\": {\n        \"all\": [\n          {\n            \"argument\": \"some_property\",\n            \"operator\": \"equal_to\",\n            \"variable\": \"recipient.property\"\n          }\n        ]\n      },\n      \"description\": \"Send a message to the channel\",\n      \"name\": \"Channel\",\n      \"send_windows\": [\n        {\n          \"day\": \"monday\",\n          \"type\": \"send\",\n          \"from\": \"09:48:57.478Z\",\n          \"until\": \"23:08:35.668Z\"\n        },\n        {\n          \"day\": \"wednesday\",\n          \"type\": \"send\",\n          \"from\": \"18:59:56.358Z\",\n          \"until\": \"11:36:42.422Z\"\n        }\n      ]\n    }\n  ],\n  \"valid\": true,\n  \"environment\": \"string\",\n  \"created_at\": \"1955-04-19T05:53:36.260Z\",\n  \"updated_at\": \"1968-05-16T09:34:19.510Z\",\n  \"sha\": \"string\",\n  \"archived_at\": \"1956-12-30T18:35:41.946Z\",\n  \"categories\": [\n    \"string\",\n    \"string\"\n  ],\n  \"description\": \"string\",\n  \"scheduled_at\": \"1955-07-24T02:08:21.198Z\",\n  \"sent_at\": \"2007-08-25T20:59:07.687Z\",\n  \"settings\": {\n    \"is_commercial\": true,\n    \"override_preferences\": false\n  },\n  \"target_audience_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "958b000f-63fe-4867-9047-721dcebb1024",
+          "name": "Upsert a broadcast",
+          "request": {
+            "name": "Upsert a broadcast",
+            "description": {
+              "content": "Updates a broadcast of a given key, or creates a new one if it does not yet exist.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts",
+                ":broadcast_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                },
+                {
+                  "disabled": false,
+                  "key": "annotate",
+                  "value": "<boolean>",
+                  "description": "Whether to annotate the resource. Only used in the Knock CLI."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "broadcast_key",
+                  "description": "(Required) The key of the broadcast."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"broadcast\": {\n    \"name\": \"<string>\",\n    \"steps\": [\n      {\n        \"type\": \"<string>\",\n        \"ref\": \"<string>\",\n        \"template\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"body\": \"<string>\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"<string>\",\n        \"channel_key\": \"<string>\",\n        \"channel_type\": \"<string>\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"send_windows\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"type\": \"<string>\",\n        \"ref\": \"<string>\",\n        \"template\": {\n          \"url\": \"<string>\",\n          \"method\": \"<string>\",\n          \"body\": \"<string>\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"<string>\",\n        \"channel_key\": \"<string>\",\n        \"channel_type\": \"<string>\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"<string>\",\n        \"name\": \"<string>\",\n        \"send_windows\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"from\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ],\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"description\": \"<string>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"settings\": {\n      \"is_commercial\": \"<boolean>\",\n      \"override_preferences\": \"<boolean>\"\n    },\n    \"target_audience_key\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9c5334b-bfe8-4c99-8abf-49d71ab9c6c3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts",
+                    ":broadcast_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    },
+                    {
+                      "key": "annotate",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "broadcast_key",
+                      "description": "(Required) The key of the broadcast."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"broadcast\": {\n    \"name\": \"<string>\",\n    \"steps\": [\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      },\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      }\n    ],\n    \"categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"description\": \"<string>\",\n    \"scheduled_at\": \"<dateTime>\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"scheduled\",\n    \"steps\": [\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      },\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      }\n    ],\n    \"valid\": false,\n    \"environment\": \"string\",\n    \"created_at\": \"1983-03-07T13:26:23.703Z\",\n    \"updated_at\": \"1953-02-24T01:32:22.744Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"2022-08-16T09:16:50.829Z\",\n    \"categories\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"scheduled_at\": \"1990-03-27T23:46:05.050Z\",\n    \"sent_at\": \"1993-06-07T15:47:23.086Z\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2d72d81-4d9e-4c65-9020-9d32ae9845fc",
+          "name": "Cancel a scheduled broadcast",
+          "request": {
+            "name": "Cancel a scheduled broadcast",
+            "description": {
+              "content": "Cancels sending a scheduled broadcast. The broadcast will return to draft status.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "broadcasts",
+                ":broadcast_key",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "environment",
+                  "value": "<string>",
+                  "description": "(Required) The environment slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "branch",
+                  "value": "<string>",
+                  "description": "The slug of a branch to use. This option can only be used when `environment` is `\"development\"`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "broadcast_key",
+                  "description": "(Required) The key of the broadcast."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8db195d-9dd0-41d1-9330-e9353ced32f9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "broadcasts",
+                    ":broadcast_key",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "environment",
+                      "value": "development"
+                    },
+                    {
+                      "key": "branch",
+                      "value": "feature-branch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "broadcast_key",
+                      "description": "(Required) The key of the broadcast."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"broadcast\": {\n    \"key\": \"string\",\n    \"name\": \"string\",\n    \"status\": \"scheduled\",\n    \"steps\": [\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      },\n      {\n        \"type\": \"channel\",\n        \"ref\": \"channel_step\",\n        \"template\": {\n          \"url\": \"https://example.com\",\n          \"method\": \"post\",\n          \"body\": \"{\\\"key\\\": \\\"value\\\"}\",\n          \"headers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"query_params\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        \"channel_group_key\": \"email\",\n        \"channel_key\": \"postmark\",\n        \"channel_type\": \"http\",\n        \"conditions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": \"Send a message to the channel\",\n        \"name\": \"Channel\",\n        \"send_windows\": [\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          },\n          {\n            \"day\": \"monday\",\n            \"from\": \"09:00\",\n            \"type\": \"send\",\n            \"until\": \"17:00\"\n          }\n        ]\n      }\n    ],\n    \"valid\": false,\n    \"environment\": \"string\",\n    \"created_at\": \"1983-03-07T13:26:23.703Z\",\n    \"updated_at\": \"1953-02-24T01:32:22.744Z\",\n    \"sha\": \"string\",\n    \"archived_at\": \"2022-08-16T09:16:50.829Z\",\n    \"categories\": [\n      \"string\",\n      \"string\"\n    ],\n    \"description\": \"string\",\n    \"scheduled_at\": \"1990-03-27T23:46:05.050Z\",\n    \"sent_at\": \"1993-06-07T15:47:23.086Z\",\n    \"settings\": {\n      \"is_commercial\": true,\n      \"override_preferences\": false\n    },\n    \"target_audience_key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2d2d4944-849d-467e-bc76-c15f4870894c",
+    "name": "Knock Audiences Accounts Broadcasts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

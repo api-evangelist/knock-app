@@ -1,0 +1,1159 @@
+{
+  "item": [
+    {
+      "id": "0119cbbe-c689-4b86-ba3a-aa7a6637435b",
+      "name": "Providers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cb8f9b16-a6ff-4ffc-b7f1-8e83aafc809e",
+          "name": "List channels",
+          "request": {
+            "name": "List channels",
+            "description": {
+              "content": "List Slack channels for a Slack workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.cursor",
+                  "value": "<string>",
+                  "description": "Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first \"page\" of the collection."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of channels to return. Defaults to 200."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.exclude_archived",
+                  "value": "<boolean>",
+                  "description": "Set to true to exclude archived channels from the list. Defaults to `true` when not explicitly provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.types",
+                  "value": "<string>",
+                  "description": "Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im. Defaults to `\"public_channel,private_channel\"`. If the user's Slack ID is unavailable, this option is ignored and only public channels are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.team_id",
+                  "value": "<string>",
+                  "description": "Encoded team ID (T1234) to list channels in, required if org token is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d405872-dc62-4804-89cd-cf8c27c11c20",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "query_options.cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "query_options.exclude_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query_options.types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.team_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slack_channels\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"is_private\": false,\n      \"is_im\": true,\n      \"context_team_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"is_private\": false,\n      \"is_im\": true,\n      \"context_team_id\": \"string\"\n    }\n  ],\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bae21f8e-affd-430e-a7d7-c2b96233a061",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "query_options.cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "query_options.exclude_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query_options.types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.team_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to get channels for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"authorization\",\n  \"message\": \"Access token not set.\",\n  \"status\": 403,\n  \"type\": \"authentication_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f40dc4b7-a91e-4e1d-82a3-b0bc4858d6ee",
+          "name": "Check auth",
+          "request": {
+            "name": "Check auth",
+            "description": {
+              "content": "Check if a connection to Microsoft Teams has been authorized for a given Microsoft Teams tenant object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "ms-teams",
+                ":channel_id",
+                "auth_check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ms_teams_tenant_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Microsoft Teams channel to check."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "edc02f61-b6ee-4eff-907d-96b31204284d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "ms-teams",
+                    ":channel_id",
+                    "auth_check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ms_teams_tenant_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Microsoft Teams channel to check."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connection\": {\n    \"ok\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72be7381-6330-42be-8e30-89426bfe71a9",
+          "name": "Check auth",
+          "request": {
+            "name": "Check auth",
+            "description": {
+              "content": "Check if a Slack channel is authenticated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "auth_check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to check."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0532d12-f399-465f-af8a-6eb37482dc41",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "auth_check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to check."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connection\": {\n    \"ok\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce4cd5aa-20af-403b-90cd-9179f8fb963d",
+          "name": "List channels",
+          "request": {
+            "name": "List channels",
+            "description": {
+              "content": "List the Microsoft Teams channels within a team. By default, archived and private channels are excluded from the results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "ms-teams",
+                ":channel_id",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ms_teams_tenant_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference."
+                },
+                {
+                  "disabled": false,
+                  "key": "team_id",
+                  "value": "<string>",
+                  "description": "(Required) Microsoft Teams team ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$filter",
+                  "value": "<string>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter channels."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$select",
+                  "value": "<string>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select specific properties."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Microsoft Teams channel to get channels for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6df7bafa-4908-4c0b-a225-c42d76f8bba9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "ms-teams",
+                    ":channel_id",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ms_teams_tenant_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "team_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_options.$filter",
+                      "value": "displayName eq 'General'"
+                    },
+                    {
+                      "key": "query_options.$select",
+                      "value": "id,displayName,description"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Microsoft Teams channel to get channels for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ms_teams_channels\": [\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"createdDateTime\": \"string\",\n      \"description\": \"string\",\n      \"isArchived\": false,\n      \"membershipType\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"createdDateTime\": \"string\",\n      \"description\": \"string\",\n      \"isArchived\": false,\n      \"membershipType\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "408a2566-8d19-486f-91dc-09c591a6263f",
+          "name": "Revoke access",
+          "request": {
+            "name": "Revoke access",
+            "description": {
+              "content": "Revoke access for a Slack channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "slack",
+                ":channel_id",
+                "revoke_access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the access token object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "448c26d4-682f-4d33-8c6c-2076152746da",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3be7e126-d8ea-4899-9350-376cfea05d8f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "slack",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Slack channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"authorization\",\n  \"message\": \"Access token not set.\",\n  \"status\": 403,\n  \"type\": \"authentication_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83c08af3-9745-4234-93c4-a1d0d2a155b3",
+          "name": "List teams",
+          "request": {
+            "name": "List teams",
+            "description": {
+              "content": "Get a list of teams belonging to the Microsoft Entra tenant. By default, archived and private channels are excluded from the results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "ms-teams",
+                ":channel_id",
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ms_teams_tenant_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$filter",
+                  "value": "<string>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to filter teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$select",
+                  "value": "<string>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to select fields on a team."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$top",
+                  "value": "<integer>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to limit the number of teams returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "query_options.$skiptoken",
+                  "value": "<string>",
+                  "description": "[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Microsoft Teams channel to get teams for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f05f782-f073-4de8-bd20-619b4b6ca84d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "ms-teams",
+                    ":channel_id",
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ms_teams_tenant_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    },
+                    {
+                      "key": "query_options.$filter",
+                      "value": "displayName eq 'My Team'"
+                    },
+                    {
+                      "key": "query_options.$select",
+                      "value": "id,displayName,description"
+                    },
+                    {
+                      "key": "query_options.$top",
+                      "value": "10"
+                    },
+                    {
+                      "key": "query_options.$skiptoken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Microsoft Teams channel to get teams for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ms_teams_teams\": [\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"skip_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbd325a9-ecda-4c96-aff8-913ce5b1a622",
+          "name": "Revoke access",
+          "request": {
+            "name": "Revoke access",
+            "description": {
+              "content": "Remove a Microsoft Entra tenant ID from a Microsoft Teams tenant object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "providers",
+                "ms-teams",
+                ":channel_id",
+                "revoke_access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ms_teams_tenant_object",
+                  "value": "<string>",
+                  "description": "(Required) A JSON encoded string containing the Microsoft Teams tenant object reference."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channel_id",
+                  "description": "(Required) The ID of the Knock Microsoft Teams channel to revoke access for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9cc014ec-9690-4116-bcce-bfd146b76867",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "ms-teams",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ms_teams_tenant_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Microsoft Teams channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cd0d326-ad99-4cf6-9ee6-be5a977a6acb",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "providers",
+                    "ms-teams",
+                    ":channel_id",
+                    "revoke_access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ms_teams_tenant_object",
+                      "value": "{\"collection\":\"projects\",\"object_id\":\"project_123\"}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channel_id",
+                      "description": "(Required) The ID of the Knock Microsoft Teams channel to revoke access for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"authorization\",\n  \"message\": \"Access token not set.\",\n  \"status\": 403,\n  \"type\": \"authentication_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.knock.app",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "97b65a0b-83a1-48e4-8669-4376f7ab901a",
+    "name": "Knock Audiences Accounts Providers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.\n\nContact Support:\n Name: Knock",
+      "type": "text/plain"
+    }
+  }
+}

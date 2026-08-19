@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Channels API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/channels",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "A channel id to filter the results by."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Associated resources to include in the response. Accepts `environment_settings` to include per-environment channel configuration."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to fetch per-page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of channels. Note: the list of channels is across the entire account, not scoped to an environment."
+        },
+        {
+          "info": {
+            "name": "Get a channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/channels/:channel_key",
+            "params": [
+              {
+                "name": "channel_key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the channel to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns a channel with all environment-specific settings. Secret values in provider settings are obfuscated unless they are Liquid templates (e.g., `{{ vars.api_key }}`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

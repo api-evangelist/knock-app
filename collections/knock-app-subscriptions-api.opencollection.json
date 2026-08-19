@@ -1,0 +1,244 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knock Audiences Accounts Subscriptions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk add subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/add",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add subscriptions for all objects in a single collection. If a subscription for an object in the collection already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient` field."
+        },
+        {
+          "info": {
+            "name": "Bulk delete subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/bulk/subscriptions/delete",
+            "params": [
+              {
+                "name": "collection",
+                "value": "projects",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete subscriptions for many objects in a single collection type. If a subscription for an object in the collection doesn't exist, it will be skipped."
+        },
+        {
+          "info": {
+            "name": "List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Mode of the request. `recipient` to list the objects that the provided object is subscribed to, `object` to list the recipients that subscribe to the provided object."
+              },
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Additional fields to include in the response."
+              },
+              {
+                "name": "recipients[]",
+                "value": "",
+                "type": "query",
+                "description": "Recipients to filter by (only used if mode is `object`)."
+              },
+              {
+                "name": "objects[]",
+                "value": "",
+                "type": "query",
+                "description": "Objects to filter by (only used if mode is `recipient`)."
+              },
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "List subscriptions for an object. Either list the recipients that subscribe to the provided object, or list the objects that the provided object is subscribed to. Determined by the `mode` query parameter."
+        },
+        {
+          "info": {
+            "name": "Add subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add subscriptions for an object. If a subscription already exists, it will be updated. This endpoint also handles [inline identifications](/managing-recipients/identifying-recipients#inline-identifying-recipients) for the `recipient`."
+        },
+        {
+          "info": {
+            "name": "Delete subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.knock.app/v1/objects/:collection/:object_id/subscriptions",
+            "params": [
+              {
+                "name": "object_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection this object belongs to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete subscriptions for the specified recipients from an object. Returns the list of deleted subscriptions."
+        },
+        {
+          "info": {
+            "name": "List user subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.knock.app/v1/users/:user_id/subscriptions",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user ID to list subscriptions for."
+              },
+              {
+                "name": "include[]",
+                "value": "",
+                "type": "query",
+                "description": "Associated resources to include in the response."
+              },
+              {
+                "name": "objects[]",
+                "value": "",
+                "type": "query",
+                "description": "Only returns subscriptions for the specified object references."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to fetch entries before."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The number of items per page (defaults to 50)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of subscriptions for a specific user, in descending order."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
