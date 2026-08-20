@@ -4,6 +4,10 @@ apis:
 - aid: knock-app:knock-webhooks
   name: Knock Outbound Webhooks
   tags:
+  - Webhook
+  - Event
+  - AsyncAPI
+  tags_raw:
   - Webhooks
   - Events
   - AsyncAPI
@@ -24,6 +28,8 @@ apis:
   description: Resources for managing your Knock account.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -75,6 +81,8 @@ apis:
   description: The API keys API from Knock — 1 operation(s) for api keys.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - APIKeys
+  tags_raw:
   - API keys
   properties:
   - type: OpenAPI
@@ -279,6 +287,8 @@ apis:
   description: The Bulk operations API from Knock — 12 operation(s) for bulk operations.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Bulk Operations
+  tags_raw:
   - Bulk operations
   properties:
   - type: OpenAPI
@@ -739,6 +749,8 @@ apis:
   description: The Integrations API from Knock — 2 operation(s) for integrations.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -894,6 +906,8 @@ apis:
   description: The Messages API from Knock — 24 operation(s) for messages.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -1302,6 +1316,8 @@ apis:
   description: The Subscriptions API from Knock — 4 operation(s) for subscriptions.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -1506,6 +1522,8 @@ apis:
   description: The Users API from Knock — 28 operation(s) for users.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -1659,6 +1677,8 @@ apis:
   description: The Workflow Triggers API from Knock — 2 operation(s) for workflow triggers.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - WorkflowTriggers
+  tags_raw:
   - Workflow Triggers
   properties:
   - type: OpenAPI
@@ -1758,6 +1778,22 @@ apis:
     url: https://docs.knock.app/developer-tools/management-api
 name: Knock
 tags:
+- Notification
+- Messaging
+- Infrastructure
+- Workflows
+- Cross-Channel
+- Email
+- SMS
+- Push
+- In-App
+- Chat
+- Slack
+- Webhook
+- MCP
+- AI Agents
+- Developer Platform
+tags_raw:
 - Notifications
 - Messaging
 - Infrastructure
