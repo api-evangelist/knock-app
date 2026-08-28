@@ -11,11 +11,8 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockUsersApi
-  url: ../openapi/knock-users-api-openapi.yml
-  type: openapi
-- name: knockWorkflowsApi
-  url: ../openapi/knock-workflows-api-openapi.yml
+- name: usersApi
+  url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: merge-users-and-renotify

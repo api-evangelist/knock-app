@@ -10,11 +10,11 @@ info:
     be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockTenantsApi
-  url: ../openapi/knock-tenants-api-openapi.yml
+- name: bulkOperationsApi
+  url: ../openapi/knock-app-bulk-operations-api-openapi.yml
   type: openapi
-- name: knockBulkOperationsApi
-  url: ../openapi/knock-bulk-operations-api-openapi.yml
+- name: tenantsApi
+  url: ../openapi/knock-app-tenants-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: bulk-set-tenants-verify

@@ -10,8 +10,11 @@ info:
     can be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockObjectsApi
-  url: ../openapi/knock-objects-api-openapi.yml
+- name: messagesApi
+  url: ../openapi/knock-app-messages-api-openapi.yml
+  type: openapi
+- name: objectsApi
+  url: ../openapi/knock-app-objects-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: object-preferences-message-audit

@@ -11,8 +11,8 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockWorkflowsApi
-  url: ../openapi/knock-workflows-api-openapi.yml
+- name: workflowRecipientRunsApi
+  url: ../openapi/knock-app-workflow-recipient-runs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: trigger-workflow-track-recipient-run

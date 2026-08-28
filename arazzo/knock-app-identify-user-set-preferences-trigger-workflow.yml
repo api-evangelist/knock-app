@@ -11,11 +11,11 @@ info:
     can be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockUsersApi
-  url: ../openapi/knock-users-api-openapi.yml
+- name: preferencesApi
+  url: ../openapi/knock-app-preferences-api-openapi.yml
   type: openapi
-- name: knockWorkflowsApi
-  url: ../openapi/knock-workflows-api-openapi.yml
+- name: usersApi
+  url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: identify-user-set-preferences-trigger-workflow

@@ -11,14 +11,11 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockTenantsApi
-  url: ../openapi/knock-tenants-api-openapi.yml
+- name: tenantsApi
+  url: ../openapi/knock-app-tenants-api-openapi.yml
   type: openapi
-- name: knockUsersApi
-  url: ../openapi/knock-users-api-openapi.yml
-  type: openapi
-- name: knockWorkflowsApi
-  url: ../openapi/knock-workflows-api-openapi.yml
+- name: usersApi
+  url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: tenant-onboarding-notify

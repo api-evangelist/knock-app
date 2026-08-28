@@ -11,14 +11,8 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockObjectsApi
-  url: ../openapi/knock-objects-api-openapi.yml
-  type: openapi
-- name: knockBulkOperationsApi
-  url: ../openapi/knock-bulk-operations-api-openapi.yml
-  type: openapi
-- name: knockWorkflowsApi
-  url: ../openapi/knock-workflows-api-openapi.yml
+- name: bulkOperationsApi
+  url: ../openapi/knock-app-bulk-operations-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: bulk-set-objects-notify

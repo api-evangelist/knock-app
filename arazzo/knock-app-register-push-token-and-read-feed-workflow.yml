@@ -11,8 +11,14 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: knockUsersApi
-  url: ../openapi/knock-users-api-openapi.yml
+- name: channelDataApi
+  url: ../openapi/knock-app-channel-data-api-openapi.yml
+  type: openapi
+- name: feedsApi
+  url: ../openapi/knock-app-feeds-api-openapi.yml
+  type: openapi
+- name: usersApi
+  url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: register-push-token-and-read-feed
