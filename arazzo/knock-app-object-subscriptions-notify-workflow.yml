@@ -14,6 +14,9 @@ sourceDescriptions:
 - name: objectsApi
   url: ../openapi/knock-app-objects-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: object-subscriptions-notify
   summary: Upsert an object, subscribe recipients, and trigger a workflow for it.
@@ -108,7 +111,7 @@ workflows:
     description: >-
       Trigger the workflow with the object as the recipient so all subscribers
       are notified.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

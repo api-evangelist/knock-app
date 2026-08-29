@@ -17,6 +17,9 @@ sourceDescriptions:
 - name: usersApi
   url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: tenant-onboarding-notify
   summary: Upsert a tenant, identify a member, and trigger a tenant-scoped workflow.
@@ -100,7 +103,7 @@ workflows:
     description: >-
       Trigger the workflow for the member scoped to the tenant so tenant-level
       overrides apply and the resulting messages are tagged with the tenant.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

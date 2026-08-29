@@ -17,6 +17,9 @@ sourceDescriptions:
 - name: usersApi
   url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: identify-user-set-preferences-trigger-workflow
   summary: Identify a user, set their preference set, and trigger a workflow.
@@ -107,7 +110,7 @@ workflows:
     description: >-
       Trigger the named workflow for the identified recipient. Returns a
       workflow_run_id that can be used to track the resulting messages.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

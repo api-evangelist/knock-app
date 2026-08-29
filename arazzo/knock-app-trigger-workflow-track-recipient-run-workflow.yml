@@ -14,6 +14,9 @@ sourceDescriptions:
 - name: workflowRecipientRunsApi
   url: ../openapi/knock-app-workflow-recipient-runs-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: trigger-workflow-track-recipient-run
   summary: Trigger a workflow then poll the recipient run to completion.
@@ -45,7 +48,7 @@ workflows:
     description: >-
       Trigger the named workflow for the supplied recipient and capture the
       returned workflow_run_id.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

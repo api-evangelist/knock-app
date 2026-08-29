@@ -13,6 +13,9 @@ sourceDescriptions:
 - name: messagesApi
   url: ../openapi/knock-app-messages-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: trigger-workflow-inspect-message-content
   summary: Trigger a workflow then read the resulting message and its content.
@@ -45,7 +48,7 @@ workflows:
   - stepId: triggerWorkflow
     description: >-
       Trigger the workflow for the recipient to produce one or more messages.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

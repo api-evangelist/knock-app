@@ -14,6 +14,9 @@ sourceDescriptions:
 - name: usersApi
   url: ../openapi/knock-app-users-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: merge-users-and-renotify
   summary: Identify a surviving user, merge a duplicate in, and trigger a workflow.
@@ -91,7 +94,7 @@ workflows:
     description: >-
       Trigger the workflow for the consolidated user so notifications resume
       against the surviving record.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

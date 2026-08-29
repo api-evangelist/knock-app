@@ -73,7 +73,7 @@ workflows:
     description: >-
       Trigger the workflow for the recipient with a cancellation key so the
       queued run can be cancelled before it sends.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header

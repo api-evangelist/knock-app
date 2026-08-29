@@ -13,6 +13,9 @@ sourceDescriptions:
 - name: bulkOperationsApi
   url: ../openapi/knock-app-bulk-operations-api-openapi.yml
   type: openapi
+- name: workflowsApi
+  url: ../openapi/knock-app-workflows-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: bulk-identify-users-notify
   summary: Bulk identify users, poll the bulk operation, then trigger a workflow.
@@ -101,7 +104,7 @@ workflows:
     description: >-
       Trigger the workflow for the identified recipients now that the bulk
       identification has completed.
-    operationPath: '{$sourceDescriptions.knockWorkflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
+    operationPath: '{$sourceDescriptions.workflowsApi.url}#/paths/~1v1~1workflows~1{key}~1trigger/post'
     parameters:
     - name: Authorization
       in: header
