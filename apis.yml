@@ -81,7 +81,7 @@ apis:
   description: The API keys API from Knock — 1 operation(s) for api keys.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
-  - API keys
+  - APIKeys
   tags_raw:
   - API keys
   properties:
@@ -287,7 +287,7 @@ apis:
   description: The Bulk operations API from Knock — 12 operation(s) for bulk operations.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
-  - Bulk operations
+  - Bulk Operations
   tags_raw:
   - Bulk operations
   properties:
