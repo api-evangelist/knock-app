@@ -1840,6 +1840,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/knock-app.png
 access: 3rd-Party
 common:
+- type: Website
+  url: https://www.knock.app/
 - type: AgenticAccess
   url: agentic-access/knock-app-agentic-access.yml
 - type: DomainSecurity
