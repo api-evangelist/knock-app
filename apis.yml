@@ -236,6 +236,8 @@ apis:
   description: The Broadcasts API from Knock — 5 operation(s) for broadcasts.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Broadcast
+  tags_raw:
   - Broadcasts
   properties:
   - type: OpenAPI
@@ -595,6 +597,8 @@ apis:
   description: Environments are isolated instances of your account that map to your infrastructure.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Environment
+  tags_raw:
   - Environments
   properties:
   - type: OpenAPI
@@ -646,6 +650,8 @@ apis:
   description: The Feeds API from Knock — 2 operation(s) for feeds.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Feed
+  tags_raw:
   - Feeds
   properties:
   - type: OpenAPI
@@ -1112,6 +1118,8 @@ apis:
   description: The Schedules API from Knock — 3 operation(s) for schedules.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -1318,6 +1326,8 @@ apis:
   description: Translations are per-locale string files that can be used in your templates.
   humanURL: https://docs.knock.app/api-reference/workflows
   tags:
+  - Translation
+  tags_raw:
   - Translations
   properties:
   - type: OpenAPI
