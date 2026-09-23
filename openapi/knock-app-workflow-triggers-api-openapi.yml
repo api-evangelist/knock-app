@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Workflow Triggers API
+  title: Knock Notify Workflow Triggers API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Internal notify endpoints used by the Knock event-driven trigger surface. Used to send notifications when workflows fire from source events, schedules, audiences, or programmatic triggers.
   contact:
     name: Knock
     url: https://knock.app

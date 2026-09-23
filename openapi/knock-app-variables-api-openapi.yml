@@ -1,15 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Variables API
+  title: Knock Management API (mAPI) Variables API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Knock Management API (mAPI) — the resource-management surface for Knock. Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys. Distinct from the runtime Knock API (api.knock.app) — mAPI lives at control.knock.app and is what powers the Knock CLI and MCP server.
   contact:
     name: Knock
     url: https://knock.app
-  license:
-    name: Proprietary
 servers:
-- url: https://api.knock.app
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
@@ -125,7 +123,6 @@ paths:
                     description: A list of entries.
                     items:
                       $ref: '#/components/schemas/Variable'
-                    nullable: false
                     type: array
                     x-struct: null
                     x-validate: null
@@ -153,14 +150,16 @@ components:
       properties:
         after:
           description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         before:
           description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         page_size:
@@ -189,14 +188,16 @@ components:
       properties:
         description:
           description: The description of the variable.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         environment_values:
           additionalProperties:
-            nullable: true
-            type: string
+            type:
+            - string
+            - 'null'
             x-struct: null
             x-validate: null
           description: A map of environment slugs to their override values. Only present for project-scoped responses.
@@ -231,8 +232,9 @@ components:
           x-validate: null
         value:
           description: The default value of the variable. For secret variables, this is obfuscated.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -248,4 +250,4 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
+      description: Knock service token (kst_...) as a Bearer token.

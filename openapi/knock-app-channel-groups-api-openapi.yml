@@ -1,15 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Channel Groups API
+  title: Knock Management API (mAPI) Channel Groups API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Knock Management API (mAPI) — the resource-management surface for Knock. Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys. Distinct from the runtime Knock API (api.knock.app) — mAPI lives at control.knock.app and is what powers the Knock CLI and MCP server.
   contact:
     name: Knock
     url: https://knock.app
-  license:
-    name: Proprietary
 servers:
-- url: https://api.knock.app
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
@@ -85,7 +83,6 @@ paths:
                     description: A list of entries.
                     items:
                       $ref: '#/components/schemas/ChannelGroup'
-                    nullable: false
                     type: array
                     x-struct: null
                     x-validate: null
@@ -230,134 +227,6 @@ paths:
       - Channel Groups
 components:
   schemas:
-    Channel:
-      description: A configured channel, which is a way to route messages to a provider.
-      example:
-        archived_at: null
-        created_at: '2021-01-01T00:00:00Z'
-        custom_icon_url: null
-        id: 01234567-89ab-cdef-0123-456789abcdef
-        key: my-sendgrid-channel
-        name: My Sendgrid Channel
-        provider: sendgrid
-        type: email
-        updated_at: '2021-01-01T00:00:00Z'
-      properties:
-        archived_at:
-          description: The timestamp of when the channel was deleted.
-          format: date-time
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The timestamp of when the channel was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        custom_icon_url:
-          description: Optional URL to a custom icon for the channel. Only used for display purposes in the dashboard.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        description:
-          description: Optional description of the channel's purpose or usage.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        environment_settings:
-          additionalProperties:
-            $ref: '#/components/schemas/ChannelEnvironmentSettings'
-          description: Per-environment settings for this channel, keyed by environment slug (e.g., 'development', 'production'). Only included when requested via the `include` parameter or when retrieving a single channel.
-          nullable: true
-          type: object
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier for the channel.
-          type: string
-          x-struct: null
-          x-validate: null
-        key:
-          description: Unique identifier for the channel within a project (immutable once created).
-          type: string
-          x-struct: null
-          x-validate: null
-        name:
-          description: The human-readable name of the channel.
-          type: string
-          x-struct: null
-          x-validate: null
-        provider:
-          description: The ID of the provider that this channel uses to deliver messages. Learn more about the providers available [in our documentation](https://docs.knock.app/integrations/overview).
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of channel, determining what kind of messages it can send.
-          enum:
-          - email
-          - in_app
-          - in_app_feed
-          - in_app_guide
-          - sms
-          - push
-          - chat
-          - http
-          type: string
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp of when the channel was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - id
-      - name
-      - key
-      - type
-      - provider
-      - created_at
-      - updated_at
-      title: Channel
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.Channel
-      x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
-      example:
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
     ChannelGroupRuleRequest:
       description: A rule that determines if a channel should be executed as part of a channel group.
       example:
@@ -367,8 +236,9 @@ components:
       properties:
         argument:
           description: For conditional rules, the value to compare against.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         channel_key:
@@ -406,8 +276,9 @@ components:
           - is_audience_member
           - is_not_audience_member
           example: equal_to
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         rule_type:
@@ -421,8 +292,9 @@ components:
           x-validate: null
         variable:
           description: For conditional rules, the variable to evaluate.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -431,103 +303,6 @@ components:
       title: ChannelGroupRuleRequest
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRuleRequest
-      x-validate: null
-    ChannelGroupRule:
-      description: A rule that determines if a channel should be executed as part of a channel group.
-      example:
-        channel:
-          archived_at: null
-          created_at: '2021-01-01T00:00:00Z'
-          custom_icon_url: null
-          id: 01234567-89ab-cdef-0123-456789abcdef
-          key: my-sendgrid-channel
-          name: My Sendgrid Channel
-          provider: sendgrid
-          type: email
-          updated_at: '2021-01-01T00:00:00Z'
-        created_at: '2021-01-01T00:00:00Z'
-        index: 0
-        rule_type: always
-        updated_at: '2021-01-01T00:00:00Z'
-      properties:
-        argument:
-          description: For conditional rules, the value to compare against.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        channel:
-          $ref: '#/components/schemas/Channel'
-        created_at:
-          description: The timestamp of when the rule was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        index:
-          description: The order index of this rule within the channel group.
-          type: integer
-          x-struct: null
-          x-validate: null
-        operator:
-          description: For conditional rules, the operator to apply.
-          enum:
-          - equal_to
-          - not_equal_to
-          - greater_than
-          - less_than
-          - greater_than_or_equal_to
-          - less_than_or_equal_to
-          - contains
-          - not_contains
-          - contains_all
-          - not_contains_all
-          - is_timestamp_before
-          - is_timestamp_on_or_after
-          - is_timestamp_between
-          - is_between
-          - empty
-          - not_empty
-          - exists
-          - not_exists
-          - is_timestamp
-          - is_audience_member
-          - is_not_audience_member
-          example: equal_to
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        rule_type:
-          description: The type of rule (if = conditional, unless = negative conditional, always = always apply).
-          enum:
-          - if
-          - unless
-          - always
-          type: string
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp of when the rule was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        variable:
-          description: For conditional rules, the variable to evaluate.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - index
-      - rule_type
-      - channel
-      - created_at
-      - updated_at
-      title: ChannelGroupRule
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRule
       x-validate: null
     ChannelGroup:
       description: A group of channels with rules for when they are applicable.
@@ -558,8 +333,9 @@ components:
         archived_at:
           description: The timestamp of when the channel group was archived (soft deleted).
           format: date-time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         channel_rules:
@@ -634,6 +410,240 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroup
       x-validate: null
+    Channel:
+      description: A configured channel, which is a way to route messages to a provider.
+      example:
+        archived_at: null
+        created_at: '2021-01-01T00:00:00Z'
+        custom_icon_url: null
+        id: 01234567-89ab-cdef-0123-456789abcdef
+        key: my-sendgrid-channel
+        name: My Sendgrid Channel
+        provider: sendgrid
+        type: email
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        archived_at:
+          description: The timestamp of when the channel was deleted.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the channel was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        custom_icon_url:
+          description: Optional URL to a custom icon for the channel. Only used for display purposes in the dashboard.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        description:
+          description: Optional description of the channel's purpose or usage.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        environment_settings:
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelEnvironmentSettings'
+          description: Per-environment settings for this channel, keyed by environment slug (e.g., 'development', 'production'). Only included when requested via the `include` parameter or when retrieving a single channel.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the channel.
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: Unique identifier for the channel within a project (immutable once created).
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The human-readable name of the channel.
+          type: string
+          x-struct: null
+          x-validate: null
+        provider:
+          description: The ID of the provider that this channel uses to deliver messages. Learn more about the providers available [in our documentation](https://docs.knock.app/integrations/overview).
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of channel, determining what kind of messages it can send.
+          enum:
+          - email
+          - in_app
+          - in_app_feed
+          - in_app_guide
+          - sms
+          - push
+          - chat
+          - http
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the channel was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - name
+      - key
+      - type
+      - provider
+      - created_at
+      - updated_at
+      title: Channel
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Channel
+      x-validate: null
+    ChannelGroupRule:
+      description: A rule that determines if a channel should be executed as part of a channel group.
+      example:
+        channel:
+          archived_at: null
+          created_at: '2021-01-01T00:00:00Z'
+          custom_icon_url: null
+          id: 01234567-89ab-cdef-0123-456789abcdef
+          key: my-sendgrid-channel
+          name: My Sendgrid Channel
+          provider: sendgrid
+          type: email
+          updated_at: '2021-01-01T00:00:00Z'
+        created_at: '2021-01-01T00:00:00Z'
+        index: 0
+        rule_type: always
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        argument:
+          description: For conditional rules, the value to compare against.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel:
+          $ref: '#/components/schemas/Channel'
+        created_at:
+          description: The timestamp of when the rule was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        index:
+          description: The order index of this rule within the channel group.
+          type: integer
+          x-struct: null
+          x-validate: null
+        operator:
+          description: For conditional rules, the operator to apply.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - contains_all
+          - not_contains_all
+          - is_timestamp_before
+          - is_timestamp_on_or_after
+          - is_timestamp_between
+          - is_between
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - is_timestamp
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        rule_type:
+          description: The type of rule (if = conditional, unless = negative conditional, always = always apply).
+          enum:
+          - if
+          - unless
+          - always
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the rule was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: For conditional rules, the variable to evaluate.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - index
+      - rule_type
+      - channel
+      - created_at
+      - updated_at
+      title: ChannelGroupRule
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRule
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
     ChannelGroupRequest:
       description: A request to create or update a channel group.
       example:
@@ -704,8 +714,9 @@ components:
         channel_settings:
           additionalProperties: true
           description: Channel-type-specific settings (e.g., from_address for email). Structure varies by channel type.
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
         id:
@@ -727,8 +738,9 @@ components:
         provider_settings:
           additionalProperties: true
           description: Provider-specific settings (e.g., API keys, credentials). Structure varies by provider. Secret values are obfuscated unless they are Liquid templates.
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -743,4 +755,4 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
+      description: Knock service token (kst_...) as a Bearer token.

@@ -1,15 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Channels API
+  title: Knock Management API (mAPI) Channels API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Knock Management API (mAPI) — the resource-management surface for Knock. Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys. Distinct from the runtime Knock API (api.knock.app) — mAPI lives at control.knock.app and is what powers the Knock CLI and MCP server.
   contact:
     name: Knock
     url: https://knock.app
-  license:
-    name: Proprietary
 servers:
-- url: https://api.knock.app
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
@@ -95,7 +93,6 @@ paths:
                     description: A list of entries.
                     items:
                       $ref: '#/components/schemas/Channel'
-                    nullable: false
                     type: array
                     x-struct: null
                     x-validate: null
@@ -154,8 +151,9 @@ components:
         archived_at:
           description: The timestamp of when the channel was deleted.
           format: date-time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         created_at:
@@ -166,22 +164,25 @@ components:
           x-validate: null
         custom_icon_url:
           description: Optional URL to a custom icon for the channel. Only used for display purposes in the dashboard.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         description:
           description: Optional description of the channel's purpose or usage.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         environment_settings:
           additionalProperties:
             $ref: '#/components/schemas/ChannelEnvironmentSettings'
           description: Per-environment settings for this channel, keyed by environment slug (e.g., 'development', 'production'). Only included when requested via the `include` parameter or when retrieving a single channel.
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
         id:
@@ -236,36 +237,6 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Channel
       x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
-      example:
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
     ChannelEnvironmentSettings:
       description: Environment-specific settings for a channel.
       example:
@@ -284,8 +255,9 @@ components:
         channel_settings:
           additionalProperties: true
           description: Channel-type-specific settings (e.g., from_address for email). Structure varies by channel type.
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
         id:
@@ -307,8 +279,9 @@ components:
         provider_settings:
           additionalProperties: true
           description: Provider-specific settings (e.g., API keys, credentials). Structure varies by provider. Secret values are obfuscated unless they are Liquid templates.
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -319,8 +292,40 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ChannelEnvironmentSettings
       x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
-      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
+      description: Knock service token (kst_...) as a Bearer token.

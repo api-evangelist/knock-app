@@ -1,15 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts API
+  title: Knock Management API (mAPI) Accounts API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Knock Management API (mAPI) — the resource-management surface for Knock. Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys. Distinct from the runtime Knock API (api.knock.app) — mAPI lives at control.knock.app and is what powers the Knock CLI and MCP server.
   contact:
     name: Knock
     url: https://knock.app
-  license:
-    name: Proprietary
 servers:
-- url: https://api.knock.app
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
@@ -78,8 +76,9 @@ components:
               x-validate: null
             data_retention_days:
               description: Number of days data is retained, null for unlimited retention.
-              nullable: true
-              type: integer
+              type:
+              - integer
+              - 'null'
               x-struct: null
               x-validate: null
             data_warehouse_extension_allowed:
@@ -99,8 +98,9 @@ components:
               x-validate: null
             guides_monthly_notified_recipients_limit:
               description: Monthly limit for guide notification recipients, null for unlimited.
-              nullable: true
-              type: integer
+              type:
+              - integer
+              - 'null'
               x-struct: null
               x-validate: null
             guides_per_tenant_scope_allowed:
@@ -125,8 +125,9 @@ components:
               x-validate: null
             message_sent_limit:
               description: Monthly limit for messages sent, null for unlimited.
-              nullable: true
-              type: integer
+              type:
+              - integer
+              - 'null'
               x-struct: null
               x-validate: null
             new_relic_extension_allowed:
@@ -174,8 +175,9 @@ components:
           x-validate: null
         service_token_name:
           description: The name of the service token if authenticated via service token, null for OAuth contexts.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         type:
@@ -188,8 +190,9 @@ components:
           x-validate: null
         user_id:
           description: The ID of the authenticated user if in OAuth context, null for service token contexts.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -205,4 +208,4 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
+      description: Knock service token (kst_...) as a Bearer token.

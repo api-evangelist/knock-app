@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Providers API
+  title: Knock Providers API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: OAuth provider endpoints supporting SlackKit, MS Teams Kit, and other inbound provider integrations — authorize, revoke, and inspect connections to chat and notification providers on behalf of users or tenants.
   contact:
     name: Knock
     url: https://knock.app
@@ -518,90 +518,6 @@ paths:
       x-ratelimit-tier: 2
 components:
   schemas:
-    MsTeamsAuthCheckResponse:
-      description: The response from a Microsoft Teams auth check request.
-      example:
-        connection:
-          ok: true
-      properties:
-        connection:
-          description: A Microsoft Teams connection object.
-          properties:
-            ok:
-              description: Whether the Microsoft Teams connection is valid.
-              nullable: false
-              type: boolean
-              x-struct: null
-              x-validate: null
-            reason:
-              description: The reason for the Microsoft Teams connection if it is not valid.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - ok
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - connection
-      title: MsTeamsAuthCheckResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsAuthCheckResponse
-      x-validate: null
-    TeamsForMsTeamsProviderResponse:
-      description: The response from a Microsoft Teams provider request, containing a list of teams.
-      example:
-        ms_teams_teams:
-        - displayName: Engineering Team
-          id: team-id-1
-        skip_token: token-for-next-page
-      properties:
-        ms_teams_teams:
-          description: List of Microsoft Teams teams.
-          items:
-            properties:
-              description:
-                description: Microsoft Teams team description.
-                nullable: true
-                type: string
-                x-struct: null
-                x-validate: null
-              displayName:
-                description: Microsoft Teams team display name.
-                nullable: false
-                type: string
-                x-struct: null
-                x-validate: null
-              id:
-                description: Microsoft Teams team ID.
-                nullable: false
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - id
-            - displayName
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        skip_token:
-          description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.'
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - ms_teams_teams
-      - skip_token
-      title: TeamsForMsTeamsProviderResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.TeamsForMsTeamsProviderResponse
-      x-validate: null
     ChannelsForMsTeamsProviderResponse:
       description: The response from a Microsoft Teams provider request, containing a list of channels.
       example:
@@ -615,37 +531,33 @@ components:
             properties:
               createdDateTime:
                 description: Microsoft Teams channel created date and time.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
               description:
                 description: Microsoft Teams channel description.
-                nullable: true
-                type: string
+                type:
+                - string
+                - 'null'
                 x-struct: null
                 x-validate: null
               displayName:
                 description: Microsoft Teams channel name.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
               id:
                 description: Microsoft Teams channel ID.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
               isArchived:
                 description: Whether the Microsoft Teams channel is archived.
-                nullable: false
                 type: boolean
                 x-struct: null
                 x-validate: null
               membershipType:
                 description: Microsoft Teams channel membership type.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
@@ -664,38 +576,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelsForMsTeamsProviderResponse
       x-validate: null
-    SlackAuthCheckResponse:
-      description: The response from a Slack auth check request.
-      example:
-        connection:
-          ok: true
-      properties:
-        connection:
-          description: A Slack connection object.
-          properties:
-            ok:
-              description: Whether the Slack connection is valid.
-              nullable: false
-              type: boolean
-              x-struct: null
-              x-validate: null
-            reason:
-              description: The reason for the Slack connection if it is not valid.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - ok
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - connection
-      title: SlackAuthCheckResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackAuthCheckResponse
-      x-validate: null
     ChannelsForSlackProviderResponse:
       description: The response from a Slack provider request, containing a list of channels.
       example:
@@ -709,8 +589,9 @@ components:
       properties:
         next_cursor:
           description: Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first "page" of the collection.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         slack_channels:
@@ -720,31 +601,26 @@ components:
             properties:
               context_team_id:
                 description: The team ID that the Slack channel belongs to.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
               id:
                 description: A Slack channel ID from the Slack provider.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
               is_im:
                 description: Whether the Slack channel is an IM channel.
-                nullable: false
                 type: boolean
                 x-struct: null
                 x-validate: null
               is_private:
                 description: Whether the Slack channel is private.
-                nullable: false
                 type: boolean
                 x-struct: null
                 x-validate: null
               name:
                 description: Slack channel name.
-                nullable: false
                 type: string
                 x-struct: null
                 x-validate: null
@@ -766,6 +642,122 @@ components:
       title: ChannelsForSlackProviderResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelsForSlackProviderResponse
+      x-validate: null
+    TeamsForMsTeamsProviderResponse:
+      description: The response from a Microsoft Teams provider request, containing a list of teams.
+      example:
+        ms_teams_teams:
+        - displayName: Engineering Team
+          id: team-id-1
+        skip_token: token-for-next-page
+      properties:
+        ms_teams_teams:
+          description: List of Microsoft Teams teams.
+          items:
+            properties:
+              description:
+                description: Microsoft Teams team description.
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              displayName:
+                description: Microsoft Teams team display name.
+                type: string
+                x-struct: null
+                x-validate: null
+              id:
+                description: Microsoft Teams team ID.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - id
+            - displayName
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        skip_token:
+          description: '[OData param](https://learn.microsoft.com/en-us/graph/query-parameters) passed to the Microsoft Graph API to retrieve the next page of results.'
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - ms_teams_teams
+      - skip_token
+      title: TeamsForMsTeamsProviderResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.TeamsForMsTeamsProviderResponse
+      x-validate: null
+    SlackAuthCheckResponse:
+      description: The response from a Slack auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Slack connection object.
+          properties:
+            ok:
+              description: Whether the Slack connection is valid.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Slack connection if it is not valid.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: SlackAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackAuthCheckResponse
+      x-validate: null
+    MsTeamsAuthCheckResponse:
+      description: The response from a Microsoft Teams auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Microsoft Teams connection object.
+          properties:
+            ok:
+              description: Whether the Microsoft Teams connection is valid.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Microsoft Teams connection if it is not valid.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: MsTeamsAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsAuthCheckResponse
       x-validate: null
   securitySchemes:
     BearerAuth:

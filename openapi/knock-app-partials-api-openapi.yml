@@ -1,15 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Knock Audiences Accounts Partials API
+  title: Knock Management API (mAPI) Partials API
   version: '1.0'
-  description: Manage static Audiences and their members. Audiences power lifecycle messaging — when a user joins an audience, configured workflows fire automatically.
+  description: Knock Management API (mAPI) — the resource-management surface for Knock. Programmatic CRUD over Workflows, Channels, Email Layouts, Partials, Templates, Translations, Audiences, Broadcasts, Guides, Message Types, Variables, Members, Channel Groups, Environments, Branches, Commits, and API Keys. Distinct from the runtime Knock API (api.knock.app) — mAPI lives at control.knock.app and is what powers the Knock CLI and MCP server.
   contact:
     name: Knock
     url: https://knock.app
-  license:
-    name: Proprietary
 servers:
-- url: https://api.knock.app
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
@@ -118,7 +116,6 @@ paths:
                     description: A list of entries.
                     items:
                       $ref: '#/components/schemas/Partial'
-                    nullable: false
                     type: array
                     x-struct: null
                     x-validate: null
@@ -198,9 +195,7 @@ paths:
       description: 'Updates a partial of a given key, or creates a new one if it does not yet exist.
 
 
-        Note: this endpoint only operates on partials in the “development” environment.
-
-        '
+        Note: this endpoint only operates on partials in the “development” environment.'
       operationId: upsertPartial
       parameters:
       - description: The environment slug.
@@ -340,9 +335,7 @@ paths:
       description: 'Validates a partial payload without persisting it.
 
 
-        Note: this endpoint only operates on partials in the “development” environment.
-
-        '
+        Note: this endpoint only operates on partials in the “development” environment.'
       operationId: validatePartial
       parameters:
       - description: The environment slug.
@@ -446,6 +439,688 @@ paths:
       - Partials
 components:
   schemas:
+    MessageTypeButtonField:
+      description: A button field used in a message type.
+      example:
+        action:
+          key: action
+          label: Button Action
+          settings:
+            description: A description of the text field in the button action
+            required: true
+          type: text
+        key: button_field
+        label: Button Field
+        settings:
+          description: A description of the button field
+          required: true
+        text:
+          key: text
+          label: Button Text
+          settings:
+            description: A description of the text field in the button
+            required: true
+          type: text
+        type: button
+      properties:
+        action:
+          $ref: '#/components/schemas/MessageTypeTextField'
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the button field.
+          properties:
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        text:
+          $ref: '#/components/schemas/MessageTypeTextField'
+        type:
+          description: The type of the field.
+          enum:
+          - button
+          example: button
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      - text
+      - action
+      title: MessageTypeButtonField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.ButtonField
+      x-validate: null
+    MessageTypeUrlField:
+      description: A URL field used in a message type.
+      example:
+        key: url_field
+        label: URL Field
+        settings:
+          description: A description of the URL field
+          placeholder: A placeholder for the URL field
+          required: true
+        type: url
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the url field.
+          properties:
+            default:
+              description: The default value of the URL field.
+              example: https://example.com
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - url
+          example: url
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      title: MessageTypeUrlField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.UrlField
+      x-validate: null
+    MessageTypeSelectField:
+      description: A select field used in a message type.
+      example:
+        key: select_field
+        label: Select Field
+        settings:
+          default: option1
+          description: A description of the select field
+          options:
+          - label: Option 1
+            value: option1
+          - label: Option 2
+            value: option2
+          - label: Option 3
+            value: option3
+          required: true
+        type: select
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the select field.
+          properties:
+            default:
+              description: The default value for the select field.
+              example: option1
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            options:
+              description: The available options for the select field.
+              items:
+                properties:
+                  label:
+                    description: The display label for the option.
+                    example: Option 1
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  value:
+                    description: The value for the option.
+                    example: option1
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - value
+                type: object
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - select
+          example: select
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      - settings
+      title: MessageTypeSelectField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.SelectField
+      x-validate: null
+    MessageTypeJsonField:
+      description: A JSON field used in a message type.
+      example:
+        key: json_field
+        label: JSON Field
+        settings:
+          default:
+            key: value
+          description: A description of the JSON field
+          placeholder: A placeholder for the JSON field
+          required: true
+          schema:
+            properties:
+              key:
+                type: string
+            required:
+            - key
+        type: json
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the json field.
+          properties:
+            default:
+              description: The default value of the JSON field.
+              example:
+                key: value
+              type:
+              - object
+              - 'null'
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+            schema:
+              description: A JSON schema used to validate the structure of the JSON provided. Must be a valid JSON schema.
+              example:
+                properties:
+                  key:
+                    type: string
+              type:
+              - object
+              - 'null'
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - json
+          example: json
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      title: MessageTypeJsonField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.JsonField
+      x-validate: null
+    MessageTypeMultiSelectField:
+      description: A multi-select field used in a message type.
+      example:
+        key: multi_select_field
+        label: Multi-Select Field
+        settings:
+          default:
+          - option1
+          - option3
+          description: A description of the multi-select field
+          options:
+          - label: Option 1
+            value: option1
+          - label: Option 2
+            value: option2
+          - label: Option 3
+            value: option3
+          required: true
+        type: multi_select
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the multi_select field.
+          properties:
+            default:
+              description: The default values for the multi-select field.
+              example:
+              - option1
+              - option3
+              items:
+                type: string
+                x-struct: null
+                x-validate: null
+              type:
+              - array
+              - 'null'
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            options:
+              description: The available options for the multi-select field.
+              items:
+                properties:
+                  label:
+                    description: The display label for the option.
+                    example: Option 1
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                  value:
+                    description: The value for the option.
+                    example: option1
+                    type: string
+                    x-struct: null
+                    x-validate: null
+                required:
+                - value
+                type: object
+                x-struct: null
+                x-validate: null
+              type: array
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - multi_select
+          example: multi_select
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      - settings
+      title: MessageTypeMultiSelectField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.MultiSelectField
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-validate: null
+    MessageTypeBooleanField:
+      description: A boolean field used in a message type.
+      example:
+        key: boolean_field
+        label: Boolean Field
+        settings:
+          default: false
+          description: A description of the boolean field
+          required: true
+        type: boolean
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the boolean field.
+          properties:
+            default:
+              description: The default value of the boolean field.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - boolean
+          example: boolean
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      title: MessageTypeBooleanField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.BooleanField
+      x-validate: null
+    MessageTypeImageField:
+      description: An image field used in a message type.
+      example:
+        action:
+          key: action
+          label: Image Action
+          settings:
+            description: A link to open when the paywall image is clicked
+            placeholder: A placeholder for the image action
+            required: true
+          type: text
+        alt:
+          key: alt
+          label: Alt Text
+          settings:
+            description: A description of the paywall image
+            placeholder: A placeholder for the alt text
+            required: true
+          type: text
+        key: image_field
+        label: Paywall Image
+        settings:
+          description: An image to display in the paywall
+          required: true
+        type: image
+        url:
+          key: url
+          label: Image URL
+          settings:
+            description: The URL of the paywall image
+            placeholder: A placeholder for the image URL
+            required: true
+          type: url
+      properties:
+        action:
+          $ref: '#/components/schemas/MessageTypeTextField'
+        alt:
+          $ref: '#/components/schemas/MessageTypeTextField'
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the image field.
+          properties:
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - image
+          example: image
+          type: string
+          x-struct: null
+          x-validate: null
+        url:
+          $ref: '#/components/schemas/MessageTypeUrlField'
+      required:
+      - type
+      - key
+      - label
+      - url
+      - action
+      - alt
+      title: MessageTypeImageField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.ImageField
+      x-validate: null
     PartialRequest:
       description: A partial object with attributes to update or create a partial.
       example:
@@ -527,6 +1202,93 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.PartialRequest
       x-validate: null
+    MessageTypeTextareaField:
+      description: A textarea field used in a message type.
+      example:
+        key: textarea_field
+        label: Textarea Field
+        settings:
+          description: A description of the textarea field
+          max_length: 1000
+          min_length: 10
+          placeholder: A placeholder for the textarea field
+          required: true
+        type: textarea
+      properties:
+        key:
+          description: The unique key of the field.
+          example: key
+          type: string
+          x-struct: null
+          x-validate: null
+        label:
+          description: The label of the field.
+          example: Label
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        settings:
+          description: Settings for the textarea field.
+          properties:
+            default:
+              description: The default value of the textarea field.
+              example: A placeholder
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            description:
+              example: A description of the field, used in the UI as a hint text.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            max_length:
+              example: 1000
+              type: integer
+              x-struct: null
+              x-validate: null
+            min_length:
+              example: 10
+              type: integer
+              x-struct: null
+              x-validate: null
+            placeholder:
+              example: A placeholder for the field.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+            required:
+              description: Whether the field is required.
+              example: true
+              type: boolean
+              x-struct: null
+              x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of the field.
+          enum:
+          - textarea
+          example: textarea
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - key
+      - label
+      title: MessageTypeTextareaField
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.TextareaField
+      x-validate: null
     MessageTypeMarkdownField:
       description: A markdown field used in a message type.
       example:
@@ -551,8 +1313,9 @@ components:
         label:
           description: The label of the field.
           example: Label
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         settings:
@@ -569,14 +1332,16 @@ components:
               x-validate: null
             description:
               example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
               x-struct: null
               x-validate: null
             placeholder:
               example: A placeholder for the field.
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
               x-struct: null
               x-validate: null
             required:
@@ -604,217 +1369,6 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.MarkdownField
       x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
-      example:
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
-    MessageTypeMultiSelectField:
-      description: A multi-select field used in a message type.
-      example:
-        key: multi_select_field
-        label: Multi-Select Field
-        settings:
-          default:
-          - option1
-          - option3
-          description: A description of the multi-select field
-          options:
-          - label: Option 1
-            value: option1
-          - label: Option 2
-            value: option2
-          - label: Option 3
-            value: option3
-          required: true
-        type: multi_select
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the multi_select field.
-          properties:
-            default:
-              description: The default values for the multi-select field.
-              example:
-              - option1
-              - option3
-              items:
-                type: string
-                x-struct: null
-                x-validate: null
-              nullable: true
-              type: array
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            options:
-              description: The available options for the multi-select field.
-              items:
-                properties:
-                  label:
-                    description: The display label for the option.
-                    example: Option 1
-                    type: string
-                    x-struct: null
-                    x-validate: null
-                  value:
-                    description: The value for the option.
-                    example: option1
-                    type: string
-                    x-struct: null
-                    x-validate: null
-                required:
-                - value
-                type: object
-                x-struct: null
-                x-validate: null
-              type: array
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - multi_select
-          example: multi_select
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      - settings
-      title: MessageTypeMultiSelectField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.MultiSelectField
-      x-validate: null
-    MessageTypeBooleanField:
-      description: A boolean field used in a message type.
-      example:
-        key: boolean_field
-        label: Boolean Field
-        settings:
-          default: false
-          description: A description of the boolean field
-          required: true
-        type: boolean
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the boolean field.
-          properties:
-            default:
-              description: The default value of the boolean field.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - boolean
-          example: boolean
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      title: MessageTypeBooleanField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.BooleanField
-      x-validate: null
     MessageTypeTextField:
       description: A text field used in a message type.
       example:
@@ -837,8 +1391,9 @@ components:
         label:
           description: The label of the field.
           example: Label
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
         settings:
@@ -847,14 +1402,16 @@ components:
             default:
               description: The default value of the text field.
               example: A placeholder
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
               x-struct: null
               x-validate: null
             description:
               example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
               x-struct: null
               x-validate: null
             max_length:
@@ -869,8 +1426,9 @@ components:
               x-validate: null
             placeholder:
               example: A placeholder for the field.
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
               x-struct: null
               x-validate: null
             required:
@@ -1016,534 +1574,8 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Partial
       x-validate: null
-    MessageTypeButtonField:
-      description: A button field used in a message type.
-      example:
-        action:
-          key: action
-          label: Button Action
-          settings:
-            description: A description of the text field in the button action
-            required: true
-          type: text
-        key: button_field
-        label: Button Field
-        settings:
-          description: A description of the button field
-          required: true
-        text:
-          key: text
-          label: Button Text
-          settings:
-            description: A description of the text field in the button
-            required: true
-          type: text
-        type: button
-      properties:
-        action:
-          $ref: '#/components/schemas/MessageTypeTextField'
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the button field.
-          properties:
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        text:
-          $ref: '#/components/schemas/MessageTypeTextField'
-        type:
-          description: The type of the field.
-          enum:
-          - button
-          example: button
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      - text
-      - action
-      title: MessageTypeButtonField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.ButtonField
-      x-validate: null
-    MessageTypeJsonField:
-      description: A JSON field used in a message type.
-      example:
-        key: json_field
-        label: JSON Field
-        settings:
-          default:
-            key: value
-          description: A description of the JSON field
-          placeholder: A placeholder for the JSON field
-          required: true
-          schema:
-            properties:
-              key:
-                type: string
-            required:
-            - key
-        type: json
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the json field.
-          properties:
-            default:
-              description: The default value of the JSON field.
-              example:
-                key: value
-              nullable: true
-              type: object
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-            schema:
-              description: A JSON schema used to validate the structure of the JSON provided. Must be a valid JSON schema.
-              example:
-                properties:
-                  key:
-                    type: string
-              nullable: true
-              type: object
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - json
-          example: json
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      title: MessageTypeJsonField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.JsonField
-      x-validate: null
-    MessageTypeTextareaField:
-      description: A textarea field used in a message type.
-      example:
-        key: textarea_field
-        label: Textarea Field
-        settings:
-          description: A description of the textarea field
-          max_length: 1000
-          min_length: 10
-          placeholder: A placeholder for the textarea field
-          required: true
-        type: textarea
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the textarea field.
-          properties:
-            default:
-              description: The default value of the textarea field.
-              example: A placeholder
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            max_length:
-              example: 1000
-              type: integer
-              x-struct: null
-              x-validate: null
-            min_length:
-              example: 10
-              type: integer
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - textarea
-          example: textarea
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      title: MessageTypeTextareaField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.TextareaField
-      x-validate: null
-    MessageTypeSelectField:
-      description: A select field used in a message type.
-      example:
-        key: select_field
-        label: Select Field
-        settings:
-          default: option1
-          description: A description of the select field
-          options:
-          - label: Option 1
-            value: option1
-          - label: Option 2
-            value: option2
-          - label: Option 3
-            value: option3
-          required: true
-        type: select
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the select field.
-          properties:
-            default:
-              description: The default value for the select field.
-              example: option1
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            options:
-              description: The available options for the select field.
-              items:
-                properties:
-                  label:
-                    description: The display label for the option.
-                    example: Option 1
-                    type: string
-                    x-struct: null
-                    x-validate: null
-                  value:
-                    description: The value for the option.
-                    example: option1
-                    type: string
-                    x-struct: null
-                    x-validate: null
-                required:
-                - value
-                type: object
-                x-struct: null
-                x-validate: null
-              type: array
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - select
-          example: select
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      - settings
-      title: MessageTypeSelectField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.SelectField
-      x-validate: null
-    MessageTypeUrlField:
-      description: A URL field used in a message type.
-      example:
-        key: url_field
-        label: URL Field
-        settings:
-          description: A description of the URL field
-          placeholder: A placeholder for the URL field
-          required: true
-        type: url
-      properties:
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the url field.
-          properties:
-            default:
-              description: The default value of the URL field.
-              example: https://example.com
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - url
-          example: url
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - key
-      - label
-      title: MessageTypeUrlField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.UrlField
-      x-validate: null
-    MessageTypeImageField:
-      description: An image field used in a message type.
-      example:
-        action:
-          key: action
-          label: Image Action
-          settings:
-            description: A link to open when the paywall image is clicked
-            placeholder: A placeholder for the image action
-            required: true
-          type: text
-        alt:
-          key: alt
-          label: Alt Text
-          settings:
-            description: A description of the paywall image
-            placeholder: A placeholder for the alt text
-            required: true
-          type: text
-        key: image_field
-        label: Paywall Image
-        settings:
-          description: An image to display in the paywall
-          required: true
-        type: image
-        url:
-          key: url
-          label: Image URL
-          settings:
-            description: The URL of the paywall image
-            placeholder: A placeholder for the image URL
-            required: true
-          type: url
-      properties:
-        action:
-          $ref: '#/components/schemas/MessageTypeTextField'
-        alt:
-          $ref: '#/components/schemas/MessageTypeTextField'
-        key:
-          description: The unique key of the field.
-          example: key
-          type: string
-          x-struct: null
-          x-validate: null
-        label:
-          description: The label of the field.
-          example: Label
-          nullable: true
-          type: string
-          x-struct: null
-          x-validate: null
-        settings:
-          description: Settings for the image field.
-          properties:
-            description:
-              example: A description of the field, used in the UI as a hint text.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            placeholder:
-              example: A placeholder for the field.
-              nullable: true
-              type: string
-              x-struct: null
-              x-validate: null
-            required:
-              description: Whether the field is required.
-              example: true
-              type: boolean
-              x-struct: null
-              x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of the field.
-          enum:
-          - image
-          example: image
-          type: string
-          x-struct: null
-          x-validate: null
-        url:
-          $ref: '#/components/schemas/MessageTypeUrlField'
-      required:
-      - type
-      - key
-      - label
-      - url
-      - action
-      - alt
-      title: MessageTypeImageField
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MessageTypes.ImageField
-      x-validate: null
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
-      description: Knock API key as a Bearer token. Use a public key (pk_...) for client-side requests or a secret key (sk_...) for server-side.
+      description: Knock service token (kst_...) as a Bearer token.

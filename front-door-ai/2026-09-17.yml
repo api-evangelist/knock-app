@@ -1,0 +1,30 @@
+# Front Door AI Index — knock-app — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: knock-app
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.knock.app
+  final_host: knock.app
+  ownership: inherited
+  owner: knock-app
+  shares_host_with: null
+  inherited_from: knock.app
+  verdict: scored
+  score: null
+  host_score: 17
+  density: null
+  words: 1167
+  tiers:
+    agentic: 4
+    core: 11
+    model: 2
+  ambiguous: 2
+  top_terms:
+    AI: 11
+    Claude: 2
+    agent: 2
+    prompts: 2
+    MCP: 1
+    agentic: 1
