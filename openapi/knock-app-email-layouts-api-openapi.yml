@@ -396,6 +396,69 @@ paths:
       - Email layouts
 components:
   schemas:
+    EmailLayoutRequest:
+      description: A request to update or create an email layout.
+      example:
+        footer_links:
+        - text: Example
+          url: http://example.com
+        html_layout: <html><body>Hello, world!</body></html>
+        name: Transactional
+        text_layout: Hello, world!
+      properties:
+        footer_links:
+          description: A list of one or more items to show in the footer of the email layout.
+          items:
+            properties:
+              text:
+                description: The text to display as the link.
+                type: string
+                x-struct: null
+                x-validate: null
+              url:
+                description: The URL to link to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - text
+            - url
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        html_layout:
+          description: The complete HTML or MJML content of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        is_mjml:
+          description: Whether this layout uses MJML format. When true, html_layout must contain <mjml> tags.
+          type:
+          - boolean
+          - 'null'
+          x-struct: null
+          x-validate: null
+        name:
+          description: The friendly name of this email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+        text_layout:
+          description: The complete plain text content of the email layout.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - name
+      - html_layout
+      - text_layout
+      title: EmailLayoutRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.EmailLayoutRequest
+      x-validate: null
     EmailLayout:
       description: A versioned email layout used within an environment.
       example:
@@ -491,69 +554,6 @@ components:
       title: EmailLayout
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.EmailLayout
-      x-validate: null
-    EmailLayoutRequest:
-      description: A request to update or create an email layout.
-      example:
-        footer_links:
-        - text: Example
-          url: http://example.com
-        html_layout: <html><body>Hello, world!</body></html>
-        name: Transactional
-        text_layout: Hello, world!
-      properties:
-        footer_links:
-          description: A list of one or more items to show in the footer of the email layout.
-          items:
-            properties:
-              text:
-                description: The text to display as the link.
-                type: string
-                x-struct: null
-                x-validate: null
-              url:
-                description: The URL to link to.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - text
-            - url
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        html_layout:
-          description: The complete HTML or MJML content of the email layout.
-          type: string
-          x-struct: null
-          x-validate: null
-        is_mjml:
-          description: Whether this layout uses MJML format. When true, html_layout must contain <mjml> tags.
-          type:
-          - boolean
-          - 'null'
-          x-struct: null
-          x-validate: null
-        name:
-          description: The friendly name of this email layout.
-          type: string
-          x-struct: null
-          x-validate: null
-        text_layout:
-          description: The complete plain text content of the email layout.
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - name
-      - html_layout
-      - text_layout
-      title: EmailLayoutRequest
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.EmailLayoutRequest
       x-validate: null
     PageInfo:
       description: The information about a paginated result.

@@ -20,7 +20,7 @@ paths:
     post:
       callbacks: {}
       description: Cancels a previously triggered workflow using the provided cancellation key.
-      operationId: cancelWorkflow (2)
+      operationId: cancelWorkflow(2)
       parameters: []
       requestBody:
         content:
@@ -36,6 +36,8 @@ paths:
       tags:
       - Workflow Triggers
       x-ratelimit-tier: 3
+      x-operation-id-source: normalized
+      x-operation-id-original: cancelWorkflow (2)
   /v1/notify:
     post:
       callbacks: {}

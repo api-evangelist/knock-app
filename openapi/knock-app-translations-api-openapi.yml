@@ -479,6 +479,33 @@ paths:
       - Translations
 components:
   schemas:
+    TranslationRequest:
+      description: A translation object with a content attribute used to update or create a translation.
+      example:
+        content: '{"hello":"Hello, world!"}'
+        format: json
+      properties:
+        content:
+          description: A JSON encoded string containing the key-value pairs of translation references and translation strings.
+          type: string
+          x-struct: null
+          x-validate: null
+        format:
+          description: Indicates whether content is a JSON encoded object string or a string in the PO format.
+          enum:
+          - json
+          - po
+          example: json
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - content
+      - format
+      title: TranslationRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.TranslationRequest
+      x-validate: null
     Translation:
       description: A translation object.
       example:
@@ -539,33 +566,6 @@ components:
       title: Translation
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Translation
-      x-validate: null
-    TranslationRequest:
-      description: A translation object with a content attribute used to update or create a translation.
-      example:
-        content: '{"hello":"Hello, world!"}'
-        format: json
-      properties:
-        content:
-          description: A JSON encoded string containing the key-value pairs of translation references and translation strings.
-          type: string
-          x-struct: null
-          x-validate: null
-        format:
-          description: Indicates whether content is a JSON encoded object string or a string in the PO format.
-          enum:
-          - json
-          - po
-          example: json
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - content
-      - format
-      title: TranslationRequest
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.TranslationRequest
       x-validate: null
     PageInfo:
       description: The information about a paginated result.
