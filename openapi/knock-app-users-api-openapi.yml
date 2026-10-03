@@ -593,54 +593,31 @@ paths:
       x-ratelimit-tier: 3
 components:
   schemas:
-    OneSignalChannelDataPlayerIdsOnly:
-      description: OneSignal channel data.
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
       example:
-        player_ids:
-        - 123e4567-e89b-12d3-a456-426614174000
+        incoming_webhook:
+          url: https://example.com/webhook
       properties:
-        player_ids:
-          description: A list of OneSignal player IDs.
-          example:
-          - 123e4567-e89b-12d3-a456-426614174000
-          items:
-            description: OneSignal player ID.
-            format: uuid
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
           x-struct: null
           x-validate: null
       required:
-      - player_ids
-      title: OneSignalChannelDataPlayerIdsOnly
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
-      x-validate: null
-    AWSSNSPushChannelDataTargetARNsOnly:
-      description: AWS SNS push channel data.
-      example:
-        target_arns:
-        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-      properties:
-        target_arns:
-          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-          example:
-          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-          items:
-            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - target_arns
-      title: AWSSNSPushChannelDataTargetARNsOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
       x-validate: null
     MsTeamsChannelData:
       description: Microsoft Teams channel data.
@@ -708,6 +685,383 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ListUsersResponse
       x-validate: null
+    OneSignalChannelDataPlayerIdsOnly:
+      description: OneSignal channel data.
+      example:
+        player_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+      properties:
+        player_ids:
+          description: A list of OneSignal player IDs.
+          example:
+          - 123e4567-e89b-12d3-a456-426614174000
+          items:
+            description: OneSignal player ID.
+            format: uuid
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - player_ids
+      title: OneSignalChannelDataPlayerIdsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
+      x-validate: null
+    AWSSNSPushChannelDataDevicesOnly:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: AWSSNSPushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
+      x-validate: null
+    DiscordChannelConnection:
+      description: Discord channel connection.
+      example:
+        channel_id: '123456789012345678'
+      properties:
+        channel_id:
+          description: Discord channel ID.
+          example: '123456789012345678'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      title: DiscordChannelConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: PushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    IdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to identify a user with. Does not include the user ID, as that's specified elsewhere in the request. You can supply any additional properties you'd like to upsert for the user.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: ian.malcolm@chaos.theory
+        name: Dr. Ian Malcolm
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      title: IdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.IdentifyUserRequest
+      x-validate: null
+    BulkDeleteUsersRequest:
+      description: A request to delete users in bulk.
+      example:
+        user_ids:
+        - user_1
+        - user_2
+      properties:
+        user_ids:
+          description: A list of user IDs.
+          items:
+            description: The unique identifier of the user.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - user_ids
+      title: BulkDeleteUsersRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkDeleteUsersRequest
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            type:
+            - array
+            - 'null'
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - conditions
+      title: PreferenceSetChannelSetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-validate: null
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
+      example:
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    MergeUserRequest:
+      description: A set of parameters to merge one user into another.
+      example:
+        from_user_id: user_1
+      properties:
+        from_user_id:
+          description: The user ID to merge from.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - from_user_id
+      title: MergeUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MergeUserRequest
+      x-validate: null
     InlinePreferenceSetRequest:
       additionalProperties:
         $ref: '#/components/schemas/PreferenceSetRequest'
@@ -724,97 +1078,304 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.InlinePreferenceSetRequest
       x-validate: null
-    SlackTokenConnection:
-      description: A Slack connection token.
+    InlineChannelDataRequest:
+      additionalProperties:
+        description: Channel data for a given channel type.
+        oneOf:
+        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+        - $ref: '#/components/schemas/SlackChannelData'
+        - $ref: '#/components/schemas/MsTeamsChannelData'
+        - $ref: '#/components/schemas/DiscordChannelData'
+        x-struct: null
+        x-validate: null
+      description: A request to set channel data for a type of channel inline.
       example:
-        access_token: xoxb-1234567890
-        channel_id: C01234567890
-        user_id: U01234567890
-      properties:
-        access_token:
-          description: A Slack access token.
-          example: xoxb-1234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_id:
-          description: A Slack channel ID from the Slack provider.
-          example: C01234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        user_id:
-          description: A Slack user ID from the Slack provider.
-          example: U01234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: SlackTokenConnection
+        97c5837d-c65c-4d54-aa39-080eeb81c69d:
+          tokens:
+          - push_token_xxx
+      title: InlineChannelDataRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
       x-validate: null
-    SlackIncomingWebhookConnection:
-      description: A Slack connection incoming webhook.
+    BulkIdentifyUsersRequest:
+      description: A request to identify a list of users.
       example:
-        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+        users:
+        - email: jane@ingen.net
+          id: user_1
+          name: Jane Doe
+          timezone: America/New_York
       properties:
-        url:
-          description: The URL of the incoming webhook for a Slack connection.
-          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
-          type: string
+        users:
+          description: A list of users.
+          items:
+            $ref: '#/components/schemas/InlineIdentifyUserRequest'
+          type: array
           x-struct: null
           x-validate: null
       required:
-      - url
-      title: SlackIncomingWebhookConnection
+      - users
+      title: BulkIdentifyUsersRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkIdentifyUsersRequest
       x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
       example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
       properties:
-        __typename:
-          description: The typename of the schema.
-          example: PageInfo
-          type: string
-          x-struct: null
-          x-validate: null
-        after:
-          description: The cursor to fetch entries after.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
           x-struct: null
           x-validate: null
       required:
-      - __typename
-      - page_size
-      title: PageInfo
+      - conditions
+      title: PreferenceSetChannelTypeSetting
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    InlineIdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing any properties specified.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: jane@ingen.net
+        id: user_1
+        name: Jane Doe
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: InlineIdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
+      x-validate: null
+    PreferenceSet:
+      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can have multiple preference sets.
+      example:
+        categories:
+          marketing: false
+          transactional:
+            channel_types:
+              email: false
+        channel_types:
+          email: true
+          push: false
+          sms:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+        commercial_subscribed: true
+        id: default
+        workflows: null
+      properties:
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+            title: PreferenceSetCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
+          type:
+          - boolean
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the preference set.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+            title: PreferenceSetWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: PreferenceSet
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
       x-validate: null
     SlackChannelData:
       description: Slack channel data.
@@ -865,31 +1426,6 @@ components:
       title: SlackChannelData
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
-      x-validate: null
-    DiscordChannelData:
-      description: Discord channel data.
-      example:
-        connections:
-        - channel_id: '123456789012345678'
-      properties:
-        connections:
-          description: List of Discord channel connections.
-          items:
-            description: Discord channel connection, either a channel connection or an incoming webhook connection.
-            oneOf:
-            - $ref: '#/components/schemas/DiscordChannelConnection'
-            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - connections
-      title: DiscordChannelData
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
       x-validate: null
     PreferenceSetChannelTypes:
       description: Channel type preferences.
@@ -1038,483 +1574,57 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.User
       x-validate: null
-    InlineChannelDataRequest:
-      additionalProperties:
-        description: Channel data for a given channel type.
-        oneOf:
-        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
-        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
-        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
-        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
-        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
-        - $ref: '#/components/schemas/SlackChannelData'
-        - $ref: '#/components/schemas/MsTeamsChannelData'
-        - $ref: '#/components/schemas/DiscordChannelData'
-        x-struct: null
-        x-validate: null
-      description: A request to set channel data for a type of channel inline.
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
       example:
-        97c5837d-c65c-4d54-aa39-080eeb81c69d:
-          tokens:
-          - push_token_xxx
-      title: InlineChannelDataRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
-      x-validate: null
-    MergeUserRequest:
-      description: A set of parameters to merge one user into another.
-      example:
-        from_user_id: user_1
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
       properties:
-        from_user_id:
-          description: The user ID to merge from.
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
           type: string
           x-struct: null
           x-validate: null
       required:
-      - from_user_id
-      title: MergeUserRequest
+      - url
+      title: SlackIncomingWebhookConnection
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MergeUserRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
       x-validate: null
-    BulkIdentifyUsersRequest:
-      description: A request to identify a list of users.
+    SlackTokenConnection:
+      description: A Slack connection token.
       example:
-        users:
-        - email: jane@ingen.net
-          id: user_1
-          name: Jane Doe
-          timezone: America/New_York
+        access_token: xoxb-1234567890
+        channel_id: C01234567890
+        user_id: U01234567890
       properties:
-        users:
-          description: A list of users.
-          items:
-            $ref: '#/components/schemas/InlineIdentifyUserRequest'
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - users
-      title: BulkIdentifyUsersRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkIdentifyUsersRequest
-      x-validate: null
-    PreferenceSet:
-      description: A preference set represents a specific set of notification preferences for a recipient. A recipient can have multiple preference sets.
-      example:
-        categories:
-          marketing: false
-          transactional:
-            channel_types:
-              email: false
-        channel_types:
-          email: true
-          push: false
-          sms:
-            conditions:
-            - argument: US
-              operator: equal_to
-              variable: recipient.country_code
-        commercial_subscribed: true
-        id: default
-        workflows: null
-      properties:
-        categories:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
-            description: An object where the key is the category and the values are the preference settings for that category.
-            example:
-              marketing:
-                channel_types:
-                  email: false
-            title: PreferenceSetCategories
-            type: object
-            x-struct: null
-            x-validate: null
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the category and the values are the preference settings for that category.
-          x-struct: null
-          x-validate: null
-        channel_types:
-          anyOf:
-          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the channel type and the values are the preference settings for that channel type.
-          x-struct: null
-          x-validate: null
-        channels:
-          anyOf:
-          - $ref: '#/components/schemas/PreferenceSetChannels'
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
-          x-struct: null
-          x-validate: null
-        commercial_subscribed:
-          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
-          type:
-          - boolean
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the preference set.
-          example: default
-          type: string
-          x-struct: null
-          x-validate: null
-        workflows:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
-            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
-            example:
-              dinosaurs-loose:
-                channel_types:
-                  email: false
-            title: PreferenceSetWorkflows
-            type: object
-            x-struct: null
-            x-validate: null
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
-          x-struct: null
-          x-validate: null
-      required:
-      - id
-      title: PreferenceSet
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSet
-      x-validate: null
-    BulkSetUserPreferencesRequest:
-      description: A request to set preferences for a set of users in bulk.
-      example:
-        preferences:
-          __persistence_strategy__: merge
-          categories:
-            marketing: false
-            transactional:
-              channel_types:
-                email: false
-          channel_types:
-            email: true
-          channels:
-            2f641633-95d3-4555-9222-9f1eb7888a80:
-              conditions:
-              - argument: US
-                operator: equal_to
-                variable: recipient.country_code
-            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-          commercial_subscribed: true
-          workflows:
-            dinosaurs-loose:
-              channel_types:
-                email: false
-        user_ids:
-        - user_1
-        - user_2
-      properties:
-        preferences:
-          $ref: '#/components/schemas/PreferenceSetRequest'
-        user_ids:
-          description: A list of user IDs.
-          items:
-            description: The unique identifier of the user.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - preferences
-      - user_ids
-      title: BulkSetUserPreferencesRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetUserPreferencesRequest
-      x-validate: null
-    PreferenceSetChannelTypeSetting:
-      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
-      example:
-        conditions:
-        - argument: US
-          operator: equal_to
-          variable: recipient.country_code
-      properties:
-        conditions:
-          description: A list of conditions to apply to a channel type.
-          items:
-            $ref: '#/components/schemas/Condition'
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - conditions
-      title: PreferenceSetChannelTypeSetting
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
-      x-validate: null
-    PreferenceSetRequest:
-      description: A request to set a preference set for a recipient.
-      example:
-        __persistence_strategy__: merge
-        categories:
-          marketing: false
-          transactional:
-            channel_types:
-              email: false
-        channel_types:
-          email: true
-        channels:
-          2f641633-95d3-4555-9222-9f1eb7888a80:
-            conditions:
-            - argument: US
-              operator: equal_to
-              variable: recipient.country_code
-          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-        commercial_subscribed: true
-        workflows:
-          dinosaurs-loose:
-            channel_types:
-              email: false
-      properties:
-        __persistence_strategy__:
-          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set, 'merge' will merge with existing preferences.
-          enum:
-          - merge
-          - replace
-          type: string
-          x-struct: null
-          x-validate: null
-        categories:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
-            description: An object where the key is the category and the values are the preference settings for that category.
-            example:
-              marketing:
-                channel_types:
-                  email: false
-              transactional: true
-            title: PreferenceSetRequestCategories
-            type: object
-            x-struct: null
-            x-validate: null
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the category and the values are the preference settings for that category.
-          x-struct: null
-          x-validate: null
-        channel_types:
-          anyOf:
-          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the channel type and the values are the preference settings for that channel type.
-          x-struct: null
-          x-validate: null
-        channels:
-          anyOf:
-          - $ref: '#/components/schemas/PreferenceSetChannels'
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
-          x-struct: null
-          x-validate: null
-        commercial_subscribed:
-          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
-          type:
-          - boolean
-          - 'null'
-          x-struct: null
-          x-validate: null
-        workflows:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
-            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
-            example:
-              dinosaurs-loose:
-                channel_types:
-                  email: false
-                  sms: true
-              welcome-sequence: true
-            title: PreferenceSetRequestWorkflows
-            type: object
-            x-struct: null
-            x-validate: null
-          - x-struct: null
-            x-validate: null
-          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
-          x-struct: null
-          x-validate: null
-      title: PreferenceSetRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
-      x-validate: null
-    PushChannelDataTokensOnly:
-      description: Push channel data.
-      example:
-        tokens:
-        - push_token_1
-        - push_token_2
-      properties:
-        tokens:
-          description: A list of push channel tokens.
-          items:
-            description: The device token to send the push notification to.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - tokens
-      title: PushChannelDataTokensOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
-      x-validate: null
-    PreferenceSetChannels:
-      additionalProperties:
-        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
-        oneOf:
-        - type: boolean
-          x-struct: null
-          x-validate: null
-        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
-        x-struct: null
-        x-validate: null
-      description: Channel preferences.
-      example:
-        2f641633-95d3-4555-9222-9f1eb7888a80:
-          conditions:
-          - argument: US
-            operator: equal_to
-            variable: recipient.country_code
-        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-      title: PreferenceSetChannels
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
-      x-validate: null
-    MsTeamsTokenConnection:
-      description: Microsoft Teams token connection.
-      example:
-        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_tenant_id: null
-        ms_teams_user_id: null
-      properties:
-        ms_teams_channel_id:
-          description: Microsoft Teams channel ID.
-          format: uuid
+        access_token:
+          description: A Slack access token.
+          example: xoxb-1234567890
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        ms_teams_team_id:
-          description: Microsoft Teams team ID.
-          format: uuid
+        channel_id:
+          description: A Slack channel ID from the Slack provider.
+          example: C01234567890
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        ms_teams_tenant_id:
-          description: Microsoft Teams tenant ID.
-          format: uuid
+        user_id:
+          description: A Slack user ID from the Slack provider.
+          example: U01234567890
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        ms_teams_user_id:
-          description: Microsoft Teams user ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: MsTeamsTokenConnection
+      title: SlackTokenConnection
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
-      x-validate: null
-    MsTeamsIncomingWebhookConnection:
-      description: Microsoft Teams incoming webhook connection.
-      example:
-        incoming_webhook:
-          url: https://example.com/webhook
-      properties:
-        incoming_webhook:
-          description: Microsoft Teams incoming webhook.
-          properties:
-            url:
-              description: Microsoft Teams incoming webhook URL.
-              example: https://example.com/webhook
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - url
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - incoming_webhook
-      title: MsTeamsIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
-      x-validate: null
-    PushChannelDataDevicesOnly:
-      description: Push channel data.
-      example:
-        devices:
-        - locale: en-US
-          timezone: America/Los_Angeles
-          token: push_token_1
-      properties:
-        devices:
-          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              token:
-                description: The device token to send the push notification to.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - token
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - devices
-      title: PushChannelDataDevicesOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
       x-validate: null
     Condition:
       description: A condition to be evaluated.
@@ -1575,22 +1685,45 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
       x-validate: null
-    DiscordChannelConnection:
-      description: Discord channel connection.
+    PageInfo:
+      description: Pagination information for a list of resources.
       example:
-        channel_id: '123456789012345678'
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
       properties:
-        channel_id:
-          description: Discord channel ID.
-          example: '123456789012345678'
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
           type: string
           x-struct: null
           x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
       required:
-      - channel_id
-      title: DiscordChannelConnection
+      - __typename
+      - page_size
+      title: PageInfo
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
       x-validate: null
     BulkOperation:
       description: A bulk operation entity.
@@ -1744,152 +1877,80 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkOperation
       x-validate: null
-    IdentifyUserRequest:
-      additionalProperties: true
-      description: A set of parameters to identify a user with. Does not include the user ID, as that's specified elsewhere in the request. You can supply any additional properties you'd like to upsert for the user.
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
       example:
-        channel_data:
-          97c5837d-c65c-4d54-aa39-080eeb81c69d:
-            tokens:
-            - push_token_123
-        email: ian.malcolm@chaos.theory
-        name: Dr. Ian Malcolm
-        preferences:
-          default:
-            channel_types:
-              email: true
-            workflows:
-              dinosaurs-loose:
-                channel_types:
-                  email: true
-        timezone: America/New_York
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
       properties:
-        avatar:
-          description: A URL for the avatar of the user.
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        channel_data:
-          allOf:
-          - $ref: '#/components/schemas/InlineChannelDataRequest'
-          description: Channel-specific information that's needed to deliver a notification to an end provider.
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The creation date of the user from your system.
-          format: date-time
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        email:
-          description: The primary email address for the user.
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        locale:
-          description: The locale of the user. Used for [message localization](/concepts/translations).
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        name:
-          description: Display name of the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        phone_number:
-          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
+      x-validate: null
+    BulkSetUserPreferencesRequest:
+      description: A request to set preferences for a set of users in bulk.
+      example:
         preferences:
-          allOf:
-          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
-          description: A set of preferences for the user.
-          x-struct: null
-          x-validate: null
-        timezone:
-          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: IdentifyUserRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.IdentifyUserRequest
-      x-validate: null
-    PreferenceSetWorkflowCategorySetting:
-      description: Workflow or category preferences within a preference set
-      example:
-        channel_types:
-          email: false
-        channels:
-          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-      oneOf:
-      - example: false
-        type: boolean
-        x-struct: null
-        x-validate: null
-      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
-        example:
+          __persistence_strategy__: merge
+          categories:
+            marketing: false
+            transactional:
+              channel_types:
+                email: false
           channel_types:
-            email: false
+            email: true
           channels:
+            2f641633-95d3-4555-9222-9f1eb7888a80:
+              conditions:
+              - argument: US
+                operator: equal_to
+                variable: recipient.country_code
             aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-          conditions: null
-        properties:
-          channel_types:
-            anyOf:
-            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
-            - x-struct: null
-              x-validate: null
-            description: An object where the key is the channel type and the values are the preference settings for that channel type.
-            x-struct: null
-            x-validate: null
-          channels:
-            anyOf:
-            - $ref: '#/components/schemas/PreferenceSetChannels'
-            - x-struct: null
-              x-validate: null
-            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
-            x-struct: null
-            x-validate: null
-          conditions:
-            description: A list of conditions to apply to a channel type.
-            items:
-              $ref: '#/components/schemas/Condition'
-            type:
-            - array
-            - 'null'
-            x-struct: null
-            x-validate: null
-        title: PreferenceSetWorkflowCategorySettingObject
-        type: object
-        x-struct: null
-        x-validate: null
-      title: PreferenceSetWorkflowCategorySetting
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
-      x-validate: null
-    BulkDeleteUsersRequest:
-      description: A request to delete users in bulk.
-      example:
+          commercial_subscribed: true
+          workflows:
+            dinosaurs-loose:
+              channel_types:
+                email: false
         user_ids:
         - user_1
         - user_2
       properties:
+        preferences:
+          $ref: '#/components/schemas/PreferenceSetRequest'
         user_ids:
           description: A list of user IDs.
           items:
@@ -1901,31 +1962,11 @@ components:
           x-struct: null
           x-validate: null
       required:
+      - preferences
       - user_ids
-      title: BulkDeleteUsersRequest
+      title: BulkSetUserPreferencesRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkDeleteUsersRequest
-      x-validate: null
-    PreferenceSetChannelSetting:
-      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
-      example:
-        conditions:
-        - argument: US
-          operator: equal_to
-          variable: recipient.country_code
-      properties:
-        conditions:
-          description: A list of conditions to apply to a specific channel.
-          items:
-            $ref: '#/components/schemas/Condition'
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - conditions
-      title: PreferenceSetChannelSetting
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkSetUserPreferencesRequest
       x-validate: null
     DiscordIncomingWebhookConnection:
       description: Discord incoming webhook connection.
@@ -1953,144 +1994,103 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
       x-validate: null
-    AWSSNSPushChannelDataDevicesOnly:
-      description: AWS SNS push channel data.
+    PreferenceSetRequest:
+      description: A request to set a preference set for a recipient.
       example:
-        devices:
-        - locale: en-US
-          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-          timezone: America/Los_Angeles
-      properties:
-        devices:
-          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              target_arn:
-                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-                type: string
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-            required:
-            - target_arn
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - devices
-      title: AWSSNSPushChannelDataDevicesOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
-      x-validate: null
-    InlineIdentifyUserRequest:
-      additionalProperties: true
-      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing any properties specified.
-      example:
-        channel_data:
-          97c5837d-c65c-4d54-aa39-080eeb81c69d:
-            tokens:
-            - push_token_123
-        email: jane@ingen.net
-        id: user_1
-        name: Jane Doe
-        preferences:
-          default:
+        __persistence_strategy__: merge
+        categories:
+          marketing: false
+          transactional:
             channel_types:
-              email: true
-            workflows:
-              dinosaurs-loose:
-                channel_types:
-                  email: true
-        timezone: America/New_York
+              email: false
+        channel_types:
+          email: true
+        channels:
+          2f641633-95d3-4555-9222-9f1eb7888a80:
+            conditions:
+            - argument: US
+              operator: equal_to
+              variable: recipient.country_code
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+        commercial_subscribed: true
+        workflows:
+          dinosaurs-loose:
+            channel_types:
+              email: false
       properties:
-        avatar:
-          description: A URL for the avatar of the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_data:
-          allOf:
-          - $ref: '#/components/schemas/InlineChannelDataRequest'
-          description: Channel-specific information that's needed to deliver a notification to an end provider.
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The creation date of the user from your system.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        email:
-          description: The primary email address for the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier of the user.
+        __persistence_strategy__:
+          description: Controls how the preference set is persisted. 'replace' will completely replace the preference set, 'merge' will merge with existing preferences.
+          enum:
+          - merge
+          - replace
           type: string
           x-struct: null
           x-validate: null
-        locale:
-          description: The locale of the user. Used for [message localization](/concepts/translations).
+        categories:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the category and the values are the preference settings for that category.
+            example:
+              marketing:
+                channel_types:
+                  email: false
+              transactional: true
+            title: PreferenceSetRequestCategories
+            type: object
+            x-struct: null
+            x-validate: null
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the category and the values are the preference settings for that category.
+          x-struct: null
+          x-validate: null
+        channel_types:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the channel type and the values are the preference settings for that channel type.
+          x-struct: null
+          x-validate: null
+        channels:
+          anyOf:
+          - $ref: '#/components/schemas/PreferenceSetChannels'
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+          x-struct: null
+          x-validate: null
+        commercial_subscribed:
+          description: Whether the recipient is subscribed to commercial communications. When false, the recipient will not receive commercial workflow notifications.
           type:
-          - string
+          - boolean
           - 'null'
           x-struct: null
           x-validate: null
-        name:
-          description: Display name of the user.
-          type:
-          - string
-          - 'null'
+        workflows:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/PreferenceSetWorkflowCategorySetting'
+            description: An object where the key is the workflow key and the values are the preference settings for that workflow.
+            example:
+              dinosaurs-loose:
+                channel_types:
+                  email: false
+                  sms: true
+              welcome-sequence: true
+            title: PreferenceSetRequestWorkflows
+            type: object
+            x-struct: null
+            x-validate: null
+          - x-struct: null
+            x-validate: null
+          description: An object where the key is the workflow key and the values are the preference settings for that workflow.
           x-struct: null
           x-validate: null
-        phone_number:
-          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        preferences:
-          allOf:
-          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
-          description: A set of preferences for the user.
-          x-struct: null
-          x-validate: null
-        timezone:
-          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - id
-      title: InlineIdentifyUserRequest
+      title: PreferenceSetRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
       x-validate: null
   securitySchemes:
     BearerAuth:

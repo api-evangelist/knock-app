@@ -350,66 +350,223 @@ paths:
       variables: {}
 components:
   schemas:
-    Object:
-      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+    PageInfo:
+      description: Pagination information for a list of resources.
       example:
-        __typename: Object
-        collection: assets
-        created_at: null
-        id: specimen_25
-        properties:
-          classification: Theropod
-          config:
-            biz: baz
-            foo: bar
-          name: Velociraptor
-          status: contained
-        updated_at: '2024-05-22T12:00:00Z'
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
       properties:
         __typename:
           description: The typename of the schema.
-          example: Object
+          example: PageInfo
           type: string
           x-struct: null
           x-validate: null
-        collection:
-          description: The collection this object belongs to.
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: Timestamp when the resource was created.
-          format: date-time
+        after:
+          description: The cursor to fetch entries after.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        id:
-          description: Unique identifier for the object.
-          type: string
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
-        properties:
-          additionalProperties: true
-          description: The custom properties associated with the object.
-          type: object
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp when the resource was last updated.
-          format: date-time
-          type: string
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
           x-struct: null
           x-validate: null
       required:
       - __typename
-      - id
-      - collection
-      - updated_at
-      title: Object
+      - page_size
+      title: PageInfo
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    ScheduleRepeatRule:
+      description: The repeat rule for the schedule.
+      example:
+        __typename: ScheduleRepeat
+        day_of_month: null
+        days:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+        - sat
+        - sun
+        frequency: daily
+        hours: null
+        interval: 1
+        minutes: null
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: ScheduleRepeat
+          type: string
+          x-struct: null
+          x-validate: null
+        day_of_month:
+          description: The day of the month to repeat the schedule.
+          example: 1
+          type:
+          - integer
+          - 'null'
+          x-struct: null
+          x-validate: null
+        days:
+          description: The days of the week to repeat the schedule.
+          example:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          items:
+            description: An identifier for a day of the week.
+            enum:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            type: string
+            x-struct: null
+            x-validate: null
+          type:
+          - array
+          - 'null'
+          x-struct: null
+          x-validate: null
+        frequency:
+          description: The frequency of the schedule.
+          enum:
+          - daily
+          - weekly
+          - monthly
+          - hourly
+          example: daily
+          type: string
+          x-struct: null
+          x-validate: null
+        hours:
+          description: The hour of the day to repeat the schedule.
+          example: 0
+          type:
+          - integer
+          - 'null'
+          x-struct: null
+          x-validate: null
+        interval:
+          default: 1
+          description: The interval of the schedule.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+        minutes:
+          description: The minute of the hour to repeat the schedule.
+          example: 0
+          type:
+          - integer
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - frequency
+      title: ScheduleRepeatRule
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ScheduleRepeatRule
+      x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    ListSchedulesResponse:
+      description: A response containing a list of schedules.
+      example:
+        entries:
+        - __typename: Schedule
+          actor: null
+          data: null
+          id: 123e4567-e89b-12d3-a456-426614174000
+          inserted_at: '2021-01-01T00:00:00Z'
+          last_occurrence_at: null
+          next_occurrence_at: null
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          repeats:
+          - __typename: ScheduleRepeat
+            day_of_month: null
+            days:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+            frequency: daily
+            hours: null
+            interval: 1
+            minutes: null
+          tenant: null
+          updated_at: '2021-01-01T00:00:00Z'
+          workflow: workflow_123
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        entries:
+          description: A list of schedules.
+          items:
+            $ref: '#/components/schemas/Schedule'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - entries
+      - page_info
+      title: ListSchedulesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSchedulesResponse
       x-validate: null
     Schedule:
       description: A schedule represents a recurring workflow execution.
@@ -538,67 +695,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.Schedule
       x-validate: null
-    ListSchedulesResponse:
-      description: A response containing a list of schedules.
-      example:
-        entries:
-        - __typename: Schedule
-          actor: null
-          data: null
-          id: 123e4567-e89b-12d3-a456-426614174000
-          inserted_at: '2021-01-01T00:00:00Z'
-          last_occurrence_at: null
-          next_occurrence_at: null
-          recipient:
-            __typename: User
-            avatar: null
-            created_at: null
-            email: jane@ingen.net
-            id: jane
-            name: Jane Doe
-            phone_number: null
-            timezone: null
-            updated_at: '2024-05-22T12:00:00Z'
-          repeats:
-          - __typename: ScheduleRepeat
-            day_of_month: null
-            days:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
-            - sat
-            - sun
-            frequency: daily
-            hours: null
-            interval: 1
-            minutes: null
-          tenant: null
-          updated_at: '2021-01-01T00:00:00Z'
-          workflow: workflow_123
-        page_info:
-          __typename: PageInfo
-          after: null
-          before: null
-          page_size: 25
-      properties:
-        entries:
-          description: A list of schedules.
-          items:
-            $ref: '#/components/schemas/Schedule'
-          type: array
-          x-struct: null
-          x-validate: null
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-      required:
-      - entries
-      - page_info
-      title: ListSchedulesResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListSchedulesResponse
-      x-validate: null
     User:
       additionalProperties: true
       description: A [User](/concepts/users) represents an individual in your system who can receive notifications through Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
@@ -678,162 +774,129 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.User
       x-validate: null
-    Recipient:
-      description: A recipient of a notification, which is either a user or an object.
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
       example:
-        __typename: User
-        avatar: null
+        __typename: Object
+        collection: assets
         created_at: null
-        email: jane@ingen.net
-        id: jane
-        name: Jane Doe
-        phone_number: null
-        timezone: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
         updated_at: '2024-05-22T12:00:00Z'
-      oneOf:
-      - $ref: '#/components/schemas/User'
-      - $ref: '#/components/schemas/Object'
-      title: Recipient
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
-      x-validate: null
-    ScheduleRepeatRule:
-      description: The repeat rule for the schedule.
-      example:
-        __typename: ScheduleRepeat
-        day_of_month: null
-        days:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-        - sat
-        - sun
-        frequency: daily
-        hours: null
-        interval: 1
-        minutes: null
       properties:
         __typename:
           description: The typename of the schema.
-          example: ScheduleRepeat
+          example: Object
           type: string
           x-struct: null
           x-validate: null
-        day_of_month:
-          description: The day of the month to repeat the schedule.
-          example: 1
-          type:
-          - integer
-          - 'null'
-          x-struct: null
-          x-validate: null
-        days:
-          description: The days of the week to repeat the schedule.
-          example:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-          items:
-            description: An identifier for a day of the week.
-            enum:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
-            - sat
-            - sun
-            type: string
-            x-struct: null
-            x-validate: null
-          type:
-          - array
-          - 'null'
-          x-struct: null
-          x-validate: null
-        frequency:
-          description: The frequency of the schedule.
-          enum:
-          - daily
-          - weekly
-          - monthly
-          - hourly
-          example: daily
+        collection:
+          description: The collection this object belongs to.
           type: string
           x-struct: null
           x-validate: null
-        hours:
-          description: The hour of the day to repeat the schedule.
-          example: 0
-          type:
-          - integer
-          - 'null'
-          x-struct: null
-          x-validate: null
-        interval:
-          default: 1
-          description: The interval of the schedule.
-          example: 1
-          type: integer
-          x-struct: null
-          x-validate: null
-        minutes:
-          description: The minute of the hour to repeat the schedule.
-          example: 0
-          type:
-          - integer
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - frequency
-      title: ScheduleRepeatRule
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ScheduleRepeatRule
-      x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
-      example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: PageInfo
-          type: string
-          x-struct: null
-          x-validate: null
-        after:
-          description: The cursor to fetch entries after.
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
+        id:
+          description: Unique identifier for the object.
+          type: string
           x-struct: null
           x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
           x-struct: null
           x-validate: null
       required:
       - __typename
-      - page_size
-      title: PageInfo
+      - id
+      - collection
+      - updated_at
+      title: Object
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
+      x-validate: null
+    MsTeamsChannelData:
+      description: Microsoft Teams channel data.
+      example:
+        connections:
+        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_tenant_id: null
+          ms_teams_user_id: null
+        ms_teams_tenant_id: null
+      properties:
+        connections:
+          description: List of Microsoft Teams connections.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MsTeamsTokenConnection'
+            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: MsTeamsChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
       x-validate: null
     OneSignalChannelDataPlayerIdsOnly:
       description: OneSignal channel data.
@@ -860,51 +923,281 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
       x-validate: null
-    DeleteSchedulesRequest:
-      description: A request to delete a schedule.
-      example:
-        schedule_ids:
-        - 123e4567-e89b-12d3-a456-426614174000
-      properties:
-        schedule_ids:
-          description: A list of schedule IDs.
-          items:
-            description: Unique identifier for the schedule.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - schedule_ids
-      title: DeleteSchedulesRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DeleteSchedulesRequest
-      x-validate: null
-    AWSSNSPushChannelDataTargetARNsOnly:
+    AWSSNSPushChannelDataDevicesOnly:
       description: AWS SNS push channel data.
       example:
-        target_arns:
-        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
       properties:
-        target_arns:
-          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-          example:
-          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
           items:
-            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-            type: string
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
+            type: object
             x-struct: null
             x-validate: null
           type: array
           x-struct: null
           x-validate: null
       required:
-      - target_arns
-      title: AWSSNSPushChannelDataTargetARNsOnly
+      - devices
+      title: AWSSNSPushChannelDataDevicesOnly
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
+      x-validate: null
+    DiscordChannelConnection:
+      description: Discord channel connection.
+      example:
+        channel_id: '123456789012345678'
+      properties:
+        channel_id:
+          description: Discord channel ID.
+          example: '123456789012345678'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      title: DiscordChannelConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
+      x-validate: null
+    PreferenceSetChannels:
+      additionalProperties:
+        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
+        oneOf:
+        - type: boolean
+          x-struct: null
+          x-validate: null
+        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
+        x-struct: null
+        x-validate: null
+      description: Channel preferences.
+      example:
+        2f641633-95d3-4555-9222-9f1eb7888a80:
+          conditions:
+          - argument: US
+            operator: equal_to
+            variable: recipient.country_code
+        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      title: PreferenceSetChannels
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
+      x-validate: null
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
+      example:
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
+      properties:
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
+          items:
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - devices
+      title: PushChannelDataDevicesOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    CreateSchedulesRequest:
+      description: A request to create a schedule.
+      example:
+        data:
+          key: value
+        ending_at: null
+        recipients:
+        - user_123
+        repeats:
+        - __typename: ScheduleRepeat
+          day_of_month: null
+          days:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+          frequency: daily
+          hours: null
+          interval: 1
+          minutes: null
+        scheduled_at: null
+        tenant: acme_corp
+        workflow: comment-created
+      properties:
+        actor:
+          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed the action.
+          oneOf:
+          - $ref: '#/components/schemas/RecipientRequest'
+          - x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation) in your logs.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ending_at:
+          description: The ending date and time for the schedule.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        recipients:
+          description: The recipients to set the schedule for. Limited to 100 recipients per request.
+          items:
+            $ref: '#/components/schemas/RecipientRequest'
+          type: array
+          x-struct: null
+          x-validate: null
+        repeats:
+          description: The repeat rule for the schedule.
+          items:
+            $ref: '#/components/schemas/ScheduleRepeatRule'
+          type: array
+          x-struct: null
+          x-validate: null
+        scheduled_at:
+          description: The starting date and time for the schedule.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        tenant:
+          anyOf:
+          - $ref: '#/components/schemas/InlineTenantRequest'
+          - x-struct: null
+            x-validate: null
+          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
+          x-struct: null
+          x-validate: null
+        workflow:
+          description: The key of the workflow.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - workflow
+      - recipients
+      title: CreateSchedulesRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.CreateSchedulesRequest
+      x-validate: null
+    PreferenceSetWorkflowCategorySetting:
+      description: Workflow or category preferences within a preference set
+      example:
+        channel_types:
+          email: false
+        channels:
+          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+      oneOf:
+      - example: false
+        type: boolean
+        x-struct: null
+        x-validate: null
+      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
+        example:
+          channel_types:
+            email: false
+          channels:
+            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
+          conditions: null
+        properties:
+          channel_types:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
+            - x-struct: null
+              x-validate: null
+            description: An object where the key is the channel type and the values are the preference settings for that channel type.
+            x-struct: null
+            x-validate: null
+          channels:
+            anyOf:
+            - $ref: '#/components/schemas/PreferenceSetChannels'
+            - x-struct: null
+              x-validate: null
+            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
+            x-struct: null
+            x-validate: null
+          conditions:
+            description: A list of conditions to apply to a channel type.
+            items:
+              $ref: '#/components/schemas/Condition'
+            type:
+            - array
+            - 'null'
+            x-struct: null
+            x-validate: null
+        title: PreferenceSetWorkflowCategorySettingObject
+        type: object
+        x-struct: null
+        x-validate: null
+      title: PreferenceSetWorkflowCategorySetting
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
       x-validate: null
     InlineIdentifyObjectRequest:
       additionalProperties: true
@@ -962,63 +1255,108 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyObjectRequest
       x-validate: null
-    MsTeamsChannelData:
-      description: Microsoft Teams channel data.
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
       example:
-        connections:
-        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
-          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
-          ms_teams_tenant_id: null
-          ms_teams_user_id: null
-        ms_teams_tenant_id: null
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
       properties:
-        connections:
-          description: List of Microsoft Teams connections.
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
           items:
-            oneOf:
-            - $ref: '#/components/schemas/MsTeamsTokenConnection'
-            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
-            type: object
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            type: string
             x-struct: null
             x-validate: null
           type: array
           x-struct: null
           x-validate: null
-        ms_teams_tenant_id:
-          description: Microsoft Teams tenant ID.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type:
-          - string
-          - 'null'
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    PreferenceSetChannelSetting:
+      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
+      example:
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
+      properties:
+        conditions:
+          description: A list of conditions to apply to a specific channel.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
           x-struct: null
           x-validate: null
       required:
-      - connections
-      title: MsTeamsChannelData
+      - conditions
+      title: PreferenceSetChannelSetting
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
       x-validate: null
-    SchedulesResponse:
-      description: A list of schedules.
+    RecipientRequest:
+      description: Specifies a recipient in a request. This can either be a user identifier (string), an inline user request (object), or an inline object request, which is determined by the presence of a `collection` property.
       example:
-      - __typename: Schedule
+        id: user_1
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        title: UserRecipient
+        type: string
+        x-struct: null
+        x-validate: null
+      - $ref: '#/components/schemas/InlineIdentifyUserRequest'
+      - $ref: '#/components/schemas/InlineIdentifyObjectRequest'
+      title: RecipientRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientRequest
+      x-validate: null
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+    UpdateSchedulesRequest:
+      description: A request to update a schedule.
+      example:
         actor: null
-        data: null
-        id: 123e4567-e89b-12d3-a456-426614174000
-        inserted_at: '2021-01-01T00:00:00Z'
-        last_occurrence_at: null
-        next_occurrence_at: null
-        recipient:
-          __typename: User
-          avatar: null
-          created_at: null
-          email: jane@ingen.net
-          id: jane
-          name: Jane Doe
-          phone_number: null
-          timezone: null
-          updated_at: '2024-05-22T12:00:00Z'
+        data:
+          key: value
+        ending_at: null
         repeats:
         - __typename: ScheduleRepeat
           day_of_month: null
@@ -1034,14 +1372,97 @@ components:
           hours: null
           interval: 1
           minutes: null
-        tenant: null
-        updated_at: '2021-01-01T00:00:00Z'
-        workflow: workflow_123
-      items:
-        $ref: '#/components/schemas/Schedule'
-      title: SchedulesResponse
-      type: array
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SchedulesResponse
+        schedule_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+        scheduled_at: null
+        tenant: acme_corp
+      properties:
+        actor:
+          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed the action.
+          oneOf:
+          - $ref: '#/components/schemas/RecipientReference'
+          - x-struct: null
+            x-validate: null
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation) in your logs.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ending_at:
+          description: The ending date and time for the schedule.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        repeats:
+          description: The repeat rule for the schedule.
+          items:
+            $ref: '#/components/schemas/ScheduleRepeatRule'
+          type: array
+          x-struct: null
+          x-validate: null
+        schedule_ids:
+          description: A list of schedule IDs.
+          items:
+            description: Unique identifier for the schedule.
+            format: uuid
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        scheduled_at:
+          description: The starting date and time for the schedule.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        tenant:
+          anyOf:
+          - $ref: '#/components/schemas/InlineTenantRequest'
+          - x-struct: null
+            x-validate: null
+          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
+          x-struct: null
+          x-validate: null
+      required:
+      - schedule_ids
+      title: UpdateSchedulesRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UpdateSchedulesRequest
+      x-validate: null
+    InlineChannelDataRequest:
+      additionalProperties:
+        description: Channel data for a given channel type.
+        oneOf:
+        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+        - $ref: '#/components/schemas/SlackChannelData'
+        - $ref: '#/components/schemas/MsTeamsChannelData'
+        - $ref: '#/components/schemas/DiscordChannelData'
+        x-struct: null
+        x-validate: null
+      description: A request to set channel data for a type of channel inline.
+      example:
+        97c5837d-c65c-4d54-aa39-080eeb81c69d:
+          tokens:
+          - push_token_xxx
+      title: InlineChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
       x-validate: null
     InlinePreferenceSetRequest:
       additionalProperties:
@@ -1059,57 +1480,168 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.InlinePreferenceSetRequest
       x-validate: null
-    SlackTokenConnection:
-      description: A Slack connection token.
+    PreferenceSetChannelTypeSetting:
+      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
       example:
-        access_token: xoxb-1234567890
-        channel_id: C01234567890
-        user_id: U01234567890
+        conditions:
+        - argument: US
+          operator: equal_to
+          variable: recipient.country_code
       properties:
-        access_token:
-          description: A Slack access token.
-          example: xoxb-1234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_id:
-          description: A Slack channel ID from the Slack provider.
-          example: C01234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        user_id:
-          description: A Slack user ID from the Slack provider.
-          example: U01234567890
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: SlackTokenConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
-      x-validate: null
-    SlackIncomingWebhookConnection:
-      description: A Slack connection incoming webhook.
-      example:
-        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
-      properties:
-        url:
-          description: The URL of the incoming webhook for a Slack connection.
-          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
-          type: string
+        conditions:
+          description: A list of conditions to apply to a channel type.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
           x-struct: null
           x-validate: null
       required:
-      - url
-      title: SlackIncomingWebhookConnection
+      - conditions
+      title: PreferenceSetChannelTypeSetting
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-validate: null
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    InlineIdentifyUserRequest:
+      additionalProperties: true
+      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing any properties specified.
+      example:
+        channel_data:
+          97c5837d-c65c-4d54-aa39-080eeb81c69d:
+            tokens:
+            - push_token_123
+        email: jane@ingen.net
+        id: user_1
+        name: Jane Doe
+        preferences:
+          default:
+            channel_types:
+              email: true
+            workflows:
+              dinosaurs-loose:
+                channel_types:
+                  email: true
+        timezone: America/New_York
+      properties:
+        avatar:
+          description: A URL for the avatar of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_data:
+          allOf:
+          - $ref: '#/components/schemas/InlineChannelDataRequest'
+          description: Channel-specific information that's needed to deliver a notification to an end provider.
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        locale:
+          description: The locale of the user. Used for [message localization](/concepts/translations).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        preferences:
+          allOf:
+          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
+          description: A set of preferences for the user.
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      title: InlineIdentifyUserRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
       x-validate: null
     SlackChannelData:
       description: Slack channel data.
@@ -1161,30 +1693,19 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
       x-validate: null
-    DiscordChannelData:
-      description: Discord channel data.
+    InlineTenantRequest:
+      description: An request to set a tenant inline.
       example:
-        connections:
-        - channel_id: '123456789012345678'
-      properties:
-        connections:
-          description: List of Discord channel connections.
-          items:
-            description: Discord channel connection, either a channel connection or an incoming webhook connection.
-            oneOf:
-            - $ref: '#/components/schemas/DiscordChannelConnection'
-            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - connections
-      title: DiscordChannelData
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+        id: tenant_1
+        name: Acme Corp, Inc.
+      oneOf:
+      - description: The unique identifier for the tenant.
+        type: string
+        x-struct: null
+        x-validate: null
+      - $ref: '#/components/schemas/TenantRequest'
+      title: InlineTenantRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineTenantRequest
       x-validate: null
     PreferenceSetChannelTypes:
       description: Channel type preferences.
@@ -1254,62 +1775,226 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes
       x-validate: null
-    InlineChannelDataRequest:
-      additionalProperties:
-        description: Channel data for a given channel type.
-        oneOf:
-        - $ref: '#/components/schemas/PushChannelDataTokensOnly'
-        - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
-        - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
-        - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
-        - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
-        - $ref: '#/components/schemas/SlackChannelData'
-        - $ref: '#/components/schemas/MsTeamsChannelData'
-        - $ref: '#/components/schemas/DiscordChannelData'
-        x-struct: null
-        x-validate: null
-      description: A request to set channel data for a type of channel inline.
+    DeleteSchedulesRequest:
+      description: A request to delete a schedule.
       example:
-        97c5837d-c65c-4d54-aa39-080eeb81c69d:
-          tokens:
-          - push_token_xxx
-      title: InlineChannelDataRequest
+        schedule_ids:
+        - 123e4567-e89b-12d3-a456-426614174000
+      properties:
+        schedule_ids:
+          description: A list of schedule IDs.
+          items:
+            description: Unique identifier for the schedule.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - schedule_ids
+      title: DeleteSchedulesRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineChannelDataRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DeleteSchedulesRequest
       x-validate: null
-    RecipientReference:
-      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
-      example: user_123
-      oneOf:
-      - description: The ID of the user which is used as the reference for the recipient.
-        example: user_123
-        title: UserReference
-        type: string
-        x-struct: null
-        x-validate: null
-      - description: A reference to a recipient object.
-        example:
-          collection: projects
-          id: project_123
-        properties:
-          collection:
-            description: The collection the recipient object belongs to.
-            example: projects
-            type: string
-            x-struct: null
-            x-validate: null
-          id:
-            description: An identifier for the recipient object.
-            example: project_123
-            type: string
-            x-struct: null
-            x-validate: null
-        title: ObjectReference
-        type: object
-        x-struct: null
-        x-validate: null
-      title: RecipientReference
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
+      example:
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+      properties:
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - url
+      title: SlackIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
+      x-validate: null
+    SlackTokenConnection:
+      description: A Slack connection token.
+      example:
+        access_token: xoxb-1234567890
+        channel_id: C01234567890
+        user_id: U01234567890
+      properties:
+        access_token:
+          description: A Slack access token.
+          example: xoxb-1234567890
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_id:
+          description: A Slack channel ID from the Slack provider.
+          example: C01234567890
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        user_id:
+          description: A Slack user ID from the Slack provider.
+          example: U01234567890
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      title: SlackTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
+      x-validate: null
+    Condition:
+      description: A condition to be evaluated.
+      example:
+        argument: frog_genome
+        operator: contains
+        variable: specimen.dna_sequence
+      properties:
+        argument:
+          description: The argument value to compare against in the condition.
+          example: some_property
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        operator:
+          description: The operator to use in the condition evaluation.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - contains_all
+          - is_timestamp
+          - is_not_timestamp
+          - is_timestamp_on_or_after
+          - is_timestamp_before
+          - is_timestamp_on_or_after_date
+          - is_timestamp_before_date
+          - is_timestamp_between
+          - is_between
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: The variable to be evaluated in the condition.
+          example: recipient.property
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - variable
+      - operator
+      - argument
+      title: Condition
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
+      x-validate: null
+    SchedulesResponse:
+      description: A list of schedules.
+      example:
+      - __typename: Schedule
+        actor: null
+        data: null
+        id: 123e4567-e89b-12d3-a456-426614174000
+        inserted_at: '2021-01-01T00:00:00Z'
+        last_occurrence_at: null
+        next_occurrence_at: null
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        repeats:
+        - __typename: ScheduleRepeat
+          day_of_month: null
+          days:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+          frequency: daily
+          hours: null
+          interval: 1
+          minutes: null
+        tenant: null
+        updated_at: '2021-01-01T00:00:00Z'
+        workflow: workflow_123
+      items:
+        $ref: '#/components/schemas/Schedule'
+      title: SchedulesResponse
+      type: array
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SchedulesResponse
+      x-validate: null
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
+      example:
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
+      properties:
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
       x-validate: null
     TenantRequest:
       additionalProperties: true
@@ -1406,26 +2091,31 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.TenantRequest
       x-validate: null
-    PreferenceSetChannelTypeSetting:
-      description: A set of settings for a channel type. Currently, this can only be a list of conditions to apply.
+    DiscordIncomingWebhookConnection:
+      description: Discord incoming webhook connection.
       example:
-        conditions:
-        - argument: US
-          operator: equal_to
-          variable: recipient.country_code
+        incoming_webhook:
+          url: https://example.com/webhook
       properties:
-        conditions:
-          description: A list of conditions to apply to a channel type.
-          items:
-            $ref: '#/components/schemas/Condition'
-          type: array
+        incoming_webhook:
+          description: Discord incoming webhook object.
+          properties:
+            url:
+              description: Incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
           x-struct: null
           x-validate: null
       required:
-      - conditions
-      title: PreferenceSetChannelTypeSetting
+      - incoming_webhook
+      title: DiscordIncomingWebhookConnection
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannelTypes.PreferenceSetChannelTypeSetting
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
       x-validate: null
     PreferenceSetRequest:
       description: A request to set a preference set for a recipient.
@@ -1524,696 +2214,6 @@ components:
       title: PreferenceSetRequest
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetRequest
-      x-validate: null
-    PushChannelDataTokensOnly:
-      description: Push channel data.
-      example:
-        tokens:
-        - push_token_1
-        - push_token_2
-      properties:
-        tokens:
-          description: A list of push channel tokens.
-          items:
-            description: The device token to send the push notification to.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - tokens
-      title: PushChannelDataTokensOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
-      x-validate: null
-    PreferenceSetChannels:
-      additionalProperties:
-        description: Whether the specific channel (by channel_id) is enabled for the preference set, or a settings object with conditions.
-        oneOf:
-        - type: boolean
-          x-struct: null
-          x-validate: null
-        - $ref: '#/components/schemas/PreferenceSetChannelSetting'
-        x-struct: null
-        x-validate: null
-      description: Channel preferences.
-      example:
-        2f641633-95d3-4555-9222-9f1eb7888a80:
-          conditions:
-          - argument: US
-            operator: equal_to
-            variable: recipient.country_code
-        aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-      title: PreferenceSetChannels
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels
-      x-validate: null
-    MsTeamsTokenConnection:
-      description: Microsoft Teams token connection.
-      example:
-        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_tenant_id: null
-        ms_teams_user_id: null
-      properties:
-        ms_teams_channel_id:
-          description: Microsoft Teams channel ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_team_id:
-          description: Microsoft Teams team ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_tenant_id:
-          description: Microsoft Teams tenant ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_user_id:
-          description: Microsoft Teams user ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: MsTeamsTokenConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
-      x-validate: null
-    PushChannelDataDevicesOnly:
-      description: Push channel data.
-      example:
-        devices:
-        - locale: en-US
-          timezone: America/Los_Angeles
-          token: push_token_1
-      properties:
-        devices:
-          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              token:
-                description: The device token to send the push notification to.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - token
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - devices
-      title: PushChannelDataDevicesOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
-      x-validate: null
-    MsTeamsIncomingWebhookConnection:
-      description: Microsoft Teams incoming webhook connection.
-      example:
-        incoming_webhook:
-          url: https://example.com/webhook
-      properties:
-        incoming_webhook:
-          description: Microsoft Teams incoming webhook.
-          properties:
-            url:
-              description: Microsoft Teams incoming webhook URL.
-              example: https://example.com/webhook
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - url
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - incoming_webhook
-      title: MsTeamsIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
-      x-validate: null
-    Condition:
-      description: A condition to be evaluated.
-      example:
-        argument: frog_genome
-        operator: contains
-        variable: specimen.dna_sequence
-      properties:
-        argument:
-          description: The argument value to compare against in the condition.
-          example: some_property
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        operator:
-          description: The operator to use in the condition evaluation.
-          enum:
-          - equal_to
-          - not_equal_to
-          - greater_than
-          - less_than
-          - greater_than_or_equal_to
-          - less_than_or_equal_to
-          - contains
-          - not_contains
-          - empty
-          - not_empty
-          - exists
-          - not_exists
-          - contains_all
-          - is_timestamp
-          - is_not_timestamp
-          - is_timestamp_on_or_after
-          - is_timestamp_before
-          - is_timestamp_on_or_after_date
-          - is_timestamp_before_date
-          - is_timestamp_between
-          - is_between
-          - is_audience_member
-          - is_not_audience_member
-          example: equal_to
-          type: string
-          x-struct: null
-          x-validate: null
-        variable:
-          description: The variable to be evaluated in the condition.
-          example: recipient.property
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - variable
-      - operator
-      - argument
-      title: Condition
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Condition
-      x-validate: null
-    UpdateSchedulesRequest:
-      description: A request to update a schedule.
-      example:
-        actor: null
-        data:
-          key: value
-        ending_at: null
-        repeats:
-        - __typename: ScheduleRepeat
-          day_of_month: null
-          days:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-          - sat
-          - sun
-          frequency: daily
-          hours: null
-          interval: 1
-          minutes: null
-        schedule_ids:
-        - 123e4567-e89b-12d3-a456-426614174000
-        scheduled_at: null
-        tenant: acme_corp
-      properties:
-        actor:
-          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed the action.
-          oneOf:
-          - $ref: '#/components/schemas/RecipientReference'
-          - x-struct: null
-            x-validate: null
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation) in your logs.
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ending_at:
-          description: The ending date and time for the schedule.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        repeats:
-          description: The repeat rule for the schedule.
-          items:
-            $ref: '#/components/schemas/ScheduleRepeatRule'
-          type: array
-          x-struct: null
-          x-validate: null
-        schedule_ids:
-          description: A list of schedule IDs.
-          items:
-            description: Unique identifier for the schedule.
-            format: uuid
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        scheduled_at:
-          description: The starting date and time for the schedule.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        tenant:
-          anyOf:
-          - $ref: '#/components/schemas/InlineTenantRequest'
-          - x-struct: null
-            x-validate: null
-          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
-          x-struct: null
-          x-validate: null
-      required:
-      - schedule_ids
-      title: UpdateSchedulesRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.UpdateSchedulesRequest
-      x-validate: null
-    DiscordChannelConnection:
-      description: Discord channel connection.
-      example:
-        channel_id: '123456789012345678'
-      properties:
-        channel_id:
-          description: Discord channel ID.
-          example: '123456789012345678'
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - channel_id
-      title: DiscordChannelConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
-      x-validate: null
-    RecipientRequest:
-      description: Specifies a recipient in a request. This can either be a user identifier (string), an inline user request (object), or an inline object request, which is determined by the presence of a `collection` property.
-      example:
-        id: user_1
-      oneOf:
-      - description: The ID of the user which is used as the reference for the recipient.
-        example: user_123
-        title: UserRecipient
-        type: string
-        x-struct: null
-        x-validate: null
-      - $ref: '#/components/schemas/InlineIdentifyUserRequest'
-      - $ref: '#/components/schemas/InlineIdentifyObjectRequest'
-      title: RecipientRequest
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientRequest
-      x-validate: null
-    PreferenceSetWorkflowCategorySetting:
-      description: Workflow or category preferences within a preference set
-      example:
-        channel_types:
-          email: false
-        channels:
-          aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-      oneOf:
-      - example: false
-        type: boolean
-        x-struct: null
-        x-validate: null
-      - description: The settings object for a workflow or category, where you can specify channel types or conditions.
-        example:
-          channel_types:
-            email: false
-          channels:
-            aef6e715-df82-4ab6-b61e-b743e249f7b6: true
-          conditions: null
-        properties:
-          channel_types:
-            anyOf:
-            - $ref: '#/components/schemas/PreferenceSetChannelTypes'
-            - x-struct: null
-              x-validate: null
-            description: An object where the key is the channel type and the values are the preference settings for that channel type.
-            x-struct: null
-            x-validate: null
-          channels:
-            anyOf:
-            - $ref: '#/components/schemas/PreferenceSetChannels'
-            - x-struct: null
-              x-validate: null
-            description: An object where the key is the channel ID and the values are the preference settings for that channel ID.
-            x-struct: null
-            x-validate: null
-          conditions:
-            description: A list of conditions to apply to a channel type.
-            items:
-              $ref: '#/components/schemas/Condition'
-            type:
-            - array
-            - 'null'
-            x-struct: null
-            x-validate: null
-        title: PreferenceSetWorkflowCategorySettingObject
-        type: object
-        x-struct: null
-        x-validate: null
-      title: PreferenceSetWorkflowCategorySetting
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetWorkflowCategorySetting
-      x-validate: null
-    CreateSchedulesRequest:
-      description: A request to create a schedule.
-      example:
-        data:
-          key: value
-        ending_at: null
-        recipients:
-        - user_123
-        repeats:
-        - __typename: ScheduleRepeat
-          day_of_month: null
-          days:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-          - sat
-          - sun
-          frequency: daily
-          hours: null
-          interval: 1
-          minutes: null
-        scheduled_at: null
-        tenant: acme_corp
-        workflow: comment-created
-      properties:
-        actor:
-          description: A map of properties describing a user or an object to identify in Knock and mark as who or what performed the action.
-          oneOf:
-          - $ref: '#/components/schemas/RecipientRequest'
-          - x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: An optional map of data to pass into the workflow execution. There is a 10MB limit on the size of the full `data` payload. Any individual string value greater than 1024 bytes in length will be [truncated](/developer-tools/api-logs#log-truncation) in your logs.
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ending_at:
-          description: The ending date and time for the schedule.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        recipients:
-          description: The recipients to set the schedule for. Limited to 100 recipients per request.
-          items:
-            $ref: '#/components/schemas/RecipientRequest'
-          type: array
-          x-struct: null
-          x-validate: null
-        repeats:
-          description: The repeat rule for the schedule.
-          items:
-            $ref: '#/components/schemas/ScheduleRepeatRule'
-          type: array
-          x-struct: null
-          x-validate: null
-        scheduled_at:
-          description: The starting date and time for the schedule.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        tenant:
-          anyOf:
-          - $ref: '#/components/schemas/InlineTenantRequest'
-          - x-struct: null
-            x-validate: null
-          description: The tenant to trigger the workflow for. Triggering with a tenant will use any tenant-level overrides associated with the tenant object, and all messages produced from workflow runs will be tagged with the tenant.
-          x-struct: null
-          x-validate: null
-        workflow:
-          description: The key of the workflow.
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - workflow
-      - recipients
-      title: CreateSchedulesRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.CreateSchedulesRequest
-      x-validate: null
-    PreferenceSetChannelSetting:
-      description: A set of settings for a specific channel. Currently, this can only be a list of conditions to apply.
-      example:
-        conditions:
-        - argument: US
-          operator: equal_to
-          variable: recipient.country_code
-      properties:
-        conditions:
-          description: A list of conditions to apply to a specific channel.
-          items:
-            $ref: '#/components/schemas/Condition'
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - conditions
-      title: PreferenceSetChannelSetting
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PreferenceSetChannels.PreferenceSetChannelSetting
-      x-validate: null
-    DiscordIncomingWebhookConnection:
-      description: Discord incoming webhook connection.
-      example:
-        incoming_webhook:
-          url: https://example.com/webhook
-      properties:
-        incoming_webhook:
-          description: Discord incoming webhook object.
-          properties:
-            url:
-              description: Incoming webhook URL.
-              example: https://example.com/webhook
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - url
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - incoming_webhook
-      title: DiscordIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
-      x-validate: null
-    InlineTenantRequest:
-      description: An request to set a tenant inline.
-      example:
-        id: tenant_1
-        name: Acme Corp, Inc.
-      oneOf:
-      - description: The unique identifier for the tenant.
-        type: string
-        x-struct: null
-        x-validate: null
-      - $ref: '#/components/schemas/TenantRequest'
-      title: InlineTenantRequest
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineTenantRequest
-      x-validate: null
-    AWSSNSPushChannelDataDevicesOnly:
-      description: AWS SNS push channel data.
-      example:
-        devices:
-        - locale: en-US
-          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-          timezone: America/Los_Angeles
-      properties:
-        devices:
-          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              target_arn:
-                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-                type: string
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-            required:
-            - target_arn
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - devices
-      title: AWSSNSPushChannelDataDevicesOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
-      x-validate: null
-    InlineIdentifyUserRequest:
-      additionalProperties: true
-      description: A set of parameters to inline-identify a user with. Inline identifying the user will ensure that the user is available before the request is executed in Knock. It will perform an upsert for the user you're supplying, replacing any properties specified.
-      example:
-        channel_data:
-          97c5837d-c65c-4d54-aa39-080eeb81c69d:
-            tokens:
-            - push_token_123
-        email: jane@ingen.net
-        id: user_1
-        name: Jane Doe
-        preferences:
-          default:
-            channel_types:
-              email: true
-            workflows:
-              dinosaurs-loose:
-                channel_types:
-                  email: true
-        timezone: America/New_York
-      properties:
-        avatar:
-          description: A URL for the avatar of the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_data:
-          allOf:
-          - $ref: '#/components/schemas/InlineChannelDataRequest'
-          description: Channel-specific information that's needed to deliver a notification to an end provider.
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The creation date of the user from your system.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        email:
-          description: The primary email address for the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier of the user.
-          type: string
-          x-struct: null
-          x-validate: null
-        locale:
-          description: The locale of the user. Used for [message localization](/concepts/translations).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        name:
-          description: Display name of the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        phone_number:
-          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        preferences:
-          allOf:
-          - $ref: '#/components/schemas/InlinePreferenceSetRequest'
-          description: A set of preferences for the user.
-          x-struct: null
-          x-validate: null
-        timezone:
-          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - id
-      title: InlineIdentifyUserRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.InlineIdentifyUserRequest
       x-validate: null
   securitySchemes:
     BearerAuth:

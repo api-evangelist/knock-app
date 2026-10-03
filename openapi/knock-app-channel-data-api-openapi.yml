@@ -262,6 +262,168 @@ paths:
       variables: {}
 components:
   schemas:
+    DiscordChannelData:
+      description: Discord channel data.
+      example:
+        connections:
+        - channel_id: '123456789012345678'
+      properties:
+        connections:
+          description: List of Discord channel connections.
+          items:
+            description: Discord channel connection, either a channel connection or an incoming webhook connection.
+            oneOf:
+            - $ref: '#/components/schemas/DiscordChannelConnection'
+            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: DiscordChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-validate: null
+    MsTeamsIncomingWebhookConnection:
+      description: Microsoft Teams incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Microsoft Teams incoming webhook.
+          properties:
+            url:
+              description: Microsoft Teams incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: MsTeamsIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
+      x-validate: null
+    ChannelDataRequest:
+      description: A request to set channel data for a type of channel.
+      example:
+        data:
+          tokens:
+          - push_token_1
+      properties:
+        data:
+          description: Channel data for a given channel type.
+          oneOf:
+          - $ref: '#/components/schemas/PushChannelDataTokensOnly'
+          - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
+          - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
+          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
+          - $ref: '#/components/schemas/SlackChannelData'
+          - $ref: '#/components/schemas/MsTeamsChannelData'
+          - $ref: '#/components/schemas/DiscordChannelData'
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - data
+      title: ChannelDataRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelDataRequest
+      x-validate: null
+    MsTeamsChannelData:
+      description: Microsoft Teams channel data.
+      example:
+        connections:
+        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+          ms_teams_tenant_id: null
+          ms_teams_user_id: null
+        ms_teams_tenant_id: null
+      properties:
+        connections:
+          description: List of Microsoft Teams connections.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MsTeamsTokenConnection'
+            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: MsTeamsChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
+      x-validate: null
+    AWSSNSPushChannelDataTargetARNsOnly:
+      description: AWS SNS push channel data.
+      example:
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          example:
+          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - target_arns
+      title: AWSSNSPushChannelDataTargetARNsOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-validate: null
+    PushChannelDataTokensOnly:
+      description: Push channel data.
+      example:
+        tokens:
+        - push_token_1
+        - push_token_2
+      properties:
+        tokens:
+          description: A list of push channel tokens.
+          items:
+            description: The device token to send the push notification to.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - tokens
+      title: PushChannelDataTokensOnly
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
+      x-validate: null
     OneSignalChannelDataPlayerIdsOnly:
       description: OneSignal channel data.
       example:
@@ -286,56 +448,6 @@ components:
       title: OneSignalChannelDataPlayerIdsOnly
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.OneSignalChannelDataPlayerIdsOnly
-      x-validate: null
-    SlackChannelData:
-      description: Slack channel data.
-      example:
-        connections:
-        - access_token: xoxb-1234567890
-          channel_id: C01234567890
-          user_id: U01234567890
-        token:
-          access_token: xoxb-1234567890
-      properties:
-        connections:
-          description: List of Slack channel connections.
-          items:
-            description: A Slack connection, either an access token or an incoming webhook
-            oneOf:
-            - $ref: '#/components/schemas/SlackTokenConnection'
-            - $ref: '#/components/schemas/SlackIncomingWebhookConnection'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        token:
-          description: A Slack connection token.
-          example:
-            access_token: xoxb-1234567890
-          properties:
-            access_token:
-              description: A Slack access token.
-              example: xoxb-1234567890
-              type:
-              - string
-              - 'null'
-              x-struct: null
-              x-validate: null
-          required:
-          - access_token
-          title: SlackChannelDataTokenObject
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - connections
-      title: SlackChannelData
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
       x-validate: null
     AWSSNSPushChannelDataDevicesOnly:
       description: AWS SNS push channel data.
@@ -382,30 +494,107 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataDevicesOnly
       x-validate: null
-    DiscordChannelData:
-      description: Discord channel data.
+    MsTeamsTokenConnection:
+      description: Microsoft Teams token connection.
       example:
-        connections:
-        - channel_id: '123456789012345678'
+        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
+        ms_teams_tenant_id: null
+        ms_teams_user_id: null
       properties:
-        connections:
-          description: List of Discord channel connections.
+        ms_teams_channel_id:
+          description: Microsoft Teams channel ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_team_id:
+          description: Microsoft Teams team ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_tenant_id:
+          description: Microsoft Teams tenant ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        ms_teams_user_id:
+          description: Microsoft Teams user ID.
+          format: uuid
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      title: MsTeamsTokenConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
+      x-validate: null
+    AWSSNSPushChannelDataFull:
+      description: AWS SNS push channel data.
+      example:
+        devices:
+        - locale: en-US
+          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+          timezone: America/Los_Angeles
+        target_arns:
+        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+      properties:
+        devices:
+          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
           items:
-            description: Discord channel connection, either a channel connection or an incoming webhook connection.
-            oneOf:
-            - $ref: '#/components/schemas/DiscordChannelConnection'
-            - $ref: '#/components/schemas/DiscordIncomingWebhookConnection'
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              target_arn:
+                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+                type: string
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+            required:
+            - target_arn
             type: object
             x-struct: null
             x-validate: null
           type: array
           x-struct: null
           x-validate: null
+        target_arns:
+          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+          items:
+            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
       required:
-      - connections
-      title: DiscordChannelData
+      - target_arns
+      - devices
+      title: AWSSNSPushChannelDataFull
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataFull
       x-validate: null
     DiscordChannelConnection:
       description: Discord channel connection.
@@ -423,51 +612,6 @@ components:
       title: DiscordChannelConnection
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.ChannelConnection
-      x-validate: null
-    PushChannelDataDevicesOnly:
-      description: Push channel data.
-      example:
-        devices:
-        - locale: en-US
-          timezone: America/Los_Angeles
-          token: push_token_1
-      properties:
-        devices:
-          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              token:
-                description: The device token to send the push notification to.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - token
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - devices
-      title: PushChannelDataDevicesOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
       x-validate: null
     PushChannelDataFull:
       description: Push channel data.
@@ -528,29 +672,126 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataFull
       x-validate: null
-    AWSSNSPushChannelDataTargetARNsOnly:
-      description: AWS SNS push channel data.
+    PushChannelDataDevicesOnly:
+      description: Push channel data.
       example:
-        target_arns:
-        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+        devices:
+        - locale: en-US
+          timezone: America/Los_Angeles
+          token: push_token_1
       properties:
-        target_arns:
-          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-          example:
-          - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
+        devices:
+          description: A list of devices. Each device contains a token, and optionally a locale and timezone.
           items:
-            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-            type: string
+            properties:
+              locale:
+                description: The locale of the object. Used for [message localization](/concepts/translations).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              timezone:
+                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+                type:
+                - string
+                - 'null'
+                x-struct: null
+                x-validate: null
+              token:
+                description: The device token to send the push notification to.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - token
+            type: object
             x-struct: null
             x-validate: null
           type: array
           x-struct: null
           x-validate: null
       required:
-      - target_arns
-      title: AWSSNSPushChannelDataTargetARNsOnly
+      - devices
+      title: PushChannelDataDevicesOnly
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataTargetARNsOnly
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataDevicesOnly
+      x-validate: null
+    SlackChannelData:
+      description: Slack channel data.
+      example:
+        connections:
+        - access_token: xoxb-1234567890
+          channel_id: C01234567890
+          user_id: U01234567890
+        token:
+          access_token: xoxb-1234567890
+      properties:
+        connections:
+          description: List of Slack channel connections.
+          items:
+            description: A Slack connection, either an access token or an incoming webhook
+            oneOf:
+            - $ref: '#/components/schemas/SlackTokenConnection'
+            - $ref: '#/components/schemas/SlackIncomingWebhookConnection'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        token:
+          description: A Slack connection token.
+          example:
+            access_token: xoxb-1234567890
+          properties:
+            access_token:
+              description: A Slack access token.
+              example: xoxb-1234567890
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+          required:
+          - access_token
+          title: SlackChannelDataTokenObject
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - connections
+      title: SlackChannelData
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData
+      x-validate: null
+    DiscordIncomingWebhookConnection:
+      description: Discord incoming webhook connection.
+      example:
+        incoming_webhook:
+          url: https://example.com/webhook
+      properties:
+        incoming_webhook:
+          description: Discord incoming webhook object.
+          properties:
+            url:
+              description: Incoming webhook URL.
+              example: https://example.com/webhook
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - url
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - incoming_webhook
+      title: DiscordIncomingWebhookConnection
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
       x-validate: null
     ChannelData:
       description: Channel data for a given channel type.
@@ -613,126 +854,22 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelData
       x-validate: null
-    MsTeamsChannelData:
-      description: Microsoft Teams channel data.
+    SlackIncomingWebhookConnection:
+      description: A Slack connection incoming webhook.
       example:
-        connections:
-        - ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
-          ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
-          ms_teams_tenant_id: null
-          ms_teams_user_id: null
-        ms_teams_tenant_id: null
+        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
       properties:
-        connections:
-          description: List of Microsoft Teams connections.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/MsTeamsTokenConnection'
-            - $ref: '#/components/schemas/MsTeamsIncomingWebhookConnection'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        ms_teams_tenant_id:
-          description: Microsoft Teams tenant ID.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type:
-          - string
-          - 'null'
+        url:
+          description: The URL of the incoming webhook for a Slack connection.
+          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
+          type: string
           x-struct: null
           x-validate: null
       required:
-      - connections
-      title: MsTeamsChannelData
+      - url
+      title: SlackIncomingWebhookConnection
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData
-      x-validate: null
-    DiscordIncomingWebhookConnection:
-      description: Discord incoming webhook connection.
-      example:
-        incoming_webhook:
-          url: https://example.com/webhook
-      properties:
-        incoming_webhook:
-          description: Discord incoming webhook object.
-          properties:
-            url:
-              description: Incoming webhook URL.
-              example: https://example.com/webhook
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - url
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - incoming_webhook
-      title: DiscordIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.DiscordChannelData.IncomingWebhookConnection
-      x-validate: null
-    AWSSNSPushChannelDataFull:
-      description: AWS SNS push channel data.
-      example:
-        devices:
-        - locale: en-US
-          target_arn: arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-          timezone: America/Los_Angeles
-        target_arns:
-        - arn:aws:sns:us-west-2:123456789012:endpoint/GCM/gcmpushapp/5e3e9847-3183-3f18-a7e8-671c3a57d4b3
-      properties:
-        devices:
-          description: A list of devices. Each device contains a target_arn, and optionally a locale and timezone.
-          items:
-            properties:
-              locale:
-                description: The locale of the object. Used for [message localization](/concepts/translations).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-              target_arn:
-                description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-                type: string
-                x-struct: null
-                x-validate: null
-              timezone:
-                description: The timezone of the object. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
-            required:
-            - target_arn
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        target_arns:
-          description: A list of platform endpoint ARNs. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-          items:
-            description: The ARN of a platform endpoint associated with a platform application and a device token. See [Setting up an Amazon SNS platform endpoint for mobile notifications](https://docs.aws.amazon.com/sns/latest/dg/mobile-platform-endpoint.html).
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - target_arns
-      - devices
-      title: AWSSNSPushChannelDataFull
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.AWSSNSPushChannelDataFull
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
       x-validate: null
     SlackTokenConnection:
       description: A Slack connection token.
@@ -768,143 +905,6 @@ components:
       title: SlackTokenConnection
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.TokenConnection
-      x-validate: null
-    PushChannelDataTokensOnly:
-      description: Push channel data.
-      example:
-        tokens:
-        - push_token_1
-        - push_token_2
-      properties:
-        tokens:
-          description: A list of push channel tokens.
-          items:
-            description: The device token to send the push notification to.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - tokens
-      title: PushChannelDataTokensOnly
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PushChannelDataTokensOnly
-      x-validate: null
-    ChannelDataRequest:
-      description: A request to set channel data for a type of channel.
-      example:
-        data:
-          tokens:
-          - push_token_1
-      properties:
-        data:
-          description: Channel data for a given channel type.
-          oneOf:
-          - $ref: '#/components/schemas/PushChannelDataTokensOnly'
-          - $ref: '#/components/schemas/PushChannelDataDevicesOnly'
-          - $ref: '#/components/schemas/AWSSNSPushChannelDataTargetARNsOnly'
-          - $ref: '#/components/schemas/AWSSNSPushChannelDataDevicesOnly'
-          - $ref: '#/components/schemas/OneSignalChannelDataPlayerIdsOnly'
-          - $ref: '#/components/schemas/SlackChannelData'
-          - $ref: '#/components/schemas/MsTeamsChannelData'
-          - $ref: '#/components/schemas/DiscordChannelData'
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - data
-      title: ChannelDataRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelDataRequest
-      x-validate: null
-    MsTeamsTokenConnection:
-      description: Microsoft Teams token connection.
-      example:
-        ms_teams_channel_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_team_id: 123e4567-e89b-12d3-a456-426614174000
-        ms_teams_tenant_id: null
-        ms_teams_user_id: null
-      properties:
-        ms_teams_channel_id:
-          description: Microsoft Teams channel ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_team_id:
-          description: Microsoft Teams team ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_tenant_id:
-          description: Microsoft Teams tenant ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ms_teams_user_id:
-          description: Microsoft Teams user ID.
-          format: uuid
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      title: MsTeamsTokenConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.TokenConnection
-      x-validate: null
-    MsTeamsIncomingWebhookConnection:
-      description: Microsoft Teams incoming webhook connection.
-      example:
-        incoming_webhook:
-          url: https://example.com/webhook
-      properties:
-        incoming_webhook:
-          description: Microsoft Teams incoming webhook.
-          properties:
-            url:
-              description: Microsoft Teams incoming webhook URL.
-              example: https://example.com/webhook
-              type: string
-              x-struct: null
-              x-validate: null
-          required:
-          - url
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - incoming_webhook
-      title: MsTeamsIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsChannelData.IncomingWebhookConnection
-      x-validate: null
-    SlackIncomingWebhookConnection:
-      description: A Slack connection incoming webhook.
-      example:
-        url: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
-      properties:
-        url:
-          description: The URL of the incoming webhook for a Slack connection.
-          example: https://hooks.slack.com/services/T01234567890/B01234567890/1234567890
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - url
-      title: SlackIncomingWebhookConnection
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackChannelData.IncomingWebhookConnection
       x-validate: null
   securitySchemes:
     BearerAuth:

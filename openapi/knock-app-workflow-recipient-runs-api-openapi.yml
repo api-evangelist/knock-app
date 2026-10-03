@@ -262,6 +262,46 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRun
       x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
     RecipientReference:
       description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
       example: user_123
@@ -295,6 +335,92 @@ components:
         x-validate: null
       title: RecipientReference
       x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+    ListWorkflowRecipientRunsResponse:
+      description: A paginated list of workflow recipient runs.
+      example:
+        items:
+        - __typename: WorkflowRecipientRun
+          actor: user_456
+          error_count: 0
+          id: 550e8400-e29b-41d4-a716-446655440000
+          inserted_at: '2025-01-01T00:00:00Z'
+          recipient: user_123
+          status: completed
+          tenant: tenant_abc
+          trigger_source:
+            cancellation_key: comment-123-user-456
+            type: api
+          updated_at: '2025-01-01T00:05:00Z'
+          workflow: comment-created
+          workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of workflow recipient runs.
+          items:
+            $ref: '#/components/schemas/WorkflowRecipientRun'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListWorkflowRecipientRunsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListWorkflowRecipientRunsResponse
+      x-validate: null
+    WorkflowRecipientRunTriggerSource:
+      description: Describes how the workflow was triggered.
+      example:
+        cancellation_key: comment-123-user-456
+        type: api
+      properties:
+        audience_key:
+          description: The key of the audience that triggered the workflow.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        cancellation_key:
+          description: The cancellation key provided when the workflow was triggered via the API.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        schedule_id:
+          description: The ID of the schedule that triggered the workflow.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of trigger source. One of `api`, `audience`, `schedule`, `broadcast`, `workflow_step`, `integration`, or `rehearsal`.
+          enum:
+          - api
+          - audience
+          - schedule
+          - broadcast
+          - workflow_step
+          - integration
+          - rehearsal
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      title: WorkflowRecipientRunTriggerSource
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunTriggerSource
       x-validate: null
     WorkflowRecipientRunEvent:
       description: An event that occurred during a workflow recipient run.
@@ -385,92 +511,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunEvent
       x-validate: null
-    WorkflowRecipientRunTriggerSource:
-      description: Describes how the workflow was triggered.
-      example:
-        cancellation_key: comment-123-user-456
-        type: api
-      properties:
-        audience_key:
-          description: The key of the audience that triggered the workflow.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        cancellation_key:
-          description: The cancellation key provided when the workflow was triggered via the API.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        schedule_id:
-          description: The ID of the schedule that triggered the workflow.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of trigger source. One of `api`, `audience`, `schedule`, `broadcast`, `workflow_step`, `integration`, or `rehearsal`.
-          enum:
-          - api
-          - audience
-          - schedule
-          - broadcast
-          - workflow_step
-          - integration
-          - rehearsal
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      title: WorkflowRecipientRunTriggerSource
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunTriggerSource
-      x-validate: null
-    ListWorkflowRecipientRunsResponse:
-      description: A paginated list of workflow recipient runs.
-      example:
-        items:
-        - __typename: WorkflowRecipientRun
-          actor: user_456
-          error_count: 0
-          id: 550e8400-e29b-41d4-a716-446655440000
-          inserted_at: '2025-01-01T00:00:00Z'
-          recipient: user_123
-          status: completed
-          tenant: tenant_abc
-          trigger_source:
-            cancellation_key: comment-123-user-456
-            type: api
-          updated_at: '2025-01-01T00:05:00Z'
-          workflow: comment-created
-          workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
-        page_info:
-          __typename: PageInfo
-          after: null
-          before: null
-          page_size: 25
-      properties:
-        items:
-          description: A list of workflow recipient runs.
-          items:
-            $ref: '#/components/schemas/WorkflowRecipientRun'
-          type: array
-          x-struct: null
-          x-validate: null
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-      required:
-      - items
-      - page_info
-      title: ListWorkflowRecipientRunsResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListWorkflowRecipientRunsResponse
-      x-validate: null
     WorkflowRecipientRunDetail:
       allOf:
       - $ref: '#/components/schemas/WorkflowRecipientRun'
@@ -517,46 +557,6 @@ components:
         workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
       title: WorkflowRecipientRunDetail
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunDetail
-      x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
-      example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: PageInfo
-          type: string
-          x-struct: null
-          x-validate: null
-        after:
-          description: The cursor to fetch entries after.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
       x-validate: null
   securitySchemes:
     BearerAuth:

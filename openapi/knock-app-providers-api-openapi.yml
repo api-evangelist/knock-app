@@ -518,70 +518,6 @@ paths:
       x-ratelimit-tier: 2
 components:
   schemas:
-    MsTeamsAuthCheckResponse:
-      description: The response from a Microsoft Teams auth check request.
-      example:
-        connection:
-          ok: true
-      properties:
-        connection:
-          description: A Microsoft Teams connection object.
-          properties:
-            ok:
-              description: Whether the Microsoft Teams connection is valid.
-              type: boolean
-              x-struct: null
-              x-validate: null
-            reason:
-              description: The reason for the Microsoft Teams connection if it is not valid.
-              type:
-              - string
-              - 'null'
-              x-struct: null
-              x-validate: null
-          required:
-          - ok
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - connection
-      title: MsTeamsAuthCheckResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsAuthCheckResponse
-      x-validate: null
-    SlackAuthCheckResponse:
-      description: The response from a Slack auth check request.
-      example:
-        connection:
-          ok: true
-      properties:
-        connection:
-          description: A Slack connection object.
-          properties:
-            ok:
-              description: Whether the Slack connection is valid.
-              type: boolean
-              x-struct: null
-              x-validate: null
-            reason:
-              description: The reason for the Slack connection if it is not valid.
-              type:
-              - string
-              - 'null'
-              x-struct: null
-              x-validate: null
-          required:
-          - ok
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - connection
-      title: SlackAuthCheckResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackAuthCheckResponse
-      x-validate: null
     ChannelsForMsTeamsProviderResponse:
       description: The response from a Microsoft Teams provider request, containing a list of channels.
       example:
@@ -639,6 +575,38 @@ components:
       title: ChannelsForMsTeamsProviderResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ChannelsForMsTeamsProviderResponse
+      x-validate: null
+    SlackAuthCheckResponse:
+      description: The response from a Slack auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Slack connection object.
+          properties:
+            ok:
+              description: Whether the Slack connection is valid.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Slack connection if it is not valid.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: SlackAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.SlackAuthCheckResponse
       x-validate: null
     ChannelsForSlackProviderResponse:
       description: The response from a Slack provider request, containing a list of channels.
@@ -758,6 +726,38 @@ components:
       title: TeamsForMsTeamsProviderResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.TeamsForMsTeamsProviderResponse
+      x-validate: null
+    MsTeamsAuthCheckResponse:
+      description: The response from a Microsoft Teams auth check request.
+      example:
+        connection:
+          ok: true
+      properties:
+        connection:
+          description: A Microsoft Teams connection object.
+          properties:
+            ok:
+              description: Whether the Microsoft Teams connection is valid.
+              type: boolean
+              x-struct: null
+              x-validate: null
+            reason:
+              description: The reason for the Microsoft Teams connection if it is not valid.
+              type:
+              - string
+              - 'null'
+              x-struct: null
+              x-validate: null
+          required:
+          - ok
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - connection
+      title: MsTeamsAuthCheckResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MsTeamsAuthCheckResponse
       x-validate: null
   securitySchemes:
     BearerAuth:

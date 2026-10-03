@@ -1005,61 +1005,71 @@ paths:
       variables: {}
 components:
   schemas:
-    Condition:
-      description: A condition to be evaluated.
+    GuideActivationUrlPattern:
+      description: A rule that controls when a guide should be shown based on the user's location in the application. At least one of `pathname` or `search` must be provided.
       example:
-        argument: some_property
-        operator: equal_to
-        variable: recipient.property
+        directive: allow
+        pathname: /dashboard/*
+        search: tab=settings
       properties:
-        argument:
-          description: The argument to be evaluated. Arguments can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
-          example: some_property
+        directive:
+          default: allow
+          description: Whether to allow or block the guide at the specified location.
+          enum:
+          - allow
+          - block
+          type: string
+          x-struct: null
+          x-validate: null
+        pathname:
+          description: The URL pathname pattern to match against. Must be a valid URI path.
+          example: /dashboard/*
+          type: string
+          x-struct: null
+          x-validate: null
+        search:
+          description: The URL query string pattern to match against (without the leading '?'). Supports URLPattern API syntax.
+          example: tab=settings&*
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - directive
+      title: GuideActivationUrlPattern
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationUrlPattern
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        operator:
-          description: The operator to use in the evaluation of the condition.
-          enum:
-          - equal_to
-          - not_equal_to
-          - greater_than
-          - less_than
-          - greater_than_or_equal_to
-          - less_than_or_equal_to
-          - contains
-          - not_contains
-          - contains_all
-          - not_contains_all
-          - is_timestamp_before
-          - is_timestamp_on_or_after
-          - is_timestamp_between
-          - is_between
-          - empty
-          - not_empty
-          - exists
-          - not_exists
-          - is_timestamp
-          - is_audience_member
-          - is_not_audience_member
-          example: equal_to
-          type: string
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
-        variable:
-          description: The variable to be evaluated. Variables can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
-          example: recipient.property
-          type: string
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
           x-struct: null
           x-validate: null
       required:
-      - variable
-      - operator
-      title: Condition
+      - page_size
+      title: PageInfo
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.Condition
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
       x-validate: null
     GuideRequest:
       description: A request to create or update a guide.
@@ -1370,65 +1380,6 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Guide
       x-validate: null
-    ConditionGroupAnyMatch:
-      description: A group of conditions that any must be met. Can contain nested alls.
-      example:
-        any:
-        - all:
-          - argument: some_property
-            operator: equal_to
-            variable: recipient.property
-      properties:
-        any:
-          description: An array of conditions or nested condition groups to evaluate.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/Condition'
-            - $ref: '#/components/schemas/ConditionGroupAllMatch'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      title: ConditionGroupAnyMatch
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAnyMatch
-      x-validate: null
-    GuideActivationUrlPattern:
-      description: A rule that controls when a guide should be shown based on the user's location in the application. At least one of `pathname` or `search` must be provided.
-      example:
-        directive: allow
-        pathname: /dashboard/*
-        search: tab=settings
-      properties:
-        directive:
-          default: allow
-          description: Whether to allow or block the guide at the specified location.
-          enum:
-          - allow
-          - block
-          type: string
-          x-struct: null
-          x-validate: null
-        pathname:
-          description: The URL pathname pattern to match against. Must be a valid URI path.
-          example: /dashboard/*
-          type: string
-          x-struct: null
-          x-validate: null
-        search:
-          description: The URL query string pattern to match against (without the leading '?'). Supports URLPattern API syntax.
-          example: tab=settings&*
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - directive
-      title: GuideActivationUrlPattern
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationUrlPattern
-      x-validate: null
     ConditionGroupAllMatch:
       description: A group of conditions that must all be met.
       example:
@@ -1510,119 +1461,86 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationRequest
       x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
+    Condition:
+      description: A condition to be evaluated.
       example:
-        after: null
-        before: null
-        page_size: 25
+        argument: some_property
+        operator: equal_to
+        variable: recipient.property
       properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+        argument:
+          description: The argument to be evaluated. Arguments can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
+          example: some_property
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          type:
-          - string
-          - 'null'
+        operator:
+          description: The operator to use in the evaluation of the condition.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - contains_all
+          - not_contains_all
+          - is_timestamp_before
+          - is_timestamp_on_or_after
+          - is_timestamp_between
+          - is_between
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - is_timestamp
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type: string
           x-struct: null
           x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
+        variable:
+          description: The variable to be evaluated. Variables can be either static values or dynamic properties. Static values will always be JSON decoded so will support strings, lists, objects, numbers, and booleans. Dynamic values should be path expressions.
+          example: recipient.property
+          type: string
           x-struct: null
           x-validate: null
       required:
-      - page_size
-      title: PageInfo
+      - variable
+      - operator
+      title: Condition
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-struct: Elixir.ControlWeb.V1.Specs.Condition
       x-validate: null
-    GuideActionRequest:
-      description: A request to trigger a guide action.
+    ConditionGroupAnyMatch:
+      description: A group of conditions that any must be met. Can contain nested alls.
       example:
-        channel_id: 123e4567-e89b-12d3-a456-426614174000
-        content:
-          body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
-          title: DNA Lab Tour Available
-        data:
-          next_time: '14:30'
-          spots_left: 8
-          tour_id: dna_lab_tour
-        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
-        guide_key: tour_notification
-        guide_step_ref: lab_tours
-        is_final: false
-        metadata:
-          cta: Reserve Spot
-          theme: amber
-          type: banner
-        tenant: ingen_isla_nublar
+        any:
+        - all:
+          - argument: some_property
+            operator: equal_to
+            variable: recipient.property
       properties:
-        channel_id:
-          description: The unique identifier for the channel.
-          format: uuid
-          type: string
+        any:
+          description: An array of conditions or nested condition groups to evaluate.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/Condition'
+            - $ref: '#/components/schemas/ConditionGroupAllMatch'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
           x-struct: null
           x-validate: null
-        content:
-          additionalProperties: true
-          description: The content of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: The data of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        guide_id:
-          description: The unique identifier for the guide.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        guide_key:
-          description: The key of the guide.
-          type: string
-          x-struct: null
-          x-validate: null
-        guide_step_ref:
-          description: The step reference of the guide.
-          type: string
-          x-struct: null
-          x-validate: null
-        is_final:
-          description: Whether the guide is final.
-          type: boolean
-          x-struct: null
-          x-validate: null
-        metadata:
-          additionalProperties: true
-          description: The metadata of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        tenant:
-          description: The tenant ID of the guide.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - channel_id
-      - guide_id
-      - guide_key
-      - guide_step_ref
-      title: GuideActionRequest
+      title: ConditionGroupAnyMatch
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Requests.GuideActionRequest
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAnyMatch
       x-validate: null
     GuideActionResponse:
       description: A response for a guide action.
@@ -2030,6 +1948,88 @@ components:
       title: GuidesResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Responses.GuidesResponse
+      x-validate: null
+    GuideActionRequest:
+      description: A request to trigger a guide action.
+      example:
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        content:
+          body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+          title: DNA Lab Tour Available
+        data:
+          next_time: '14:30'
+          spots_left: 8
+          tour_id: dna_lab_tour
+        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+        guide_key: tour_notification
+        guide_step_ref: lab_tours
+        is_final: false
+        metadata:
+          cta: Reserve Spot
+          theme: amber
+          type: banner
+        tenant: ingen_isla_nublar
+      properties:
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        content:
+          additionalProperties: true
+          description: The content of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: The data of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        guide_id:
+          description: The unique identifier for the guide.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        guide_key:
+          description: The key of the guide.
+          type: string
+          x-struct: null
+          x-validate: null
+        guide_step_ref:
+          description: The step reference of the guide.
+          type: string
+          x-struct: null
+          x-validate: null
+        is_final:
+          description: Whether the guide is final.
+          type: boolean
+          x-struct: null
+          x-validate: null
+        metadata:
+          additionalProperties: true
+          description: The metadata of the guide.
+          type: object
+          x-struct: null
+          x-validate: null
+        tenant:
+          description: The tenant ID of the guide.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_id
+      - guide_id
+      - guide_key
+      - guide_step_ref
+      title: GuideActionRequest
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Requests.GuideActionRequest
       x-validate: null
   securitySchemes:
     BearerAuth:

@@ -267,67 +267,6 @@ paths:
       x-ratelimit-tier: 4
 components:
   schemas:
-    Object:
-      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
-      example:
-        __typename: Object
-        collection: assets
-        created_at: null
-        id: specimen_25
-        properties:
-          classification: Theropod
-          config:
-            biz: baz
-            foo: bar
-          name: Velociraptor
-          status: contained
-        updated_at: '2024-05-22T12:00:00Z'
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: Object
-          type: string
-          x-struct: null
-          x-validate: null
-        collection:
-          description: The collection this object belongs to.
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: Timestamp when the resource was created.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the object.
-          type: string
-          x-struct: null
-          x-validate: null
-        properties:
-          additionalProperties: true
-          description: The custom properties associated with the object.
-          type: object
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp when the resource was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - id
-      - collection
-      - updated_at
-      title: Object
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
-      x-validate: null
     InAppFeedItem:
       description: An in-app feed message in a user's feed.
       example:
@@ -552,45 +491,105 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.InAppFeedItem
       x-validate: null
-    MessageInAppFeedContentBlock:
-      description: A block in a message in an app feed.
+    PageInfo:
+      description: Pagination information for a list of resources.
       example:
-        content: This is a message in an app feed
-        name: body
-        rendered: <p>This is a message in an app feed</p>
-        type: markdown
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
       properties:
-        content:
-          description: The content of the block in a message in an app feed.
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
           type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-validate: null
+    MessageInAppFeedButtonSetBlock:
+      description: A button set block in a message in an app feed.
+      example:
+        buttons:
+        - action: action_1
+          label: Action 1
+          name: primary
+        name: actions
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in an in app feed message.
+          items:
+            description: A button in an in app feed message.
+            properties:
+              action:
+                description: The action to take when the button is clicked.
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the button.
+                type: string
+                x-struct: null
+                x-validate: null
+              name:
+                description: The name of the button.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - action
+            - label
+            - name
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
           x-struct: null
           x-validate: null
         name:
-          description: The name of the block in a message in an app feed.
-          type: string
-          x-struct: null
-          x-validate: null
-        rendered:
-          description: The rendered HTML version of the content.
+          description: The name of the button set in a message in an app feed.
           type: string
           x-struct: null
           x-validate: null
         type:
           description: The type of block in a message in an app feed.
           enum:
-          - markdown
-          - text
+          - button_set
           type: string
           x-struct: null
           x-validate: null
       required:
       - type
       - name
-      - rendered
-      - content
-      title: MessageInAppFeedContentBlock
+      - buttons
+      title: MessageInAppFeedButtonSetBlock
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
       x-validate: null
     UserInAppFeedResponse:
       description: A paginated list of feed items.
@@ -721,6 +720,50 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedResponse
       x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    UserInAppFeedSettingsResponse:
+      description: The response for the user's feed settings.
+      example:
+        features:
+          branding_required: true
+      properties:
+        features:
+          description: Features configuration for the user's feed.
+          properties:
+            branding_required:
+              description: Whether branding is required for the user's feed.
+              type: boolean
+              x-struct: null
+              x-validate: null
+          required:
+          - branding_required
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - features
+      title: UserInAppFeedSettingsResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedSettingsResponse
+      x-validate: null
     User:
       additionalProperties: true
       description: A [User](/concepts/users) represents an individual in your system who can receive notifications through Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
@@ -800,110 +843,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.User
       x-validate: null
-    UserInAppFeedSettingsResponse:
-      description: The response for the user's feed settings.
-      example:
-        features:
-          branding_required: true
-      properties:
-        features:
-          description: Features configuration for the user's feed.
-          properties:
-            branding_required:
-              description: Whether branding is required for the user's feed.
-              type: boolean
-              x-struct: null
-              x-validate: null
-          required:
-          - branding_required
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - features
-      title: UserInAppFeedSettingsResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.UserInAppFeedSettingsResponse
-      x-validate: null
-    MessageInAppFeedButtonSetBlock:
-      description: A button set block in a message in an app feed.
-      example:
-        buttons:
-        - action: action_1
-          label: Action 1
-          name: primary
-        name: actions
-        type: button_set
-      properties:
-        buttons:
-          description: A list of buttons in an in app feed message.
-          items:
-            description: A button in an in app feed message.
-            properties:
-              action:
-                description: The action to take when the button is clicked.
-                type: string
-                x-struct: null
-                x-validate: null
-              label:
-                description: The label of the button.
-                type: string
-                x-struct: null
-                x-validate: null
-              name:
-                description: The name of the button.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - action
-            - label
-            - name
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        name:
-          description: The name of the button set in a message in an app feed.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of block in a message in an app feed.
-          enum:
-          - button_set
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - name
-      - buttons
-      title: MessageInAppFeedButtonSetBlock
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
-      x-validate: null
-    Recipient:
-      description: A recipient of a notification, which is either a user or an object.
-      example:
-        __typename: User
-        avatar: null
-        created_at: null
-        email: jane@ingen.net
-        id: jane
-        name: Jane Doe
-        phone_number: null
-        timezone: null
-        updated_at: '2024-05-22T12:00:00Z'
-      oneOf:
-      - $ref: '#/components/schemas/User'
-      - $ref: '#/components/schemas/Object'
-      title: Recipient
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
-      x-validate: null
     Activity:
       description: An activity associated with a workflow trigger request. Messages produced after a [batch step](/designing-workflows/batch-function) can be associated with one or more activities. Non-batched messages will always be associated with a single activity.
       example:
@@ -972,45 +911,106 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.Activity
       x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
       example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
+        __typename: Object
+        collection: assets
+        created_at: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
+        updated_at: '2024-05-22T12:00:00Z'
       properties:
         __typename:
           description: The typename of the schema.
-          example: PageInfo
+          example: Object
           type: string
           x-struct: null
           x-validate: null
-        after:
-          description: The cursor to fetch entries after.
+        collection:
+          description: The collection this object belongs to.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
+        id:
+          description: Unique identifier for the object.
+          type: string
           x-struct: null
           x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
           x-struct: null
           x-validate: null
       required:
       - __typename
-      - page_size
-      title: PageInfo
+      - id
+      - collection
+      - updated_at
+      title: Object
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    MessageInAppFeedContentBlock:
+      description: A block in a message in an app feed.
+      example:
+        content: This is a message in an app feed
+        name: body
+        rendered: <p>This is a message in an app feed</p>
+        type: markdown
+      properties:
+        content:
+          description: The content of the block in a message in an app feed.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the block in a message in an app feed.
+          type: string
+          x-struct: null
+          x-validate: null
+        rendered:
+          description: The rendered HTML version of the content.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - markdown
+          - text
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - rendered
+      - content
+      title: MessageInAppFeedContentBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
       x-validate: null
   securitySchemes:
     BearerAuth:
