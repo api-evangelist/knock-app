@@ -154,6 +154,95 @@ paths:
       x-retention-policy: true
 components:
   schemas:
+    WorkflowRecipientRunEvent:
+      description: An event that occurred during a workflow recipient run.
+      example:
+        __typename: WorkflowRecipientRunEvent
+        attempt: 1
+        data:
+          channel_type: email
+          message_id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        event: message_enqueued
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2025-01-01T00:00:00Z'
+        status: ok
+        step_ref: email_step_1
+        step_type: channel
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: WorkflowRecipientRunEvent
+          type: string
+          x-struct: null
+          x-validate: null
+        attempt:
+          description: The attempt number of the workflow recipient run event. Increments for each retry.
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Event-specific data associated with the event.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        event:
+          description: The type of event that occurred.
+          example: message_enqueued
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the event.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the resource was created.
+          example: '2025-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: Whether the event represents a successful or error state.
+          enum:
+          - ok
+          - error
+          example: ok
+          type: string
+          x-struct: null
+          x-validate: null
+        step_ref:
+          description: The reference of the workflow step associated with this event.
+          example: email_step_1
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        step_type:
+          description: The type of workflow step associated with this event.
+          example: channel
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - event
+      - status
+      - inserted_at
+      title: WorkflowRecipientRunEvent
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunEvent
+      x-validate: null
     WorkflowRecipientRun:
       description: A workflow recipient run represents an individual execution of a workflow for a specific recipient.
       example:
@@ -262,80 +351,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRun
       x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
-      example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: PageInfo
-          type: string
-          x-struct: null
-          x-validate: null
-        after:
-          description: The cursor to fetch entries after.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
-      x-validate: null
-    RecipientReference:
-      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
-      example: user_123
-      oneOf:
-      - description: The ID of the user which is used as the reference for the recipient.
-        example: user_123
-        title: UserReference
-        type: string
-        x-struct: null
-        x-validate: null
-      - description: A reference to a recipient object.
-        example:
-          collection: projects
-          id: project_123
-        properties:
-          collection:
-            description: The collection the recipient object belongs to.
-            example: projects
-            type: string
-            x-struct: null
-            x-validate: null
-          id:
-            description: An identifier for the recipient object.
-            example: project_123
-            type: string
-            x-struct: null
-            x-validate: null
-        title: ObjectReference
-        type: object
-        x-struct: null
-        x-validate: null
-      title: RecipientReference
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
-      x-validate: null
     ListWorkflowRecipientRunsResponse:
       description: A paginated list of workflow recipient runs.
       example:
@@ -375,6 +390,40 @@ components:
       title: ListWorkflowRecipientRunsResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ListWorkflowRecipientRunsResponse
+      x-validate: null
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
       x-validate: null
     WorkflowRecipientRunTriggerSource:
       description: Describes how the workflow was triggered.
@@ -422,95 +471,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunTriggerSource
       x-validate: null
-    WorkflowRecipientRunEvent:
-      description: An event that occurred during a workflow recipient run.
-      example:
-        __typename: WorkflowRecipientRunEvent
-        attempt: 1
-        data:
-          channel_type: email
-          message_id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-        event: message_enqueued
-        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-        inserted_at: '2025-01-01T00:00:00Z'
-        status: ok
-        step_ref: email_step_1
-        step_type: channel
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: WorkflowRecipientRunEvent
-          type: string
-          x-struct: null
-          x-validate: null
-        attempt:
-          description: The attempt number of the workflow recipient run event. Increments for each retry.
-          example: 1
-          type: integer
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: Event-specific data associated with the event.
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-        event:
-          description: The type of event that occurred.
-          example: message_enqueued
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier for the event.
-          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-          type: string
-          x-struct: null
-          x-validate: null
-        inserted_at:
-          description: Timestamp when the resource was created.
-          example: '2025-01-01T00:00:00Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        status:
-          description: Whether the event represents a successful or error state.
-          enum:
-          - ok
-          - error
-          example: ok
-          type: string
-          x-struct: null
-          x-validate: null
-        step_ref:
-          description: The reference of the workflow step associated with this event.
-          example: email_step_1
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        step_type:
-          description: The type of workflow step associated with this event.
-          example: channel
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - id
-      - event
-      - status
-      - inserted_at
-      title: WorkflowRecipientRunEvent
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunEvent
-      x-validate: null
     WorkflowRecipientRunDetail:
       allOf:
       - $ref: '#/components/schemas/WorkflowRecipientRun'
@@ -557,6 +517,46 @@ components:
         workflow_run_id: 660e8400-e29b-41d4-a716-446655440000
       title: WorkflowRecipientRunDetail
       x-struct: Elixir.SwitchboardWeb.V1.Specs.WorkflowRecipientRunDetail
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
       x-validate: null
   securitySchemes:
     BearerAuth:

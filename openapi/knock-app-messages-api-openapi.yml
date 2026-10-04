@@ -2656,89 +2656,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.BulkUpdateMessagesForChannelRequest
       x-validate: null
-    MessageDeliveryLogResponse:
-      description: A message delivery log response.
-      example:
-        body:
-          success: true
-        headers:
-          Content-Type: application/json
-        status: 200
-      properties:
-        body:
-          description: The body content that was received with the response.
-          oneOf:
-          - type: string
-            x-struct: null
-            x-validate: null
-          - additionalProperties: true
-            type: object
-            x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        headers:
-          additionalProperties: true
-          description: The headers that were received with the response.
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-        status:
-          description: The HTTP status code of the response.
-          example: 200
-          type: integer
-          x-struct: null
-          x-validate: null
-      title: MessageDeliveryLogResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageDeliveryLog.Response
-      x-validate: null
-    ListActivitiesResponse:
-      description: Returns a paginated list of `activities` associated with a given message. For messages produced after a [batch step](/designing-workflows/batch-function), this will contain one or more activities. Non-batched messages will always return a single activity.
-      example:
-        items:
-        - __typename: Activity
-          actor: null
-          data:
-            foo: bar
-          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-          inserted_at: '2024-01-01T00:00:00Z'
-          recipient:
-            __typename: User
-            avatar: null
-            created_at: null
-            email: jane@ingen.net
-            id: jane
-            name: Jane Doe
-            phone_number: null
-            timezone: null
-            updated_at: '2024-05-22T12:00:00Z'
-          updated_at: '2024-01-01T00:00:00Z'
-        page_info:
-          __typename: PageInfo
-          after: null
-          before: null
-          page_size: 25
-      properties:
-        items:
-          description: A list of activities.
-          items:
-            $ref: '#/components/schemas/Activity'
-          type: array
-          x-struct: null
-          x-validate: null
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-      required:
-      - items
-      - page_info
-      title: ListActivitiesResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListActivitiesResponse
-      x-validate: null
     ListMessageEventsResponse:
       description: Returns a paginated list of [delivery and engagement](/send-notifications/message-statuses) events for the specified message.
       example:
@@ -2770,113 +2687,6 @@ components:
       title: ListMessageEventsResponse
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessageEventsResponse
-      x-validate: null
-    Object:
-      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
-      example:
-        __typename: Object
-        collection: assets
-        created_at: null
-        id: specimen_25
-        properties:
-          classification: Theropod
-          config:
-            biz: baz
-            foo: bar
-          name: Velociraptor
-          status: contained
-        updated_at: '2024-05-22T12:00:00Z'
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: Object
-          type: string
-          x-struct: null
-          x-validate: null
-        collection:
-          description: The collection this object belongs to.
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: Timestamp when the resource was created.
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the object.
-          type: string
-          x-struct: null
-          x-validate: null
-        properties:
-          additionalProperties: true
-          description: The custom properties associated with the object.
-          type: object
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp when the resource was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - id
-      - collection
-      - updated_at
-      title: Object
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
-      x-validate: null
-    ListMessageDeliveryLogsResponse:
-      description: A message delivery log response.
-      example:
-        items:
-        - __typename: MessageDeliveryLog
-          environment_id: 123e4567-e89b-12d3-a456-426614174000
-          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-          inserted_at: '2021-01-01T00:00:00Z'
-          request:
-            body:
-              html_content: <html></html>
-            headers:
-              Content-Type: application/json
-            host: localhost
-            method: GET
-            path: /
-            query: ?foo=bar
-          response:
-            body:
-              success: true
-            headers:
-              Content-Type: application/json
-            status: 200
-          service_name: Postmark
-        page_info:
-          __typename: PageInfo
-          after: null
-          before: null
-          page_size: 25
-      properties:
-        items:
-          description: Returns a paginated list of delivery logs from the downstream provider for the specified message. For Knock in-app channels, the delivery logs will always be an empty list.
-          items:
-            $ref: '#/components/schemas/MessageDeliveryLog'
-          type: array
-          x-struct: null
-          x-validate: null
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-      required:
-      - items
-      - page_info
-      title: ListMessageDeliveryLogsResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessageDeliveryLogsResponse
       x-validate: null
     MessageEvent:
       description: A message event. Occurs when a message [delivery or engagement status](/send-notifications/message-statuses) changes.
@@ -2950,354 +2760,6 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageEvent
       x-validate: null
-    RecipientReference:
-      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
-      example: user_123
-      oneOf:
-      - description: The ID of the user which is used as the reference for the recipient.
-        example: user_123
-        title: UserReference
-        type: string
-        x-struct: null
-        x-validate: null
-      - description: A reference to a recipient object.
-        example:
-          collection: projects
-          id: project_123
-        properties:
-          collection:
-            description: The collection the recipient object belongs to.
-            example: projects
-            type: string
-            x-struct: null
-            x-validate: null
-          id:
-            description: An identifier for the recipient object.
-            example: project_123
-            type: string
-            x-struct: null
-            x-validate: null
-        title: ObjectReference
-        type: object
-        x-struct: null
-        x-validate: null
-      title: RecipientReference
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
-      x-validate: null
-    MessageInteractedRequest:
-      description: A request to mark a message as interacted with.
-      example:
-        metadata:
-          key: value
-      properties:
-        metadata:
-          additionalProperties: true
-          description: Metadata about the interaction.
-          example:
-            key: value
-          type: object
-          x-struct: null
-          x-validate: null
-      title: MessageInteractedRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInteractedRequest
-      x-validate: null
-    Recipient:
-      description: A recipient of a notification, which is either a user or an object.
-      example:
-        __typename: User
-        avatar: null
-        created_at: null
-        email: jane@ingen.net
-        id: jane
-        name: Jane Doe
-        phone_number: null
-        timezone: null
-        updated_at: '2024-05-22T12:00:00Z'
-      oneOf:
-      - $ref: '#/components/schemas/User'
-      - $ref: '#/components/schemas/Object'
-      title: Recipient
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
-      x-validate: null
-    MessageEmailContent:
-      description: The content of an email message.
-      example:
-        __typename: MessageEmailContent
-        bcc: security@ingen.net
-        cc: operations@isla-nublar.com
-        from: welcome@isla-nublar.com
-        html_body: <h1>Welcome to Isla Nublar</h1><p>Dear visitor,</p><p>We're excited to confirm your upcoming tour of our biological preserve. Your safety is our primary concern.</p><p>Please review the <a href='https://example.com/safety'>safety protocols</a> before arrival.</p><p><strong>Remember:</strong> All specimens are accounted for and contained.</p>
-        reply_to: visitor.center@isla-nublar.com
-        subject_line: 'Tour Confirmation: Isla Nublar Biological Preserve'
-        text_body: 'Welcome to Isla Nublar
-
-
-          Dear visitor,
-
-
-          We''re excited to confirm your upcoming tour of our biological preserve. Your safety is our primary concern.
-
-
-          Please review the safety protocols before arrival: https://example.com/safety
-
-
-          Remember: All specimens are accounted for and contained.'
-        to: dr.grant@dig.site.mt
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: MessageEmailContent
-          type: string
-          x-struct: null
-          x-validate: null
-        bcc:
-          description: The BCC email addresses.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        cc:
-          description: The CC email addresses.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        from:
-          description: The sender's email address.
-          type: string
-          x-struct: null
-          x-validate: null
-        html_body:
-          description: The HTML body of the email message.
-          type: string
-          x-struct: null
-          x-validate: null
-        reply_to:
-          description: The reply-to email address.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        subject_line:
-          description: The subject line of the email message.
-          type: string
-          x-struct: null
-          x-validate: null
-        text_body:
-          description: The text body of the email message.
-          type: string
-          x-struct: null
-          x-validate: null
-        to:
-          description: The recipient's email address.
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - html_body
-      - text_body
-      - subject_line
-      - from
-      - to
-      title: MessageEmailContent
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageEmailContent
-      x-validate: null
-    MessageContents:
-      description: The content of a message.
-      example:
-        __typename: MessageContent
-        data:
-          __typename: MessageSmsContent
-          body: 'URGENT: Power failure detected in perimeter fencing. Backup generators failed to engage. Technical team dispatched. Maintain lockdown protocols.'
-          to: '+15553982647'
-        inserted_at: '1993-06-11T20:30:00Z'
-        message_id: 2w3YUpTTOxuDvZFji8OMsKrG176
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: MessageContent
-          type: string
-          x-struct: null
-          x-validate: null
-        data:
-          description: Content data specific to the channel type.
-          oneOf:
-          - $ref: '#/components/schemas/MessageEmailContent'
-          - $ref: '#/components/schemas/MessageSmsContent'
-          - $ref: '#/components/schemas/MessagePushContent'
-          - $ref: '#/components/schemas/MessageChatContent'
-          - $ref: '#/components/schemas/MessageInAppFeedContent'
-          type: object
-          x-struct: null
-          x-validate: null
-        inserted_at:
-          description: Timestamp when the message content was created.
-          example: '2021-01-01T00:00:00Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        message_id:
-          description: The unique identifier for the message content.
-          example: 1jNaXzB2RZX3LY8wVQnfCKyPnv7
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - message_id
-      - data
-      - inserted_at
-      title: MessageContents
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageContents
-      x-validate: null
-    Activity:
-      description: An activity associated with a workflow trigger request. Messages produced after a [batch step](/designing-workflows/batch-function) can be associated with one or more activities. Non-batched messages will always be associated with a single activity.
-      example:
-        __typename: Activity
-        actor: null
-        data:
-          foo: bar
-        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-        inserted_at: '2024-01-01T00:00:00Z'
-        recipient:
-          __typename: User
-          avatar: null
-          created_at: null
-          email: jane@ingen.net
-          id: jane
-          name: Jane Doe
-          phone_number: null
-          timezone: null
-          updated_at: '2024-05-22T12:00:00Z'
-        updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: Activity
-          type: string
-          x-struct: null
-          x-validate: null
-        actor:
-          anyOf:
-          - $ref: '#/components/schemas/Recipient'
-          - x-struct: null
-            x-validate: null
-          description: The actor who performed the activity.
-          type: object
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: The workflow trigger `data` payload associated with the activity.
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the activity.
-          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-          type: string
-          x-struct: null
-          x-validate: null
-        inserted_at:
-          description: Timestamp when the activity was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        recipient:
-          $ref: '#/components/schemas/Recipient'
-        updated_at:
-          description: Timestamp when the activity was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      title: Activity
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Activity
-      x-validate: null
-    MessageDeliveryLog:
-      description: A message delivery log contains a `request` from Knock to a downstream provider and the `response` that was returned.
-      example:
-        __typename: MessageDeliveryLog
-        environment_id: 123e4567-e89b-12d3-a456-426614174000
-        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-        inserted_at: '2021-01-01T00:00:00Z'
-        request:
-          body:
-            html_content: <html></html>
-          headers:
-            Content-Type: application/json
-          host: localhost
-          method: GET
-          path: /
-          query: ?foo=bar
-        response:
-          body:
-            success: true
-          headers:
-            Content-Type: application/json
-          status: 200
-        service_name: Postmark
-      properties:
-        __typename:
-          description: The typename of the schema.
-          example: MessageDeliveryLog
-          type: string
-          x-struct: null
-          x-validate: null
-        environment_id:
-          description: The ID of the environment in which the message delivery occurred.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier for the message delivery log.
-          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
-          type: string
-          x-struct: null
-          x-validate: null
-        inserted_at:
-          description: Timestamp when the message delivery log was created.
-          example: '2021-01-01T00:00:00Z'
-          type: string
-          x-struct: null
-          x-validate: null
-        request:
-          $ref: '#/components/schemas/MessageDeliveryLogRequest'
-        response:
-          $ref: '#/components/schemas/MessageDeliveryLogResponse'
-        service_name:
-          description: The name of the service that processed the delivery.
-          example: Postmark
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - id
-      - environment_id
-      - request
-      - response
-      - service_name
-      - inserted_at
-      title: MessageDeliveryLog
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageDeliveryLog
-      x-validate: null
     MessageDeliveryLogRequest:
       description: A message delivery log request.
       example:
@@ -3366,39 +2828,6 @@ components:
       title: MessageDeliveryLogRequest
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageDeliveryLog.Request
-      x-validate: null
-    BatchMessagesInteractedRequest:
-      description: A request to batch mark messages as interacted with.
-      example:
-        message_ids:
-        - 1jNaXzB2RZX3LY8wVQnfCKyPnv7
-        metadata:
-          key: value
-      properties:
-        message_ids:
-          description: The message IDs to batch mark as interacted with.
-          items:
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        metadata:
-          additionalProperties: true
-          description: Metadata about the interaction.
-          example:
-            key: value
-          type:
-          - object
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - message_ids
-      title: BatchMessagesInteractedRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.BatchMessagesInteractedRequest
       x-validate: null
     Block:
       description: A block in a message in a chat.
@@ -3806,77 +3235,73 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.Message
       x-validate: null
-    MessagePushContent:
-      description: Push channel data.
+    Activity:
+      description: An activity associated with a workflow trigger request. Messages produced after a [batch step](/designing-workflows/batch-function) can be associated with one or more activities. Non-batched messages will always be associated with a single activity.
       example:
-        __typename: MessagePushContent
-        body: Multiple assets out of containment in Sector 5. Take shelter immediately!
+        __typename: Activity
+        actor: null
         data:
-          asset_type: carnivore
-          severity: high
-        title: 'URGENT: Asset Containment Alert'
-        token: ingen-security-1234567890
+          foo: bar
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2024-01-01T00:00:00Z'
+        recipient:
+          __typename: User
+          avatar: null
+          created_at: null
+          email: jane@ingen.net
+          id: jane
+          name: Jane Doe
+          phone_number: null
+          timezone: null
+          updated_at: '2024-05-22T12:00:00Z'
+        updated_at: '2024-01-01T00:00:00Z'
       properties:
         __typename:
           description: The typename of the schema.
-          example: MessagePushContent
+          example: Activity
           type: string
           x-struct: null
           x-validate: null
-        body:
-          description: The content body of the push notification.
-          type: string
+        actor:
+          anyOf:
+          - $ref: '#/components/schemas/Recipient'
+          - x-struct: null
+            x-validate: null
+          description: The actor who performed the activity.
+          type: object
           x-struct: null
           x-validate: null
         data:
           additionalProperties: true
-          description: Additional data payload for the push notification.
+          description: The workflow trigger `data` payload associated with the activity.
           type:
           - object
           - 'null'
           x-struct: null
           x-validate: null
-        title:
-          description: The title of the push notification.
+        id:
+          description: Unique identifier for the activity.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
           type: string
           x-struct: null
           x-validate: null
-        token:
-          description: The device token to send the push notification to.
+        inserted_at:
+          description: Timestamp when the activity was created.
+          format: date-time
           type: string
           x-struct: null
           x-validate: null
-      required:
-      - __typename
-      - title
-      - body
-      - token
-      title: MessagePushContent
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessagePushContent
-      x-validate: null
-    BatchMessagesStatusRequest:
-      description: Request to update the status of multiple messages in batch.
-      example:
-        message_ids:
-        - 2w3YUpTTOxuDvZFji8OMsKrG176
-        - 2w3YVRbPXMIh8Zq6oBFcVDA5xes
-      properties:
-        message_ids:
-          description: The message IDs to update the status of.
-          items:
-            description: The message ID to update the status of.
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        updated_at:
+          description: Timestamp when the activity was last updated.
+          format: date-time
+          type: string
           x-struct: null
           x-validate: null
-      required:
-      - message_ids
-      title: BatchMessagesStatusRequest
+      title: Activity
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.BatchMessagesStatusRequest
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Activity
       x-validate: null
     MessageInAppFeedContent:
       description: The content of an in-app feed message.
@@ -3934,185 +3359,86 @@ components:
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent
       x-validate: null
-    PageInfo:
-      description: Pagination information for a list of resources.
+    BatchMessagesInteractedRequest:
+      description: A request to batch mark messages as interacted with.
       example:
-        __typename: PageInfo
-        after: null
-        before: null
-        page_size: 25
+        message_ids:
+        - 1jNaXzB2RZX3LY8wVQnfCKyPnv7
+        metadata:
+          key: value
       properties:
-        __typename:
-          description: The typename of the schema.
-          example: PageInfo
-          type: string
-          x-struct: null
-          x-validate: null
-        after:
-          description: The cursor to fetch entries after.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of items per page (defaults to 50).
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - __typename
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
-      x-validate: null
-    MessageInAppFeedButtonSetBlock:
-      description: A button set block in a message in an app feed.
-      example:
-        buttons:
-        - action: action_1
-          label: Action 1
-          name: primary
-        name: actions
-        type: button_set
-      properties:
-        buttons:
-          description: A list of buttons in an in app feed message.
+        message_ids:
+          description: The message IDs to batch mark as interacted with.
           items:
-            description: A button in an in app feed message.
-            properties:
-              action:
-                description: The action to take when the button is clicked.
-                type: string
-                x-struct: null
-                x-validate: null
-              label:
-                description: The label of the button.
-                type: string
-                x-struct: null
-                x-validate: null
-              name:
-                description: The name of the button.
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - action
-            - label
-            - name
-            type: object
+            type: string
             x-struct: null
             x-validate: null
           type: array
           x-struct: null
           x-validate: null
-        name:
-          description: The name of the button set in a message in an app feed.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of block in a message in an app feed.
-          enum:
-          - button_set
-          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata about the interaction.
+          example:
+            key: value
+          type:
+          - object
+          - 'null'
           x-struct: null
           x-validate: null
       required:
-      - type
-      - name
-      - buttons
-      title: MessageInAppFeedButtonSetBlock
+      - message_ids
+      title: BatchMessagesInteractedRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BatchMessagesInteractedRequest
       x-validate: null
-    MessageSmsContent:
-      description: The content of an SMS message.
+    BatchMessagesStatusRequest:
+      description: Request to update the status of multiple messages in batch.
       example:
-        __typename: MessageSmsContent
-        body: 'ALERT: Security systems offline in Sector B. Evacuate immediately. Proceed to emergency bunker. DO NOT attempt to approach the paddocks. Response team dispatched.'
-        to: '+15553982647'
+        message_ids:
+        - 2w3YUpTTOxuDvZFji8OMsKrG176
+        - 2w3YVRbPXMIh8Zq6oBFcVDA5xes
       properties:
-        __typename:
-          description: The typename of the schema.
-          example: MessageSmsContent
-          type: string
-          x-struct: null
-          x-validate: null
-        body:
-          description: The content body of the SMS message.
-          type: string
-          x-struct: null
-          x-validate: null
-        to:
-          description: The phone number the SMS was sent to.
-          type: string
+        message_ids:
+          description: The message IDs to update the status of.
+          items:
+            description: The message ID to update the status of.
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
           x-struct: null
           x-validate: null
       required:
-      - __typename
-      - to
-      - body
-      title: MessageSmsContent
+      - message_ids
+      title: BatchMessagesStatusRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageSmsContent
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.BatchMessagesStatusRequest
       x-validate: null
-    ListMessagesResponse:
-      description: A paginated list of messages.
+    ListMessageDeliveryLogsResponse:
+      description: A message delivery log response.
       example:
         items:
-        - __typename: Message
-          actors:
-          - mr_arnold
-          - mr_muldoon
-          archived_at: null
-          channel_id: 123e4567-e89b-12d3-a456-426614174000
-          clicked_at: null
-          data:
-            affected_areas:
-            - visitor_center
-            - raptor_pen
-            - trex_paddock
-            attraction_id: paddock_rex_01
-            evacuation_protocol: active
-            message: Life finds a way
-            severity: critical
-            system_status: fences_failing
-          engagement_statuses:
-          - read
-          - seen
-          id: 2w3YUpTTOxuDvZFji8OMsKrG176
-          inserted_at: '1993-06-11T21:15:00Z'
-          interacted_at: null
-          link_clicked_at: null
-          metadata:
-            external_id: 123e4567-e89b-12d3-a456-426614174000
-          read_at: '1993-06-11T21:30:00Z'
-          recipient: dr_grant
-          scheduled_at: null
-          seen_at: '1993-06-11T21:29:45Z'
-          source:
-            __typename: NotificationSource
-            categories:
-            - security
-            - emergency
-            key: security-breach-alert
-            step_ref: alert_step_1
-            version_id: 123e4567-e89b-12d3-a456-426614174000
-            workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
-            workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
-          status: sent
-          tenant: ingen_isla_nublar
-          updated_at: '1993-06-11T21:30:05Z'
-          workflow: security-breach-alert
+        - __typename: MessageDeliveryLog
+          environment_id: 123e4567-e89b-12d3-a456-426614174000
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2021-01-01T00:00:00Z'
+          request:
+            body:
+              html_content: <html></html>
+            headers:
+              Content-Type: application/json
+            host: localhost
+            method: GET
+            path: /
+            query: ?foo=bar
+          response:
+            body:
+              success: true
+            headers:
+              Content-Type: application/json
+            status: 200
+          service_name: Postmark
         page_info:
           __typename: PageInfo
           after: null
@@ -4120,9 +3446,9 @@ components:
           page_size: 25
       properties:
         items:
-          description: A list of messages.
+          description: Returns a paginated list of delivery logs from the downstream provider for the specified message. For Knock in-app channels, the delivery logs will always be an empty list.
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: '#/components/schemas/MessageDeliveryLog'
           type: array
           x-struct: null
           x-validate: null
@@ -4131,128 +3457,115 @@ components:
       required:
       - items
       - page_info
-      title: ListMessagesResponse
+      title: ListMessageDeliveryLogsResponse
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessagesResponse
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessageDeliveryLogsResponse
       x-validate: null
-    User:
-      additionalProperties: true
-      description: A [User](/concepts/users) represents an individual in your system who can receive notifications through Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
+    MessageEmailContent:
+      description: The content of an email message.
       example:
-        __typename: User
-        created_at: null
-        email: ian.malcolm@chaos.theory
-        id: user_id
-        name: Dr. Ian Malcolm
-        updated_at: '2024-05-22T12:00:00Z'
+        __typename: MessageEmailContent
+        bcc: security@ingen.net
+        cc: operations@isla-nublar.com
+        from: welcome@isla-nublar.com
+        html_body: <h1>Welcome to Isla Nublar</h1><p>Dear visitor,</p><p>We're excited to confirm your upcoming tour of our biological preserve. Your safety is our primary concern.</p><p>Please review the <a href='https://example.com/safety'>safety protocols</a> before arrival.</p><p><strong>Remember:</strong> All specimens are accounted for and contained.</p>
+        reply_to: visitor.center@isla-nublar.com
+        subject_line: 'Tour Confirmation: Isla Nublar Biological Preserve'
+        text_body: 'Welcome to Isla Nublar
+
+
+          Dear visitor,
+
+
+          We''re excited to confirm your upcoming tour of our biological preserve. Your safety is our primary concern.
+
+
+          Please review the safety protocols before arrival: https://example.com/safety
+
+
+          Remember: All specimens are accounted for and contained.'
+        to: dr.grant@dig.site.mt
       properties:
         __typename:
           description: The typename of the schema.
-          example: User
+          example: MessageEmailContent
           type: string
           x-struct: null
           x-validate: null
-        avatar:
-          description: A URL for the avatar of the user.
+        bcc:
+          description: The BCC email addresses.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        created_at:
-          description: The creation date of the user from your system.
-          format: date-time
+        cc:
+          description: The CC email addresses.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        email:
-          description: The primary email address for the user.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier of the user.
+        from:
+          description: The sender's email address.
           type: string
           x-struct: null
           x-validate: null
-        name:
-          description: Display name of the user.
+        html_body:
+          description: The HTML body of the email message.
+          type: string
+          x-struct: null
+          x-validate: null
+        reply_to:
+          description: The reply-to email address.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        phone_number:
-          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
-          type:
-          - string
-          - 'null'
+        subject_line:
+          description: The subject line of the email message.
+          type: string
           x-struct: null
           x-validate: null
-        timezone:
-          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
-          type:
-          - string
-          - 'null'
+        text_body:
+          description: The text body of the email message.
+          type: string
           x-struct: null
           x-validate: null
-        updated_at:
-          description: The timestamp when the resource was last updated.
-          format: date-time
+        to:
+          description: The recipient's email address.
           type: string
           x-struct: null
           x-validate: null
       required:
       - __typename
-      - id
-      - updated_at
-      title: User
+      - html_body
+      - text_body
+      - subject_line
+      - from
+      - to
+      title: MessageEmailContent
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.User
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageEmailContent
       x-validate: null
-    MessageInAppFeedContentBlock:
-      description: A block in a message in an app feed.
+    MessageInteractedRequest:
+      description: A request to mark a message as interacted with.
       example:
-        content: This is a message in an app feed
-        name: body
-        rendered: <p>This is a message in an app feed</p>
-        type: markdown
+        metadata:
+          key: value
       properties:
-        content:
-          description: The content of the block in a message in an app feed.
-          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata about the interaction.
+          example:
+            key: value
+          type: object
           x-struct: null
           x-validate: null
-        name:
-          description: The name of the block in a message in an app feed.
-          type: string
-          x-struct: null
-          x-validate: null
-        rendered:
-          description: The rendered HTML version of the content.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of block in a message in an app feed.
-          enum:
-          - markdown
-          - text
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - name
-      - rendered
-      - content
-      title: MessageInAppFeedContentBlock
+      title: MessageInteractedRequest
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInteractedRequest
       x-validate: null
     MessageChatContent:
       description: The content of a chat message.
@@ -4347,6 +3660,693 @@ components:
       title: MessageChatContent
       type: object
       x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageChatContent
+      x-validate: null
+    MessageDeliveryLog:
+      description: A message delivery log contains a `request` from Knock to a downstream provider and the `response` that was returned.
+      example:
+        __typename: MessageDeliveryLog
+        environment_id: 123e4567-e89b-12d3-a456-426614174000
+        id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+        inserted_at: '2021-01-01T00:00:00Z'
+        request:
+          body:
+            html_content: <html></html>
+          headers:
+            Content-Type: application/json
+          host: localhost
+          method: GET
+          path: /
+          query: ?foo=bar
+        response:
+          body:
+            success: true
+          headers:
+            Content-Type: application/json
+          status: 200
+        service_name: Postmark
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: MessageDeliveryLog
+          type: string
+          x-struct: null
+          x-validate: null
+        environment_id:
+          description: The ID of the environment in which the message delivery occurred.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier for the message delivery log.
+          example: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          type: string
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the message delivery log was created.
+          example: '2021-01-01T00:00:00Z'
+          type: string
+          x-struct: null
+          x-validate: null
+        request:
+          $ref: '#/components/schemas/MessageDeliveryLogRequest'
+        response:
+          $ref: '#/components/schemas/MessageDeliveryLogResponse'
+        service_name:
+          description: The name of the service that processed the delivery.
+          example: Postmark
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - environment_id
+      - request
+      - response
+      - service_name
+      - inserted_at
+      title: MessageDeliveryLog
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageDeliveryLog
+      x-validate: null
+    ListMessagesResponse:
+      description: A paginated list of messages.
+      example:
+        items:
+        - __typename: Message
+          actors:
+          - mr_arnold
+          - mr_muldoon
+          archived_at: null
+          channel_id: 123e4567-e89b-12d3-a456-426614174000
+          clicked_at: null
+          data:
+            affected_areas:
+            - visitor_center
+            - raptor_pen
+            - trex_paddock
+            attraction_id: paddock_rex_01
+            evacuation_protocol: active
+            message: Life finds a way
+            severity: critical
+            system_status: fences_failing
+          engagement_statuses:
+          - read
+          - seen
+          id: 2w3YUpTTOxuDvZFji8OMsKrG176
+          inserted_at: '1993-06-11T21:15:00Z'
+          interacted_at: null
+          link_clicked_at: null
+          metadata:
+            external_id: 123e4567-e89b-12d3-a456-426614174000
+          read_at: '1993-06-11T21:30:00Z'
+          recipient: dr_grant
+          scheduled_at: null
+          seen_at: '1993-06-11T21:29:45Z'
+          source:
+            __typename: NotificationSource
+            categories:
+            - security
+            - emergency
+            key: security-breach-alert
+            step_ref: alert_step_1
+            version_id: 123e4567-e89b-12d3-a456-426614174000
+            workflow_recipient_run_id: def01234-a56b-78c9-d012-345678901bcd
+            workflow_run_id: 789e0123-f45a-67b8-c901-234567890abc
+          status: sent
+          tenant: ingen_isla_nublar
+          updated_at: '1993-06-11T21:30:05Z'
+          workflow: security-breach-alert
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of messages.
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListMessagesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListMessagesResponse
+      x-validate: null
+    MessageInAppFeedButtonSetBlock:
+      description: A button set block in a message in an app feed.
+      example:
+        buttons:
+        - action: action_1
+          label: Action 1
+          name: primary
+        name: actions
+        type: button_set
+      properties:
+        buttons:
+          description: A list of buttons in an in app feed message.
+          items:
+            description: A button in an in app feed message.
+            properties:
+              action:
+                description: The action to take when the button is clicked.
+                type: string
+                x-struct: null
+                x-validate: null
+              label:
+                description: The label of the button.
+                type: string
+                x-struct: null
+                x-validate: null
+              name:
+                description: The name of the button.
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - action
+            - label
+            - name
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the button set in a message in an app feed.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - button_set
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - buttons
+      title: MessageInAppFeedButtonSetBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ButtonSetBlock
+      x-validate: null
+    MessageSmsContent:
+      description: The content of an SMS message.
+      example:
+        __typename: MessageSmsContent
+        body: 'ALERT: Security systems offline in Sector B. Evacuate immediately. Proceed to emergency bunker. DO NOT attempt to approach the paddocks. Response team dispatched.'
+        to: '+15553982647'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: MessageSmsContent
+          type: string
+          x-struct: null
+          x-validate: null
+        body:
+          description: The content body of the SMS message.
+          type: string
+          x-struct: null
+          x-validate: null
+        to:
+          description: The phone number the SMS was sent to.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - to
+      - body
+      title: MessageSmsContent
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageSmsContent
+      x-validate: null
+    MessagePushContent:
+      description: Push channel data.
+      example:
+        __typename: MessagePushContent
+        body: Multiple assets out of containment in Sector 5. Take shelter immediately!
+        data:
+          asset_type: carnivore
+          severity: high
+        title: 'URGENT: Asset Containment Alert'
+        token: ingen-security-1234567890
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: MessagePushContent
+          type: string
+          x-struct: null
+          x-validate: null
+        body:
+          description: The content body of the push notification.
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          additionalProperties: true
+          description: Additional data payload for the push notification.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        title:
+          description: The title of the push notification.
+          type: string
+          x-struct: null
+          x-validate: null
+        token:
+          description: The device token to send the push notification to.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - title
+      - body
+      - token
+      title: MessagePushContent
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessagePushContent
+      x-validate: null
+    User:
+      additionalProperties: true
+      description: A [User](/concepts/users) represents an individual in your system who can receive notifications through Knock. Users are the most common recipients of notifications and are always referenced by your internal identifier.
+      example:
+        __typename: User
+        created_at: null
+        email: ian.malcolm@chaos.theory
+        id: user_id
+        name: Dr. Ian Malcolm
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: User
+          type: string
+          x-struct: null
+          x-validate: null
+        avatar:
+          description: A URL for the avatar of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The creation date of the user from your system.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        email:
+          description: The primary email address for the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the user.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: Display name of the user.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        phone_number:
+          description: The [E.164](https://www.twilio.com/docs/glossary/what-e164) phone number of the user (required for SMS channels).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        timezone:
+          description: The timezone of the user. Must be a valid [tz database time zone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Used for [recurring schedules](/concepts/schedules#scheduling-workflows-with-recurring-schedules-for-recipients).
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - updated_at
+      title: User
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.User
+      x-validate: null
+    Object:
+      description: A custom [Object](/concepts/objects) entity which belongs to a collection.
+      example:
+        __typename: Object
+        collection: assets
+        created_at: null
+        id: specimen_25
+        properties:
+          classification: Theropod
+          config:
+            biz: baz
+            foo: bar
+          name: Velociraptor
+          status: contained
+        updated_at: '2024-05-22T12:00:00Z'
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: Object
+          type: string
+          x-struct: null
+          x-validate: null
+        collection:
+          description: The collection this object belongs to.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: Timestamp when the resource was created.
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          type: string
+          x-struct: null
+          x-validate: null
+        properties:
+          additionalProperties: true
+          description: The custom properties associated with the object.
+          type: object
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp when the resource was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - id
+      - collection
+      - updated_at
+      title: Object
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Object
+      x-validate: null
+    RecipientReference:
+      description: A reference to a recipient, either a user identifier (string) or an object reference (ID, collection).
+      example: user_123
+      oneOf:
+      - description: The ID of the user which is used as the reference for the recipient.
+        example: user_123
+        title: UserReference
+        type: string
+        x-struct: null
+        x-validate: null
+      - description: A reference to a recipient object.
+        example:
+          collection: projects
+          id: project_123
+        properties:
+          collection:
+            description: The collection the recipient object belongs to.
+            example: projects
+            type: string
+            x-struct: null
+            x-validate: null
+          id:
+            description: An identifier for the recipient object.
+            example: project_123
+            type: string
+            x-struct: null
+            x-validate: null
+        title: ObjectReference
+        type: object
+        x-struct: null
+        x-validate: null
+      title: RecipientReference
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.RecipientReference
+      x-validate: null
+    Recipient:
+      description: A recipient of a notification, which is either a user or an object.
+      example:
+        __typename: User
+        avatar: null
+        created_at: null
+        email: jane@ingen.net
+        id: jane
+        name: Jane Doe
+        phone_number: null
+        timezone: null
+        updated_at: '2024-05-22T12:00:00Z'
+      oneOf:
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Object'
+      title: Recipient
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.Recipient
+      x-validate: null
+    MessageInAppFeedContentBlock:
+      description: A block in a message in an app feed.
+      example:
+        content: This is a message in an app feed
+        name: body
+        rendered: <p>This is a message in an app feed</p>
+        type: markdown
+      properties:
+        content:
+          description: The content of the block in a message in an app feed.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The name of the block in a message in an app feed.
+          type: string
+          x-struct: null
+          x-validate: null
+        rendered:
+          description: The rendered HTML version of the content.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of block in a message in an app feed.
+          enum:
+          - markdown
+          - text
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - name
+      - rendered
+      - content
+      title: MessageInAppFeedContentBlock
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageInAppFeedContent.ContentBlock
+      x-validate: null
+    ListActivitiesResponse:
+      description: Returns a paginated list of `activities` associated with a given message. For messages produced after a [batch step](/designing-workflows/batch-function), this will contain one or more activities. Non-batched messages will always return a single activity.
+      example:
+        items:
+        - __typename: Activity
+          actor: null
+          data:
+            foo: bar
+          id: 2FVHPWxRqNuXQ9krvNP5A6Z4qXe
+          inserted_at: '2024-01-01T00:00:00Z'
+          recipient:
+            __typename: User
+            avatar: null
+            created_at: null
+            email: jane@ingen.net
+            id: jane
+            name: Jane Doe
+            phone_number: null
+            timezone: null
+            updated_at: '2024-05-22T12:00:00Z'
+          updated_at: '2024-01-01T00:00:00Z'
+        page_info:
+          __typename: PageInfo
+          after: null
+          before: null
+          page_size: 25
+      properties:
+        items:
+          description: A list of activities.
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+          x-struct: null
+          x-validate: null
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page_info
+      title: ListActivitiesResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.ListActivitiesResponse
+      x-validate: null
+    MessageDeliveryLogResponse:
+      description: A message delivery log response.
+      example:
+        body:
+          success: true
+        headers:
+          Content-Type: application/json
+        status: 200
+      properties:
+        body:
+          description: The body content that was received with the response.
+          oneOf:
+          - type: string
+            x-struct: null
+            x-validate: null
+          - additionalProperties: true
+            type: object
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        headers:
+          additionalProperties: true
+          description: The headers that were received with the response.
+          type:
+          - object
+          - 'null'
+          x-struct: null
+          x-validate: null
+        status:
+          description: The HTTP status code of the response.
+          example: 200
+          type: integer
+          x-struct: null
+          x-validate: null
+      title: MessageDeliveryLogResponse
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageDeliveryLog.Response
+      x-validate: null
+    MessageContents:
+      description: The content of a message.
+      example:
+        __typename: MessageContent
+        data:
+          __typename: MessageSmsContent
+          body: 'URGENT: Power failure detected in perimeter fencing. Backup generators failed to engage. Technical team dispatched. Maintain lockdown protocols.'
+          to: '+15553982647'
+        inserted_at: '1993-06-11T20:30:00Z'
+        message_id: 2w3YUpTTOxuDvZFji8OMsKrG176
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: MessageContent
+          type: string
+          x-struct: null
+          x-validate: null
+        data:
+          description: Content data specific to the channel type.
+          oneOf:
+          - $ref: '#/components/schemas/MessageEmailContent'
+          - $ref: '#/components/schemas/MessageSmsContent'
+          - $ref: '#/components/schemas/MessagePushContent'
+          - $ref: '#/components/schemas/MessageChatContent'
+          - $ref: '#/components/schemas/MessageInAppFeedContent'
+          type: object
+          x-struct: null
+          x-validate: null
+        inserted_at:
+          description: Timestamp when the message content was created.
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        message_id:
+          description: The unique identifier for the message content.
+          example: 1jNaXzB2RZX3LY8wVQnfCKyPnv7
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - message_id
+      - data
+      - inserted_at
+      title: MessageContents
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.MessageContents
+      x-validate: null
+    PageInfo:
+      description: Pagination information for a list of resources.
+      example:
+        __typename: PageInfo
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        __typename:
+          description: The typename of the schema.
+          example: PageInfo
+          type: string
+          x-struct: null
+          x-validate: null
+        after:
+          description: The cursor to fetch entries after.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of items per page (defaults to 50).
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - __typename
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.SwitchboardWeb.V1.Specs.PageInfo
       x-validate: null
   securitySchemes:
     BearerAuth:

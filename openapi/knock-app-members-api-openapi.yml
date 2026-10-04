@@ -151,63 +151,6 @@ paths:
       - Members
 components:
   schemas:
-    MemberUser:
-      description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
-      example:
-        avatar_url: https://www.gravatar.com/avatar/abc123
-        created_at: '2024-01-10T08:00:00Z'
-        email: jane@example.com
-        id: a1b2c3d4-5678-9abc-def0-123456789abc
-        name: Jane Doe
-        updated_at: '2024-06-18T12:00:00Z'
-      properties:
-        avatar_url:
-          description: The URL of the user's avatar image.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The timestamp of when the user was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        email:
-          description: The user's email address.
-          format: email
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: The user's unique identifier.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        name:
-          description: The user's display name.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp of when the user was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - id
-      - email
-      - created_at
-      - updated_at
-      title: MemberUser
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
-      x-validate: null
     Member:
       description: A member of the account.
       example:
@@ -264,6 +207,63 @@ components:
       title: Member
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Member
+      x-validate: null
+    MemberUser:
+      description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
+      example:
+        avatar_url: https://www.gravatar.com/avatar/abc123
+        created_at: '2024-01-10T08:00:00Z'
+        email: jane@example.com
+        id: a1b2c3d4-5678-9abc-def0-123456789abc
+        name: Jane Doe
+        updated_at: '2024-06-18T12:00:00Z'
+      properties:
+        avatar_url:
+          description: The URL of the user's avatar image.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the user was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The user's email address.
+          format: email
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The user's unique identifier.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The user's display name.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the user was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - email
+      - created_at
+      - updated_at
+      title: MemberUser
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
       x-validate: null
     PageInfo:
       description: The information about a paginated result.

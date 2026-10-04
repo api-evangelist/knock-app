@@ -423,38 +423,6 @@ paths:
       - Commits
 components:
   schemas:
-    PageInfo:
-      description: The information about a paginated result.
-      example:
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
     Commit:
       description: A commit is a change to a resource within an environment, made by an author.
       example:
@@ -557,6 +525,38 @@ components:
       title: Commit
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Commit
+      x-validate: null
+    PageInfo:
+      description: The information about a paginated result.
+      example:
+        after: null
+        before: null
+        page_size: 25
+      properties:
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - page_size
+      title: PageInfo
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
       x-validate: null
   securitySchemes:
     BearerAuth:
