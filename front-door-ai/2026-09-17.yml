@@ -7,14 +7,17 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.knock.app
   final_host: knock.app
-  ownership: inherited
+  ownership: own
   owner: knock-app
   shares_host_with: null
-  inherited_from: knock.app
+  inherited_from: null
+  alias_of: knock.app
   verdict: scored
-  score: null
+  score: 17
+  band: 5
+  band_label: prominent
   host_score: 17
-  density: null
+  density: 14.57
   words: 1167
   tiers:
     agentic: 4
