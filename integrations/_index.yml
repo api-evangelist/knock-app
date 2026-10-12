@@ -19,7 +19,7 @@
     property: schemas.ChannelData.provider
     matched_domain: apple.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-discord
@@ -38,7 +38,7 @@
     property: schemas.ChannelData.provider
     matched_domain: discord.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-fcm
@@ -57,7 +57,7 @@
     property: schemas.ChannelData.provider
     matched_domain: google.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-microsoft-teams
@@ -76,7 +76,7 @@
     property: schemas.ChannelData.provider
     matched_domain: microsoft.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-slack
@@ -95,7 +95,7 @@
     property: schemas.ChannelData.provider
     matched_domain: slack.dev
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-amazon-sns
@@ -114,7 +114,7 @@
     property: schemas.ChannelData.provider
     matched_domain: amazon.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-expo
@@ -133,7 +133,7 @@
     property: schemas.ChannelData.provider
     matched_domain: expo.dev
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null
 - slug: knock-app-onesignal
@@ -152,6 +152,6 @@
     property: schemas.ChannelData.provider
     matched_domain: onesignal.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
   status: not-a-workflow
   arazzo: null

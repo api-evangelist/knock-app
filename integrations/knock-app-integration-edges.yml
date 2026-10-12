@@ -14,7 +14,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: apple.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: Discord
   partner: discord
   partner_match: domain
@@ -30,7 +30,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: discord.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: FCM
   partner: google-firebase
   partner_match: domain
@@ -46,7 +46,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: google.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: Microsoft Teams
   partner: microsoft-teams
   partner_match: domain
@@ -62,7 +62,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: microsoft.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: Slack
   partner: slack
   partner_match: domain
@@ -78,7 +78,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: slack.dev
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: amazon-sns
   partner: amazon-sns
   partner_match: domain
@@ -94,7 +94,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: amazon.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: expo
   partner: expo
   partner_match: domain
@@ -110,7 +110,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: expo.dev
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 - partner_name: onesignal
   partner: onesignal
   partner_match: domain
@@ -126,7 +126,7 @@ edges:
     property: schemas.ChannelData.provider
     matched_domain: onesignal.com
     detected_by: sweep-cpaas.py
-    detected: '2026-10-12'
+    detected: '2026-10-13'
 generated: '2026-10-12'
 method: searched
 checked: []
