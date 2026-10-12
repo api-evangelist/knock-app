@@ -1,0 +1,132 @@
+edges:
+- partner_name: APNs
+  partner: apple
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: messaging-channel
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: push_apns
+    property: schemas.ChannelData.provider
+    matched_domain: apple.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: Discord
+  partner: discord
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: messaging-channel
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: chat_discord
+    property: schemas.ChannelData.provider
+    matched_domain: discord.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: FCM
+  partner: google-firebase
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: messaging-channel
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: push_fcm
+    property: schemas.ChannelData.provider
+    matched_domain: google.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: Microsoft Teams
+  partner: microsoft-teams
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: messaging-channel
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: chat_ms_teams
+    property: schemas.ChannelData.provider
+    matched_domain: microsoft.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: Slack
+  partner: slack
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: messaging-channel
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: chat_slack
+    property: schemas.ChannelData.provider
+    matched_domain: slack.dev
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: amazon-sns
+  partner: amazon-sns
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: delivery-provider
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: push_aws_sns
+    property: schemas.ChannelData.provider
+    matched_domain: amazon.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: expo
+  partner: expo
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: delivery-provider
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: push_expo
+    property: schemas.ChannelData.provider
+    matched_domain: expo.dev
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: onesignal
+  partner: onesignal
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: delivery-provider
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/knock-app/blob/main/openapi/knock-app-channel-data-api-openapi.yml
+  contract_reference:
+    repo: knock-app
+    spec_file: knock-app-channel-data-api-openapi.yml
+    value: push_one_signal
+    property: schemas.ChannelData.provider
+    matched_domain: onesignal.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+generated: '2026-10-12'
+method: searched
+checked: []
