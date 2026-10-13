@@ -1,0 +1,28 @@
+slug: knock-app
+provider: Knock
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Tenants
+  spec_file: knock-app-tenants-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.7
+  evidence: Manage Tenants — the top-level accounts or workspaces in your product. Tenants power tenant-scoped
+    branding, preferences, and message-targeting; PUT /v1/tenants/{id} setTenant; POST /v1/tenants/bulk/delete
+    bulkDeleteTenants
+  reason: The operations create, update, list and delete tenants representing the top-level accounts/workspaces
+    of a multi-tenant product, which is tenant lifecycle management. Some ambiguity remains between provisioning/lifecycle
+    and per-tenant configuration (branding and preference settings also appear in the schemas), hence
+    0.7.
