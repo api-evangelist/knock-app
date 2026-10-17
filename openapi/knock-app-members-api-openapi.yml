@@ -151,63 +151,6 @@ paths:
       - Members
 components:
   schemas:
-    Member:
-      description: A member of the account.
-      example:
-        created_at: '2024-01-15T10:30:00Z'
-        id: d4b8e8e0-1234-5678-9abc-def012345678
-        role: admin
-        updated_at: '2024-06-20T14:45:00Z'
-        user:
-          avatar_url: https://www.gravatar.com/avatar/abc123
-          created_at: '2024-01-10T08:00:00Z'
-          email: jane@example.com
-          id: a1b2c3d4-5678-9abc-def0-123456789abc
-          name: Jane Doe
-          updated_at: '2024-06-18T12:00:00Z'
-      properties:
-        created_at:
-          description: The timestamp of when the member joined the account.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: The unique identifier of the member.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        role:
-          description: The member's role in the account.
-          enum:
-          - owner
-          - admin
-          - member
-          - production_only_member
-          - billing
-          - support
-          type: string
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp of when the member was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        user:
-          $ref: '#/components/schemas/MemberUser'
-      required:
-      - id
-      - role
-      - user
-      - created_at
-      - updated_at
-      title: Member
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.Member
-      x-validate: null
     MemberUser:
       description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
       example:
@@ -264,6 +207,63 @@ components:
       title: MemberUser
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
+      x-validate: null
+    Member:
+      description: A member of the account.
+      example:
+        created_at: '2024-01-15T10:30:00Z'
+        id: d4b8e8e0-1234-5678-9abc-def012345678
+        role: admin
+        updated_at: '2024-06-20T14:45:00Z'
+        user:
+          avatar_url: https://www.gravatar.com/avatar/abc123
+          created_at: '2024-01-10T08:00:00Z'
+          email: jane@example.com
+          id: a1b2c3d4-5678-9abc-def0-123456789abc
+          name: Jane Doe
+          updated_at: '2024-06-18T12:00:00Z'
+      properties:
+        created_at:
+          description: The timestamp of when the member joined the account.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The unique identifier of the member.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        role:
+          description: The member's role in the account.
+          enum:
+          - owner
+          - admin
+          - member
+          - production_only_member
+          - billing
+          - support
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the member was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        user:
+          $ref: '#/components/schemas/MemberUser'
+      required:
+      - id
+      - role
+      - user
+      - created_at
+      - updated_at
+      title: Member
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.Member
       x-validate: null
     PageInfo:
       description: The information about a paginated result.
