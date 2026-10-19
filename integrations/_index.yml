@@ -180,3 +180,140 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: knock-app-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/knocklabs/knock-go
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/knocklabs/knock-go
+      version: v1.42.0
+      released: '2026-09-30'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/knocklabs/knock-go
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: knock-app-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@knocklabs/cli
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@knocklabs/cli'
+      version: 1.4.0
+      released: '2026-10-17'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/cli
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    - name: '@knocklabs/client'
+      version: 0.22.2
+      released: '2026-09-04'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/client
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    - name: '@knocklabs/expo'
+      version: 0.8.3
+      released: '2026-10-08'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/expo
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    - name: '@knocklabs/node'
+      version: 1.39.0
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/node
+      repo_leg: github-org:knocklabs
+      publisher_leg: email:knock.app
+      matched_by: domain
+    - name: '@knocklabs/react'
+      version: 0.14.0
+      released: '2026-10-08'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/react
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    - name: '@knocklabs/react-native'
+      version: 0.11.3
+      released: '2026-10-08'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@knocklabs/react-native
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: knock-app-rubygems
+  label: RubyGems
+  partner: rubygems
+  partner_name: RubyGems
+  category: official SDK (Ruby)
+  type: register
+  channel: package-registry
+  evidence: https://rubygems.org/gems/knockapi
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: RubyGems (public registry JSON)
+    spec_file: null
+    language: Ruby
+    packages:
+    - name: knockapi
+      version: 1.42.0
+      released: '2026-09-30'
+      released_field: version_created_at
+      lapsed: false
+      page: https://rubygems.org/gems/knockapi
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
