@@ -2,21 +2,360 @@ openapi: 3.2.0
 info:
   title: Knock App Guides API
   version: '1.0'
-  contact:
-    name: Knock
-    url: https://knock.app
-  description: 'Operations tagged Guides across 2 of this provider''s published API definitions: knock-management-api-openapi.yml, knock-users-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Guides across 2 of this provider''s published API definitions: knock-app-openapi.json, knock-management-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://control.knock.app
-  variables: {}
 - url: https://api.knock.app
+  variables: {}
+- url: https://control.knock.app
   variables: {}
 security:
 - BearerAuth: []
 tags:
-- description: Guides let you define in-app guides that can be displayed to users based on priority and other conditions.
-  name: Guides
+- name: Guides
 paths:
+  /v1/users/{user_id}/guides/messages/interacted:
+    put:
+      callbacks: {}
+      description: Records that a user has interacted with a guide, triggering any associated interacted events.
+      operationId: markUserGuideAsInteracted(2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideInteractedRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as interacted
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+      x-operation-id-source: normalized
+      x-operation-id-original: markUserGuideAsInteracted (2)
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/messages/archived:
+    delete:
+      callbacks: {}
+      description: Records that a guide has been unarchived, triggering any associated unarchived events.
+      operationId: markUserGuideAsUnarchived
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideUnarchivedRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as unarchived
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    put:
+      callbacks: {}
+      description: Records that a guide has been archived by a user, triggering any associated archived events.
+      operationId: markUserGuideAsArchived(2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideArchivedRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as archived
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+      x-operation-id-source: normalized
+      x-operation-id-original: markUserGuideAsArchived (2)
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/{channel_id}:
+    get:
+      callbacks: {}
+      description: Returns a list of eligible in-app guides for a specific user and channel.
+      operationId: listUserGuides
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      - description: The unique identifier for the channel.
+        in: path
+        name: channel_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: The tenant ID to use for targeting and rendering guides.
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+      - description: The data (JSON encoded object) to use for targeting and rendering guides.
+        in: query
+        name: data
+        required: false
+        schema:
+          type: string
+      - description: The type of guides to filter by.
+        in: query
+        name: type
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuidesResponse'
+          description: OK
+      summary: List guides
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/engagements/reset:
+    put:
+      callbacks: {}
+      description: Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next interaction creates a fresh engagement.
+      operationId: resetUserGuideEngagement
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideResetRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Reset guide engagement
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/messages/{message_id}/archived:
+    put:
+      callbacks: {}
+      description: Records that a guide has been archived by a user, triggering any associated archived events.
+      operationId: markUserGuideAsArchived
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideArchivedRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as archived
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/messages/seen:
+    put:
+      callbacks: {}
+      description: Records that a guide has been seen by a user, triggering any associated seen events.
+      operationId: markUserGuideAsSeen(2)
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_id: 123e4567-e89b-12d3-a456-426614174000
+              content:
+                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+                title: DNA Lab Tour Available
+              data:
+                next_time: '14:30'
+                spots_left: 8
+                tour_id: dna_lab_tour
+              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+              guide_key: tour_notification
+              guide_step_ref: lab_tours
+              tenant: ingen_isla_nublar
+            schema:
+              $ref: '#/components/schemas/GuideSeenRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as seen
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+      x-operation-id-source: normalized
+      x-operation-id-original: markUserGuideAsSeen (2)
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/messages/{message_id}/seen:
+    put:
+      callbacks: {}
+      description: Records that a guide has been seen by a user, triggering any associated seen events.
+      operationId: markUserGuideAsSeen
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              channel_id: 123e4567-e89b-12d3-a456-426614174000
+              content:
+                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+                title: DNA Lab Tour Available
+              data:
+                next_time: '14:30'
+                spots_left: 8
+                tour_id: dna_lab_tour
+              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+              guide_key: tour_notification
+              guide_step_ref: lab_tours
+              tenant: ingen_isla_nublar
+            schema:
+              $ref: '#/components/schemas/GuideSeenRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as seen
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    servers:
+    - url: https://api.knock.app
+      variables: {}
+  /v1/users/{user_id}/guides/messages/{message_id}/interacted:
+    put:
+      callbacks: {}
+      description: Records that a user has interacted with a guide, triggering any associated interacted events.
+      operationId: markUserGuideAsInteracted
+      parameters:
+      - description: The unique identifier of the user.
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuideInteractedRequest'
+        description: Params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuideActionResponse'
+          description: OK
+      summary: Mark guide as interacted
+      tags:
+      - Guides
+      x-ratelimit-tier: 2
+    servers:
+    - url: https://api.knock.app
+      variables: {}
   /v1/guides/{guide_key}:
     delete:
       callbacks: {}
@@ -624,387 +963,521 @@ paths:
     servers:
     - url: https://control.knock.app
       variables: {}
-  /v1/users/{user_id}/guides/messages/seen:
-    put:
-      callbacks: {}
-      description: Records that a guide has been seen by a user, triggering any associated seen events.
-      operationId: markUserGuideAsSeen(2)
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            example:
-              channel_id: 123e4567-e89b-12d3-a456-426614174000
-              content:
-                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
-                title: DNA Lab Tour Available
-              data:
-                next_time: '14:30'
-                spots_left: 8
-                tour_id: dna_lab_tour
-              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
-              guide_key: tour_notification
-              guide_step_ref: lab_tours
-              is_final: false
-              metadata:
-                cta: Reserve Spot
-                theme: amber
-                type: banner
-              tenant: ingen_isla_nublar
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as seen
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-      x-operation-id-source: normalized
-      x-operation-id-original: markUserGuideAsSeen (2)
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/messages/{message_id}/seen:
-    put:
-      callbacks: {}
-      description: Records that a guide has been seen by a user, triggering any associated seen events.
-      operationId: markUserGuideAsSeen
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            example:
-              channel_id: 123e4567-e89b-12d3-a456-426614174000
-              content:
-                body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
-                title: DNA Lab Tour Available
-              data:
-                next_time: '14:30'
-                spots_left: 8
-                tour_id: dna_lab_tour
-              guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
-              guide_key: tour_notification
-              guide_step_ref: lab_tours
-              is_final: false
-              metadata:
-                cta: Reserve Spot
-                theme: amber
-                type: banner
-              tenant: ingen_isla_nublar
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as seen
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/messages/archived:
-    delete:
-      callbacks: {}
-      description: Records that a guide has been unarchived, triggering any associated unarchived events.
-      operationId: markUserGuideAsUnarchived
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as unarchived
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    put:
-      callbacks: {}
-      description: Records that a guide has been archived by a user, triggering any associated archived events.
-      operationId: markUserGuideAsArchived(2)
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as archived
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-      x-operation-id-source: normalized
-      x-operation-id-original: markUserGuideAsArchived (2)
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/messages/interacted:
-    put:
-      callbacks: {}
-      description: Records that a user has interacted with a guide, triggering any associated interacted events.
-      operationId: markUserGuideAsInteracted(2)
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as interacted
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-      x-operation-id-source: normalized
-      x-operation-id-original: markUserGuideAsInteracted (2)
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/engagements/reset:
-    put:
-      callbacks: {}
-      description: Resets the engagement state of a guide for a user, removing the guide's engagement log entry so the next interaction creates a fresh engagement.
-      operationId: resetUserGuideEngagement
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Reset guide engagement
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/{channel_id}:
-    get:
-      callbacks: {}
-      description: Returns a list of eligible in-app guides for a specific user and channel.
-      operationId: listUserGuides
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: The unique identifier for the channel.
-        in: path
-        name: channel_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: The tenant ID to use for targeting and rendering guides.
-        in: query
-        name: tenant
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: The data (JSON encoded object) to use for targeting and rendering guides.
-        in: query
-        name: data
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: The type of guides to filter by.
-        in: query
-        name: type
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuidesResponse'
-          description: OK
-      summary: List guides
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/messages/{message_id}/interacted:
-    put:
-      callbacks: {}
-      description: Records that a user has interacted with a guide, triggering any associated interacted events.
-      operationId: markUserGuideAsInteracted
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as interacted
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    servers:
-    - url: https://api.knock.app
-      variables: {}
-  /v1/users/{user_id}/guides/messages/{message_id}/archived:
-    put:
-      callbacks: {}
-      description: Records that a guide has been archived by a user, triggering any associated archived events.
-      operationId: markUserGuideAsArchived
-      parameters:
-      - description: The unique identifier of the user.
-        in: path
-        name: user_id
-        required: true
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GuideActionRequest'
-        description: Params
-        required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GuideActionResponse'
-          description: OK
-      summary: Mark guide as archived
-      tags:
-      - Guides
-      x-ratelimit-tier: 2
-    servers:
-    - url: https://api.knock.app
-      variables: {}
 components:
   schemas:
+    GuideInteractedRequest:
+      description: A request to mark a guide as interacted with.
+      example:
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+        guide_key: tour_notification
+        guide_step_ref: lab_tours
+        metadata:
+          cta: Reserve Spot
+          theme: amber
+          type: banner
+        tenant: ingen_isla_nublar
+      properties:
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+        guide_id:
+          description: The unique identifier for the guide.
+          format: uuid
+          type: string
+        guide_key:
+          description: The key of the guide.
+          type: string
+        guide_step_ref:
+          description: The step reference of the guide.
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Metadata about the interaction.
+          type: object
+        tenant:
+          description: The tenant ID of the guide.
+          type: string
+      required:
+      - channel_id
+      - guide_id
+      - guide_key
+      - guide_step_ref
+      title: GuideInteractedRequest
+      type: object
+    GuideActionResponse:
+      description: A response for a guide action.
+      example:
+        status: ok
+      properties:
+        status:
+          description: The status of a guide's action.
+          example: ok
+          type: string
+      required:
+      - status
+      title: GuideActionResponse
+      type: object
+    GuideSeenRequest:
+      description: A request to mark a guide as seen.
+      example:
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        content:
+          body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
+          title: DNA Lab Tour Available
+        data:
+          next_time: '14:30'
+          spots_left: 8
+          tour_id: dna_lab_tour
+        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+        guide_key: tour_notification
+        guide_step_ref: lab_tours
+        tenant: ingen_isla_nublar
+      properties:
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+        content:
+          additionalProperties: true
+          description: The content of the guide.
+          type: object
+        data:
+          additionalProperties: true
+          description: The data of the guide.
+          type: object
+        guide_id:
+          description: The unique identifier for the guide.
+          format: uuid
+          type: string
+        guide_key:
+          description: The key of the guide.
+          type: string
+        guide_step_ref:
+          description: The step reference of the guide.
+          type: string
+        tenant:
+          description: The tenant ID of the guide.
+          type: string
+      required:
+      - channel_id
+      - guide_id
+      - guide_key
+      - guide_step_ref
+      - content
+      title: GuideSeenRequest
+      type: object
+    GuideArchivedRequest:
+      description: A request to mark a guide as archived.
+      example:
+        channel_id: 123e4567-e89b-12d3-a456-426614174000
+        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
+        guide_key: tour_notification
+        guide_step_ref: lab_tours
+        is_final: false
+        tenant: ingen_isla_nublar
+        unthrottled: false
+      properties:
+        channel_id:
+          description: The unique identifier for the channel.
+          format: uuid
+          type: string
+        guide_id:
+          description: The unique identifier for the guide.
+          format: uuid
+          type: string
+        guide_key:
+          description: The key of the guide.
+          type: string
+        guide_step_ref:
+          description: The step reference of the guide.
+          type: string
+        is_final:
+          description: Whether the guide is final.
+          type: boolean
+        tenant:
+          description: The tenant ID of the guide.
+          type: string
+        unthrottled:
+          description: Whether the guide bypasses its guide group's throttle settings. When true, archiving the guide does not open a new throttle window.
+          type: boolean
+      required:
+      - channel_id
+      - guide_id
+      - guide_key
+      - guide_step_ref
+      title: GuideArchivedRequest
+      type: object
+    GuideResetRequest:
+      description: A request to reset a guide's engagement state.
+      example:
+        guide_key: tour_notification
+        tenant: ingen_isla_nublar
+      properties:
+        guide_key:
+          description: The key of the guide.
+          type: string
+        tenant:
+          description: The tenant ID of the guide.
+          type: string
+      required:
+      - guide_key
+      title: GuideResetRequest
+      type: object
+    GuidesResponse:
+      description: A response for a list of guides.
+      example:
+        entries:
+        - __typename: Guide
+          activation_url_patterns: []
+          activation_url_rules:
+          - argument: /workflows
+            directive: allow
+            operator: contains
+            variable: pathname
+          - argument: /guides
+            directive: allow
+            operator: equal_to
+            variable: pathname
+          active: true
+          bypass_global_group_limit: false
+          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
+          dashboard_url: https://dashboard.knock.app/~/guides/nps-survey
+          id: 53595157-2fac-4a17-8dd7-e6603e32cb3a
+          inserted_at: '2025-09-30T14:54:44.217756Z'
+          key: nps-survey
+          semver: 0.0.3
+          steps:
+          - content:
+              companyName: Knock
+              showFeedbackSection: true
+              showThanksToast: true
+            message:
+              archived_at: null
+              id: 33hjnKRKNx9ISRlixVBjhpkh28J
+              interacted_at: '2025-10-07T15:10:59.291Z'
+              link_clicked_at: null
+              read_at: '2025-10-07T15:10:59.291Z'
+              seen_at: '2025-10-06T18:46:03.210Z'
+            ref: step_1
+            schema_key: nps-survey
+            schema_semver: 0.0.3
+            schema_variant_key: default
+          type: nps-survey
+          updated_at: '2025-10-03T17:46:53.653663Z'
+        - __typename: Guide
+          activation_url_patterns:
+          - directive: allow
+            pathname: /dairy/*
+          - directive: allow
+            pathname: /produce
+            search: role=admin
+          - directive: allow
+            pathname: /
+          activation_url_rules: []
+          active: true
+          bypass_global_group_limit: false
+          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
+          dashboard_url: https://dashboard.knock.app/~/guides/changelog-card
+          id: 4fc4503e-ef8b-473a-ae07-14800639d30c
+          inserted_at: '2025-10-07T19:41:06.215233Z'
+          key: changelog-card
+          semver: 0.0.3
+          steps:
+          - content:
+              body: Lorem ipsum
+              dismissible: false
+              eyebrowText: New in Knock
+              image:
+                action: ''
+                alt: ''
+                url: https://bhoite.com/img/sculptures/2024/lander-r2/lander-r2.jpg
+              link: https://dashboard.knock.app/knock/development/guides/changelog-card/editor
+              title: Changelog card
+            message:
+              archived_at: null
+              id: null
+              interacted_at: null
+              link_clicked_at: null
+              read_at: null
+              seen_at: null
+            ref: step_1
+            schema_key: changelog-card
+            schema_semver: 0.0.3
+            schema_variant_key: default
+          type: changelog-card
+          updated_at: '2025-10-07T20:39:52.410146Z'
+        guide_group_display_logs:
+          default: '2025-08-16T00:47:14.025Z'
+        guide_groups:
+        - __typename: GuideGroup
+          display_interval: 3600
+          display_sequence:
+          - nps-survey
+          - changelog-card
+          inserted_at: '2025-07-24T21:06:27.394627Z'
+          key: default
+          updated_at: '2025-10-07T20:39:52.465400Z'
+        ineligible_guides:
+        - key: onboarding-tour
+          message: User has archived this guide already
+          reason: marked_as_archived
+        - key: premium-feature
+          message: User is not a member of the target audience
+          reason: not_in_target_audience
+      properties:
+        entries:
+          description: A list of guides.
+          items:
+            properties:
+              __typename:
+                description: The typename of the schema.
+                type: string
+              activation_url_patterns:
+                description: A list of URL Patterns to evaluate user's current location to activate the guide, if matched
+                items:
+                  properties:
+                    directive:
+                      description: The directive for the URL pattern ('allow' or 'block')
+                      type: string
+                    pathname:
+                      description: The pathname pattern to match (supports wildcards like /*)
+                      type: string
+                    search:
+                      description: The search query params to match
+                      type: string
+                  type: object
+                type: array
+              activation_url_rules:
+                description: A list of URL rules to evaluate user's current location to activate the guide, if matched
+                items:
+                  properties:
+                    argument:
+                      description: The value to compare against
+                      type: string
+                    directive:
+                      description: The directive for the URL rule ('allow' or 'block')
+                      type: string
+                    operator:
+                      description: The comparison operator ('contains' or 'equal_to')
+                      type: string
+                    variable:
+                      description: The variable to evaluate ('pathname')
+                      type: string
+                  type: object
+                type: array
+              active:
+                description: Whether the guide is active.
+                type: boolean
+              bypass_global_group_limit:
+                type: boolean
+              channel_id:
+                format: uuid
+                type: string
+              dashboard_url:
+                description: URL to this guide in the Knock dashboard
+                type: string
+              id:
+                description: The unique identifier for the guide.
+                format: uuid
+                type: string
+              inserted_at:
+                format: date-time
+                type: string
+              key:
+                description: The key of the guide.
+                type: string
+              semver:
+                type: string
+              steps:
+                items:
+                  properties:
+                    content:
+                      additionalProperties: true
+                      type: object
+                    message:
+                      properties:
+                        archived_at:
+                          format: date-time
+                          type:
+                          - string
+                          - 'null'
+                        id:
+                          type:
+                          - string
+                          - 'null'
+                        interacted_at:
+                          format: date-time
+                          type:
+                          - string
+                          - 'null'
+                        link_clicked_at:
+                          format: date-time
+                          type:
+                          - string
+                          - 'null'
+                        read_at:
+                          format: date-time
+                          type:
+                          - string
+                          - 'null'
+                        seen_at:
+                          format: date-time
+                          type:
+                          - string
+                          - 'null'
+                      type: object
+                    ref:
+                      type: string
+                    schema_key:
+                      type: string
+                    schema_semver:
+                      type: string
+                    schema_variant_key:
+                      type: string
+                  type: object
+                type: array
+              type:
+                description: The type of the guide.
+                type: string
+              updated_at:
+                format: date-time
+                type: string
+            type: object
+          type: array
+        guide_group_display_logs:
+          additionalProperties:
+            format: date-time
+            type: string
+          description: A map of guide group keys to their last display timestamps.
+          type: object
+        guide_groups:
+          description: A list of guide groups with their display sequences and intervals.
+          items:
+            properties:
+              __typename:
+                type: string
+              display_interval:
+                type: integer
+              display_sequence:
+                items:
+                  type: string
+                type: array
+              inserted_at:
+                format: date-time
+                type: string
+              key:
+                type: string
+              updated_at:
+                format: date-time
+                type: string
+            type: object
+          type: array
+        ineligible_guides:
+          description: Markers for guides the user is not eligible to see.
+          items:
+            properties:
+              key:
+                description: The guide's key identifier
+                type: string
+              message:
+                description: Human-readable explanation of ineligibility
+                type: string
+              reason:
+                description: Reason code for ineligibility
+                enum:
+                - guide_not_active
+                - marked_as_archived
+                - target_conditions_not_met
+                - not_in_target_audience
+                type: string
+            required:
+            - key
+            - reason
+            - message
+            type: object
+          type: array
+      required:
+      - entries
+      - guide_groups
+      - guide_group_display_logs
+      - ineligible_guides
+      title: GuidesResponse
+      type: object
+    GuideUnarchivedRequest:
+      description: A request to mark a guide as unarchived.
+      example:
+        guide_key: tour_notification
+        tenant: ingen_isla_nublar
+      properties:
+        guide_key:
+          description: The key of the guide.
+          type: string
+        tenant:
+          description: The tenant ID of the guide.
+          type: string
+      required:
+      - guide_key
+      title: GuideUnarchivedRequest
+      type: object
+    GuideStep:
+      description: A step in a guide that corresponds to a piece of UI and its content.
+      example:
+        name: Welcome to the App
+        ref: welcome-step
+        schema_key: tooltip
+        schema_semver: 1.0.0
+        schema_variant_key: default
+        values:
+          text_field: value
+      properties:
+        name:
+          description: A name for the step.
+          type: string
+          x-struct: null
+          x-validate: null
+        ref:
+          description: The unique reference string for the step. Must be at minimum 3 characters and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
+          example: welcome-step
+          type: string
+          x-struct: null
+          x-validate: null
+        schema_key:
+          description: The key of the template schema to use for this step.
+          example: tooltip
+          type: string
+          x-struct: null
+          x-validate: null
+        schema_semver:
+          description: The semantic version of the template schema to use.
+          example: 1.0.0
+          type: string
+          x-struct: null
+          x-validate: null
+        schema_variant_key:
+          description: The key of the template schema variant to use.
+          example: default
+          type: string
+          x-struct: null
+          x-validate: null
+        values:
+          additionalProperties: true
+          description: A map of values that make up the step's content. Each value must conform to its respective template schema field settings.
+          example:
+            text_field: value
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - ref
+      - schema_key
+      - schema_semver
+      - schema_variant_key
+      title: GuideStep
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.GuideStep
+      x-validate: null
     ConditionGroup:
       anyOf:
       - $ref: '#/components/schemas/ConditionGroupAllMatch'
@@ -1019,97 +1492,39 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup
       x-validate: null
-    ConditionGroupAllMatch:
-      description: A group of conditions that must all be met.
+    GuideActivationUrlPattern:
+      description: A rule that controls when a guide should be shown based on the user's location in the application. At least one of `pathname` or `search` must be provided.
       example:
-        all:
-        - argument: some_property
-          operator: equal_to
-          variable: recipient.property
+        directive: allow
+        pathname: /dashboard/*
+        search: tab=settings
       properties:
-        all:
-          description: A list of conditions.
-          items:
-            $ref: '#/components/schemas/Condition'
-          type: array
+        directive:
+          default: allow
+          description: Whether to allow or block the guide at the specified location.
+          enum:
+          - allow
+          - block
+          type: string
           x-struct: null
           x-validate: null
-      title: ConditionGroupAllMatch
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAllMatch
-      x-validate: null
-    ConditionGroupAnyMatch:
-      description: A group of conditions that any must be met. Can contain nested alls.
-      example:
-        any:
-        - all:
-          - argument: some_property
-            operator: equal_to
-            variable: recipient.property
-      properties:
-        any:
-          description: An array of conditions or nested condition groups to evaluate.
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/Condition'
-            - $ref: '#/components/schemas/ConditionGroupAllMatch'
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
+        pathname:
+          description: The URL pathname pattern to match against. Must be a valid URI path.
+          example: /dashboard/*
+          type: string
           x-struct: null
           x-validate: null
-      title: ConditionGroupAnyMatch
+        search:
+          description: The URL query string pattern to match against (without the leading '?'). Supports URLPattern API syntax.
+          example: tab=settings&*
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - directive
+      title: GuideActivationUrlPattern
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAnyMatch
-      x-validate: null
-    GuideActivationParams:
-      description: A request to activate or schedule the activation of a guide.
-      example:
-        active: true
-      oneOf:
-      - description: A request to activate or deactivate a guide.
-        example:
-          status: true
-        properties:
-          status:
-            description: Whether to activate or deactivate the guide.
-            example: true
-            type: boolean
-            x-struct: null
-            x-validate: null
-        required:
-        - status
-        title: GuideBooleanActivationParams
-        type: object
-        x-struct: null
-        x-validate: null
-      - description: A request to schedule the activation of a guide. At least one of from or until must be provided.
-        example:
-          from: '2024-03-20T10:00:00Z'
-          until: '2024-03-21T10:00:00Z'
-        properties:
-          from:
-            description: When to activate the guide. If provided, the guide will be scheduled to activate at this time. Must be in ISO 8601 UTC format.
-            example: '2024-03-20T10:00:00Z'
-            format: date-time
-            type: string
-            x-struct: null
-            x-validate: null
-          until:
-            description: When to deactivate the guide. If provided, the guide will be scheduled to deactivate at this time. Must be in ISO 8601 UTC format.
-            example: '2024-03-21T10:00:00Z'
-            format: date-time
-            type: string
-            x-struct: null
-            x-validate: null
-        title: GuideScheduledActivationParams
-        type: object
-        x-struct: null
-        x-validate: null
-      title: GuideActivationParams
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationRequest
+      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationUrlPattern
       x-validate: null
     Guide:
       description: A guide defines an in-app guide that can be displayed to users based on priority and other conditions.
@@ -1268,62 +1683,37 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Guide
       x-validate: null
-    GuideStep:
-      description: A step in a guide that corresponds to a piece of UI and its content.
+    PageInfo:
+      description: The information about a paginated result.
       example:
-        name: Welcome to the App
-        ref: welcome-step
-        schema_key: tooltip
-        schema_semver: 1.0.0
-        schema_variant_key: default
-        values:
-          text_field: value
+        after: null
+        before: null
+        page_size: 25
       properties:
-        name:
-          description: A name for the step.
-          type: string
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
-        ref:
-          description: The unique reference string for the step. Must be at minimum 3 characters and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-          example: welcome-step
-          type: string
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
-        schema_key:
-          description: The key of the template schema to use for this step.
-          example: tooltip
-          type: string
-          x-struct: null
-          x-validate: null
-        schema_semver:
-          description: The semantic version of the template schema to use.
-          example: 1.0.0
-          type: string
-          x-struct: null
-          x-validate: null
-        schema_variant_key:
-          description: The key of the template schema variant to use.
-          example: default
-          type: string
-          x-struct: null
-          x-validate: null
-        values:
-          additionalProperties: true
-          description: A map of values that make up the step's content. Each value must conform to its respective template schema field settings.
-          example:
-            text_field: value
-          type: object
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
           x-struct: null
           x-validate: null
       required:
-      - ref
-      - schema_key
-      - schema_semver
-      - schema_variant_key
-      title: GuideStep
+      - page_size
+      title: PageInfo
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.GuideStep
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
       x-validate: null
     Condition:
       description: A condition to be evaluated.
@@ -1380,6 +1770,31 @@ components:
       title: Condition
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Condition
+      x-validate: null
+    ConditionGroupAnyMatch:
+      description: A group of conditions that any must be met. Can contain nested alls.
+      example:
+        any:
+        - all:
+          - argument: some_property
+            operator: equal_to
+            variable: recipient.property
+      properties:
+        any:
+          description: An array of conditions or nested condition groups to evaluate.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/Condition'
+            - $ref: '#/components/schemas/ConditionGroupAllMatch'
+            type: object
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      title: ConditionGroupAnyMatch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAnyMatch
       x-validate: null
     GuideRequest:
       description: A request to create or update a guide.
@@ -1476,566 +1891,78 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.GuideRequest
       x-validate: null
-    GuideActivationUrlPattern:
-      description: A rule that controls when a guide should be shown based on the user's location in the application. At least one of `pathname` or `search` must be provided.
+    GuideActivationParams:
+      description: A request to activate or schedule the activation of a guide.
       example:
-        directive: allow
-        pathname: /dashboard/*
-        search: tab=settings
-      properties:
-        directive:
-          default: allow
-          description: Whether to allow or block the guide at the specified location.
-          enum:
-          - allow
-          - block
-          type: string
-          x-struct: null
-          x-validate: null
-        pathname:
-          description: The URL pathname pattern to match against. Must be a valid URI path.
-          example: /dashboard/*
-          type: string
-          x-struct: null
-          x-validate: null
-        search:
-          description: The URL query string pattern to match against (without the leading '?'). Supports URLPattern API syntax.
-          example: tab=settings&*
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - directive
-      title: GuideActivationUrlPattern
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationUrlPattern
-      x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
-      example:
-        after: null
-        before: null
-        page_size: 25
-      properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - page_size
-      title: PageInfo
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
-    GuideActionResponse:
-      description: A response for a guide action.
-      example:
-        status: ok
-      properties:
-        status:
-          description: The status of a guide's action.
-          example: ok
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - status
-      title: GuideActionResponse
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Responses.GuideActionResponse
-      x-validate: null
-    GuideActionRequest:
-      description: A request to trigger a guide action.
-      example:
-        channel_id: 123e4567-e89b-12d3-a456-426614174000
-        content:
-          body: Limited spots available for today's behind-the-scenes DNA extraction demonstration.
-          title: DNA Lab Tour Available
-        data:
-          next_time: '14:30'
-          spots_left: 8
-          tour_id: dna_lab_tour
-        guide_id: 7e9dc78c-b3b1-4127-a54e-71f1899b831a
-        guide_key: tour_notification
-        guide_step_ref: lab_tours
-        is_final: false
-        metadata:
-          cta: Reserve Spot
-          theme: amber
-          type: banner
-        tenant: ingen_isla_nublar
-      properties:
-        channel_id:
-          description: The unique identifier for the channel.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        content:
-          additionalProperties: true
-          description: The content of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        data:
-          additionalProperties: true
-          description: The data of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        guide_id:
-          description: The unique identifier for the guide.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        guide_key:
-          description: The key of the guide.
-          type: string
-          x-struct: null
-          x-validate: null
-        guide_step_ref:
-          description: The step reference of the guide.
-          type: string
-          x-struct: null
-          x-validate: null
-        is_final:
-          description: Whether the guide is final.
-          type: boolean
-          x-struct: null
-          x-validate: null
-        metadata:
-          additionalProperties: true
-          description: The metadata of the guide.
-          type: object
-          x-struct: null
-          x-validate: null
-        tenant:
-          description: The tenant ID of the guide.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - channel_id
-      - guide_id
-      - guide_key
-      - guide_step_ref
-      title: GuideActionRequest
-      type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Requests.GuideActionRequest
-      x-validate: null
-    GuidesResponse:
-      description: A response for a list of guides.
-      example:
-        entries:
-        - __typename: Guide
-          activation_url_patterns: []
-          activation_url_rules:
-          - argument: /workflows
-            directive: allow
-            operator: contains
-            variable: pathname
-          - argument: /guides
-            directive: allow
-            operator: equal_to
-            variable: pathname
-          active: true
-          bypass_global_group_limit: false
-          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
-          dashboard_url: https://dashboard.knock.app/~/guides/nps-survey
-          id: 53595157-2fac-4a17-8dd7-e6603e32cb3a
-          inserted_at: '2025-09-30T14:54:44.217756Z'
-          key: nps-survey
-          semver: 0.0.3
-          steps:
-          - content:
-              companyName: Knock
-              showFeedbackSection: true
-              showThanksToast: true
-            message:
-              archived_at: null
-              id: 33hjnKRKNx9ISRlixVBjhpkh28J
-              interacted_at: '2025-10-07T15:10:59.291Z'
-              link_clicked_at: null
-              read_at: '2025-10-07T15:10:59.291Z'
-              seen_at: '2025-10-06T18:46:03.210Z'
-            ref: step_1
-            schema_key: nps-survey
-            schema_semver: 0.0.3
-            schema_variant_key: default
-          type: nps-survey
-          updated_at: '2025-10-03T17:46:53.653663Z'
-        - __typename: Guide
-          activation_url_patterns:
-          - directive: allow
-            pathname: /dairy/*
-          - directive: allow
-            pathname: /produce
-            search: role=admin
-          - directive: allow
-            pathname: /
-          activation_url_rules: []
-          active: true
-          bypass_global_group_limit: false
-          channel_id: 51b92f90-1504-4fda-95c1-495a3883bc4d
-          dashboard_url: https://dashboard.knock.app/~/guides/changelog-card
-          id: 4fc4503e-ef8b-473a-ae07-14800639d30c
-          inserted_at: '2025-10-07T19:41:06.215233Z'
-          key: changelog-card
-          semver: 0.0.3
-          steps:
-          - content:
-              body: Lorem ipsum
-              dismissible: false
-              eyebrowText: New in Knock
-              image:
-                action: ''
-                alt: ''
-                url: https://bhoite.com/img/sculptures/2024/lander-r2/lander-r2.jpg
-              link: https://dashboard.knock.app/knock/development/guides/changelog-card/editor
-              title: Changelog card
-            message:
-              archived_at: null
-              id: null
-              interacted_at: null
-              link_clicked_at: null
-              read_at: null
-              seen_at: null
-            ref: step_1
-            schema_key: changelog-card
-            schema_semver: 0.0.3
-            schema_variant_key: default
-          type: changelog-card
-          updated_at: '2025-10-07T20:39:52.410146Z'
-        guide_group_display_logs:
-          default: '2025-08-16T00:47:14.025Z'
-        guide_groups:
-        - __typename: GuideGroup
-          display_interval: 3600
-          display_sequence:
-          - nps-survey
-          - changelog-card
-          inserted_at: '2025-07-24T21:06:27.394627Z'
-          key: default
-          updated_at: '2025-10-07T20:39:52.465400Z'
-        ineligible_guides:
-        - key: onboarding-tour
-          message: User has archived this guide already
-          reason: marked_as_archived
-        - key: premium-feature
-          message: User is not a member of the target audience
-          reason: not_in_target_audience
-      properties:
-        entries:
-          description: A list of guides.
-          items:
-            properties:
-              __typename:
-                description: The typename of the schema.
-                type: string
-                x-struct: null
-                x-validate: null
-              activation_url_patterns:
-                description: A list of URL Patterns to evaluate user's current location to activate the guide, if matched
-                items:
-                  properties:
-                    directive:
-                      description: The directive for the URL pattern ('allow' or 'block')
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    pathname:
-                      description: The pathname pattern to match (supports wildcards like /*)
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    search:
-                      description: The search query params to match
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                  type: object
-                  x-struct: null
-                  x-validate: null
-                type: array
-                x-struct: null
-                x-validate: null
-              activation_url_rules:
-                description: A list of URL rules to evaluate user's current location to activate the guide, if matched
-                items:
-                  properties:
-                    argument:
-                      description: The value to compare against
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    directive:
-                      description: The directive for the URL rule ('allow' or 'block')
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    operator:
-                      description: The comparison operator ('contains' or 'equal_to')
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    variable:
-                      description: The variable to evaluate ('pathname')
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                  type: object
-                  x-struct: null
-                  x-validate: null
-                type: array
-                x-struct: null
-                x-validate: null
-              active:
-                description: Whether the guide is active.
-                type: boolean
-                x-struct: null
-                x-validate: null
-              bypass_global_group_limit:
-                type: boolean
-                x-struct: null
-                x-validate: null
-              channel_id:
-                format: uuid
-                type: string
-                x-struct: null
-                x-validate: null
-              dashboard_url:
-                description: URL to this guide in the Knock dashboard
-                type: string
-                x-struct: null
-                x-validate: null
-              id:
-                description: The unique identifier for the guide.
-                format: uuid
-                type: string
-                x-struct: null
-                x-validate: null
-              inserted_at:
-                format: date-time
-                type: string
-                x-struct: null
-                x-validate: null
-              key:
-                description: The key of the guide.
-                type: string
-                x-struct: null
-                x-validate: null
-              semver:
-                type: string
-                x-struct: null
-                x-validate: null
-              steps:
-                items:
-                  properties:
-                    content:
-                      additionalProperties: true
-                      type: object
-                      x-struct: null
-                      x-validate: null
-                    message:
-                      properties:
-                        archived_at:
-                          format: date-time
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                        id:
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                        interacted_at:
-                          format: date-time
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                        link_clicked_at:
-                          format: date-time
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                        read_at:
-                          format: date-time
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                        seen_at:
-                          format: date-time
-                          type:
-                          - string
-                          - 'null'
-                          x-struct: null
-                          x-validate: null
-                      type: object
-                      x-struct: null
-                      x-validate: null
-                    ref:
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    schema_key:
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    schema_semver:
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                    schema_variant_key:
-                      type: string
-                      x-struct: null
-                      x-validate: null
-                  type: object
-                  x-struct: null
-                  x-validate: null
-                type: array
-                x-struct: null
-                x-validate: null
-              type:
-                description: The type of the guide.
-                type: string
-                x-struct: null
-                x-validate: null
-              updated_at:
-                format: date-time
-                type: string
-                x-struct: null
-                x-validate: null
-            type: object
+        active: true
+      oneOf:
+      - description: A request to activate or deactivate a guide.
+        example:
+          status: true
+        properties:
+          status:
+            description: Whether to activate or deactivate the guide.
+            example: true
+            type: boolean
             x-struct: null
             x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        guide_group_display_logs:
-          additionalProperties:
+        required:
+        - status
+        title: GuideBooleanActivationParams
+        type: object
+        x-struct: null
+        x-validate: null
+      - description: A request to schedule the activation of a guide. At least one of from or until must be provided.
+        example:
+          from: '2024-03-20T10:00:00Z'
+          until: '2024-03-21T10:00:00Z'
+        properties:
+          from:
+            description: When to activate the guide. If provided, the guide will be scheduled to activate at this time. Must be in ISO 8601 UTC format.
+            example: '2024-03-20T10:00:00Z'
             format: date-time
             type: string
             x-struct: null
             x-validate: null
-          description: A map of guide group keys to their last display timestamps.
-          type: object
-          x-struct: null
-          x-validate: null
-        guide_groups:
-          description: A list of guide groups with their display sequences and intervals.
-          items:
-            properties:
-              __typename:
-                type: string
-                x-struct: null
-                x-validate: null
-              display_interval:
-                type: integer
-                x-struct: null
-                x-validate: null
-              display_sequence:
-                items:
-                  type: string
-                  x-struct: null
-                  x-validate: null
-                type: array
-                x-struct: null
-                x-validate: null
-              inserted_at:
-                format: date-time
-                type: string
-                x-struct: null
-                x-validate: null
-              key:
-                type: string
-                x-struct: null
-                x-validate: null
-              updated_at:
-                format: date-time
-                type: string
-                x-struct: null
-                x-validate: null
-            type: object
+          until:
+            description: When to deactivate the guide. If provided, the guide will be scheduled to deactivate at this time. Must be in ISO 8601 UTC format.
+            example: '2024-03-21T10:00:00Z'
+            format: date-time
+            type: string
             x-struct: null
             x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-        ineligible_guides:
-          description: Markers for guides the user is not eligible to see.
-          items:
-            properties:
-              key:
-                description: The guide's key identifier
-                type: string
-                x-struct: null
-                x-validate: null
-              message:
-                description: Human-readable explanation of ineligibility
-                type: string
-                x-struct: null
-                x-validate: null
-              reason:
-                description: Reason code for ineligibility
-                enum:
-                - guide_not_active
-                - marked_as_archived
-                - target_conditions_not_met
-                - not_in_target_audience
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - key
-            - reason
-            - message
-            type: object
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - entries
-      - guide_groups
-      - guide_group_display_logs
-      - ineligible_guides
-      title: GuidesResponse
+        title: GuideScheduledActivationParams
+        type: object
+        x-struct: null
+        x-validate: null
+      title: GuideActivationParams
       type: object
-      x-struct: Elixir.SwitchboardWeb.V1.Specs.Guides.Responses.GuidesResponse
+      x-struct: Elixir.ControlWeb.V1.Specs.GuideActivationRequest
+      x-validate: null
+    ConditionGroupAllMatch:
+      description: A group of conditions that must all be met.
+      example:
+        all:
+        - argument: some_property
+          operator: equal_to
+          variable: recipient.property
+      properties:
+        all:
+          description: A list of conditions.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+          x-struct: null
+          x-validate: null
+      title: ConditionGroupAllMatch
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ConditionGroup.ConditionGroupAllMatch
       x-validate: null
   securitySchemes:
     BearerAuth:
-      type: http
+      bearerFormat: JWT
       scheme: bearer
-      description: Knock service token (kst_...) as a Bearer token.
+      type: http
 x-refined-from:
+- knock-app-openapi.json
 - knock-management-api-openapi.yml
-- knock-users-api-openapi.yml

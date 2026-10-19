@@ -382,83 +382,6 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ChannelEnvironmentSettings
       x-validate: null
-    ChannelGroupRuleRequest:
-      description: A rule that determines if a channel should be executed as part of a channel group.
-      example:
-        channel_key: email-channel
-        index: 0
-        rule_type: always
-      properties:
-        argument:
-          description: For conditional rules, the value to compare against.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_key:
-          description: The key of the channel this rule applies to.
-          type: string
-          x-struct: null
-          x-validate: null
-        index:
-          description: The order index of this rule within the channel group.
-          type: integer
-          x-struct: null
-          x-validate: null
-        operator:
-          description: For conditional rules, the operator to apply.
-          enum:
-          - equal_to
-          - not_equal_to
-          - greater_than
-          - less_than
-          - greater_than_or_equal_to
-          - less_than_or_equal_to
-          - contains
-          - not_contains
-          - contains_all
-          - not_contains_all
-          - is_timestamp_before
-          - is_timestamp_on_or_after
-          - is_timestamp_between
-          - is_between
-          - empty
-          - not_empty
-          - exists
-          - not_exists
-          - is_timestamp
-          - is_audience_member
-          - is_not_audience_member
-          example: equal_to
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        rule_type:
-          description: The type of rule (if = conditional, unless = negative conditional, always = always apply).
-          enum:
-          - if
-          - unless
-          - always
-          type: string
-          x-struct: null
-          x-validate: null
-        variable:
-          description: For conditional rules, the variable to evaluate.
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-      required:
-      - channel_key
-      - rule_type
-      title: ChannelGroupRuleRequest
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRuleRequest
-      x-validate: null
     PageInfo:
       description: The information about a paginated result.
       example:
@@ -490,112 +413,6 @@ components:
       title: PageInfo
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
-      x-validate: null
-    ChannelGroup:
-      description: A group of channels with rules for when they are applicable.
-      example:
-        channel_rules:
-        - channel:
-            archived_at: null
-            created_at: '2021-01-01T00:00:00Z'
-            custom_icon_url: null
-            id: 01234567-89ab-cdef-0123-456789abcdef
-            key: my-sendgrid-channel
-            name: My Sendgrid Channel
-            provider: sendgrid
-            type: email
-            updated_at: '2021-01-01T00:00:00Z'
-          created_at: '2021-01-01T00:00:00Z'
-          index: 0
-          rule_type: always
-          updated_at: '2021-01-01T00:00:00Z'
-        channel_type: push
-        created_at: '2021-01-01T00:00:00Z'
-        key: push-group
-        name: Push Notification Group
-        operator: any
-        source: user
-        updated_at: '2021-01-01T00:00:00Z'
-      properties:
-        archived_at:
-          description: The timestamp of when the channel group was archived (soft deleted).
-          format: date-time
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        channel_rules:
-          description: Rules for determining which channels should be used.
-          items:
-            $ref: '#/components/schemas/ChannelGroupRule'
-          type: array
-          x-struct: null
-          x-validate: null
-        channel_type:
-          description: The type of channels contained in this group.
-          enum:
-          - email
-          - in_app
-          - in_app_feed
-          - in_app_guide
-          - sms
-          - push
-          - chat
-          - http
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: The timestamp of when the channel group was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        key:
-          description: Unique identifier for the channel group within a project.
-          type: string
-          x-struct: null
-          x-validate: null
-        name:
-          description: The human-readable name of the channel group.
-          type: string
-          x-struct: null
-          x-validate: null
-        operator:
-          description: Determines how the channel rules are applied ('any' means any rule can match, 'all' means all rules must match).
-          enum:
-          - any
-          - all
-          type: string
-          x-struct: null
-          x-validate: null
-        source:
-          description: Whether this channel group was created by the system or a user. Only user created channel groups can be modified.
-          enum:
-          - system
-          - user
-          type: string
-          x-struct: null
-          x-validate: null
-        updated_at:
-          description: The timestamp of when the channel group was last updated.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - name
-      - key
-      - channel_type
-      - operator
-      - source
-      - channel_rules
-      - created_at
-      - updated_at
-      title: ChannelGroup
-      type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroup
       x-validate: null
     Channel:
       description: A configured channel, which is a way to route messages to a provider.
@@ -750,6 +567,189 @@ components:
       title: ChannelGroupRequest
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRequest
+      x-validate: null
+    ChannelGroup:
+      description: A group of channels with rules for when they are applicable.
+      example:
+        channel_rules:
+        - channel:
+            archived_at: null
+            created_at: '2021-01-01T00:00:00Z'
+            custom_icon_url: null
+            id: 01234567-89ab-cdef-0123-456789abcdef
+            key: my-sendgrid-channel
+            name: My Sendgrid Channel
+            provider: sendgrid
+            type: email
+            updated_at: '2021-01-01T00:00:00Z'
+          created_at: '2021-01-01T00:00:00Z'
+          index: 0
+          rule_type: always
+          updated_at: '2021-01-01T00:00:00Z'
+        channel_type: push
+        created_at: '2021-01-01T00:00:00Z'
+        key: push-group
+        name: Push Notification Group
+        operator: any
+        source: user
+        updated_at: '2021-01-01T00:00:00Z'
+      properties:
+        archived_at:
+          description: The timestamp of when the channel group was archived (soft deleted).
+          format: date-time
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_rules:
+          description: Rules for determining which channels should be used.
+          items:
+            $ref: '#/components/schemas/ChannelGroupRule'
+          type: array
+          x-struct: null
+          x-validate: null
+        channel_type:
+          description: The type of channels contained in this group.
+          enum:
+          - email
+          - in_app
+          - in_app_feed
+          - in_app_guide
+          - sms
+          - push
+          - chat
+          - http
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: The timestamp of when the channel group was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        key:
+          description: Unique identifier for the channel group within a project.
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The human-readable name of the channel group.
+          type: string
+          x-struct: null
+          x-validate: null
+        operator:
+          description: Determines how the channel rules are applied ('any' means any rule can match, 'all' means all rules must match).
+          enum:
+          - any
+          - all
+          type: string
+          x-struct: null
+          x-validate: null
+        source:
+          description: Whether this channel group was created by the system or a user. Only user created channel groups can be modified.
+          enum:
+          - system
+          - user
+          type: string
+          x-struct: null
+          x-validate: null
+        updated_at:
+          description: The timestamp of when the channel group was last updated.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - name
+      - key
+      - channel_type
+      - operator
+      - source
+      - channel_rules
+      - created_at
+      - updated_at
+      title: ChannelGroup
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroup
+      x-validate: null
+    ChannelGroupRuleRequest:
+      description: A rule that determines if a channel should be executed as part of a channel group.
+      example:
+        channel_key: email-channel
+        index: 0
+        rule_type: always
+      properties:
+        argument:
+          description: For conditional rules, the value to compare against.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        channel_key:
+          description: The key of the channel this rule applies to.
+          type: string
+          x-struct: null
+          x-validate: null
+        index:
+          description: The order index of this rule within the channel group.
+          type: integer
+          x-struct: null
+          x-validate: null
+        operator:
+          description: For conditional rules, the operator to apply.
+          enum:
+          - equal_to
+          - not_equal_to
+          - greater_than
+          - less_than
+          - greater_than_or_equal_to
+          - less_than_or_equal_to
+          - contains
+          - not_contains
+          - contains_all
+          - not_contains_all
+          - is_timestamp_before
+          - is_timestamp_on_or_after
+          - is_timestamp_between
+          - is_between
+          - empty
+          - not_empty
+          - exists
+          - not_exists
+          - is_timestamp
+          - is_audience_member
+          - is_not_audience_member
+          example: equal_to
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+        rule_type:
+          description: The type of rule (if = conditional, unless = negative conditional, always = always apply).
+          enum:
+          - if
+          - unless
+          - always
+          type: string
+          x-struct: null
+          x-validate: null
+        variable:
+          description: For conditional rules, the variable to evaluate.
+          type:
+          - string
+          - 'null'
+          x-struct: null
+          x-validate: null
+      required:
+      - channel_key
+      - rule_type
+      title: ChannelGroupRuleRequest
+      type: object
+      x-struct: Elixir.ControlWeb.V1.Specs.ChannelGroupRuleRequest
       x-validate: null
   securitySchemes:
     BearerAuth:

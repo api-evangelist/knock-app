@@ -151,62 +151,37 @@ paths:
       - Members
 components:
   schemas:
-    MemberUser:
-      description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
+    PageInfo:
+      description: The information about a paginated result.
       example:
-        avatar_url: https://www.gravatar.com/avatar/abc123
-        created_at: '2024-01-10T08:00:00Z'
-        email: jane@example.com
-        id: a1b2c3d4-5678-9abc-def0-123456789abc
-        name: Jane Doe
-        updated_at: '2024-06-18T12:00:00Z'
+        after: null
+        before: null
+        page_size: 25
       properties:
-        avatar_url:
-          description: The URL of the user's avatar image.
+        after:
+          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        created_at:
-          description: The timestamp of when the user was created.
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        email:
-          description: The user's email address.
-          format: email
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: The user's unique identifier.
-          format: uuid
-          type: string
-          x-struct: null
-          x-validate: null
-        name:
-          description: The user's display name.
+        before:
+          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        updated_at:
-          description: The timestamp of when the user was last updated.
-          format: date-time
-          type: string
+        page_size:
+          description: The number of entries to fetch per-page.
+          type: integer
           x-struct: null
           x-validate: null
       required:
-      - id
-      - email
-      - created_at
-      - updated_at
-      title: MemberUser
+      - page_size
+      title: PageInfo
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
+      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
       x-validate: null
     Member:
       description: A member of the account.
@@ -265,37 +240,62 @@ components:
       type: object
       x-struct: Elixir.ControlWeb.V1.Specs.Member
       x-validate: null
-    PageInfo:
-      description: The information about a paginated result.
+    MemberUser:
+      description: Information about a user within the Knock dashboard. Not to be confused with an external user (recipient) of a workflow.
       example:
-        after: null
-        before: null
-        page_size: 25
+        avatar_url: https://www.gravatar.com/avatar/abc123
+        created_at: '2024-01-10T08:00:00Z'
+        email: jane@example.com
+        id: a1b2c3d4-5678-9abc-def0-123456789abc
+        name: Jane Doe
+        updated_at: '2024-06-18T12:00:00Z'
       properties:
-        after:
-          description: The cursor to fetch entries after. Will only be present if there are more entries to fetch.
+        avatar_url:
+          description: The URL of the user's avatar image.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        before:
-          description: The cursor to fetch entries before. Will only be present if there are more entries to fetch before the current page.
+        created_at:
+          description: The timestamp of when the user was created.
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        email:
+          description: The user's email address.
+          format: email
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: The user's unique identifier.
+          format: uuid
+          type: string
+          x-struct: null
+          x-validate: null
+        name:
+          description: The user's display name.
           type:
           - string
           - 'null'
           x-struct: null
           x-validate: null
-        page_size:
-          description: The number of entries to fetch per-page.
-          type: integer
+        updated_at:
+          description: The timestamp of when the user was last updated.
+          format: date-time
+          type: string
           x-struct: null
           x-validate: null
       required:
-      - page_size
-      title: PageInfo
+      - id
+      - email
+      - created_at
+      - updated_at
+      title: MemberUser
       type: object
-      x-struct: Elixir.ControlWeb.V1.Specs.PageInfo
+      x-struct: Elixir.ControlWeb.V1.Specs.MemberUser
       x-validate: null
   securitySchemes:
     BearerAuth:
