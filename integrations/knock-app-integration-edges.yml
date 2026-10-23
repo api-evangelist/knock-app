@@ -416,6 +416,96 @@ edges:
   detected_by: mirror-platform-listings.py
   category: Messaging
   partner_tier: third-party
+- partner_name: Hex
+  partner: hex-pm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Elixir/Erlang)
+  evidence: https://hex.pm/packages/knock
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Hex (public registry JSON)
+    spec_file: null
+    language: Elixir/Erlang
+    packages:
+    - name: knock
+      version: 0.6.0
+      released: '2026-09-30'
+      released_field: inserted_at
+      lapsed: false
+      page: https://hex.pm/packages/knock
+      repo_leg: github-org:knocklabs
+      publisher_leg: org:knocklabs
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/knocklabs/knock-php
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: knocklabs/knock-php
+      version: v0.3.0
+      released: '2026-09-30'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/knocklabs/knock-php
+      repo_leg: github-org:knocklabs
+      publisher_leg: email:knock.app
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/knock_flutter
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: knock_flutter
+      version: 1.1.0
+      released: '2026-09-30'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/knock_flutter
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:knock.app
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 generated: '2026-10-12'
 method: searched
 checked:
@@ -440,4 +530,7 @@ checked:
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
 - vercel/integrations/vercel-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 source: https://hightouch.com/docs/destinations/knock
